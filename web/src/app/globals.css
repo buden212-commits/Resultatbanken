@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-50: #e8f2fa;
+  --color-brand-100: #cce5f5;
+  --color-brand-200: #99cbeb;
+  --color-brand-500: #005daa;
+  --color-brand-600: #004d8f;
+  --color-brand-700: #003d72;
+  --color-brand-800: #002f5a;
+  --color-brand-900: #002244;
+  --color-surface: #ffffff;
+  --color-muted: #64748b;
+  --color-border: rgb(15 23 42 / 0.08);
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px rgb(15 23 42 / 0.06);
+  --shadow-card-hover: 0 4px 12px rgb(15 23 42 / 0.08), 0 16px 40px rgb(15 23 42 / 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgb(0 93 170 / 0.12), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgb(0 77 143 / 0.08), transparent),
+    linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(0 93 170 / 0.2);
+  color: #002244;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.card-hover {
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+  border-color: rgb(0 93 170 / 0.15);
+}
+
+.glass-header {
+  background: rgb(255 255 255 / 0.82);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-gradient {
+  background:
+    linear-gradient(135deg, #002244 0%, #003d72 45%, #002f5a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgb(255 255 255 / 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgb(255 255 255 / 0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.table-shell {
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
+  background: white;
+  box-shadow: var(--shadow-card);
+}
+
+.table-shell table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table-shell thead {
+  background: #f8fafc;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-shell th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.table-shell td {
+  padding: 0.875rem 1rem;
+  border-top: 1px solid rgb(15 23 42 / 0.05);
+}
+
+.table-shell tbody tr {
+  transition: background 0.15s ease;
+}
+
+.table-shell tbody tr:hover {
+  background: #e8f2fa;
+}
+
+.input-field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(15 23 42 / 0.12);
+  background: white;
+  padding-block: 0.75rem;
+  padding-inline: 1rem;
+  font-size: 0.9375rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-field-with-icon {
+  padding-left: 3rem;
+}
+
+.input-field::placeholder {
+  color: #94a3b8;
+}
+
+.input-field:focus {
+  border-color: rgb(0 93 170 / 0.5);
+  box-shadow: 0 0 0 3px rgb(0 93 170 / 0.15);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, #004d8f 0%, #003d72 100%);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.1), 0 4px 12px rgb(0 77 143 / 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgb(0 77 143 / 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: #e8f2fa;
+  color: #003d72;
+  border: 1px solid rgb(0 93 170 / 0.2);
+}
+
+.link-brand {
+  color: #003d72;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.link-brand:hover {
+  color: #002f5a;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

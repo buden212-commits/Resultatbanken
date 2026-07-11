@@ -1,0 +1,731 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <LastAuthor>Björn Wrahme</LastAuthor>
+  <LastPrinted>2020-03-11T11:15:54Z</LastPrinted>
+  <LastSaved>2020-03-12T10:22:12Z</LastSaved>
+  <Version>14.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9360</WindowHeight>
+  <WindowWidth>9705</WindowWidth>
+  <WindowTopX>270</WindowTopX>
+  <WindowTopY>630</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Arial"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s64">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial" ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s65">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s66">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial" ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s67">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial" ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s68">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s69">
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial" ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s70">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s71">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial" ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s72">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s73">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+  </Style>
+  <Style ss:ID="s88">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Interior ss:Color="#EBF1DE" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s89">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Interior ss:Color="#EBF1DE" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s90">
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s93">
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s102">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#969696"/>
+   </Borders>
+   <Font ss:FontName="Arial" ss:Bold="1"/>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s103">
+   <Interior/>
+  </Style>
+  <Style ss:ID="s113">
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="14" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s114">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="14" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s115">
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="14" ss:Bold="1"/>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s116">
+   <Font ss:FontName="Arial" x:Family="Swiss"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Anmälningar">
+  <Names>
+   <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Anmälningar!R11C1:R11C10"
+    ss:Hidden="1"/>
+  </Names>
+  <Table ss:ExpandedColumnCount="85" ss:ExpandedRowCount="25" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:AutoFitWidth="0" ss:Width="54.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="78.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="69.75"/>
+   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="35.25"/>
+   <Column ss:Width="25.5"/>
+   <Column ss:Width="47.25" ss:Span="2"/>
+   <Column ss:Index="10" ss:StyleID="s73" ss:Width="84.75"/>
+   <Column ss:StyleID="s103" ss:Hidden="1" ss:AutoFitWidth="0"/>
+   <Column ss:StyleID="s103" ss:AutoFitWidth="0" ss:Span="73"/>
+   <Row ss:Height="18" ss:StyleID="s113">
+    <Cell><Data ss:Type="String">Resultat Skido KM 2020-03-11</Data></Cell>
+    <Cell ss:Index="10" ss:StyleID="s114"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+    <Cell ss:StyleID="s115"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="2.0625"/>
+   <Row ss:AutoFitHeight="0" ss:Height="16.5">
+    <Cell><Data ss:Type="String">Hemus skidstadion i sol och + 5 grader, gemensam start</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="2.0625"/>
+   <Row>
+    <Cell ss:StyleID="s116"><Data ss:Type="String">Noterbart var att den tuffa H55 klassen var en taktisk triumf i kampen om andraplatsen. Johan Trygg hade gamla skrotskidor och Björn Albinsson</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s116"><Data ss:Type="String">valde nya fina skidor. Trygg tog detta till sin fördel i slutet av andra varvet då kan inte tog av sig skidorna och körde över de grusiga parkeringarna-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s116"><Data ss:Type="String">Med förtvivlad blick tappade Albinsson ryggen då han fick ta av sig skidorna och springa efter, en lucka han aldrig lyckades täta till.</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="5.25"/>
+   <Row>
+    <Cell ss:StyleID="s116"><Data ss:Type="String">Arrangörer grupp 8: Conny Eriksson, Siv Brodin, Björn Wrahme, Anders Sandberg</Data></Cell>
+   </Row>
+   <Row ss:Index="11" ss:StyleID="s64">
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Förnamn</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Efternamn</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Klubb</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Klass</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Längd</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Bana</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Varv 1</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Varv 2</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s69"><Data ss:Type="String">Varv 3</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Placering</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+    <Cell ss:StyleID="s102"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Hilma</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Kabo</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">D10</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">2 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">A</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">23.59</Data></Cell>
+    <Cell ss:StyleID="s70"/>
+    <Cell ss:StyleID="s70"/>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Frida</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Brudin</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">D12</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">2 km</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">A</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">22.59</Data></Cell>
+    <Cell ss:StyleID="s88"/>
+    <Cell ss:StyleID="s88"/>
+    <Cell ss:StyleID="s89"><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Sofie</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Karlsson Holmer</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">D16</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">11.31</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">?</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">39.590000000000003</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s90"><Data ss:Type="Number">3</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Lovisa</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Moqvist</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Lerums SOK</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">D17-44</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">12.14</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">24.4</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">39.11</Data></Cell>
+    <Cell ss:StyleID="s89"><Data ss:Type="String">(utom tävlan i KM)</Data></Cell>
+    <Cell ss:StyleID="s90"><Data ss:Type="Number">4</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Laura</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Fenyvesi</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">D17-44</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">15.32</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">29.3</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">40.47</Data></Cell>
+    <Cell ss:StyleID="s89"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s90"><Data ss:Type="Number">5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Simon</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Hodler</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">H17-44</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">10.050000000000001</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">25.01</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">36.450000000000003</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">6</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Gustav</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Johnsson</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">H17-44</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">9.41</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">18.010000000000002</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">29.21</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">7</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Henrik</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Jonsson</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">H45</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">10.45</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">21.38</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">35.25</Data></Cell>
+    <Cell ss:StyleID="s89"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Thomas</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Sparr</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">H55</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">13.55</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">23.35</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">36.24</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">9</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Johan</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Trygg</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">H55</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">15.3</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">28.56</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">39.57</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">10</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Björn</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Albinsson</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">H55</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">12.31</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">29.54</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">40.549999999999997</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s90"><Data ss:Type="Number">11</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Ulf K.</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">Rask</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">H55</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">6 km</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">ABC</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">17.010000000000002</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">36.01</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">48.55</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Karl-Erik</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Andersson</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">H65</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">4 km</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">AB</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">16.54</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">38.56</Data></Cell>
+    <Cell ss:StyleID="s88"/>
+    <Cell ss:StyleID="s89"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">13</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.9375">
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Bo</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">Wallin</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">IFK Mora OK</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">H65</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">4 km</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="String">AB</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">16.57</Data></Cell>
+    <Cell ss:StyleID="s88"><Data ss:Type="Number">39.020000000000003</Data></Cell>
+    <Cell ss:StyleID="s88"/>
+    <Cell ss:StyleID="s89"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s93"><Data ss:Type="Number">14</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:Orientation="Landscape"/>
+   </PageSetup>
+   <Print>
+    <ValidPrinterInfo/>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>16</ActiveRow>
+     <ActiveCol>15</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  <AutoFilter x:Range="R11C1:R11C10"
+   xmlns="urn:schemas-microsoft-com:office:excel">
+  </AutoFilter>
+ </Worksheet>
+ <Worksheet ss:Name="Summering">
+  <Table ss:ExpandedColumnCount="3" ss:ExpandedRowCount="19" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:StyleID="s64" ss:AutoFitWidth="0" ss:Width="109.5"/>
+   <Column ss:StyleID="s65" ss:AutoFitWidth="0" ss:Width="114"/>
+   <Row ss:StyleID="s64">
+    <Cell><Data ss:Type="String">Inmatningsfält</Data></Cell>
+    <Cell><Data ss:Type="String">Värde</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">Antal</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">Klass</Data></Cell>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D10</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D12</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D14</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D16</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D17-44</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D45</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D55</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D65</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">D75</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H10</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H12</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H14</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H16</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H17-44</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H45</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H55</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H65</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">H75</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>
