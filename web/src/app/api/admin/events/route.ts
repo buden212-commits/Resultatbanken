@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 
-import { verifyAdminToken } from "@/lib/admin-auth";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { createEvent } from "@/lib/admin-data";
 
 export async function POST(request: Request) {
-  const token = request.cookies.get("admin_session")?.value;
-  if (!verifyAdminToken(token)) {
+  if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Obehörig." }, { status: 401 });
   }
 
