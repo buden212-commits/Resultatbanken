@@ -4,4 +4,5 @@ __pycache__/
 .pytest_cache/
 web/node_modules/
 web/.next/
+web/.build-venv/
 web/.env.local
