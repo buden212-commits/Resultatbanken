@@ -164,12 +164,12 @@ export async function commitFilesToGitHub(
   return { commitSha: commit.sha, branch: config.branch };
 }
 
-export async function triggerNetlifyBuild(): Promise<{ ok: boolean; message: string }> {
-  const hookUrl = process.env.NETLIFY_BUILD_HOOK_URL?.trim();
+export async function triggerProductionDeploy(): Promise<{ ok: boolean; message: string }> {
+  const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL?.trim();
   if (!hookUrl) {
     return {
       ok: true,
-      message: "Commit pushad till GitHub. Netlify bygger om automatiskt om webhook är kopplad.",
+      message: "Commit pushad till GitHub. Vercel bygger om automatiskt om repot är kopplat.",
     };
   }
 
@@ -178,13 +178,13 @@ export async function triggerNetlifyBuild(): Promise<{ ok: boolean; message: str
     const body = await response.text();
     return {
       ok: false,
-      message: `Commit sparad, men Netlify build hook misslyckades (${response.status}): ${body}`,
+      message: `Commit sparad, men Vercel deploy hook misslyckades (${response.status}): ${body}`,
     };
   }
 
   return {
     ok: true,
-    message: "Commit pushad och Netlify-deploy startad. Sidan uppdateras om några minuter.",
+    message: "Commit pushad och Vercel-deploy startad. Sidan uppdateras om några minuter.",
   };
 }
 
@@ -204,7 +204,7 @@ export async function publishEventToGitHub(
     `Lägg till resultat: ${event.name} (${event.date})`,
   );
 
-  const build = await triggerNetlifyBuild();
+  const build = await triggerProductionDeploy();
 
   return {
     ok: build.ok,

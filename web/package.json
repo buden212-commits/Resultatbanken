@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "vercel-build": "python3 -m pip install -r ../scripts/requirements.txt && python3 ../scripts/extract_participants.py && python3 ../scripts/rebuild_index.py && next build",
     "start": "next start",
     "lint": "eslint"
   },

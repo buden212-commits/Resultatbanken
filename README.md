@@ -34,34 +34,35 @@ Se [README export](README.md) i `scraper/`.
 
 Se [BUILD.md](BUILD.md).
 
-## Deploy (Netlify)
+## Deploy (Vercel)
 
-```bash
-cd web && npm run build
-```
+Konfiguration i `web/vercel.json`. Vid deploy körs Python-scripten automatiskt för att bygga om personsökningsindex.
 
-Konfiguration i `netlify.toml`. Vid deploy körs Python-scripten automatiskt för att bygga om personsökningsindex.
+### Koppla till Vercel
+
+1. Gå till [vercel.com/new](https://vercel.com/new) och importera GitHub-repot `buden212-commits/Resultatbanken`
+2. Sätt **Root Directory** till `web`
+3. Klicka **Deploy**
 
 ### Admin i produktion (Git-deploy)
 
-På Netlify kan servern inte skriva filer direkt. När `GITHUB_TOKEN` och `GITHUB_REPO` är satta committar admin-uppladdningar i stället till GitHub, och Netlify bygger om sajten.
+På Vercel kan servern inte skriva filer direkt. När `GITHUB_TOKEN` och `GITHUB_REPO` är satta committar admin-uppladdningar i stället till GitHub, och Vercel bygger om sajten.
 
-**Miljövariabler på Netlify:**
+**Miljövariabler på Vercel** (Project → Settings → Environment Variables):
 
 | Variabel | Beskrivning |
 |----------|-------------|
 | `ADMIN_PASSWORD` | Lösenord för `/admin` |
 | `GITHUB_TOKEN` | Personal Access Token med `Contents: Read and write` |
-| `GITHUB_REPO` | `ägare/reponamn`, t.ex. `jonas/resultatbanken` |
+| `GITHUB_REPO` | `ägare/reponamn`, t.ex. `buden212-commits/Resultatbanken` |
 | `GITHUB_BRANCH` | Branch att committa till (standard: `main`) |
-| `NETLIFY_BUILD_HOOK_URL` | Valfri build hook-URL för omedelbar deploy |
+| `VERCEL_DEPLOY_HOOK_URL` | Valfri deploy hook-URL för omedelbar deploy |
 
-**Steg:**
+**Deploy hook (valfritt):**
 
-1. Skapa en [GitHub PAT](https://github.com/settings/tokens) med scope `repo` (eller fine-grained med Contents write).
-2. Koppla repot till Netlify (Site settings → Build & deploy → Continuous deployment).
-3. Sätt miljövariablerna ovan under Site settings → Environment variables.
-4. (Valfritt) Skapa en [build hook](https://docs.netlify.com/configure-builds/build-hooks/) och sätt `NETLIFY_BUILD_HOOK_URL`.
+1. Vercel → Project → Settings → **Git** → **Deploy Hooks**
+2. Skapa hook för branch `main`
+3. Sätt URL:en som `VERCEL_DEPLOY_HOOK_URL`
 
 Lokalt (utan `GITHUB_TOKEN`) sparas filer direkt i `data/` och index uppdateras via Python.
 

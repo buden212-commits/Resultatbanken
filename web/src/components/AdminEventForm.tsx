@@ -80,7 +80,7 @@ export function AdminEventForm({ eventTypes }: Props) {
           </p>
           {result.deploy.mode === "git" ? (
             <p className="mt-2 text-emerald-800">
-              Personsökningen uppdateras när Netlify-bygget är klart (index byggs om automatiskt).
+              Personsökningen uppdateras när Vercel-bygget är klart (index byggs om automatiskt).
             </p>
           ) : null}
         </div>

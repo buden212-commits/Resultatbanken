@@ -39,7 +39,7 @@ export default async function AdminPage() {
             <div className="mb-6 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-900">
               <p className="font-medium">Git-deploy aktivt</p>
               <p className="mt-1">
-                Nya resultat committas till GitHub och Netlify bygger om sajten automatiskt.
+                Nya resultat committas till GitHub och Vercel bygger om sajten automatiskt.
               </p>
             </div>
           ) : (
@@ -48,7 +48,7 @@ export default async function AdminPage() {
               <p className="mt-1">
                 Filer sparas direkt i <code className="rounded bg-white px-1 py-0.5">data/</code>. Sätt{" "}
                 <code className="rounded bg-white px-1 py-0.5">GITHUB_TOKEN</code> och{" "}
-                <code className="rounded bg-white px-1 py-0.5">GITHUB_REPO</code> på Netlify för produktion.
+                <code className="rounded bg-white px-1 py-0.5">GITHUB_REPO</code> på Vercel för produktion.
               </p>
             </div>
           )}
