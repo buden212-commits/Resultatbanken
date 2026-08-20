@@ -76,13 +76,12 @@ export function AdminEventForm({ eventTypes }: Props) {
             </Link>
           </p>
           <p className={`mt-2 ${result.deploy.ok ? "text-emerald-800" : "text-amber-800"}`}>
-            {result.deploy.message}
+            {result.deploy.ok
+              ? result.deploy.mode === "git"
+                ? "Sidan uppdateras inom några minuter. Personsökningen uppdateras automatiskt."
+                : "Personsökningen är uppdaterad."
+              : "Resultatet sparades, men uppdateringen av sajten kan ha misslyckats. Kontakta administratören om det inte syns snart."}
           </p>
-          {result.deploy.mode === "git" ? (
-            <p className="mt-2 text-emerald-800">
-              Personsökningen uppdateras när Vercel-bygget är klart (index byggs om automatiskt).
-            </p>
-          ) : null}
         </div>
       ) : null}
 
