@@ -6236,5 +6236,20 @@
     "source_url": "",
     "local_file": "content/633.pdf",
     "downloaded_at": "2026-08-20T16:54:56.037Z"
+  },
+  {
+    "id": 634,
+    "name": "25 manna test",
+    "type": "25-manna test",
+    "date": "2026-08-20",
+    "organizer": "Grupp 7",
+    "location": "Spjutmodammen",
+    "free_text": "",
+    "result_file": "Getresultat (2).pdf",
+    "file_size": 69060,
+    "file_type": "application/pdf",
+    "source_url": "",
+    "local_file": "content/634.pdf",
+    "downloaded_at": "2026-08-20T19:07:29.870Z"
   }
 ]
