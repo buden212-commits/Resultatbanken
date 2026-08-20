@@ -6221,5 +6221,20 @@
     "location": "Bonäs",
     "free_text": "",
     "result_file": "Träningsorientering 260625.pdf"
+  },
+  {
+    "id": 633,
+    "name": "Gummusänget",
+    "type": "Tränings ol",
+    "date": "2026-08-13",
+    "organizer": "Grupp 16",
+    "location": "Gummusänget",
+    "free_text": "Solig och varm kväll vid Gummusänget!",
+    "result_file": "Getresultat (1).pdf",
+    "file_size": 39582,
+    "file_type": "application/pdf",
+    "source_url": "",
+    "local_file": "content/633.pdf",
+    "downloaded_at": "2026-08-20T16:54:56.037Z"
   }
 ]
