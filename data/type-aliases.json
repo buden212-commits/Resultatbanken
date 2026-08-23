@@ -17,5 +17,16 @@
     "alias_keys": [
       "skidkm"
     ]
+  },
+  {
+    "canonical_key": "traningsorientering",
+    "display_name": "träningsorientering",
+    "alias_keys": [
+      "tran-ol",
+      "traning-ol",
+      "tranings-o",
+      "tranings-ol",
+      "traningsol"
+    ]
   }
 ]
