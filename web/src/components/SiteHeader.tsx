@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const nav = [
   { href: "/resultat", label: "Alla resultat" },
+  { href: "/statistik", label: "Statistik" },
   { href: "/sok", label: "Sök person" },
   { href: "/ladda-upp", label: "Ladda upp" },
   { href: "/koppla-namn", label: "Koppla namn" },

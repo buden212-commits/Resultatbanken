@@ -7,11 +7,13 @@ import { PersonSearchForm } from "@/components/PersonSearchForm";
 import {
   formatDuration,
   getEvents,
-  getLongestTotalTimeInLastYear,
-  getMostParticipationsInLastYear,
   getPeopleIndex,
   getResultsIndex,
 } from "@/lib/data";
+import {
+  getLongestTotalTimeInLastYear,
+  getMostParticipationsInLastYear,
+} from "@/lib/stats";
 
 export const metadata: Metadata = {
   title: "Resultatbanken — IFK Mora OK",
@@ -22,8 +24,8 @@ export default function HomePage() {
   const events = getEvents();
   const peopleCount = getPeopleIndex().length;
   const resultsCount = getResultsIndex().length;
-  const mostParticipations = getMostParticipationsInLastYear();
-  const longestTotalTime = getLongestTotalTimeInLastYear();
+  const mostParticipations = getMostParticipationsInLastYear(1)[0];
+  const longestTotalTime = getLongestTotalTimeInLastYear(1)[0];
 
   return (
     <main>
@@ -59,7 +61,7 @@ export default function HomePage() {
             <div className="rounded-xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur">
               <p className="text-base font-bold leading-snug text-white sm:text-lg">
                 {mostParticipations
-                  ? `${mostParticipations.displayName} · ${mostParticipations.value}`
+                  ? `${mostParticipations.display_name} · ${mostParticipations.value}`
                   : "–"}
               </p>
               <p className="mt-1 text-sm text-brand-100/80">Flest träningar (senaste året)</p>
@@ -67,7 +69,7 @@ export default function HomePage() {
             <div className="col-span-2 rounded-xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur sm:col-span-1">
               <p className="text-base font-bold leading-snug text-white sm:text-lg">
                 {longestTotalTime
-                  ? `${longestTotalTime.displayName} · ${formatDuration(longestTotalTime.value)}`
+                  ? `${longestTotalTime.display_name} · ${formatDuration(longestTotalTime.value)}`
                   : "–"}
               </p>
               <p className="mt-1 text-sm text-brand-100/80">Längst tid totalt (senaste året)</p>
@@ -82,9 +84,14 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">Senaste resultat</h2>
             <p className="mt-1 text-slate-500">Nyligen tillagda träningar och tävlingar</p>
           </div>
-          <Link href="/resultat" className="link-brand text-sm">
-            Visa alla {events.length} →
-          </Link>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/resultat" className="link-brand text-sm">
+              Visa alla {events.length} →
+            </Link>
+            <Link href="/statistik" className="link-brand text-sm">
+              Statistik →
+            </Link>
+          </div>
         </div>
         <EventList events={events.slice(0, 15)} />
       </section>
