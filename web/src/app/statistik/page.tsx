@@ -17,6 +17,7 @@ import {
   getMostParticipationsInLastYear,
   getOverviewStats,
   getResultsByEventType,
+  getStatsExcludedEventCount,
   getResultsByLocation,
   getResultsByYear,
   getStatusBreakdown,
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
 
 export default function StatistikPage() {
   const overview = getOverviewStats();
+  const excludedEventCount = getStatsExcludedEventCount();
   const lastYearRange = getLastYearDateRange();
   const resultsByYear = getResultsByYear();
   const recentYears = resultsByYear.filter((item) => item.year >= "2004");
@@ -59,6 +61,9 @@ export default function StatistikPage() {
         <h2 className="text-xl font-bold text-slate-900">Datatäckning</h2>
         <p className="mt-1 text-sm text-slate-500">
           {overview.eventsWithResults} av {overview.eventCount} event har parsade deltagare.
+          {excludedEventCount > 0
+            ? ` ${excludedEventCount} resultat är exkluderade från statistik.`
+            : null}
         </p>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
@@ -176,11 +181,22 @@ export default function StatistikPage() {
           <li>Klassnamn varierar i källfilerna — PR per klass kan dupliceras för liknande banor.</li>
           <li>Äldre PDF:er och skannade ark kan sakna namn eller tider.</li>
           <li>
+            Koppla ihop typer under{" "}
+            <Link href="/koppla-namn" className="link-brand">
+              Koppla namn
+            </Link>{" "}
+            för enhetlig typstatistik.
+          </li>
+          <li>
             Koppla ihop stavningar under{" "}
             <Link href="/koppla-namn" className="link-brand">
               Koppla namn
             </Link>{" "}
             för bättre personstatistik.
+          </li>
+          <li>
+            Resultat kan exkluderas från statistik via reglaget på respektive resultatsida (kräver
+            inloggning).
           </li>
         </ul>
       </section>

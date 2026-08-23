@@ -54,3 +54,9 @@ export type PersonAliasGroup = {
   display_name: string;
   alias_keys: string[];
 };
+
+export type TypeAliasGroup = {
+  canonical_key: string;
+  display_name: string;
+  alias_keys: string[];
+};

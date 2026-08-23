@@ -1,4 +1,4 @@
-import type { Event, PersonAliasGroup } from "./types";
+import type { Event, PersonAliasGroup, TypeAliasGroup } from "./types";
 
 type GitHubConfig = {
   token: string;
@@ -237,6 +237,82 @@ export async function publishPersonAliasesToGitHub(
   const content = `${JSON.stringify(groups, null, 2)}\n`;
   const { commitSha, branch } = await commitFilesToGitHub(
     [{ path: "data/person-aliases.json", content }],
+    message,
+  );
+
+  const build = await triggerProductionDeploy();
+
+  return {
+    ok: build.ok,
+    message: `${build.message} (commit ${commitSha.slice(0, 7)} på ${branch})`,
+    commitSha,
+  };
+}
+
+export async function fetchStatsExclusionsFromGitHub(): Promise<number[]> {
+  const config = getGitHubConfig();
+  if (!config) {
+    throw new Error("Git-deploy är inte konfigurerat.");
+  }
+
+  try {
+    const file = await githubRequest<GitHubContent>(
+      config,
+      `/contents/data/stats-exclusions.json?ref=${encodeURIComponent(config.branch)}`,
+    );
+    const parsed = JSON.parse(decodeContent(file)) as unknown;
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+    return parsed.filter((id): id is number => typeof id === "number" && Number.isInteger(id));
+  } catch {
+    return [];
+  }
+}
+
+export async function publishStatsExclusionsToGitHub(
+  eventIds: number[],
+  message: string,
+): Promise<{ ok: boolean; message: string; commitSha?: string }> {
+  const content = `${JSON.stringify(eventIds, null, 2)}\n`;
+  const { commitSha, branch } = await commitFilesToGitHub(
+    [{ path: "data/stats-exclusions.json", content }],
+    message,
+  );
+
+  const build = await triggerProductionDeploy();
+
+  return {
+    ok: build.ok,
+    message: `${build.message} (commit ${commitSha.slice(0, 7)} på ${branch})`,
+    commitSha,
+  };
+}
+
+export async function fetchTypeAliasesFromGitHub(): Promise<TypeAliasGroup[]> {
+  const config = getGitHubConfig();
+  if (!config) {
+    throw new Error("Git-deploy är inte konfigurerat.");
+  }
+
+  try {
+    const file = await githubRequest<GitHubContent>(
+      config,
+      `/contents/data/type-aliases.json?ref=${encodeURIComponent(config.branch)}`,
+    );
+    return JSON.parse(decodeContent(file)) as TypeAliasGroup[];
+  } catch {
+    return [];
+  }
+}
+
+export async function publishTypeAliasesToGitHub(
+  groups: TypeAliasGroup[],
+  message: string,
+): Promise<{ ok: boolean; message: string; commitSha?: string }> {
+  const content = `${JSON.stringify(groups, null, 2)}\n`;
+  const { commitSha, branch } = await commitFilesToGitHub(
+    [{ path: "data/type-aliases.json", content }],
     message,
   );
 

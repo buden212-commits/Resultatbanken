@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BackLink } from "@/components/PageHeader";
+import { EventStatsExclusionSwitch } from "@/components/EventStatsExclusionSwitch";
 import { ParsedResultsTable } from "@/components/ParsedResultsTable";
 import { TypeBadge } from "@/components/ui";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { findContentFile, formatDate, getEvent, getResolvedResultsForEvent } from "@/lib/data";
+import { isEventExcludedFromStats } from "@/lib/stats-exclusions";
+import { resolveEventType } from "@/lib/type-aliases";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -30,6 +34,8 @@ export default async function EventPage({ params }: Props) {
   const content = findContentFile(eventId);
   const parsedRows = getResolvedResultsForEvent(eventId);
   const title = event.name || event.type || `Resultat ${event.id}`;
+  const excludedFromStats = isEventExcludedFromStats(eventId);
+  const canEditStats = await isAdminAuthenticated();
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
@@ -44,7 +50,7 @@ export default async function EventPage({ params }: Props) {
                 {title}
               </h1>
             </div>
-            {event.type ? <TypeBadge label={event.type} /> : null}
+            {event.type ? <TypeBadge label={resolveEventType(event.type)} /> : null}
           </div>
         </div>
 
@@ -64,6 +70,14 @@ export default async function EventPage({ params }: Props) {
             <p className="text-sm leading-relaxed text-slate-600">{event.free_text}</p>
           </div>
         ) : null}
+
+        <div className="border-t border-slate-100 px-6 py-4 sm:px-8">
+          <EventStatsExclusionSwitch
+            eventId={eventId}
+            initialExcluded={excludedFromStats}
+            canEdit={canEditStats}
+          />
+        </div>
       </header>
 
       <ParsedResultsTable rows={parsedRows} />

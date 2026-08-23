@@ -7,7 +7,9 @@ import {
   parseTimeToSeconds,
 } from "./data";
 import { countUniquePeople, resolveDisplayName, resolvePersonKey } from "./person-aliases";
-import type { Person, PersonResult, ResultRow } from "./types";
+import { getStatsExcludedEventIds } from "./stats-exclusions";
+import { resolveEventType } from "./type-aliases";
+import type { Event, Person, PersonResult, ResultRow } from "./types";
 
 export type CountEntry = {
   label: string;
@@ -83,6 +85,38 @@ function resultDedupeKey(row: ResultRow): string {
   return [row.event_id, row.class_name, row.place, row.time, row.status].join("|");
 }
 
+function getExcludedEventIds(): Set<number> {
+  return new Set(getStatsExcludedEventIds());
+}
+
+function filterResultsForStats(rows: ResultRow[]): ResultRow[] {
+  const excluded = getExcludedEventIds();
+  if (excluded.size === 0) {
+    return rows;
+  }
+  return rows.filter((row) => !excluded.has(row.event_id));
+}
+
+function filterEventsForStats(events: Event[]): Event[] {
+  const excluded = getExcludedEventIds();
+  if (excluded.size === 0) {
+    return events;
+  }
+  return events.filter((event) => !excluded.has(event.id));
+}
+
+function filterPersonResultsForStats(results: PersonResult[]): PersonResult[] {
+  const excluded = getExcludedEventIds();
+  if (excluded.size === 0) {
+    return results;
+  }
+  return results.filter((result) => !excluded.has(result.event_id));
+}
+
+export function getStatsExcludedEventCount(): number {
+  return getStatsExcludedEventIds().length;
+}
+
 function getEventDateLookup(): Map<number, string> {
   return new Map(getEvents().map((event) => [event.id, event.date]));
 }
@@ -96,7 +130,7 @@ function getEventMetaLookup(): Map<
       event.id,
       {
         date: event.date,
-        type: event.type?.trim() || "Okänd typ",
+        type: resolveEventType(event.type ?? ""),
         location: event.location?.trim() || "Okänd plats",
         name: event.name,
       },
@@ -116,7 +150,7 @@ function buildPersonAggregates(range?: { from: string; to: string }): Map<string
   const eventDates = getEventDateLookup();
   const aggregates = new Map<string, PersonAggregate>();
 
-  for (const row of getResultsIndex()) {
+  for (const row of filterResultsForStats(getResultsIndex())) {
     const date = eventDates.get(row.event_id) ?? null;
     if (range && !isWithinRange(date, range.from, range.to)) {
       continue;
@@ -201,8 +235,8 @@ function toLeaderboard(
 }
 
 export function getOverviewStats(): OverviewStats {
-  const events = getEvents();
-  const results = getResultsIndex();
+  const events = filterEventsForStats(getEvents());
+  const results = filterResultsForStats(getResultsIndex());
   const years = events.map((event) => event.date?.slice(0, 4)).filter(Boolean) as string[];
 
   return {
@@ -223,7 +257,7 @@ export function getResultsByYear(): YearCount[] {
   const eventDates = getEventDateLookup();
   const counts = new Map<string, number>();
 
-  for (const row of getResultsIndex()) {
+  for (const row of filterResultsForStats(getResultsIndex())) {
     const date = eventDates.get(row.event_id);
     if (!date) {
       continue;
@@ -241,7 +275,7 @@ export function getResultsByEventType(limit = 15): CountEntry[] {
   const eventMeta = getEventMetaLookup();
   const counts = new Map<string, number>();
 
-  for (const row of getResultsIndex()) {
+  for (const row of filterResultsForStats(getResultsIndex())) {
     const type = normalizeLabel(eventMeta.get(row.event_id)?.type ?? "Okänd typ");
     counts.set(type, (counts.get(type) ?? 0) + 1);
   }
@@ -256,7 +290,7 @@ export function getResultsByLocation(limit = 15): CountEntry[] {
   const eventMeta = getEventMetaLookup();
   const counts = new Map<string, number>();
 
-  for (const row of getResultsIndex()) {
+  for (const row of filterResultsForStats(getResultsIndex())) {
     const location = normalizeLabel(eventMeta.get(row.event_id)?.location ?? "Okänd plats");
     counts.set(location, (counts.get(location) ?? 0) + 1);
   }
@@ -270,7 +304,7 @@ export function getResultsByLocation(limit = 15): CountEntry[] {
 export function getEventsByYear(): YearCount[] {
   const counts = new Map<string, number>();
 
-  for (const event of getEvents()) {
+  for (const event of filterEventsForStats(getEvents())) {
     if (!event.date) {
       continue;
     }
@@ -292,7 +326,7 @@ export function getStatusBreakdown(): CountEntry[] {
   };
 
   const counts = new Map<string, number>();
-  for (const row of getResultsIndex()) {
+  for (const row of filterResultsForStats(getResultsIndex())) {
     const key = row.status ?? "ok";
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
@@ -401,15 +435,16 @@ function isCompetitiveResult(result: PersonResult | ResultRow): boolean {
 }
 
 export function getPersonStats(person: Person): PersonStats {
-  const wins = person.results.filter((r) => r.place === 1).length;
-  const podiums = person.results.filter((r) => r.place !== null && r.place >= 1 && r.place <= 3).length;
-  const dns = person.results.filter((r) => r.status === "dns").length;
-  const dnf = person.results.filter((r) => r.status === "dnf").length;
-  const felst = person.results.filter((r) => r.status === "felst").length;
-  const deltagit = person.results.filter((r) => r.status === "deltagit").length;
+  const results = filterPersonResultsForStats(person.results);
+  const wins = results.filter((r) => r.place === 1).length;
+  const podiums = results.filter((r) => r.place !== null && r.place >= 1 && r.place <= 3).length;
+  const dns = results.filter((r) => r.status === "dns").length;
+  const dnf = results.filter((r) => r.status === "dnf").length;
+  const felst = results.filter((r) => r.status === "felst").length;
+  const deltagit = results.filter((r) => r.status === "deltagit").length;
 
   let totalTimeSeconds = 0;
-  for (const result of person.results) {
+  for (const result of results) {
     if (result.time) {
       const seconds = parseTimeToSeconds(result.time);
       if (seconds !== null) {
@@ -423,7 +458,7 @@ export function getPersonStats(person: Person): PersonStats {
   const typeCounts = new Map<string, number>();
   const years: number[] = [];
 
-  for (const result of person.results) {
+  for (const result of results) {
     if (result.date) {
       const year = result.date.slice(0, 4);
       yearCounts.set(year, (yearCounts.get(year) ?? 0) + 1);
@@ -433,12 +468,13 @@ export function getPersonStats(person: Person): PersonStats {
       locationCounts.set(result.location, (locationCounts.get(result.location) ?? 0) + 1);
     }
     if (result.type) {
-      typeCounts.set(result.type, (typeCounts.get(result.type) ?? 0) + 1);
+      const resolved = resolveEventType(result.type);
+      typeCounts.set(resolved, (typeCounts.get(resolved) ?? 0) + 1);
     }
   }
 
   const bestByClass = new Map<string, PersonalRecord>();
-  for (const result of person.results) {
+  for (const result of results) {
     if (!isCompetitiveResult(result) || !result.class_name || !result.time) {
       continue;
     }
@@ -458,9 +494,11 @@ export function getPersonStats(person: Person): PersonStats {
     }
   }
 
-  const places = person.results
+  const places = results
     .map((r) => r.place)
     .filter((place): place is number => place !== null && place > 0);
+
+  const includedEventIds = new Set(results.map((r) => r.event_id));
 
   return {
     wins,
@@ -470,7 +508,7 @@ export function getPersonStats(person: Person): PersonStats {
     felst,
     deltagit,
     totalTimeSeconds,
-    uniqueEvents: person.event_ids.length,
+    uniqueEvents: includedEventIds.size,
     uniqueYears: yearCounts.size,
     bestPlace: places.length > 0 ? Math.min(...places) : null,
     resultsByYear: [...yearCounts.entries()]

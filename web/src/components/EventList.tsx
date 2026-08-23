@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import type { Event } from "@/lib/types";
 import { formatDate } from "@/lib/data";
+import { resolveEventType } from "@/lib/type-aliases";
 
 import { TypeBadge } from "./ui";
 
@@ -43,7 +44,7 @@ export function EventList({ events }: { events: Event[] }) {
                   <h2 className="text-base font-semibold text-slate-900 group-hover:text-brand-800 sm:text-lg">
                     {title}
                   </h2>
-                  {event.type ? <TypeBadge label={event.type} /> : null}
+                  {event.type ? <TypeBadge label={resolveEventType(event.type)} /> : null}
                 </div>
 
                 <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">

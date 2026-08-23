@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 
 import { AdminLoginForm } from "@/components/AdminLoginForm";
 import { PersonAliasForm } from "@/components/PersonAliasForm";
+import { TypeAliasForm } from "@/components/TypeAliasForm";
 import { PageHeader } from "@/components/PageHeader";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
+import { getEventTypesForAdmin } from "@/lib/event-types";
 import { getPeopleIndex } from "@/lib/data";
 import { getPersonAliasGroupsForAdmin } from "@/lib/person-alias-data";
+import { getTypeAliasGroupsForAdmin } from "@/lib/type-alias-data";
 
 export const metadata: Metadata = {
   title: "Koppla namn — Resultatbanken",
@@ -24,7 +27,9 @@ export default async function KopplaNamnPage() {
     }))
     .sort((a, b) => a.display_name.localeCompare(b.display_name, "sv"));
 
-  const existingGroups = authenticated ? getPersonAliasGroupsForAdmin() : [];
+  const existingPersonGroups = authenticated ? getPersonAliasGroupsForAdmin() : [];
+  const types = getEventTypesForAdmin();
+  const existingTypeGroups = authenticated ? getTypeAliasGroupsForAdmin() : [];
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
@@ -33,8 +38,8 @@ export default async function KopplaNamnPage() {
         title="Koppla namn"
         description={
           authenticated
-            ? "Slå ihop olika stavningar till ett namn. Grunddatat ändras inte — bara en kopplingstabell."
-            : "Slå ihop olika stavningar till ett namn. Sidan är lösenordsskyddad. Lösenordet är Hemus."
+            ? "Slå ihop olika stavningar av namn och typer. Grunddatat ändras inte — bara kopplingstabeller."
+            : "Slå ihop olika stavningar av namn och typer. Sidan är lösenordsskyddad. Lösenordet är Hemus."
         }
       />
 
@@ -44,7 +49,16 @@ export default async function KopplaNamnPage() {
           <p className="mt-2">Kontakta administratören.</p>
         </div>
       ) : authenticated ? (
-        <PersonAliasForm people={people} existingGroups={existingGroups} />
+        <div className="space-y-14">
+          <section>
+            <h2 className="mb-6 text-xl font-bold text-slate-900">Koppla namn</h2>
+            <PersonAliasForm people={people} existingGroups={existingPersonGroups} />
+          </section>
+          <section>
+            <h2 className="mb-6 text-xl font-bold text-slate-900">Koppla typer</h2>
+            <TypeAliasForm types={types} existingGroups={existingTypeGroups} />
+          </section>
+        </div>
       ) : (
         <AdminLoginForm />
       )}
