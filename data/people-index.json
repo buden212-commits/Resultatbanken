@@ -4519,7 +4519,7 @@
   },
   {
     "display_name": "Alice Eggöy Markhester",
-    "result_count": 8,
+    "result_count": 9,
     "first_date": "2024-08-15",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -4529,6 +4529,7 @@
       600,
       615,
       623,
+      627,
       631,
       635
     ],
@@ -4554,6 +4555,17 @@
         "place": 3,
         "time": "6:57",
         "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
       },
       {
         "event_id": 623,
@@ -4623,29 +4635,6 @@
       }
     ],
     "person_key": "alice-eggoy-markhester"
-  },
-  {
-    "display_name": "Alice Eggöy-Markhester Deltagit",
-    "result_count": 1,
-    "first_date": "2026-05-07",
-    "last_date": "2026-05-07",
-    "event_ids": [
-      627
-    ],
-    "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Långa Tid",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      }
-    ],
-    "person_key": "alice-eggoy-markhester-deltagit"
   },
   {
     "display_name": "Alice Fredriksson",
@@ -4942,7 +4931,7 @@
   },
   {
     "display_name": "Alma Bratt",
-    "result_count": 9,
+    "result_count": 10,
     "first_date": "2023-07-13",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -4954,6 +4943,7 @@
       588,
       599,
       600,
+      627,
       631
     ],
     "results": [
@@ -4967,6 +4957,17 @@
         "place": null,
         "time": null,
         "status": "dns"
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Nybörjarbana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
       },
       {
         "event_id": 600,
@@ -5058,29 +5059,6 @@
       }
     ],
     "person_key": "alma-bratt"
-  },
-  {
-    "display_name": "Alma Bratt Deltagit",
-    "result_count": 1,
-    "first_date": "2026-05-07",
-    "last_date": "2026-05-07",
-    "event_ids": [
-      627
-    ],
-    "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Nybörjarbana",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      }
-    ],
-    "person_key": "alma-bratt-deltagit"
   },
   {
     "display_name": "Alva",
@@ -9092,7 +9070,7 @@
   },
   {
     "display_name": "Anders Ohlin",
-    "result_count": 31,
+    "result_count": 32,
     "first_date": "2017-12-31",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -9124,6 +9102,7 @@
       623,
       624,
       625,
+      627,
       631,
       634,
       635
@@ -9160,6 +9139,17 @@
         "class_name": "H55 (10 / 10) Tid Efter Bomtid",
         "place": 5,
         "time": "3:41",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": "00:41:20",
         "status": null
       },
       {
@@ -10242,7 +10232,7 @@
   },
   {
     "display_name": "Anders Öberg",
-    "result_count": 54,
+    "result_count": 55,
     "first_date": "2004-10-09",
     "last_date": "2026-06-25",
     "event_ids": [
@@ -10299,6 +10289,7 @@
       598,
       599,
       624,
+      627,
       632
     ],
     "results": [
@@ -10311,6 +10302,17 @@
         "class_name": "Mellan banan",
         "place": 4,
         "time": "55.57",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:39:13",
         "status": null
       },
       {
@@ -11910,9 +11912,9 @@
   },
   {
     "display_name": "Anki Pousette",
-    "result_count": 15,
+    "result_count": 16,
     "first_date": "2022-07-14",
-    "last_date": "2026-04-23",
+    "last_date": "2026-05-07",
     "event_ids": [
       482,
       500,
@@ -11927,9 +11929,21 @@
       598,
       599,
       623,
-      625
+      625,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:46:20",
+        "status": null
+      },
       {
         "event_id": 625,
         "event_name": "Skuru",
@@ -13811,7 +13825,7 @@
   },
   {
     "display_name": "Annelie Hermansson",
-    "result_count": 13,
+    "result_count": 14,
     "first_date": "2008-07-31",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -13827,6 +13841,7 @@
       342,
       373,
       454,
+      627,
       635
     ],
     "results": [
@@ -13840,6 +13855,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:41:33",
+        "status": null
       },
       {
         "event_id": 454,
@@ -14499,9 +14525,9 @@
   },
   {
     "display_name": "Annlouise",
-    "result_count": 8,
+    "result_count": 9,
     "first_date": "2021-01-31",
-    "last_date": "2025-11-15",
+    "last_date": "2026-05-07",
     "event_ids": [
       447,
       451,
@@ -14510,9 +14536,21 @@
       556,
       591,
       592,
-      605
+      605,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:39:00",
+        "status": null
+      },
       {
         "event_id": 605,
         "event_name": "Siljan Trophy 2025",
@@ -18782,7 +18820,7 @@
   },
   {
     "display_name": "Berit Gummus",
-    "result_count": 70,
+    "result_count": 71,
     "first_date": "2004-08-05",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -18855,6 +18893,7 @@
       615,
       624,
       625,
+      627,
       631
     ],
     "results": [
@@ -18867,6 +18906,17 @@
         "class_name": "D55 (3 / 3) Tid Efter Bomtid",
         "place": 3,
         "time": "9:27",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:45:09",
         "status": null
       },
       {
@@ -22273,13 +22323,14 @@
   },
   {
     "display_name": "Bo Wallin",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2020-08-11",
     "last_date": "2026-06-16",
     "event_ids": [
       433,
       533,
       534,
+      627,
       631
     ],
     "results": [
@@ -22292,6 +22343,17 @@
         "class_name": "H75 (11 / 11) Tid Efter Bomtid",
         "place": 9,
         "time": "14:13",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": "01:15:10",
         "status": null
       },
       {
@@ -24720,9 +24782,9 @@
   },
   {
     "display_name": "Conny Eriksson",
-    "result_count": 35,
+    "result_count": 36,
     "first_date": "2014-06-18",
-    "last_date": "2025-11-15",
+    "last_date": "2026-05-07",
     "event_ids": [
       170,
       241,
@@ -24758,9 +24820,21 @@
       516,
       524,
       531,
-      605
+      605,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": "00:52:39",
+        "status": null
+      },
       {
         "event_id": 605,
         "event_name": "Siljan Trophy 2025",
@@ -28995,7 +29069,7 @@
   },
   {
     "display_name": "Elin Wrahme",
-    "result_count": 9,
+    "result_count": 10,
     "first_date": "2024-08-15",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -29007,6 +29081,7 @@
       599,
       600,
       620,
+      627,
       631
     ],
     "results": [
@@ -29020,6 +29095,17 @@
         "place": 1,
         "time": "19:03 1:07",
         "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
       },
       {
         "event_id": 620,
@@ -29111,29 +29197,6 @@
       }
     ],
     "person_key": "elin-wrahme"
-  },
-  {
-    "display_name": "Elin Wrahme Deltagit",
-    "result_count": 1,
-    "first_date": "2026-05-07",
-    "last_date": "2026-05-07",
-    "event_ids": [
-      627
-    ],
-    "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Mellan Tid",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      }
-    ],
-    "person_key": "elin-wrahme-deltagit"
   },
   {
     "display_name": "Elina Sofie Emanuelsson",
@@ -29357,9 +29420,9 @@
   },
   {
     "display_name": "Elisabeth",
-    "result_count": 14,
+    "result_count": 15,
     "first_date": "2004-09-30",
-    "last_date": "2024-07-11",
+    "last_date": "2026-05-07",
     "event_ids": [
       22,
       24,
@@ -29372,9 +29435,21 @@
       434,
       458,
       538,
-      542
+      542,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Nybörjarbana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 542,
         "event_name": "Träningsorientering",
@@ -29534,25 +29609,13 @@
   },
   {
     "display_name": "Elisabeth Deltagit",
-    "result_count": 2,
+    "result_count": 1,
     "first_date": "2021-07-08",
-    "last_date": "2026-05-07",
+    "last_date": "2021-07-08",
     "event_ids": [
-      458,
-      627
+      458
     ],
     "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Nybörjarbana",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      },
       {
         "event_id": 458,
         "event_name": "Motionsorientering",
@@ -33282,9 +33345,9 @@
   },
   {
     "display_name": "Erik Eriksson",
-    "result_count": 51,
+    "result_count": 52,
     "first_date": "2004-10-09",
-    "last_date": "2025-08-28",
+    "last_date": "2026-05-07",
     "event_ids": [
       24,
       35,
@@ -33331,9 +33394,21 @@
       533,
       534,
       554,
-      599
+      599,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:30:10",
+        "status": null
+      },
       {
         "event_id": 599,
         "event_name": "Medel-KM",
@@ -37657,7 +37732,7 @@
     "person_key": "fredrik"
   },
   {
-    "display_name": "Fredrik Eggl-Markhester Deltagit",
+    "display_name": "Fredrik Eggl-Markhester",
     "result_count": 1,
     "first_date": "2026-05-07",
     "last_date": "2026-05-07",
@@ -37671,13 +37746,13 @@
         "date": "2026-05-07",
         "location": "Gummusänget syd",
         "type": "",
-        "class_name": "Långa Tid",
+        "class_name": "Lång bana",
         "place": null,
         "time": null,
         "status": "deltagit"
       }
     ],
-    "person_key": "fredrik-eggl-markhester-deltagit"
+    "person_key": "fredrik-eggl-markhester"
   },
   {
     "display_name": "Fredrik Eggoy Markhester",
@@ -39352,13 +39427,25 @@
   },
   {
     "display_name": "Gert Karlsson",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2017-09-14",
-    "last_date": "2017-09-14",
+    "last_date": "2026-05-07",
     "event_ids": [
-      322
+      322,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": "00:51:20",
+        "status": null
+      },
       {
         "event_id": 322,
         "event_name": "Medel-KM 2017",
@@ -43507,7 +43594,7 @@
   },
   {
     "display_name": "Hans Johansson",
-    "result_count": 53,
+    "result_count": 54,
     "first_date": "2013-04-11",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -43560,6 +43647,7 @@
       589,
       623,
       625,
+      627,
       629,
       631,
       632,
@@ -43608,6 +43696,17 @@
         "class_name": null,
         "place": null,
         "time": "48.08",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": "00:39:50",
         "status": null
       },
       {
@@ -55205,7 +55304,7 @@
   },
   {
     "display_name": "Kane Andersson",
-    "result_count": 64,
+    "result_count": 65,
     "first_date": "2004-09-23",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -55270,6 +55369,7 @@
       600,
       611,
       612,
+      627,
       630,
       631,
       635
@@ -55306,6 +55406,17 @@
         "class_name": "Bana B, 3,5 km",
         "place": null,
         "time": "49.30",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:56:45",
         "status": null
       },
       {
@@ -59898,12 +60009,13 @@
   },
   {
     "display_name": "Kent Berggren",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2024-08-15",
     "last_date": "2026-06-11",
     "event_ids": [
       549,
       599,
+      627,
       630
     ],
     "results": [
@@ -59916,6 +60028,17 @@
         "class_name": "Bana B, 3,5 km",
         "place": null,
         "time": "48.50",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:42:59",
         "status": null
       },
       {
@@ -62109,16 +62232,28 @@
   },
   {
     "display_name": "Kristina",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2024-05-16",
-    "last_date": "2025-06-17",
+    "last_date": "2026-05-07",
     "event_ids": [
       536,
       538,
       542,
-      591
+      591,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Nybörjarbana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 591,
         "event_name": "Träning 20250617",
@@ -62168,25 +62303,13 @@
   },
   {
     "display_name": "Kristina Deltagit",
-    "result_count": 2,
+    "result_count": 1,
     "first_date": "2021-07-08",
-    "last_date": "2026-05-07",
+    "last_date": "2021-07-08",
     "event_ids": [
-      458,
-      627
+      458
     ],
     "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Nybörjarbana",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      },
       {
         "event_id": 458,
         "event_name": "Motionsorientering",
@@ -65244,7 +65367,7 @@
   },
   {
     "display_name": "Lars-Erik Larsson",
-    "result_count": 16,
+    "result_count": 17,
     "first_date": "2005-05-19",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -65261,6 +65384,7 @@
       580,
       598,
       599,
+      627,
       631,
       634,
       635
@@ -65297,6 +65421,17 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 13,
         "time": "15:12",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:41:10",
         "status": null
       },
       {
@@ -69991,7 +70126,7 @@
   },
   {
     "display_name": "Lennart Åkerström",
-    "result_count": 28,
+    "result_count": 29,
     "first_date": "2004-08-05",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -70019,6 +70154,7 @@
       621,
       623,
       624,
+      627,
       631,
       632,
       634,
@@ -70067,6 +70203,17 @@
         "class_name": "H75 (11 / 11) Tid Efter Bomtid",
         "place": 4,
         "time": "4:52",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": "01:13:11",
         "status": null
       },
       {
@@ -70552,9 +70699,9 @@
   },
   {
     "display_name": "Leo Ryapolov",
-    "result_count": 26,
+    "result_count": 27,
     "first_date": "2016-09-22",
-    "last_date": "2026-02-11",
+    "last_date": "2026-05-07",
     "event_ids": [
       290,
       301,
@@ -70581,9 +70728,21 @@
       600,
       615,
       620,
-      621
+      621,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": "00:43:34",
+        "status": null
+      },
       {
         "event_id": 621,
         "event_name": "Nattcup 2026, etapp2",
@@ -71048,14 +71207,26 @@
   },
   {
     "display_name": "Lina Berggren",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2024-08-15",
-    "last_date": "2025-08-28",
+    "last_date": "2026-05-07",
     "event_ids": [
       549,
-      599
+      599,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": "00:40:40",
+        "status": null
+      },
       {
         "event_id": 599,
         "event_name": "Medel-KM",
@@ -72624,13 +72795,25 @@
   },
   {
     "display_name": "Lisa Holm",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2026-01-18",
-    "last_date": "2026-01-18",
+    "last_date": "2026-05-07",
     "event_ids": [
-      615
+      615,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": "00:43:53",
+        "status": null
+      },
       {
         "event_id": 615,
         "event_name": "Skid-O KM 2026",
@@ -75412,12 +75595,13 @@
   },
   {
     "display_name": "Magnus Wrahme",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2024-08-08",
     "last_date": "2026-06-16",
     "event_ids": [
       548,
       588,
+      627,
       631
     ],
     "results": [
@@ -75431,6 +75615,17 @@
         "place": 5,
         "time": "1:53",
         "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
       },
       {
         "event_id": 588,
@@ -75456,29 +75651,6 @@
       }
     ],
     "person_key": "magnus-wrahme"
-  },
-  {
-    "display_name": "Magnus Wrahme Deltagit",
-    "result_count": 1,
-    "first_date": "2026-05-07",
-    "last_date": "2026-05-07",
-    "event_ids": [
-      627
-    ],
-    "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Mellan Tid",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      }
-    ],
-    "person_key": "magnus-wrahme-deltagit"
   },
   {
     "display_name": "Maj-Britt Berg",
@@ -79585,7 +79757,7 @@
   },
   {
     "display_name": "Martin Bratt",
-    "result_count": 10,
+    "result_count": 11,
     "first_date": "2022-08-18",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -79598,6 +79770,7 @@
       588,
       599,
       615,
+      627,
       631
     ],
     "results": [
@@ -79611,6 +79784,17 @@
         "place": null,
         "time": null,
         "status": "dns"
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Nybörjarbana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
       },
       {
         "event_id": 615,
@@ -79716,27 +79900,15 @@
   },
   {
     "display_name": "Martin Bratt Deltagit",
-    "result_count": 4,
+    "result_count": 3,
     "first_date": "2025-07-31",
-    "last_date": "2026-05-07",
+    "last_date": "2026-04-23",
     "event_ids": [
       594,
       595,
-      625,
-      627
+      625
     ],
     "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Nybörjarbana",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      },
       {
         "event_id": 625,
         "event_name": "Skuru",
@@ -93848,7 +94020,7 @@
   },
   {
     "display_name": "Peter Hermansson",
-    "result_count": 23,
+    "result_count": 24,
     "first_date": "2013-06-13",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -93874,6 +94046,7 @@
       425,
       454,
       506,
+      627,
       635
     ],
     "results": [
@@ -93886,6 +94059,17 @@
         "class_name": "Mellan bana",
         "place": 7,
         "time": "01:10:30",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:34:00",
         "status": null
       },
       {
@@ -102944,11 +103128,12 @@
   },
   {
     "display_name": "Sofia Österdahl",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2026-04-16",
     "last_date": "2026-05-21",
     "event_ids": [
       624,
+      627,
       629
     ],
     "results": [
@@ -102961,6 +103146,17 @@
         "class_name": null,
         "place": null,
         "time": "59.47",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:34:20",
         "status": null
       },
       {
@@ -107019,13 +107215,14 @@
   },
   {
     "display_name": "Sven-Åke Persson",
-    "result_count": 6,
+    "result_count": 7,
     "first_date": "2026-02-11",
     "last_date": "2026-07-30",
     "event_ids": [
       621,
       624,
       625,
+      627,
       631,
       632,
       635
@@ -107062,6 +107259,17 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 16,
         "time": "9:08",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": "00:33:38",
         "status": null
       },
       {
@@ -107347,7 +107555,7 @@
   },
   {
     "display_name": "Tage Bratt",
-    "result_count": 18,
+    "result_count": 19,
     "first_date": "2023-02-01",
     "last_date": "2026-06-25",
     "event_ids": [
@@ -107367,6 +107575,7 @@
       600,
       615,
       625,
+      627,
       631,
       632
     ],
@@ -107391,6 +107600,17 @@
         "class_name": "H12 (3 / 3) Tid Efter Bomtid",
         "place": 1,
         "time": "24:28 7:04",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": "00:24:40",
         "status": null
       },
       {
@@ -108841,7 +109061,7 @@
   },
   {
     "display_name": "Thomas Hermansson",
-    "result_count": 16,
+    "result_count": 17,
     "first_date": "2013-08-29",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -108859,6 +109079,7 @@
       533,
       534,
       598,
+      627,
       631,
       635
     ],
@@ -108883,6 +109104,17 @@
         "class_name": "H45 (10 / 10) Tid Efter Bomtid",
         "place": 1,
         "time": "28:36 0:00",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": "00:28:03",
         "status": null
       },
       {
@@ -111235,7 +111467,7 @@
   },
   {
     "display_name": "Tommy Eriksson",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2021-05-06",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -111245,6 +111477,7 @@
       537,
       589,
       605,
+      627,
       631
     ],
     "results": [
@@ -111258,6 +111491,17 @@
         "place": 3,
         "time": "0:44",
         "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
       },
       {
         "event_id": 605,
@@ -111327,29 +111571,6 @@
       }
     ],
     "person_key": "tommy-eriksson"
-  },
-  {
-    "display_name": "Tommy Eriksson Deltagit",
-    "result_count": 1,
-    "first_date": "2026-05-07",
-    "last_date": "2026-05-07",
-    "event_ids": [
-      627
-    ],
-    "results": [
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Mellan Tid",
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      }
-    ],
-    "person_key": "tommy-eriksson-deltagit"
   },
   {
     "display_name": "Tommy Höglund",
@@ -111719,9 +111940,9 @@
   },
   {
     "display_name": "Tony Karlsson",
-    "result_count": 38,
+    "result_count": 39,
     "first_date": "2014-05-15",
-    "last_date": "2025-08-21",
+    "last_date": "2026-05-07",
     "event_ids": [
       159,
       165,
@@ -111760,9 +111981,21 @@
       511,
       515,
       516,
-      598
+      598,
+      627
     ],
     "results": [
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": "00:24:11",
+        "status": null
+      },
       {
         "event_id": 598,
         "event_name": "25-mannaträning",
@@ -114158,7 +114391,7 @@
   },
   {
     "display_name": "Ulf Rask",
-    "result_count": 45,
+    "result_count": 46,
     "first_date": "2017-08-03",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -114204,6 +114437,7 @@
       512,
       513,
       567,
+      627,
       629,
       630,
       634
@@ -114240,6 +114474,17 @@
         "class_name": null,
         "place": null,
         "time": "39.00",
+        "status": null
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": "00:44:57",
         "status": null
       },
       {
@@ -117711,7 +117956,7 @@
   },
   {
     "display_name": "Yngve Karlsson",
-    "result_count": 59,
+    "result_count": 60,
     "first_date": "2014-05-08",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -117771,6 +118016,7 @@
       623,
       624,
       625,
+      627,
       631,
       632,
       634
@@ -117808,6 +118054,17 @@
         "place": null,
         "time": null,
         "status": "felst"
+      },
+      {
+        "event_id": 627,
+        "event_name": "Träningsorientering",
+        "date": "2026-05-07",
+        "location": "Gummusänget syd",
+        "type": "",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
       },
       {
         "event_id": 625,
@@ -118430,11 +118687,10 @@
   },
   {
     "display_name": "Yngve Karlsson Deltagit",
-    "result_count": 2,
-    "first_date": "2026-05-07",
+    "result_count": 1,
+    "first_date": "2026-05-21",
     "last_date": "2026-05-21",
     "event_ids": [
-      627,
       629
     ],
     "results": [
@@ -118445,17 +118701,6 @@
         "location": "Vinäs Hockeyplan",
         "type": "Träningsorientering",
         "class_name": null,
-        "place": null,
-        "time": null,
-        "status": "deltagit"
-      },
-      {
-        "event_id": 627,
-        "event_name": "Träningsorientering",
-        "date": "2026-05-07",
-        "location": "Gummusänget syd",
-        "type": "",
-        "class_name": "Mellan Tid",
         "place": null,
         "time": null,
         "status": "deltagit"

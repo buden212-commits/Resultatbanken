@@ -1,6 +1,7 @@
 import { AdminEventForm } from "@/components/AdminEventForm";
 import { AdminLoginForm } from "@/components/AdminLoginForm";
 import { PageHeader } from "@/components/PageHeader";
+import { UploadFormatHelp } from "@/components/UploadFormatHelp";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
 import { getEventTypes } from "@/lib/admin-data";
 
@@ -10,7 +11,7 @@ export async function UploadResultPage() {
   const eventTypes = authenticated ? getEventTypes() : [];
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
       <PageHeader
         eyebrow="Registrera"
         title="Ladda upp resultat"
@@ -21,15 +22,23 @@ export async function UploadResultPage() {
         }
       />
 
+      <div className="mt-8">
+        <UploadFormatHelp />
+      </div>
+
       {!configured ? (
         <div className="card border-amber-200 bg-amber-50 p-6 text-sm text-amber-900">
           <p className="font-medium">Uppladdning är inte aktiverad.</p>
           <p className="mt-2">Kontakta administratören om du behöver lägga till resultat.</p>
         </div>
       ) : authenticated ? (
-        <AdminEventForm eventTypes={eventTypes} />
+        <div className="mt-8">
+          <AdminEventForm eventTypes={eventTypes} />
+        </div>
       ) : (
-        <AdminLoginForm />
+        <div className="mt-8">
+          <AdminLoginForm />
+        </div>
       )}
     </main>
   );

@@ -3,10 +3,11 @@ import { notFound } from "next/navigation";
 
 import { BackLink } from "@/components/PageHeader";
 import { EventStatsExclusionSwitch } from "@/components/EventStatsExclusionSwitch";
+import { EventTypePicker } from "@/components/EventTypePicker";
 import { ParsedResultsTable } from "@/components/ParsedResultsTable";
-import { TypeBadge } from "@/components/ui";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { findContentFile, formatDate, getEvent, getResolvedResultsForEvent } from "@/lib/data";
+import { getCanonicalEventTypesForPicker } from "@/lib/event-types";
 import { isEventExcludedFromStats } from "@/lib/stats-exclusions";
 import { resolveEventType } from "@/lib/type-aliases";
 
@@ -35,7 +36,8 @@ export default async function EventPage({ params }: Props) {
   const parsedRows = getResolvedResultsForEvent(eventId);
   const title = event.name || event.type || `Resultat ${event.id}`;
   const excludedFromStats = isEventExcludedFromStats(eventId);
-  const canEditStats = await isAdminAuthenticated();
+  const canEdit = await isAdminAuthenticated();
+  const availableTypes = getCanonicalEventTypesForPicker();
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
@@ -50,7 +52,13 @@ export default async function EventPage({ params }: Props) {
                 {title}
               </h1>
             </div>
-            {event.type ? <TypeBadge label={resolveEventType(event.type)} /> : null}
+            <EventTypePicker
+              eventId={eventId}
+              initialType={event.type ?? ""}
+              initialDisplayType={event.type ? resolveEventType(event.type) : ""}
+              canEdit={canEdit}
+              availableTypes={availableTypes}
+            />
           </div>
         </div>
 
@@ -75,7 +83,7 @@ export default async function EventPage({ params }: Props) {
           <EventStatsExclusionSwitch
             eventId={eventId}
             initialExcluded={excludedFromStats}
-            canEdit={canEditStats}
+            canEdit={canEdit}
           />
         </div>
       </header>

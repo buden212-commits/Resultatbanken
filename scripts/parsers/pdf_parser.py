@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from .common import ResultRow, detect_status, make_row, split_team_names
+from .common import ResultRow, detect_status, make_row, split_team_names, strip_status_markers
 from .ocr_utils import OCR_MIN_TEXT, ocr_available, ocr_pdf_file
 
 EVENTOR_LINE = re.compile(
@@ -16,7 +16,7 @@ SIMPLE_LINE = re.compile(
     r"^(\d+)[\.\)]\s+([A-Za-zÅÄÖåäö][A-Za-zÅÄÖåäö'\-\s&]+?)\s+([\d]+[:\.,][\d]{2}(?:[:\.,][\d]{2})?)\s*$"
 )
 TRAINING_LINE = re.compile(
-    r"^(\d+)\s+(.+?)\s+([\d]+[:\.,\-][\d]{2}(?:[:\.,\-][\d]{2})?)\s*$"
+    r"^(?:(\d+)\s+)?(.+?)\s+([\d]+[:\.,][\d]{2}(?:[:\.,][\d]{2})?)\s*$"
 )
 TABLE_BAN_LINE = re.compile(
     r"^([A-Z])\s+(\d+)\s+(.+?)\s+([\d]+[:\.,][\d]{2}(?:[:\.,][\d]{2})?)\s*$"
@@ -55,6 +55,18 @@ SKIP_LINE = re.compile(
     r"Område|Plac\.|Bana Placering|Kategorie Placering|Delt:|SKERIOL|KARTA)",
     re.I,
 )
+
+
+def _normalize_class_header(line: str) -> str:
+    match = re.match(r"^(Korta?|Mellan|L[åa]ng(?:a)?)\s+Tid\s*$", line, re.I)
+    if not match:
+        return line.strip()
+    key = match.group(1).lower()
+    if key.startswith("kort"):
+        return "Kort bana"
+    if key.startswith("mellan"):
+        return "Mellan bana"
+    return "Lång bana"
 
 
 def parse_pdf_file(path: Path, event_id: int) -> list[ResultRow]:
@@ -110,7 +122,7 @@ def parse_pdf_text(
             continue
 
         if CLASS_LINE.match(line):
-            current_class = line.strip()
+            current_class = _normalize_class_header(line)
             class_match = CLASS_RESULT_LINE.match(line)
             if class_match:
                 current_class = class_match.group(1)
@@ -128,7 +140,7 @@ def parse_pdf_text(
 
         status = detect_status(line)
         if status and not re.match(r"^\d", line):
-            for name in split_team_names(line):
+            for name in split_team_names(strip_status_markers(line)):
                 row = make_row(
                     event_id,
                     name,
@@ -354,7 +366,7 @@ def _from_standard(
         event_id,
         name,
         current_class,
-        place=int(place),
+        place=int(place) if place else None,
         time_text=time_text,
         status=status,
         parse_source=parse_source,

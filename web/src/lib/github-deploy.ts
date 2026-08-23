@@ -188,6 +188,25 @@ export async function triggerProductionDeploy(): Promise<{ ok: boolean; message:
   };
 }
 
+export async function publishManifestToGitHub(
+  events: Event[],
+  message: string,
+): Promise<{ ok: boolean; message: string; commitSha?: string }> {
+  const content = `${JSON.stringify(events, null, 2)}\n`;
+  const { commitSha, branch } = await commitFilesToGitHub(
+    [{ path: "data/manifest.json", content }],
+    message,
+  );
+
+  const build = await triggerProductionDeploy();
+
+  return {
+    ok: build.ok,
+    message: `${build.message} (commit ${commitSha.slice(0, 7)} på ${branch})`,
+    commitSha,
+  };
+}
+
 export async function publishEventToGitHub(
   event: Event,
   file: { buffer: Buffer; storedName: string },

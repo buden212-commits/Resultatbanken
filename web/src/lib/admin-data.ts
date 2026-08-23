@@ -6,6 +6,7 @@ import {
   fetchManifestFromGitHub,
   isGitDeployConfigured,
   publishEventToGitHub,
+  publishManifestToGitHub,
 } from "./github-deploy";
 import type { Event } from "./types";
 
@@ -268,4 +269,61 @@ export async function createEvent(
     return createEventViaGit(input, file);
   }
   return createEventLocally(input, file);
+}
+
+export type UpdateEventTypeResult = {
+  event: Event;
+  deploy: DeployResult;
+};
+
+export async function updateEventType(eventId: number, type: string): Promise<UpdateEventTypeResult> {
+  const trimmed = type.trim();
+  if (!trimmed) {
+    throw new Error("Typ krävs.");
+  }
+
+  if (isGitDeployConfigured()) {
+    const manifest = await fetchManifestFromGitHub();
+    const index = manifest.findIndex((event) => event.id === eventId);
+    if (index === -1) {
+      throw new Error("Eventet finns inte.");
+    }
+
+    const updated = { ...manifest[index], type: trimmed };
+    manifest[index] = updated;
+
+    const deployResult = await publishManifestToGitHub(
+      manifest,
+      `Ange typ: ${trimmed} (event ${eventId})`,
+    );
+
+    return {
+      event: updated,
+      deploy: {
+        mode: "git",
+        ok: deployResult.ok,
+        message: deployResult.message,
+      },
+    };
+  }
+
+  const manifest = readManifestLocal();
+  const index = manifest.findIndex((event) => event.id === eventId);
+  if (index === -1) {
+    throw new Error("Eventet finns inte.");
+  }
+
+  const updated = { ...manifest[index], type: trimmed };
+  manifest[index] = updated;
+  writeManifestLocal(manifest);
+
+  const rebuild = await runPythonScript("rebuild_index.py");
+  return {
+    event: updated,
+    deploy: {
+      mode: "local",
+      ok: rebuild.ok,
+      message: rebuild.ok ? "Typ sparad och index uppdaterat." : rebuild.message,
+    },
+  };
 }

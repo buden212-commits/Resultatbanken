@@ -1,5 +1,6 @@
 import { getEvents } from "./data";
 import { typeKey } from "./slug";
+import { resolveEventType } from "./type-aliases";
 
 export type EventTypeOption = {
   type_key: string;
@@ -29,4 +30,19 @@ export function getEventTypesForAdmin(): EventTypeOption[] {
       event_count,
     }))
     .sort((a, b) => a.display_type.localeCompare(b.display_type, "sv"));
+}
+
+/** Unique types for pickers — alias variants collapsed to one canonical label. */
+export function getCanonicalEventTypesForPicker(): string[] {
+  const types = new Set<string>();
+
+  for (const event of getEvents()) {
+    const raw = event.type?.trim();
+    if (!raw) {
+      continue;
+    }
+    types.add(resolveEventType(raw));
+  }
+
+  return [...types].sort((a, b) => a.localeCompare(b, "sv"));
 }

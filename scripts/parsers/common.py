@@ -126,6 +126,13 @@ def detect_status(text: str) -> Optional[str]:
     return None
 
 
+def strip_status_markers(text: str) -> str:
+    cleaned = text
+    for pattern, _ in STATUS_PATTERNS:
+        cleaned = pattern.sub("", cleaned)
+    return re.sub(r"\s+", " ", cleaned).strip(" ,.\t")
+
+
 def is_plausible_name(name: str) -> bool:
     if not name or len(name) < 3:
         return False
