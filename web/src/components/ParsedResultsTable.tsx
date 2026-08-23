@@ -1,25 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
-import { parseTimeToSeconds } from "@/lib/time";
 import type { ResultRow } from "@/lib/types";
 
-type SortKey = "place" | "name" | "class_name" | "time" | "status";
-type SortDirection = "asc" | "desc";
-
-const COLUMNS: { key: SortKey; label: string }[] = [
+const COLUMNS = [
   { key: "place", label: "Plac" },
   { key: "name", label: "Namn" },
   { key: "class_name", label: "Klass" },
   { key: "time", label: "Tid" },
   { key: "status", label: "Status" },
-];
-
-function defaultDirection(key: SortKey): SortDirection {
-  return key === "place" || key === "time" ? "asc" : "asc";
-}
+] as const;
 
 function compareNullable<T>(a: T | null, b: T | null, compare: (left: T, right: T) => number): number {
   if (a === null && b === null) {
@@ -34,41 +26,30 @@ function compareNullable<T>(a: T | null, b: T | null, compare: (left: T, right: 
   return compare(a, b);
 }
 
-function compareRows(a: ResultRow, b: ResultRow, key: SortKey): number {
-  switch (key) {
-    case "place":
-      return compareNullable(a.place, b.place, (left, right) => left - right);
-    case "name":
-      return a.name.localeCompare(b.name, "sv");
-    case "class_name":
-      return (a.class_name || "").localeCompare(b.class_name || "", "sv");
-    case "time": {
-      const aSeconds = a.time ? parseTimeToSeconds(a.time) : null;
-      const bSeconds = b.time ? parseTimeToSeconds(b.time) : null;
-      return compareNullable(aSeconds, bSeconds, (left, right) => left - right);
-    }
-    case "status":
-      return (a.status || "").localeCompare(b.status || "", "sv");
+function sortByPlace(a: ResultRow, b: ResultRow): number {
+  return compareNullable(a.place, b.place, (left, right) => left - right);
+}
+
+function groupRowsByClass(rows: ResultRow[]): { className: string; rows: ResultRow[] }[] {
+  const groups = new Map<string, ResultRow[]>();
+
+  for (const row of rows) {
+    const className = row.class_name?.trim() || "–";
+    const existing = groups.get(className) ?? [];
+    existing.push(row);
+    groups.set(className, existing);
   }
+
+  return [...groups.entries()]
+    .sort(([a], [b]) => a.localeCompare(b, "sv"))
+    .map(([className, classRows]) => ({
+      className,
+      rows: [...classRows].sort(sortByPlace),
+    }));
 }
 
 export function ParsedResultsTable({ rows }: { rows: ResultRow[] }) {
-  const [sortKey, setSortKey] = useState<SortKey>("place");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-
-  const sortedRows = useMemo(() => {
-    const directionMultiplier = sortDirection === "asc" ? 1 : -1;
-    return [...rows].sort((a, b) => compareRows(a, b, sortKey) * directionMultiplier);
-  }, [rows, sortKey, sortDirection]);
-
-  function handleSort(key: SortKey) {
-    if (sortKey === key) {
-      setSortDirection((current) => (current === "asc" ? "desc" : "asc"));
-      return;
-    }
-    setSortKey(key);
-    setSortDirection(defaultDirection(key));
-  }
+  const groupedRows = useMemo(() => groupRowsByClass(rows), [rows]);
 
   if (rows.length === 0) {
     return null;
@@ -81,52 +62,57 @@ export function ParsedResultsTable({ rows }: { rows: ResultRow[] }) {
         <table>
           <thead>
             <tr>
-              {COLUMNS.map(({ key, label }) => {
-                const isActive = sortKey === key;
-                const ariaSort = isActive
-                  ? sortDirection === "asc"
-                    ? "ascending"
-                    : "descending"
-                  : "none";
-
-                return (
-                  <th key={key} aria-sort={ariaSort}>
-                    <button
-                      type="button"
-                      onClick={() => handleSort(key)}
-                      className={`inline-flex w-full cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left font-[inherit] tracking-[inherit] transition-colors hover:text-brand-600 ${
-                        isActive ? "text-brand-600" : ""
-                      }`}
-                    >
-                      <span>{label}</span>
-                      {isActive ? (
-                        <span className="text-brand-500" aria-hidden="true">
-                          {sortDirection === "asc" ? "↑" : "↓"}
-                        </span>
-                      ) : null}
-                    </button>
-                  </th>
-                );
-              })}
+              {COLUMNS.map(({ label }) => (
+                <th key={label}>{label}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {sortedRows.map((row, index) => (
-              <tr key={`${row.person_key}-${index}`}>
-                <td className="font-medium text-slate-700">{row.place ?? "–"}</td>
-                <td>
-                  <Link href={`/person/${row.person_key}`} className="link-brand">
-                    {row.name}
-                  </Link>
-                </td>
-                <td className="text-slate-600">{row.class_name ?? "–"}</td>
-                <td className="font-mono text-sm text-slate-700">{row.time ?? "–"}</td>
-                <td className="text-slate-500">{row.status ?? "–"}</td>
-              </tr>
+            {groupedRows.map((group, groupIndex) => (
+              <GroupRows key={group.className} group={group} isFirst={groupIndex === 0} />
             ))}
           </tbody>
         </table>
       </div>
     </section>
+  );
+}
+
+function GroupRows({
+  group,
+  isFirst,
+}: {
+  group: { className: string; rows: ResultRow[] };
+  isFirst: boolean;
+}) {
+  return (
+    <>
+      {!isFirst ? (
+        <tr aria-hidden="true">
+          <td colSpan={COLUMNS.length} className="border-t-2 border-slate-200 bg-slate-50/50 p-0 h-1" />
+        </tr>
+      ) : null}
+      <tr className="bg-slate-50/80">
+        <td
+          colSpan={COLUMNS.length}
+          className="py-2 text-xs font-semibold uppercase tracking-wider text-brand-700"
+        >
+          {group.className}
+        </td>
+      </tr>
+      {group.rows.map((row, index) => (
+        <tr key={`${group.className}-${row.person_key}-${row.place}-${index}`}>
+          <td className="font-medium text-slate-700">{row.place ?? "–"}</td>
+          <td>
+            <Link href={`/person/${row.person_key}`} className="link-brand">
+              {row.name}
+            </Link>
+          </td>
+          <td className="text-slate-600">{row.class_name ?? "–"}</td>
+          <td className="font-mono text-sm text-slate-700">{row.time ?? "–"}</td>
+          <td className="text-slate-500">{row.status ?? "–"}</td>
+        </tr>
+      ))}
+    </>
   );
 }
