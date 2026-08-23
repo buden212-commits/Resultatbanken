@@ -16,7 +16,6 @@ import {
   getLeaderboardMostWins,
   getMostParticipationsInLastYear,
   getOverviewStats,
-  getParseConfidenceBreakdown,
   getResultsByEventType,
   getResultsByLocation,
   getResultsByYear,
@@ -39,7 +38,7 @@ export default function StatistikPage() {
       <PageHeader
         eyebrow="Fas 2"
         title="Statistik"
-        description="Aggregerad statistik från alla indexerade resultat. Vissa siffror påverkas av ofullständig parsing eller varierande klassnamn."
+        description="Aggregerad statistik från alla indexerade resultat. Personer med kopplade alias räknas ihop till ett namn. Vissa siffror påverkas av ofullständig parsing eller varierande klassnamn."
       />
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -106,13 +105,8 @@ export default function StatistikPage() {
         <StatsCountTable title="Starter per plats" items={getResultsByLocation()} labelHeader="Plats" />
       </section>
 
-      <section className="mt-10 grid gap-6 lg:grid-cols-2">
+      <section className="mt-10">
         <StatsCountTable title="Statusfördelning" items={getStatusBreakdown()} labelHeader="Status" />
-        <StatsCountTable
-          title="Parsningskvalitet"
-          items={getParseConfidenceBreakdown()}
-          labelHeader="Konfidens"
-        />
       </section>
 
       <section className="mt-10">

@@ -6,7 +6,7 @@ import {
   getResultsIndex,
   parseTimeToSeconds,
 } from "./data";
-import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
+import { countUniquePeople, resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import type { Person, PersonResult, ResultRow } from "./types";
 
 export type CountEntry = {
@@ -76,7 +76,12 @@ type PersonAggregate = {
   firstDate: string | null;
   lastDate: string | null;
   byYear: Map<string, number>;
+  seenResults: Set<string>;
 };
+
+function resultDedupeKey(row: ResultRow): string {
+  return [row.event_id, row.class_name, row.place, row.time, row.status].join("|");
+}
 
 function getEventDateLookup(): Map<number, string> {
   return new Map(getEvents().map((event) => [event.id, event.date]));
@@ -118,13 +123,12 @@ function buildPersonAggregates(range?: { from: string; to: string }): Map<string
     }
 
     const personKey = resolvePersonKey(row.person_key);
-    const displayName = resolveDisplayName(row.person_key, row.name);
     let aggregate = aggregates.get(personKey);
 
     if (!aggregate) {
       aggregate = {
         person_key: personKey,
-        display_name: displayName,
+        display_name: resolveDisplayName(row.person_key, row.name),
         resultCount: 0,
         eventIds: new Set(),
         wins: 0,
@@ -133,9 +137,18 @@ function buildPersonAggregates(range?: { from: string; to: string }): Map<string
         firstDate: null,
         lastDate: null,
         byYear: new Map(),
+        seenResults: new Set(),
       };
       aggregates.set(personKey, aggregate);
     }
+
+    aggregate.display_name = resolveDisplayName(personKey, aggregate.display_name);
+
+    const dedupeKey = resultDedupeKey(row);
+    if (aggregate.seenResults.has(dedupeKey)) {
+      continue;
+    }
+    aggregate.seenResults.add(dedupeKey);
 
     aggregate.resultCount += 1;
     aggregate.eventIds.add(row.event_id);
@@ -194,7 +207,7 @@ export function getOverviewStats(): OverviewStats {
 
   return {
     eventCount: events.length,
-    peopleCount: getPeopleIndex().length,
+    peopleCount: countUniquePeople(getPeopleIndex().map((person) => person.person_key)),
     resultCount: results.length,
     eventsWithResults: new Set(results.map((row) => row.event_id)).size,
     rowsWithTime: results.filter((row) => row.time).length,
@@ -289,18 +302,6 @@ export function getStatusBreakdown(): CountEntry[] {
       label: key === "ok" ? "Med tid/placering" : (labels[key] ?? key),
       count,
     }))
-    .sort((a, b) => b.count - a.count);
-}
-
-export function getParseConfidenceBreakdown(): CountEntry[] {
-  const counts = new Map<string, number>();
-  for (const row of getResultsIndex()) {
-    const key = row.parse_confidence || "okänd";
-    counts.set(key, (counts.get(key) ?? 0) + 1);
-  }
-
-  return [...counts.entries()]
-    .map(([label, count]) => ({ label, count }))
     .sort((a, b) => b.count - a.count);
 }
 

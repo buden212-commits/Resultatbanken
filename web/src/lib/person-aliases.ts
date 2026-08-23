@@ -36,6 +36,15 @@ export function resolveDisplayName(key: string, fallback: string): string {
   return buildLookup().get(key)?.display_name ?? fallback;
 }
 
+/** Count unique people after merging alias groups. */
+export function countUniquePeople(keys: Iterable<string>): number {
+  const unique = new Set<string>();
+  for (const key of keys) {
+    unique.add(resolvePersonKey(key));
+  }
+  return unique.size;
+}
+
 export function getKeysForGroup(key: string): string[] {
   const canonicalKey = resolvePersonKey(key);
   const group = readGroups().find((item) => item.canonical_key === canonicalKey);

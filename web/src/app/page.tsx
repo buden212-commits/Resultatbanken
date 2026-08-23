@@ -7,12 +7,11 @@ import { PersonSearchForm } from "@/components/PersonSearchForm";
 import {
   formatDuration,
   getEvents,
-  getPeopleIndex,
-  getResultsIndex,
 } from "@/lib/data";
 import {
   getLongestTotalTimeInLastYear,
   getMostParticipationsInLastYear,
+  getOverviewStats,
 } from "@/lib/stats";
 
 export const metadata: Metadata = {
@@ -22,8 +21,9 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const events = getEvents();
-  const peopleCount = getPeopleIndex().length;
-  const resultsCount = getResultsIndex().length;
+  const overview = getOverviewStats();
+  const peopleCount = overview.peopleCount;
+  const resultsCount = overview.resultCount;
   const mostParticipations = getMostParticipationsInLastYear(1)[0];
   const longestTotalTime = getLongestTotalTimeInLastYear(1)[0];
 
