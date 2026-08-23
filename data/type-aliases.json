@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "canonical_key": "skid-km",
+    "display_name": "Skid KM",
+    "alias_keys": [
+      "skidkm"
+    ]
+  }
+]
