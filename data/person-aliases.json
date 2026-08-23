@@ -1,5 +1,12 @@
 [
   {
+    "canonical_key": "fredrik-eggoy-markhester",
+    "display_name": "Fredrik Eggoy Markhester",
+    "alias_keys": [
+      "fredrik-eggl-markhester-deltagit"
+    ]
+  },
+  {
     "canonical_key": "kea",
     "display_name": "KEA",
     "alias_keys": [
