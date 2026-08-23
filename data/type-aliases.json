@@ -1,5 +1,19 @@
 [
   {
+    "canonical_key": "klubbmasterskap",
+    "display_name": "klubbmästerskap",
+    "alias_keys": [
+      "klubbmasterskap-i-langdskidor",
+      "klubbmasteskap",
+      "km",
+      "km-terranglopning",
+      "km-terranglopning-2015",
+      "terrang-km",
+      "terrang-km-2018",
+      "terrang-km-2024"
+    ]
+  },
+  {
     "canonical_key": "motionorientering",
     "display_name": "Motionorientering",
     "alias_keys": [
