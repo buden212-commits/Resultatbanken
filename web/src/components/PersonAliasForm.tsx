@@ -24,13 +24,29 @@ export function PersonAliasForm({ people, existingGroups: initialGroups }: Props
   const [message, setMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+  const linkedKeys = useMemo(() => {
+    const keys = new Set<string>();
+    for (const group of existingGroups) {
+      keys.add(group.canonical_key);
+      for (const alias of group.alias_keys) {
+        keys.add(alias);
+      }
+    }
+    return keys;
+  }, [existingGroups]);
+
+  const availablePeople = useMemo(
+    () => people.filter((person) => !linkedKeys.has(person.person_key)),
+    [people, linkedKeys],
+  );
+
   const filteredPeople = useMemo(() => {
     const normalized = search.trim().toLowerCase();
     const list = normalized
-      ? people.filter((person) => person.display_name.toLowerCase().includes(normalized))
-      : people;
+      ? availablePeople.filter((person) => person.display_name.toLowerCase().includes(normalized))
+      : availablePeople;
     return [...list].sort((a, b) => a.display_name.localeCompare(b.display_name, "sv"));
-  }, [people, search]);
+  }, [availablePeople, search]);
 
   const selectedPeople = useMemo(
     () => people.filter((person) => selectedKeys.includes(person.person_key)),
