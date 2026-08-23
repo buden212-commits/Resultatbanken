@@ -1,5 +1,17 @@
 [
   {
+    "canonical_key": "kea",
+    "display_name": "KEA",
+    "alias_keys": [
+      "2-kea",
+      "karl-erik-kea-andersson",
+      "kea-3",
+      "kea-andersson-h",
+      "kea-deltagit",
+      "kea-mora"
+    ]
+  },
+  {
     "canonical_key": "sixten-buud",
     "display_name": "Sixten Buud",
     "alias_keys": [
