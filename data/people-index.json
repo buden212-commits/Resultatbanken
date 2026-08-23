@@ -4519,9 +4519,9 @@
   },
   {
     "display_name": "Alice Eggöy Markhester",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2024-08-15",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       549,
       598,
@@ -4529,9 +4529,21 @@
       600,
       615,
       623,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -7170,9 +7182,9 @@
   },
   {
     "display_name": "Anders Claesson",
-    "result_count": 59,
+    "result_count": 60,
     "first_date": "2007-06-21",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       49,
       60,
@@ -7232,9 +7244,21 @@
       620,
       625,
       629,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 9,
+        "time": "01:20:00",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -9068,7 +9092,7 @@
   },
   {
     "display_name": "Anders Ohlin",
-    "result_count": 30,
+    "result_count": 31,
     "first_date": "2017-12-31",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -9101,7 +9125,8 @@
       624,
       625,
       631,
-      634
+      634,
+      635
     ],
     "results": [
       {
@@ -9113,6 +9138,17 @@
         "class_name": "Blå bana 5,4 – 5,5 Km",
         "place": 1,
         "time": "56.26",
+        "status": null
+      },
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 7,
+        "time": "01:20:20",
         "status": null
       },
       {
@@ -9781,9 +9817,9 @@
   },
   {
     "display_name": "Anders Sandberg",
-    "result_count": 13,
+    "result_count": 14,
     "first_date": "2016-12-31",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       296,
       322,
@@ -9797,9 +9833,21 @@
       598,
       599,
       621,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 3,
+        "time": "00:55:00",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -13763,9 +13811,9 @@
   },
   {
     "display_name": "Annelie Hermansson",
-    "result_count": 12,
+    "result_count": 13,
     "first_date": "2008-07-31",
-    "last_date": "2021-05-18",
+    "last_date": "2026-07-30",
     "event_ids": [
       82,
       107,
@@ -13778,9 +13826,21 @@
       336,
       342,
       373,
-      454
+      454,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 454,
         "event_name": "Sprint-KM",
@@ -17547,13 +17607,25 @@
   },
   {
     "display_name": "Bengt Hamelius",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2026-06-16",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 5,
+        "time": "00:52:00",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -20031,9 +20103,9 @@
   },
   {
     "display_name": "Birk Hodler",
-    "result_count": 11,
+    "result_count": 12,
     "first_date": "2022-12-31",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       497,
       515,
@@ -20045,9 +20117,21 @@
       549,
       615,
       620,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Nybörjarbana",
+        "place": 1,
+        "time": "00:30:00",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -26493,6 +26577,29 @@
     "person_key": "ebba-grudd"
   },
   {
+    "display_name": "Ebba Hamelius",
+    "result_count": 1,
+    "first_date": "2026-07-30",
+    "last_date": "2026-07-30",
+    "event_ids": [
+      635
+    ],
+    "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Nybörjarbana",
+        "place": 2,
+        "time": "00:59:30",
+        "status": null
+      }
+    ],
+    "person_key": "ebba-hamelius"
+  },
+  {
     "display_name": "Ebbe Malm",
     "result_count": 2,
     "first_date": "2020-08-06",
@@ -29076,14 +29183,26 @@
   },
   {
     "display_name": "Elisa Hamelius",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2026-03-25",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       623,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 5,
+        "time": "01:09:20",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -29450,13 +29569,25 @@
   },
   {
     "display_name": "Elisabeth Eriksson",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2026-04-16",
-    "last_date": "2026-04-16",
+    "last_date": "2026-07-30",
     "event_ids": [
-      624
+      624,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Nybörjarbana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 624,
         "event_name": "Trän-OL",
@@ -35569,16 +35700,28 @@
   },
   {
     "display_name": "Eva Huber-Svensson",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2024-04-16",
-    "last_date": "2025-09-17",
+    "last_date": "2026-07-30",
     "event_ids": [
       531,
       533,
       534,
-      600
+      600,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 4,
+        "time": "00:53:00",
+        "status": null
+      },
       {
         "event_id": 600,
         "event_name": "Terräng-KM 2025",
@@ -37535,6 +37678,29 @@
       }
     ],
     "person_key": "fredrik-eggl-markhester-deltagit"
+  },
+  {
+    "display_name": "Fredrik Eggoy Markhester",
+    "result_count": 1,
+    "first_date": "2026-07-30",
+    "last_date": "2026-07-30",
+    "event_ids": [
+      635
+    ],
+    "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      }
+    ],
+    "person_key": "fredrik-eggoy-markhester"
   },
   {
     "display_name": "Fredrik Gummus",
@@ -43341,9 +43507,9 @@
   },
   {
     "display_name": "Hans Johansson",
-    "result_count": 52,
+    "result_count": 53,
     "first_date": "2013-04-11",
-    "last_date": "2026-06-25",
+    "last_date": "2026-07-30",
     "event_ids": [
       105,
       154,
@@ -43396,9 +43562,21 @@
       625,
       629,
       631,
-      632
+      632,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 8,
+        "time": "01:09:45",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -44967,9 +45145,9 @@
   },
   {
     "display_name": "Heinz-Eric Develius",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2018-05-31",
-    "last_date": "2025-08-28",
+    "last_date": "2026-07-30",
     "event_ids": [
       335,
       426,
@@ -44977,9 +45155,21 @@
       486,
       524,
       554,
-      599
+      599,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 6,
+        "time": "00:58:30",
+        "status": null
+      },
       {
         "event_id": 599,
         "event_name": "Medel-KM",
@@ -51457,16 +51647,28 @@
   },
   {
     "display_name": "Johan Hamelius",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2025-08-21",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       598,
       615,
       620,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 4,
+        "time": "00:56:30",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -55003,9 +55205,9 @@
   },
   {
     "display_name": "Kane Andersson",
-    "result_count": 63,
+    "result_count": 64,
     "first_date": "2004-09-23",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       19,
       35,
@@ -55069,9 +55271,21 @@
       611,
       612,
       630,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 5,
+        "time": "00:55:49",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -58110,9 +58324,9 @@
   },
   {
     "display_name": "KEA",
-    "result_count": 100,
+    "result_count": 101,
     "first_date": "2004-08-05",
-    "last_date": "2026-05-21",
+    "last_date": "2026-07-30",
     "event_ids": [
       10,
       11,
@@ -58212,9 +58426,21 @@
       612,
       624,
       625,
-      629
+      629,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 9,
+        "time": "01:10:40",
+        "status": null
+      },
       {
         "event_id": 629,
         "event_name": "Träningsorientering",
@@ -65018,7 +65244,7 @@
   },
   {
     "display_name": "Lars-Erik Larsson",
-    "result_count": 15,
+    "result_count": 16,
     "first_date": "2005-05-19",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -65036,7 +65262,8 @@
       598,
       599,
       631,
-      634
+      634,
+      635
     ],
     "results": [
       {
@@ -65048,6 +65275,17 @@
         "class_name": "Orange bana 3,4 – 3,6 km",
         "place": 1,
         "time": "41.56",
+        "status": null
+      },
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 2,
+        "time": "00:46:00",
         "status": null
       },
       {
@@ -68975,9 +69213,9 @@
   },
   {
     "display_name": "Lena Leandersson",
-    "result_count": 14,
+    "result_count": 15,
     "first_date": "2005-06-07",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       38,
       87,
@@ -68992,9 +69230,21 @@
       502,
       599,
       624,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -69741,7 +69991,7 @@
   },
   {
     "display_name": "Lennart Åkerström",
-    "result_count": 27,
+    "result_count": 28,
     "first_date": "2004-08-05",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -69771,7 +70021,8 @@
       624,
       631,
       632,
-      634
+      634,
+      635
     ],
     "results": [
       {
@@ -69783,6 +70034,17 @@
         "class_name": "Orange bana 3,4 – 3,6 km",
         "place": 6,
         "time": "62.55",
+        "status": null
+      },
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 7,
+        "time": "01:07:00",
         "status": null
       },
       {
@@ -71159,9 +71421,9 @@
   },
   {
     "display_name": "Linnea Carlsson",
-    "result_count": 10,
+    "result_count": 11,
     "first_date": "2023-01-28",
-    "last_date": "2026-06-25",
+    "last_date": "2026-07-30",
     "event_ids": [
       499,
       515,
@@ -71172,9 +71434,21 @@
       599,
       625,
       631,
-      632
+      632,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -71360,9 +71634,9 @@
   },
   {
     "display_name": "Linnea Hermansson",
-    "result_count": 10,
+    "result_count": 11,
     "first_date": "2013-05-09",
-    "last_date": "2018-07-05",
+    "last_date": "2026-07-30",
     "event_ids": [
       107,
       113,
@@ -71373,9 +71647,21 @@
       283,
       322,
       329,
-      342
+      342,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 7,
+        "time": "01:10:30",
+        "status": null
+      },
       {
         "event_id": 342,
         "event_name": "Motionsorientering",
@@ -72872,6 +73158,29 @@
       }
     ],
     "person_key": "lowe"
+  },
+  {
+    "display_name": "Lowe Hamelius",
+    "result_count": 1,
+    "first_date": "2026-07-30",
+    "last_date": "2026-07-30",
+    "event_ids": [
+      635
+    ],
+    "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Nybörjarbana",
+        "place": 2,
+        "time": "00:59:30",
+        "status": null
+      }
+    ],
+    "person_key": "lowe-hamelius"
   },
   {
     "display_name": "Loy",
@@ -80031,9 +80340,9 @@
   },
   {
     "display_name": "Martin Ryapolov",
-    "result_count": 23,
+    "result_count": 24,
     "first_date": "2019-08-22",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       395,
       404,
@@ -80057,9 +80366,21 @@
       620,
       621,
       623,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 1,
+        "time": "00:40:45",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -84057,9 +84378,9 @@
   },
   {
     "display_name": "Minna Wrahme",
-    "result_count": 9,
+    "result_count": 10,
     "first_date": "2021-12-31",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       468,
       541,
@@ -84069,9 +84390,21 @@
       615,
       620,
       623,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 4,
+        "time": "00:50:30",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -85640,17 +85973,29 @@
   },
   {
     "display_name": "My Hodler",
-    "result_count": 5,
+    "result_count": 6,
     "first_date": "2024-08-08",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       548,
       615,
       620,
       625,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Nybörjarbana",
+        "place": 2,
+        "time": "00:59:30",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -88023,9 +88368,9 @@
   },
   {
     "display_name": "Olle Andersson",
-    "result_count": 17,
+    "result_count": 18,
     "first_date": "2004-08-05",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       10,
       11,
@@ -88043,9 +88388,21 @@
       395,
       502,
       624,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -88899,7 +89256,7 @@
   },
   {
     "display_name": "Olof Eriksson",
-    "result_count": 28,
+    "result_count": 29,
     "first_date": "2013-08-08",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -88930,7 +89287,8 @@
       600,
       601,
       625,
-      634
+      634,
+      635
     ],
     "results": [
       {
@@ -88942,6 +89300,17 @@
         "class_name": "Blå bana 5,4 – 5,5 Km",
         "place": 2,
         "time": "57.54",
+        "status": null
+      },
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 1,
+        "time": "00:46:22",
         "status": null
       },
       {
@@ -93479,9 +93848,9 @@
   },
   {
     "display_name": "Peter Hermansson",
-    "result_count": 22,
+    "result_count": 23,
     "first_date": "2013-06-13",
-    "last_date": "2023-06-22",
+    "last_date": "2026-07-30",
     "event_ids": [
       117,
       124,
@@ -93504,9 +93873,21 @@
       373,
       425,
       454,
-      506
+      506,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 7,
+        "time": "01:10:30",
+        "status": null
+      },
       {
         "event_id": 506,
         "event_name": "Träningsorientering Rödmyren",
@@ -94876,13 +95257,25 @@
   },
   {
     "display_name": "Rafael Huber-Svensson",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2026-06-25",
-    "last_date": "2026-06-25",
+    "last_date": "2026-07-30",
     "event_ids": [
-      632
+      632,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 1,
+        "time": "00:46:00",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -97098,6 +97491,29 @@
     "person_key": "ros-marie-forslund"
   },
   {
+    "display_name": "Rose-Mari Hamelius",
+    "result_count": 1,
+    "first_date": "2026-07-30",
+    "last_date": "2026-07-30",
+    "event_ids": [
+      635
+    ],
+    "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 6,
+        "time": "00:55:10",
+        "status": null
+      }
+    ],
+    "person_key": "rose-mari-hamelius"
+  },
+  {
     "display_name": "Rose-Marie Forslund",
     "result_count": 2,
     "first_date": "2004-10-09",
@@ -98055,9 +98471,9 @@
   },
   {
     "display_name": "Sara Hodler",
-    "result_count": 24,
+    "result_count": 25,
     "first_date": "2015-08-29",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       244,
       250,
@@ -98082,9 +98498,21 @@
       534,
       615,
       620,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 2,
+        "time": "00:49:30",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -106591,17 +107019,29 @@
   },
   {
     "display_name": "Sven-Åke Persson",
-    "result_count": 5,
+    "result_count": 6,
     "first_date": "2026-02-11",
-    "last_date": "2026-06-25",
+    "last_date": "2026-07-30",
     "event_ids": [
       621,
       624,
       625,
       631,
-      632
+      632,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Kort bana",
+        "place": 3,
+        "time": "00:50:20",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -108401,9 +108841,9 @@
   },
   {
     "display_name": "Thomas Hermansson",
-    "result_count": 15,
+    "result_count": 16,
     "first_date": "2013-08-29",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       138,
       267,
@@ -108419,9 +108859,21 @@
       533,
       534,
       598,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 1,
+        "time": "00:46:00",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -110982,7 +111434,7 @@
   },
   {
     "display_name": "Tommy Åhman",
-    "result_count": 6,
+    "result_count": 7,
     "first_date": "2025-08-14",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -110991,7 +111443,8 @@
       615,
       620,
       631,
-      634
+      634,
+      635
     ],
     "results": [
       {
@@ -111003,6 +111456,17 @@
         "class_name": "Violett bana 4,7 – 4,8 km",
         "place": 4,
         "time": "48.47",
+        "status": null
+      },
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Mellan bana",
+        "place": 3,
+        "time": "00:50:15",
         "status": null
       },
       {
@@ -112098,9 +112562,9 @@
   },
   {
     "display_name": "Tord Norell",
-    "result_count": 24,
+    "result_count": 25,
     "first_date": "2016-05-26",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-30",
     "event_ids": [
       265,
       266,
@@ -112125,9 +112589,21 @@
       511,
       541,
       554,
-      631
+      631,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -113540,9 +114016,9 @@
   },
   {
     "display_name": "Ulf K Rask",
-    "result_count": 8,
+    "result_count": 9,
     "first_date": "2021-12-31",
-    "last_date": "2026-03-25",
+    "last_date": "2026-07-30",
     "event_ids": [
       468,
       510,
@@ -113551,9 +114027,21 @@
       589,
       611,
       612,
-      623
+      623,
+      635
     ],
     "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 6,
+        "time": "01:12:00",
+        "status": null
+      },
       {
         "event_id": 623,
         "event_name": "Natt sprint kupp",
@@ -115250,6 +115738,29 @@
       }
     ],
     "person_key": "viktor"
+  },
+  {
+    "display_name": "Viktor Djerf",
+    "result_count": 1,
+    "first_date": "2026-07-30",
+    "last_date": "2026-07-30",
+    "event_ids": [
+      635
+    ],
+    "results": [
+      {
+        "event_id": 635,
+        "event_name": "Eldris",
+        "date": "2026-07-30",
+        "location": "Eldris",
+        "type": "Tränings ol",
+        "class_name": "Lång bana",
+        "place": 8,
+        "time": "01:26:30",
+        "status": null
+      }
+    ],
+    "person_key": "viktor-djerf"
   },
   {
     "display_name": "Viktor Gustafsson",

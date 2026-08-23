@@ -9,7 +9,8 @@ from .common import ResultRow, detect_status, make_row, split_team_names
 from .ocr_utils import OCR_MIN_TEXT, ocr_available, ocr_pdf_file
 
 EVENTOR_LINE = re.compile(
-    r"^(\d+)\s+([A-Za-zÅÄÖåäö][A-Za-zÅÄÖåäö'\-\s]+?)\s+(?:IFK\s+Mora(?:\s+OK)?|[A-ZÅÄÖa-zåäö].+?)\s+([\d:+]+(?:\s*\+\s*[\d:+]+)?)\s*$"
+    r"^(\d+)\s+(.+?)\s+IFK\s+Mora(?:s)?(?:\s+OK)?\s+([\d:+]+(?:\s*\+\s*[\d:+]+)?)\s*$",
+    re.I,
 )
 SIMPLE_LINE = re.compile(
     r"^(\d+)[\.\)]\s+([A-Za-zÅÄÖåäö][A-Za-zÅÄÖåäö'\-\s&]+?)\s+([\d]+[:\.,][\d]{2}(?:[:\.,][\d]{2})?)\s*$"
@@ -41,7 +42,7 @@ KANOT_LINE = re.compile(
     re.I,
 )
 CLASS_LINE = re.compile(
-    r"^(Vit|Orange|Röd|Blå|Grön|Violett|Gul|Svart|Lila|H\d+|D\d+|Korta?|Mellan|L[åa]nga|Nybörjare?|Bana\s+[A-Z]|"
+    r"^(Vit|Orange|Röd|Blå|Grön|Violett|Gul|Svart|Lila|H\d+|D\d+|Korta?|Mellan|L[åa]ng(?:a)?|Nybörjare?|Bana\s+[A-Z]|"
     r"Herrar|Damer|\d+\s+varv|Motions-OL).*",
     re.I,
 )
