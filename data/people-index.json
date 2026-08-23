@@ -9068,9 +9068,9 @@
   },
   {
     "display_name": "Anders Ohlin",
-    "result_count": 29,
+    "result_count": 30,
     "first_date": "2017-12-31",
-    "last_date": "2026-06-16",
+    "last_date": "2026-08-20",
     "event_ids": [
       327,
       482,
@@ -9100,9 +9100,21 @@
       623,
       624,
       625,
-      631
+      631,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Blå bana 5,4 – 5,5 Km",
+        "place": 1,
+        "time": "56.26",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -19549,13 +19561,25 @@
   },
   {
     "display_name": "Berit Gummus Deltagit",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2017-06-01",
-    "last_date": "2017-06-01",
+    "last_date": "2026-08-20",
     "event_ids": [
-      307
+      307,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 – 4,8 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 307,
         "event_name": "Motions-ol 1 juni 2017",
@@ -27515,9 +27539,9 @@
   },
   {
     "display_name": "Edward Larsson",
-    "result_count": 47,
+    "result_count": 48,
     "first_date": "2017-06-01",
-    "last_date": "2026-06-25",
+    "last_date": "2026-08-20",
     "event_ids": [
       307,
       322,
@@ -27565,9 +27589,21 @@
       623,
       625,
       631,
-      632
+      632,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 – 4,8 km",
+        "place": 3,
+        "time": "46.12",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -34156,13 +34192,25 @@
   },
   {
     "display_name": "Erik Klockar Deltagit",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2024-03-12",
-    "last_date": "2024-03-12",
+    "last_date": "2026-08-20",
     "event_ids": [
-      530
+      530,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 – 4,8 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 530,
         "event_name": "Nattserien etapp 3",
@@ -56676,9 +56724,9 @@
   },
   {
     "display_name": "Karl-Erik Andersson",
-    "result_count": 54,
+    "result_count": 55,
     "first_date": "2005-06-02",
-    "last_date": "2026-06-25",
+    "last_date": "2026-08-20",
     "event_ids": [
       35,
       36,
@@ -56733,9 +56781,21 @@
       615,
       623,
       631,
-      632
+      632,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Vit bana 2,0 – 2,1 km",
+        "place": 2,
+        "time": "32.16",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -63191,9 +63251,9 @@
   },
   {
     "display_name": "Lars Eriksson",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2023-08-03",
-    "last_date": "2026-06-25",
+    "last_date": "2026-08-20",
     "event_ids": [
       510,
       511,
@@ -63201,9 +63261,21 @@
       620,
       624,
       630,
-      632
+      632,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Vit bana 2,0 – 2,1 km",
+        "place": 1,
+        "time": "13.16",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -64946,9 +65018,9 @@
   },
   {
     "display_name": "Lars-Erik Larsson",
-    "result_count": 14,
+    "result_count": 15,
     "first_date": "2005-05-19",
-    "last_date": "2026-06-16",
+    "last_date": "2026-08-20",
     "event_ids": [
       34,
       504,
@@ -64963,9 +65035,21 @@
       580,
       598,
       599,
-      631
+      631,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Orange bana 3,4 – 3,6 km",
+        "place": 1,
+        "time": "41.56",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -69657,9 +69741,9 @@
   },
   {
     "display_name": "Lennart Åkerström",
-    "result_count": 26,
+    "result_count": 27,
     "first_date": "2004-08-05",
-    "last_date": "2026-06-25",
+    "last_date": "2026-08-20",
     "event_ids": [
       10,
       11,
@@ -69686,9 +69770,21 @@
       623,
       624,
       631,
-      632
+      632,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Orange bana 3,4 – 3,6 km",
+        "place": 6,
+        "time": "62.55",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -70745,6 +70841,29 @@
       }
     ],
     "person_key": "lina-englund"
+  },
+  {
+    "display_name": "Lina Landergren",
+    "result_count": 1,
+    "first_date": "2026-08-20",
+    "last_date": "2026-08-20",
+    "event_ids": [
+      634
+    ],
+    "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 – 4,8 km",
+        "place": 2,
+        "time": "44.50",
+        "status": null
+      }
+    ],
+    "person_key": "lina-landergren"
   },
   {
     "display_name": "Lina Ryden",
@@ -73010,18 +73129,30 @@
   },
   {
     "display_name": "Lukas Eriksson",
-    "result_count": 6,
+    "result_count": 7,
     "first_date": "2025-05-01",
-    "last_date": "2026-06-25",
+    "last_date": "2026-08-20",
     "event_ids": [
       580,
       589,
       624,
       625,
       630,
-      632
+      632,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Vit bana 2,0 – 2,1 km",
+        "place": 3,
+        "time": "35.37",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -77651,9 +77782,9 @@
   },
   {
     "display_name": "Marie Rapp",
-    "result_count": 58,
+    "result_count": 59,
     "first_date": "2004-08-05",
-    "last_date": "2026-06-16",
+    "last_date": "2026-08-20",
     "event_ids": [
       10,
       11,
@@ -77712,9 +77843,21 @@
       549,
       598,
       599,
-      631
+      631,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Orange bana 3,4 – 3,6 km",
+        "place": 3,
+        "time": "45.52",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -88756,9 +88899,9 @@
   },
   {
     "display_name": "Olof Eriksson",
-    "result_count": 27,
+    "result_count": 28,
     "first_date": "2013-08-08",
-    "last_date": "2026-04-23",
+    "last_date": "2026-08-20",
     "event_ids": [
       132,
       209,
@@ -88786,9 +88929,21 @@
       599,
       600,
       601,
-      625
+      625,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Blå bana 5,4 – 5,5 Km",
+        "place": 2,
+        "time": "57.54",
+        "status": null
+      },
       {
         "event_id": 625,
         "event_name": "Skuru",
@@ -97150,6 +97305,29 @@
     "person_key": "s-l-hansson"
   },
   {
+    "display_name": "S-Å Persson",
+    "result_count": 1,
+    "first_date": "2026-08-20",
+    "last_date": "2026-08-20",
+    "event_ids": [
+      634
+    ],
+    "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Orange bana 3,4 – 3,6 km",
+        "place": 5,
+        "time": "57.55",
+        "status": null
+      }
+    ],
+    "person_key": "s-a-persson"
+  },
+  {
     "display_name": "S7 Linus Rapp",
     "result_count": 1,
     "first_date": "2023-06-01",
@@ -101174,9 +101352,9 @@
   },
   {
     "display_name": "Siv Svahn",
-    "result_count": 27,
+    "result_count": 28,
     "first_date": "2007-08-23",
-    "last_date": "2026-03-25",
+    "last_date": "2026-08-20",
     "event_ids": [
       52,
       107,
@@ -101204,9 +101382,21 @@
       549,
       551,
       589,
-      623
+      623,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Orange bana 3,4 – 3,6 km",
+        "place": 2,
+        "time": "43.29",
+        "status": null
+      },
       {
         "event_id": 623,
         "event_name": "Natt sprint kupp",
@@ -110792,17 +110982,29 @@
   },
   {
     "display_name": "Tommy Åhman",
-    "result_count": 5,
+    "result_count": 6,
     "first_date": "2025-08-14",
-    "last_date": "2026-06-16",
+    "last_date": "2026-08-20",
     "event_ids": [
       597,
       599,
       615,
       620,
-      631
+      631,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 – 4,8 km",
+        "place": 4,
+        "time": "48.47",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -113468,9 +113670,9 @@
   },
   {
     "display_name": "Ulf Rask",
-    "result_count": 44,
+    "result_count": 45,
     "first_date": "2017-08-03",
-    "last_date": "2026-06-11",
+    "last_date": "2026-08-20",
     "event_ids": [
       315,
       319,
@@ -113515,9 +113717,21 @@
       513,
       567,
       629,
-      630
+      630,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 – 4,8 km",
+        "place": 1,
+        "time": "42.15",
+        "status": null
+      },
       {
         "event_id": 630,
         "event_name": "Träningsorientering",
@@ -116986,9 +117200,9 @@
   },
   {
     "display_name": "Yngve Karlsson",
-    "result_count": 58,
+    "result_count": 59,
     "first_date": "2014-05-08",
-    "last_date": "2026-06-25",
+    "last_date": "2026-08-20",
     "event_ids": [
       156,
       157,
@@ -117047,9 +117261,21 @@
       624,
       625,
       631,
-      632
+      632,
+      634
     ],
     "results": [
+      {
+        "event_id": 634,
+        "event_name": "25 manna test",
+        "date": "2026-08-20",
+        "location": "Spjutmodammen",
+        "type": "25-manna test",
+        "class_name": "Orange bana 3,4 – 3,6 km",
+        "place": 4,
+        "time": "53.50",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",

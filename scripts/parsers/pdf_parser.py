@@ -41,8 +41,12 @@ KANOT_LINE = re.compile(
     re.I,
 )
 CLASS_LINE = re.compile(
-    r"^(Vit|Orange|Röd|Blå|Grön|H\d+|D\d+|Korta?|Mellan|L[åa]nga|Nybörjare?|Bana\s+[A-Z]|"
+    r"^(Vit|Orange|Röd|Blå|Grön|Violett|Gul|Svart|Lila|H\d+|D\d+|Korta?|Mellan|L[åa]nga|Nybörjare?|Bana\s+[A-Z]|"
     r"Herrar|Damer|\d+\s+varv|Motions-OL).*",
+    re.I,
+)
+BANA_HEADER_LINE = re.compile(
+    r"^[A-Za-zÅÄÖåäö''\-]+\s+bana\s+.+\s*km\s*$",
     re.I,
 )
 SKIP_LINE = re.compile(
@@ -98,6 +102,10 @@ def parse_pdf_text(
     for raw_line in text.splitlines():
         line = re.sub(r"\s+", " ", raw_line.strip())
         if not line or SKIP_LINE.match(line):
+            continue
+
+        if BANA_HEADER_LINE.match(line):
+            current_class = line.strip()
             continue
 
         if CLASS_LINE.match(line):
