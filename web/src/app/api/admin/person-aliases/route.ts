@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 
-import { verifyAdminToken } from "@/lib/admin-auth";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { deletePersonAliasGroup, savePersonAliasMerge } from "@/lib/person-alias-data";
 
 export async function POST(request: Request) {
-  const token = request.cookies.get("admin_session")?.value;
-  if (!verifyAdminToken(token)) {
+  if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Obehörig." }, { status: 401 });
   }
 
@@ -38,8 +37,7 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const token = request.cookies.get("admin_session")?.value;
-  if (!verifyAdminToken(token)) {
+  if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Obehörig." }, { status: 401 });
   }
 
