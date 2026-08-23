@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { BackLink } from "@/components/PageHeader";
 import { ParsedResultsTable } from "@/components/ParsedResultsTable";
 import { TypeBadge } from "@/components/ui";
-import { findContentFile, formatDate, getEvent, getResultsForEvent } from "@/lib/data";
+import { findContentFile, formatDate, getEvent, getResolvedResultsForEvent } from "@/lib/data";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -28,7 +28,7 @@ export default async function EventPage({ params }: Props) {
   }
 
   const content = findContentFile(eventId);
-  const parsedRows = getResultsForEvent(eventId);
+  const parsedRows = getResolvedResultsForEvent(eventId);
   const title = event.name || event.type || `Resultat ${event.id}`;
 
   return (

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { BackLink } from "@/components/PageHeader";
 import { PersonResultsTable } from "@/components/PersonResultsTable";
 import { StatCard } from "@/components/ui";
 import { formatDate, getPerson } from "@/lib/data";
+import { resolvePersonKey } from "@/lib/person-aliases";
 
 type Props = {
   params: Promise<{ key: string }>;
@@ -20,6 +21,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PersonPage({ params }: Props) {
   const { key } = await params;
+  const canonicalKey = resolvePersonKey(key);
+  if (canonicalKey !== key) {
+    redirect(`/person/${encodeURIComponent(canonicalKey)}`);
+  }
+
   const person = getPerson(key);
 
   if (!person) {

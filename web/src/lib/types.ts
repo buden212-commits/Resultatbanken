@@ -48,3 +48,9 @@ export type Person = {
   event_ids: number[];
   results: PersonResult[];
 };
+
+export type PersonAliasGroup = {
+  canonical_key: string;
+  display_name: string;
+  alias_keys: string[];
+};

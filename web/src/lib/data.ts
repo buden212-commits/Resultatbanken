@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 
 import type { Event, Person, ResultRow } from "./types";
+import { getMergedPerson, searchMergedPeople } from "./person-data";
+import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import { parseTimeToSeconds } from "./time";
 
 export { parseTimeToSeconds };
@@ -30,18 +32,28 @@ export function getPeopleIndex(): Person[] {
 }
 
 export function getPerson(key: string): Person | undefined {
-  return getPeopleIndex().find((person) => person.person_key === key);
+  return getMergedPerson(key);
 }
 
 export function searchPeople(query: string): Person[] {
-  const normalized = query.trim().toLowerCase();
-  if (!normalized) {
-    return [];
-  }
+  return searchMergedPeople(query);
+}
 
-  return getPeopleIndex()
-    .filter((person) => person.display_name.toLowerCase().includes(normalized))
-    .slice(0, 50);
+export type ResolvedResultRow = ResultRow & {
+  resolved_person_key: string;
+  resolved_name: string;
+};
+
+export function getResultsForEvent(eventId: number): ResultRow[] {
+  return getResultsIndex().filter((row) => row.event_id === eventId);
+}
+
+export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[] {
+  return getResultsForEvent(eventId).map((row) => ({
+    ...row,
+    resolved_person_key: resolvePersonKey(row.person_key),
+    resolved_name: resolveDisplayName(row.person_key, row.name),
+  }));
 }
 
 export function findContentFile(id: number): { path: string; ext: string } | null {
@@ -63,10 +75,6 @@ export function findContentFile(id: number): { path: string; ext: string } | nul
     path: path.join(CONTENT_DIR, filename),
     ext: path.extname(filename).toLowerCase(),
   };
-}
-
-export function getResultsForEvent(eventId: number): ResultRow[] {
-  return getResultsIndex().filter((row) => row.event_id === eventId);
 }
 
 export function formatDate(date: string): string {

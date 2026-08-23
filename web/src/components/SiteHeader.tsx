@@ -4,6 +4,7 @@ const nav = [
   { href: "/resultat", label: "Alla resultat" },
   { href: "/sok", label: "Sök person" },
   { href: "/ladda-upp", label: "Ladda upp" },
+  { href: "/koppla-namn", label: "Koppla namn" },
 ];
 
 export function SiteHeader() {

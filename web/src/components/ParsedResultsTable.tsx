@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo } from "react";
 
+import type { ResolvedResultRow } from "@/lib/data";
 import type { ResultRow } from "@/lib/types";
 
 const COLUMNS = [
@@ -30,7 +31,15 @@ function sortByPlace(a: ResultRow, b: ResultRow): number {
   return compareNullable(a.place, b.place, (left, right) => left - right);
 }
 
-function groupRowsByClass(rows: ResultRow[]): { className: string; rows: ResultRow[] }[] {
+function rowLinkKey(row: ResultRow | ResolvedResultRow): string {
+  return "resolved_person_key" in row ? row.resolved_person_key : row.person_key;
+}
+
+function rowDisplayName(row: ResultRow | ResolvedResultRow): string {
+  return "resolved_name" in row ? row.resolved_name : row.name;
+}
+
+function groupRowsByClass(rows: (ResultRow | ResolvedResultRow)[]): { className: string; rows: (ResultRow | ResolvedResultRow)[] }[] {
   const groups = new Map<string, ResultRow[]>();
 
   for (const row of rows) {
@@ -48,7 +57,7 @@ function groupRowsByClass(rows: ResultRow[]): { className: string; rows: ResultR
     }));
 }
 
-export function ParsedResultsTable({ rows }: { rows: ResultRow[] }) {
+export function ParsedResultsTable({ rows }: { rows: ResultRow[] | ResolvedResultRow[] }) {
   const groupedRows = useMemo(() => groupRowsByClass(rows), [rows]);
 
   if (rows.length === 0) {
@@ -101,11 +110,11 @@ function GroupRows({
         </td>
       </tr>
       {group.rows.map((row, index) => (
-        <tr key={`${group.className}-${row.person_key}-${row.place}-${index}`}>
+        <tr key={`${group.className}-${rowLinkKey(row)}-${row.place}-${index}`}>
           <td className="font-medium text-slate-700">{row.place ?? "–"}</td>
           <td>
-            <Link href={`/person/${row.person_key}`} className="link-brand">
-              {row.name}
+            <Link href={`/person/${rowLinkKey(row)}`} className="link-brand">
+              {rowDisplayName(row)}
             </Link>
           </td>
           <td className="text-slate-600">{row.class_name ?? "–"}</td>
