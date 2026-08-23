@@ -1,5 +1,17 @@
 [
   {
+    "canonical_key": "motionorientering",
+    "display_name": "Motionorientering",
+    "alias_keys": [
+      "motions-o-tranings-ol",
+      "motions-ol",
+      "motions-ol-stracktider",
+      "motions-orientering",
+      "motions-traning",
+      "motionsorientering"
+    ]
+  },
+  {
     "canonical_key": "skid-km",
     "display_name": "Skid KM",
     "alias_keys": [
