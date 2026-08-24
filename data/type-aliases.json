@@ -1,5 +1,12 @@
 [
   {
+    "canonical_key": "gangbudkavle",
+    "display_name": "Gängbudkavle",
+    "alias_keys": [
+      "gangbudkavle-2018"
+    ]
+  },
+  {
     "canonical_key": "klubbmasterskap",
     "display_name": "klubbmästerskap",
     "alias_keys": [
