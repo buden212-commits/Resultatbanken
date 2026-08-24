@@ -26,6 +26,16 @@
     ]
   },
   {
+    "canonical_key": "nattorientering",
+    "display_name": "Nattorientering",
+    "alias_keys": [
+      "natt-ol",
+      "natt-sprint",
+      "nostalginatt",
+      "nostalginatt-218"
+    ]
+  },
+  {
     "canonical_key": "skid-km",
     "display_name": "Skid KM",
     "alias_keys": [
