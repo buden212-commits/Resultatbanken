@@ -47,7 +47,7 @@ CLASS_LINE = re.compile(
     re.I,
 )
 BANA_HEADER_LINE = re.compile(
-    r"^[A-Za-zÅÄÖåäö''\-]+\s+bana\s+.+\s*km\s*$",
+    r"^(?:[A-Za-zÅÄÖåäö''\-]+\s+bana\s+.+\s*km|Bana\s+\d+\s+.+)\s*$",
     re.I,
 )
 SKIP_LINE = re.compile(

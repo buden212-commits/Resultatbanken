@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import type { Event, Person, ResultRow } from "./types";
+import { derivePlaces } from "./derive-places";
 import { getMergedPerson, searchMergedPeople } from "./person-data";
 import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import { isUnreasonableTime, parseTimeToSeconds } from "./time";
@@ -97,7 +98,7 @@ export function eventHasUnreasonableTimes(eventId: number): boolean {
 }
 
 export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[] {
-  return dedupeResultsByPerson(getResultsForEvent(eventId)).map((row) => ({
+  return dedupeResultsByPerson(derivePlaces(getResultsForEvent(eventId))).map((row) => ({
     ...row,
     resolved_person_key: resolvePersonKey(row.person_key),
     resolved_name: resolveDisplayName(row.person_key, row.name),
