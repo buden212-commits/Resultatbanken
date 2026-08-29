@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 import type { ResolvedResultRow } from "@/lib/data";
 import type { ResultRow } from "@/lib/types";
-import { ResultTimeCell } from "@/components/ResultTimeCell";
+import { ResultTimeEditor } from "@/components/ResultTimeEditor";
 
 const COLUMNS = [
   { key: "place", label: "Plac" },
@@ -58,7 +58,15 @@ function groupRowsByClass(rows: (ResultRow | ResolvedResultRow)[]): { className:
     }));
 }
 
-export function ParsedResultsTable({ rows }: { rows: ResultRow[] | ResolvedResultRow[] }) {
+export function ParsedResultsTable({
+  rows,
+  eventId,
+  canEdit = false,
+}: {
+  rows: ResultRow[] | ResolvedResultRow[];
+  eventId?: number;
+  canEdit?: boolean;
+}) {
   const groupedRows = useMemo(() => groupRowsByClass(rows), [rows]);
 
   if (rows.length === 0) {
@@ -79,7 +87,13 @@ export function ParsedResultsTable({ rows }: { rows: ResultRow[] | ResolvedResul
           </thead>
           <tbody>
             {groupedRows.map((group, groupIndex) => (
-              <GroupRows key={group.className} group={group} isFirst={groupIndex === 0} />
+              <GroupRows
+                key={group.className}
+                group={group}
+                isFirst={groupIndex === 0}
+                eventId={eventId}
+                canEdit={canEdit}
+              />
             ))}
           </tbody>
         </table>
@@ -91,9 +105,13 @@ export function ParsedResultsTable({ rows }: { rows: ResultRow[] | ResolvedResul
 function GroupRows({
   group,
   isFirst,
+  eventId,
+  canEdit,
 }: {
   group: { className: string; rows: ResultRow[] };
   isFirst: boolean;
+  eventId?: number;
+  canEdit: boolean;
 }) {
   return (
     <>
@@ -120,7 +138,14 @@ function GroupRows({
           </td>
           <td className="text-slate-600">{row.class_name ?? "–"}</td>
           <td className="font-mono text-sm text-slate-700">
-            <ResultTimeCell time={row.time} />
+            <ResultTimeEditor
+              eventId={eventId ?? row.event_id}
+              personKey={row.person_key}
+              className={row.class_name}
+              place={row.place}
+              initialTime={row.time ?? ""}
+              canEdit={canEdit && eventId !== undefined}
+            />
           </td>
           <td className="text-slate-500">{row.status ?? "–"}</td>
         </tr>

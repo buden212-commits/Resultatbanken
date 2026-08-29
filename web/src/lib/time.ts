@@ -71,3 +71,20 @@ export function isUnreasonableTime(time: string | null | undefined): boolean {
   const seconds = parseTimeToSeconds(time);
   return seconds !== null && seconds > MAX_REASONABLE_TIME_SECONDS;
 }
+
+export function formatSecondsToTime(seconds: number): string {
+  const hours = Math.floor(seconds / 3_600);
+  const minutes = Math.floor((seconds % 3_600) / 60);
+  const secs = seconds % 60;
+
+  if (hours > 0) {
+    return `${hours}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  }
+
+  return `${minutes}:${String(secs).padStart(2, "0")}`;
+}
+
+export function isValidCorrectedTime(time: string): boolean {
+  const seconds = parseTimeToSeconds(time.trim());
+  return seconds !== null && seconds <= MAX_REASONABLE_TIME_SECONDS;
+}

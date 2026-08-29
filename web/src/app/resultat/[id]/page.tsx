@@ -88,7 +88,7 @@ export default async function EventPage({ params }: Props) {
         </div>
       </header>
 
-      <ParsedResultsTable rows={parsedRows} />
+      <ParsedResultsTable rows={parsedRows} eventId={eventId} canEdit={canEdit} />
 
       <section className="mt-10">
         <h2 className="mb-4 text-lg font-bold text-slate-900">Resultatfil</h2>

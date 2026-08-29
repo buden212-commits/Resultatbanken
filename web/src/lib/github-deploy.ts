@@ -1,4 +1,4 @@
-import type { Event, PersonAliasGroup, TypeAliasGroup } from "./types";
+import type { Event, PersonAliasGroup, ResultRow, TypeAliasGroup } from "./types";
 
 type GitHubConfig = {
   token: string;
@@ -221,6 +221,43 @@ export async function publishEventToGitHub(
       { path: `data/content/${file.storedName}`, content: file.buffer },
     ],
     `Lägg till resultat: ${event.name} (${event.date})`,
+  );
+
+  const build = await triggerProductionDeploy();
+
+  return {
+    ok: build.ok,
+    message: `${build.message} (commit ${commitSha.slice(0, 7)} på ${branch})`,
+    commitSha,
+  };
+}
+
+export async function fetchResultsIndexFromGitHub(): Promise<ResultRow[]> {
+  const config = getGitHubConfig();
+  if (!config) {
+    throw new Error("Git-deploy är inte konfigurerat.");
+  }
+
+  const file = await githubRequest<GitHubContent>(
+    config,
+    `/contents/data/results-index.json?ref=${encodeURIComponent(config.branch)}`,
+  );
+
+  return JSON.parse(decodeContent(file)) as ResultRow[];
+}
+
+export async function publishResultsDataToGitHub(
+  results: ResultRow[],
+  peopleJson: string,
+  message: string,
+): Promise<{ ok: boolean; message: string; commitSha?: string }> {
+  const resultsContent = `${JSON.stringify(results, null, 2)}\n`;
+  const { commitSha, branch } = await commitFilesToGitHub(
+    [
+      { path: "data/results-index.json", content: resultsContent },
+      { path: "data/people-index.json", content: peopleJson },
+    ],
+    message,
   );
 
   const build = await triggerProductionDeploy();
