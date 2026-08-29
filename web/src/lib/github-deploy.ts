@@ -83,10 +83,35 @@ async function githubRequest<T>(config: GitHubConfig, path: string, init: Reques
 }
 
 function decodeContent(content: GitHubContent): string {
+  if (content.encoding === "none" || !content.content) {
+    throw new Error(
+      "GitHub returnerade tom filinnehåll (filer över 1 MB kräver raw-läge).",
+    );
+  }
   if (content.encoding === "base64") {
     return Buffer.from(content.content.replace(/\n/g, ""), "base64").toString("utf-8");
   }
   return content.content;
+}
+
+async function fetchRawFileFromGitHub(config: GitHubConfig, filePath: string): Promise<string> {
+  const response = await fetch(
+    `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${filePath}?ref=${encodeURIComponent(config.branch)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${config.token}`,
+        Accept: "application/vnd.github.raw+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`GitHub API (${response.status}): ${body}`);
+  }
+
+  return response.text();
 }
 
 export async function fetchManifestFromGitHub(): Promise<Event[]> {
@@ -238,12 +263,8 @@ export async function fetchResultsIndexFromGitHub(): Promise<ResultRow[]> {
     throw new Error("Git-deploy är inte konfigurerat.");
   }
 
-  const file = await githubRequest<GitHubContent>(
-    config,
-    `/contents/data/results-index.json?ref=${encodeURIComponent(config.branch)}`,
-  );
-
-  return JSON.parse(decodeContent(file)) as ResultRow[];
+  const raw = await fetchRawFileFromGitHub(config, "data/results-index.json");
+  return JSON.parse(raw) as ResultRow[];
 }
 
 export async function publishResultsDataToGitHub(

@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { saveCorrectedResultTime } from "@/lib/result-time-data";
 
+export const maxDuration = 60;
+
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Obehörig." }, { status: 401 });

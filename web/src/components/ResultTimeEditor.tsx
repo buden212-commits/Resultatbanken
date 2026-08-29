@@ -78,11 +78,19 @@ export function ResultTimeEditor({
         }),
       });
 
-      const data = (await response.json()) as {
+      const body = await response.text();
+      let data: {
         error?: string;
         time?: string;
         deploy?: { ok: boolean; message: string };
       };
+
+      try {
+        data = body ? (JSON.parse(body) as typeof data) : {};
+      } catch {
+        setError("Ogiltigt svar från servern.");
+        return;
+      }
 
       if (!response.ok) {
         setError(data.error ?? "Kunde inte spara tid.");
