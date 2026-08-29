@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { ResultTimeCell } from "@/components/ResultTimeCell";
 import {
-  formatSecondsToTime,
+  formatTimeForDisplay,
   isValidCorrectedTime,
   parseTimeToSeconds,
 } from "@/lib/time";
@@ -42,7 +42,7 @@ export function ResultTimeEditor({
 
   const parsedSeconds = parseTimeToSeconds(time);
   const parsedLabel =
-    parsedSeconds !== null ? formatSecondsToTime(parsedSeconds) : null;
+    parsedSeconds !== null ? formatTimeForDisplay(time) : null;
 
   async function onSave() {
     const corrected = draft.trim();

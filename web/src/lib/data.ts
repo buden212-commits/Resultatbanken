@@ -8,6 +8,40 @@ import { isUnreasonableTime, parseTimeToSeconds } from "./time";
 
 export { parseTimeToSeconds };
 
+function resultRowScore(row: ResultRow): number {
+  let score = 0;
+  if (row.place !== null && row.place !== undefined) {
+    score += 1_000;
+    score -= row.place;
+  }
+  if (row.time) {
+    score += 100;
+  }
+  if (row.class_name?.trim()) {
+    score += 10;
+  }
+  if (row.status) {
+    score += 5;
+  }
+  if (row.club) {
+    score += 1;
+  }
+  return score;
+}
+
+function dedupeResultsByPerson(rows: ResultRow[]): ResultRow[] {
+  const bestByPerson = new Map<string, ResultRow>();
+
+  for (const row of rows) {
+    const existing = bestByPerson.get(row.person_key);
+    if (!existing || resultRowScore(row) > resultRowScore(existing)) {
+      bestByPerson.set(row.person_key, row);
+    }
+  }
+
+  return [...bestByPerson.values()];
+}
+
 const DATA_DIR = path.join(process.cwd(), "..", "data");
 const CONTENT_DIR = path.join(DATA_DIR, "content");
 
@@ -63,7 +97,7 @@ export function eventHasUnreasonableTimes(eventId: number): boolean {
 }
 
 export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[] {
-  return getResultsForEvent(eventId).map((row) => ({
+  return dedupeResultsByPerson(getResultsForEvent(eventId)).map((row) => ({
     ...row,
     resolved_person_key: resolvePersonKey(row.person_key),
     resolved_name: resolveDisplayName(row.person_key, row.name),
