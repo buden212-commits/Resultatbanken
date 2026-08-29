@@ -67,7 +67,7 @@ export async function saveCorrectedResultTime(
     throw new Error("Tid krävs.");
   }
   if (!isValidCorrectedTime(trimmed)) {
-    throw new Error("Ogiltig tid — ange t.ex. 46:34, 1:05:30 eller 58.23 (max 3 timmar).");
+    throw new Error("Ogiltig tid — ange t.ex. 46:34, 1:05:30 eller 58.23 (8 min–3 tim).");
   }
 
   const event = getEvent(key.event_id);

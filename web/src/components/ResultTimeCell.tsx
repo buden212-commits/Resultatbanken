@@ -24,7 +24,7 @@ export function ResultTimeCell({ time, status }: Props) {
       <span className="text-amber-800">{time}</span>
       <span
         className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900"
-        title="Tiden är över 3 timmar och kan vara felaktigt tolkad"
+        title="Tiden är under 8 minuter eller över 3 timmar och kan vara felaktigt tolkad"
       >
         Orimlig tid
       </span>

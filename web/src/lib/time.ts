@@ -1,3 +1,4 @@
+export const MIN_REASONABLE_TIME_SECONDS = 8 * 60;
 export const MAX_REASONABLE_TIME_SECONDS = 3 * 3_600;
 
 export function parseTimeToSeconds(time: string): number | null {
@@ -69,7 +70,10 @@ export function isUnreasonableTime(time: string | null | undefined): boolean {
   }
 
   const seconds = parseTimeToSeconds(time);
-  return seconds !== null && seconds > MAX_REASONABLE_TIME_SECONDS;
+  return (
+    seconds !== null &&
+    (seconds < MIN_REASONABLE_TIME_SECONDS || seconds > MAX_REASONABLE_TIME_SECONDS)
+  );
 }
 
 export function formatSecondsToTime(seconds: number): string {
@@ -86,5 +90,9 @@ export function formatSecondsToTime(seconds: number): string {
 
 export function isValidCorrectedTime(time: string): boolean {
   const seconds = parseTimeToSeconds(time.trim());
-  return seconds !== null && seconds <= MAX_REASONABLE_TIME_SECONDS;
+  return (
+    seconds !== null &&
+    seconds >= MIN_REASONABLE_TIME_SECONDS &&
+    seconds <= MAX_REASONABLE_TIME_SECONDS
+  );
 }

@@ -11,7 +11,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = (await request.json()) as {
+    const rawBody = await request.text();
+    if (!rawBody.trim()) {
+      return NextResponse.json({ error: "Saknar request body." }, { status: 400 });
+    }
+
+    let body: {
       event_id?: number;
       person_key?: string;
       class_name?: string | null;
@@ -19,6 +24,12 @@ export async function POST(request: Request) {
       time?: string;
       corrected_time?: string;
     };
+
+    try {
+      body = JSON.parse(rawBody) as typeof body;
+    } catch {
+      return NextResponse.json({ error: "Ogiltig JSON i request body." }, { status: 400 });
+    }
 
     const eventId = body.event_id;
     const personKey = body.person_key?.trim() ?? "";

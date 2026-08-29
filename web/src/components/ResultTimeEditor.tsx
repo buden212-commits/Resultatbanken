@@ -56,7 +56,7 @@ export function ResultTimeEditor({
       return;
     }
     if (!isValidCorrectedTime(corrected)) {
-      setError("Ogiltig tid — ange t.ex. 46:34, 1:05:30 eller 58.23 (max 3 timmar).");
+      setError("Ogiltig tid — ange t.ex. 46:34, 1:05:30 eller 58.23 (8 min–3 tim).");
       return;
     }
 

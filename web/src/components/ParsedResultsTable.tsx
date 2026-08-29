@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import type { ResolvedResultRow } from "@/lib/data";
 import type { ResultRow } from "@/lib/types";
 import { ResultTimeEditor } from "@/components/ResultTimeEditor";
+import { isUnreasonableTime } from "@/lib/time";
 
 const COLUMNS = [
   { key: "place", label: "Plac" },
@@ -128,8 +129,13 @@ function GroupRows({
           {group.className}
         </td>
       </tr>
-      {group.rows.map((row, index) => (
-        <tr key={`${group.className}-${rowLinkKey(row)}-${row.place}-${index}`}>
+      {group.rows.map((row, index) => {
+        const unreasonable = isUnreasonableTime(row.time);
+        return (
+        <tr
+          key={`${group.className}-${rowLinkKey(row)}-${row.place}-${index}`}
+          className={unreasonable ? "ring-2 ring-inset ring-red-500 bg-red-50/40" : undefined}
+        >
           <td className="font-medium text-slate-700">{row.place ?? "–"}</td>
           <td>
             <Link href={`/person/${rowLinkKey(row)}`} className="link-brand">
@@ -149,7 +155,8 @@ function GroupRows({
           </td>
           <td className="text-slate-500">{row.status ?? "–"}</td>
         </tr>
-      ))}
+        );
+      })}
     </>
   );
 }
