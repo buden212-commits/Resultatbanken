@@ -74,20 +74,19 @@ export function EventTypePicker({
     }
   }
 
-  if (currentType) {
+  if (!canEdit) {
+    if (!currentType) {
+      return null;
+    }
+
     return (
       <div className="relative">
         <TypeBadge label={displayType} />
-        {message ? (
-          <p className="absolute right-0 top-full z-10 mt-2 w-64 text-xs text-emerald-700">{message}</p>
-        ) : null}
       </div>
     );
   }
 
-  if (!canEdit) {
-    return null;
-  }
+  const pickerLabel = currentType ? "Ändra typ" : "Ange typ";
 
   return (
     <div className="relative">
@@ -95,13 +94,27 @@ export function EventTypePicker({
         type="button"
         onClick={() => setOpen((value) => !value)}
         disabled={isSaving}
-        className="badge cursor-pointer transition hover:bg-brand-100 hover:text-brand-800"
+        className={
+          currentType
+            ? "group inline-flex cursor-pointer items-center gap-2 rounded-full transition hover:opacity-90"
+            : "badge cursor-pointer transition hover:bg-brand-100 hover:text-brand-800"
+        }
+        aria-expanded={open}
+        aria-haspopup="listbox"
       >
-        Ange typ
+        {currentType ? <TypeBadge label={displayType} /> : pickerLabel}
+        {currentType ? (
+          <span className="text-xs font-medium text-slate-500 transition group-hover:text-brand-700">
+            {pickerLabel}
+          </span>
+        ) : null}
       </button>
 
       {open ? (
         <div className="absolute right-0 top-full z-20 mt-2 w-72 rounded-xl border border-slate-200 bg-white p-3 shadow-lg">
+          <p className="mb-2 text-xs font-medium text-slate-500">
+            {currentType ? "Välj ny typ" : "Välj typ"}
+          </p>
           <input
             type="search"
             value={search}
@@ -110,22 +123,35 @@ export function EventTypePicker({
             className="input-field"
             autoFocus
           />
-          <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto">
+          <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto" role="listbox">
             {filteredTypes.length === 0 ? (
               <li className="px-2 py-2 text-sm text-slate-500">Ingen typ hittades.</li>
             ) : (
-              filteredTypes.map((type) => (
-                <li key={type}>
-                  <button
-                    type="button"
-                    disabled={isSaving}
-                    onClick={() => void selectType(type)}
-                    className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-800 transition hover:bg-brand-50"
-                  >
-                    {type}
-                  </button>
-                </li>
-              ))
+              filteredTypes.map((type) => {
+                const isCurrent = type === displayType || type === currentType;
+
+                return (
+                  <li key={type}>
+                    <button
+                      type="button"
+                      disabled={isSaving}
+                      onClick={() => void selectType(type)}
+                      className={`w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition ${
+                        isCurrent
+                          ? "bg-brand-50 text-brand-800"
+                          : "text-slate-800 hover:bg-brand-50"
+                      }`}
+                      role="option"
+                      aria-selected={isCurrent}
+                    >
+                      {type}
+                      {isCurrent ? (
+                        <span className="ml-2 text-xs font-normal text-slate-500">(nuvarande)</span>
+                      ) : null}
+                    </button>
+                  </li>
+                );
+              })
             )}
           </ul>
         </div>

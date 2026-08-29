@@ -294,7 +294,7 @@ export async function updateEventType(eventId: number, type: string): Promise<Up
 
     const deployResult = await publishManifestToGitHub(
       manifest,
-      `Ange typ: ${trimmed} (event ${eventId})`,
+      `Uppdatera typ: ${trimmed} (event ${eventId})`,
     );
 
     return {
