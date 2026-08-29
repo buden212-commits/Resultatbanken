@@ -34,7 +34,7 @@ class ResultRow:
 
 
 NAME_WORD = re.compile(
-    r"^[A-ZÅÄÖ][a-zåäö'\-]*(?:-[A-ZÅÄÖ][a-zåäö'\-]+)?$",
+    r"^[A-ZÅÄÖÀ-ÖØ-Þ][a-zà-öø-ÿåäö'\-]*(?:-[A-ZÅÄÖÀ-ÖØ-Þ][a-zà-öø-ÿåäö'\-]+)?$|^[A-ZÅÄÖ]\.$",
 )
 TIME_TOKEN = re.compile(
     r"^\d+[:.,]\d+(?:[:.,]\d+)?$|^\d+[.,]\d+$",
@@ -44,6 +44,7 @@ CLUB_SUFFIX_PATTERNS = (
     re.compile(r"\s+IFK\s+[\wåäöÅÄÖ'./-]+(?:\s+OK)?\s*$", re.I),
     re.compile(r"\s+[\wåäöÅÄÖ'./-]+\s+IF(?:\s+)?OK\s*$", re.I),
     re.compile(r"\s+[\wåäöÅÄÖ'./-]+\s+OK\s*$", re.I),
+    re.compile(r"\s+[\wåäöÅÄÖ'./-]+\s+SOK\s*$", re.I),
     re.compile(r"\s+[\wåäöÅÄÖ'./-]+\s+(?:SK|BK|FK|IK)(?:\s+[\wåäöÅÄÖ'./-]+)?\s*$", re.I),
 )
 TRAILING_TIME_SUFFIX = re.compile(

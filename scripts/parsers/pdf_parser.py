@@ -8,15 +8,20 @@ from pathlib import Path
 from .common import ResultRow, detect_status, make_row, split_team_names, strip_status_markers
 from .ocr_utils import OCR_MIN_TEXT, ocr_available, ocr_pdf_file
 
+_LATIN_NAME = r"A-Za-zÀ-ÖØ-öø-ÿÅÄÖåäö"
 EVENTOR_LINE = re.compile(
-    r"^(\d+)\s+(.+?)\s+IFK\s+Mora(?:s)?(?:\s+OK)?\s+([\d:+]+(?:\s*\+\s*[\d:+]+)?)\s*$",
+    r"^(\d+)\.\s+(.+?)\s+IFK\s+Mora(?:s)?(?:\s+OK)?\s+([\d:+]+(?:\s*\+\s*[\d:+]+)?)\s*$",
     re.I,
 )
 SIMPLE_LINE = re.compile(
-    r"^(\d+)[\.\)]\s+([A-Za-zÅÄÖåäö][A-Za-zÅÄÖåäö'\-\s&]+?)\s+([\d]+[:\.,][\d]{2}(?:[:\.,][\d]{2})?)\s*$"
+    rf"^(\d+)[\.\)]\s+([{_LATIN_NAME}][{_LATIN_NAME}'\-\s&\.]+?)\s+([\d]+[:\.,][\d]{{2}}(?:[:\.,][\d]{{2}})?)(?:\s*\+\s*[\d:]+)?\s*$"
+)
+MEOS_CLASS_HEADER = re.compile(
+    r"^((?:Lätt|Lagom\s+svår|Svår|Medel)\s+[\d,]+\s*km)\s*(?:\([^)]*\))?\s*(?:Tid\s+Efter)?\s*$",
+    re.I,
 )
 TRAINING_LINE = re.compile(
-    r"^(?:(\d+)\s+)?(.+?)\s+([\d]+[:\.,][\d]{2}(?:[:\.,][\d]{2})?)\s*$"
+    rf"^(?:(\d+)\s+)?(.+?)\s+([\d]+[:\.,][\d]{{2}}(?:[:\.,][\d]{{2}})?)(?:\s*\+\s*[\d:]+)?\s*$"
 )
 TABLE_BAN_LINE = re.compile(
     r"^([A-Z])\s+(\d+)\s+(.+?)\s+([\d]+[:\.,][\d]{2}(?:[:\.,][\d]{2})?)\s*$"
@@ -25,7 +30,7 @@ SYLVESTER_LINE = re.compile(
     r"^(\d+)\.\s*(.+?)\s+([\d:]+\.?[\d]*(?:\s*[\(\[][\d:\.\-\s]+[\)\]])?(?:\s+[\d:\.\-]+)?)\s*$"
 )
 NAME_TIME_LINE = re.compile(
-    r"^([A-Za-zÅÄÖåäö][A-Za-zÅÄÖåäö'\-\s]+?)\s+([\d]+[.,][\d]{2})\s*$"
+    rf"^([{_LATIN_NAME}][{_LATIN_NAME}'\-\s]+?)\s+([\d]+[.,][\d]{{2}})(?:\s*\+\s*[\d:]+)?\s*$"
 )
 CLASS_RESULT_LINE = re.compile(
     r"^(Nybörjare|Korta|Mellan|Långa|Vit|Orange|Röd|Blå|Grön|H\d+|D\d+).+\s+km\s+(.+?)\s+([\d]+[.,][\d]{2})\s*$",
@@ -52,7 +57,7 @@ BANA_HEADER_LINE = re.compile(
 )
 SKIP_LINE = re.compile(
     r"^(Tabelle|Seite|Plac|Klass|Namn|tid|Arrang|Resultat|Handicap|Uppsnappade|Visdomsord|Tack\b|"
-    r"Område|Plac\.|Bana Placering|Kategorie Placering|Delt:|SKERIOL|KARTA)",
+    r"Område|Plac\.|Bana Placering|Kategorie Placering|Delt:|SKERIOL|KARTA|MeOS\b|20\d{2}-\d{2}-\d{2}$)",
     re.I,
 )
 
@@ -119,6 +124,11 @@ def parse_pdf_text(
 
         if BANA_HEADER_LINE.match(line):
             current_class = line.strip()
+            continue
+
+        meos_class = MEOS_CLASS_HEADER.match(line)
+        if meos_class:
+            current_class = meos_class.group(1).strip()
             continue
 
         if CLASS_LINE.match(line):
@@ -190,6 +200,8 @@ def _make_result_row(
     parse_confidence: str = "medium",
 ) -> ResultRow | None:
     time_value = time_text.replace(",", ".") if time_text else None
+    if time_value:
+        time_value = re.sub(r"\s*\+\s*[\d:]+.*", "", time_value).strip()
     return make_row(
         event_id,
         name,

@@ -9070,7 +9070,7 @@
   },
   {
     "display_name": "Anders Ohlin",
-    "result_count": 32,
+    "result_count": 33,
     "first_date": "2017-12-31",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -9099,6 +9099,7 @@
       598,
       599,
       600,
+      621,
       623,
       624,
       625,
@@ -9183,6 +9184,17 @@
         "class_name": "Långa",
         "place": 16,
         "time": "70.25",
+        "status": null
+      },
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Svår 6 km",
+        "place": 5,
+        "time": "56:00",
         "status": null
       },
       {
@@ -9855,7 +9867,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Svår 6 km",
         "place": 1,
         "time": "36:00",
         "status": null
@@ -24031,7 +24043,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Lätt 2,5 km",
         "place": null,
         "time": null,
         "status": "dns"
@@ -36548,7 +36560,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Svår 6 km",
         "place": null,
         "time": null,
         "status": "dns"
@@ -40992,7 +41004,7 @@
   },
   {
     "display_name": "Gustav Elmgren",
-    "result_count": 19,
+    "result_count": 20,
     "first_date": "2021-05-18",
     "last_date": "2026-06-11",
     "event_ids": [
@@ -41011,6 +41023,7 @@
       600,
       615,
       620,
+      621,
       623,
       624,
       625,
@@ -41059,6 +41072,17 @@
         "class_name": "Långa",
         "place": 10,
         "time": "52.38",
+        "status": null
+      },
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Svår 6 km",
+        "place": 2,
+        "time": "37:40",
         "status": null
       },
       {
@@ -44288,18 +44312,30 @@
   },
   {
     "display_name": "Hans Peter Olsson",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2004-09-23",
-    "last_date": "2024-05-02",
+    "last_date": "2026-02-11",
     "event_ids": [
       19,
       22,
       82,
       482,
       533,
-      534
+      534,
+      621
     ],
     "results": [
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Lagom svår 3,5 km",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 533,
         "event_name": "",
@@ -44440,13 +44476,12 @@
   },
   {
     "display_name": "Hans-Peter Olsson Älvdalens",
-    "result_count": 4,
+    "result_count": 3,
     "first_date": "2016-04-07",
     "last_date": "2026-06-16",
     "event_ids": [
       255,
       531,
-      621,
       631
     ],
     "results": [
@@ -44460,17 +44495,6 @@
         "place": 3,
         "time": "0:35",
         "status": null
-      },
-      {
-        "event_id": 621,
-        "event_name": "Nattcup 2026, etapp2",
-        "date": "2026-02-11",
-        "location": "Kyrkbyns skola, Orsa",
-        "type": "Natt-sprint",
-        "class_name": null,
-        "place": null,
-        "time": null,
-        "status": "dns"
       },
       {
         "event_id": 531,
@@ -51158,6 +51182,29 @@
     "person_key": "joakim-olsson"
   },
   {
+    "display_name": "Joakim Skärlén",
+    "result_count": 1,
+    "first_date": "2026-02-11",
+    "last_date": "2026-02-11",
+    "event_ids": [
+      621
+    ],
+    "results": [
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Svår 6 km",
+        "place": 4,
+        "time": "49:41",
+        "status": null
+      }
+    ],
+    "person_key": "joakim-skarlen"
+  },
+  {
     "display_name": "Jocke",
     "result_count": 1,
     "first_date": "2023-08-24",
@@ -57038,7 +57085,7 @@
   },
   {
     "display_name": "Karl-Erik Andersson",
-    "result_count": 55,
+    "result_count": 56,
     "first_date": "2005-06-02",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -57093,6 +57140,7 @@
       599,
       600,
       615,
+      621,
       623,
       631,
       632,
@@ -57141,6 +57189,17 @@
         "class_name": "Korta",
         "place": 8,
         "time": "38.20",
+        "status": null
+      },
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Lätt 2,5 km",
+        "place": 4,
+        "time": "39:55",
         "status": null
       },
       {
@@ -70233,7 +70292,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Lätt 2,5 km",
         "place": 1,
         "time": "31:53",
         "status": null
@@ -70738,7 +70797,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Svår 6 km",
         "place": null,
         "time": null,
         "status": "dns"
@@ -71724,10 +71783,11 @@
   },
   {
     "display_name": "Linnea Elmgren",
-    "result_count": 1,
-    "first_date": "2026-03-25",
+    "result_count": 2,
+    "first_date": "2026-02-11",
     "last_date": "2026-03-25",
     "event_ids": [
+      621,
       623
     ],
     "results": [
@@ -71740,6 +71800,17 @@
         "class_name": "Korta",
         "place": 11,
         "time": "65.30",
+        "status": null
+      },
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Lätt 2,5 km",
+        "place": 5,
+        "time": "57:30",
         "status": null
       }
     ],
@@ -80593,7 +80664,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Lagom svår 3,5 km",
         "place": null,
         "time": null,
         "status": "dns"
@@ -91513,9 +91584,9 @@
   },
   {
     "display_name": "Ove Pettersson",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2008-04-24",
-    "last_date": "2025-05-29",
+    "last_date": "2026-02-11",
     "event_ids": [
       66,
       82,
@@ -91523,9 +91594,21 @@
       533,
       534,
       541,
-      589
+      589,
+      621
     ],
     "results": [
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Lagom svår 3,5 km",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 589,
         "event_name": "Träning Bonäs",
@@ -91605,29 +91688,6 @@
       }
     ],
     "person_key": "ove-pettersson"
-  },
-  {
-    "display_name": "Ove Pettersson Älvdalens",
-    "result_count": 1,
-    "first_date": "2026-02-11",
-    "last_date": "2026-02-11",
-    "event_ids": [
-      621
-    ],
-    "results": [
-      {
-        "event_id": 621,
-        "event_name": "Nattcup 2026, etapp2",
-        "date": "2026-02-11",
-        "location": "Kyrkbyns skola, Orsa",
-        "type": "Natt-sprint",
-        "class_name": null,
-        "place": null,
-        "time": null,
-        "status": "dns"
-      }
-    ],
-    "person_key": "ove-pettersson-alvdalens"
   },
   {
     "display_name": "P-O Eriksson",
@@ -104005,7 +104065,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Lätt 2,5 km",
         "place": null,
         "time": null,
         "status": "dns"
@@ -106832,7 +106892,7 @@
   },
   {
     "display_name": "Susanna Elmgren",
-    "result_count": 9,
+    "result_count": 10,
     "first_date": "2025-05-29",
     "last_date": "2026-06-25",
     "event_ids": [
@@ -106840,6 +106900,7 @@
       597,
       599,
       605,
+      621,
       623,
       624,
       625,
@@ -106900,6 +106961,17 @@
         "class_name": "Korta",
         "place": 12,
         "time": "65.30",
+        "status": null
+      },
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Lätt 2,5 km",
+        "place": 5,
+        "time": "57:30",
         "status": null
       },
       {
@@ -107312,7 +107384,7 @@
         "date": "2026-02-11",
         "location": "Kyrkbyns skola, Orsa",
         "type": "Natt-sprint",
-        "class_name": null,
+        "class_name": "Lätt 2,5 km",
         "place": 1,
         "time": "31:53",
         "status": null
@@ -111667,7 +111739,7 @@
   },
   {
     "display_name": "Tommy Åhman",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2025-08-14",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -111675,6 +111747,7 @@
       599,
       615,
       620,
+      621,
       631,
       634,
       635
@@ -111711,6 +111784,17 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 4,
         "time": "2:04",
+        "status": null
+      },
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Svår 6 km",
+        "place": 3,
+        "time": "44:50",
         "status": null
       },
       {
@@ -114261,7 +114345,7 @@
   },
   {
     "display_name": "Ulf K Rask",
-    "result_count": 9,
+    "result_count": 10,
     "first_date": "2021-12-31",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -114272,6 +114356,7 @@
       589,
       611,
       612,
+      621,
       623,
       635
     ],
@@ -114296,6 +114381,17 @@
         "class_name": "Mellan",
         "place": 4,
         "time": "33.23",
+        "status": null
+      },
+      {
+        "event_id": 621,
+        "event_name": "Nattcup 2026, etapp2",
+        "date": "2026-02-11",
+        "location": "Kyrkbyns skola, Orsa",
+        "type": "Natt-sprint",
+        "class_name": "Lätt 2,5 km",
+        "place": 3,
+        "time": "33:45",
         "status": null
       },
       {
