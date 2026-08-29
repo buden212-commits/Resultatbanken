@@ -18,18 +18,27 @@ function shortDate(date: string): { day: string; month: string; year: string } {
   };
 }
 
-export function EventList({ events }: { events: Event[] }) {
+export function EventList({
+  events,
+  eventIdsWithUnreasonableTimes,
+}: {
+  events: Event[];
+  eventIdsWithUnreasonableTimes?: Set<number>;
+}) {
   return (
     <ul className="space-y-3">
       {events.map((event) => {
         const dateParts = shortDate(event.date);
         const title = event.name || event.type || `Resultat ${event.id}`;
+        const hasUnreasonableTimes = eventIdsWithUnreasonableTimes?.has(event.id) ?? false;
 
         return (
           <li key={event.id}>
             <Link
               href={`/resultat/${event.id}`}
-              className="card card-hover group flex gap-4 p-4 sm:gap-5 sm:p-5"
+              className={`card card-hover group flex gap-4 p-4 sm:gap-5 sm:p-5${
+                hasUnreasonableTimes ? " ring-2 ring-red-500 bg-red-50/40" : ""
+              }`}
             >
               <div className="flex shrink-0 flex-col items-center justify-center rounded-xl bg-slate-50 px-3 py-2 text-center min-w-[3.5rem] group-hover:bg-brand-50">
                 <span className="text-lg font-bold leading-none text-slate-900">{dateParts.day}</span>

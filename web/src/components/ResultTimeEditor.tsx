@@ -5,7 +5,6 @@ import { useState } from "react";
 import { ResultTimeCell } from "@/components/ResultTimeCell";
 import {
   formatSecondsToTime,
-  isUnreasonableTime,
   isValidCorrectedTime,
   parseTimeToSeconds,
 } from "@/lib/time";
@@ -37,11 +36,7 @@ export function ResultTimeEditor({
     return <>–</>;
   }
 
-  if (!time) {
-    return <>–</>;
-  }
-
-  if (!canEdit || !isUnreasonableTime(time)) {
+  if (!canEdit) {
     return <ResultTimeCell time={time} />;
   }
 

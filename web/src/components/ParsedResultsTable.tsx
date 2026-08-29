@@ -69,6 +69,10 @@ export function ParsedResultsTable({
   canEdit?: boolean;
 }) {
   const groupedRows = useMemo(() => groupRowsByClass(rows), [rows]);
+  const eventHasUnreasonableTimes = useMemo(
+    () => rows.some((row) => isUnreasonableTime(row.time)),
+    [rows],
+  );
 
   if (rows.length === 0) {
     return null;
@@ -94,6 +98,7 @@ export function ParsedResultsTable({
                 isFirst={groupIndex === 0}
                 eventId={eventId}
                 canEdit={canEdit}
+                eventHasUnreasonableTimes={eventHasUnreasonableTimes}
               />
             ))}
           </tbody>
@@ -108,11 +113,13 @@ function GroupRows({
   isFirst,
   eventId,
   canEdit,
+  eventHasUnreasonableTimes,
 }: {
   group: { className: string; rows: ResultRow[] };
   isFirst: boolean;
   eventId?: number;
   canEdit: boolean;
+  eventHasUnreasonableTimes: boolean;
 }) {
   return (
     <>
@@ -150,7 +157,7 @@ function GroupRows({
               className={row.class_name}
               place={row.place}
               initialTime={row.time ?? ""}
-              canEdit={canEdit && eventId !== undefined}
+              canEdit={canEdit && eventHasUnreasonableTimes && eventId !== undefined}
             />
           </td>
           <td className="text-slate-500">{row.status ?? "–"}</td>

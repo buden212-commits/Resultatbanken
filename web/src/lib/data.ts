@@ -4,7 +4,7 @@ import path from "path";
 import type { Event, Person, ResultRow } from "./types";
 import { getMergedPerson, searchMergedPeople } from "./person-data";
 import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
-import { parseTimeToSeconds } from "./time";
+import { isUnreasonableTime, parseTimeToSeconds } from "./time";
 
 export { parseTimeToSeconds };
 
@@ -46,6 +46,20 @@ export type ResolvedResultRow = ResultRow & {
 
 export function getResultsForEvent(eventId: number): ResultRow[] {
   return getResultsIndex().filter((row) => row.event_id === eventId);
+}
+
+export function getEventIdsWithUnreasonableTimes(): Set<number> {
+  const eventIds = new Set<number>();
+  for (const row of getResultsIndex()) {
+    if (isUnreasonableTime(row.time)) {
+      eventIds.add(row.event_id);
+    }
+  }
+  return eventIds;
+}
+
+export function eventHasUnreasonableTimes(eventId: number): boolean {
+  return getResultsForEvent(eventId).some((row) => isUnreasonableTime(row.time));
 }
 
 export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[] {
