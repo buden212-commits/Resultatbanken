@@ -6,6 +6,7 @@ import {
   getResultsIndex,
   parseTimeToSeconds,
 } from "./data";
+import { isUnreasonableTime } from "./time";
 import { countUniquePeople, resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import { getStatsExcludedEventIds } from "./stats-exclusions";
 import { resolveEventType } from "./type-aliases";
@@ -194,7 +195,7 @@ function buildPersonAggregates(range?: { from: string; to: string }): Map<string
       aggregate.podiums += 1;
     }
 
-    if (row.time) {
+    if (row.time && !isUnreasonableTime(row.time)) {
       const seconds = parseTimeToSeconds(row.time);
       if (seconds !== null) {
         aggregate.totalTimeSeconds += seconds;
@@ -431,7 +432,10 @@ function isCompetitiveResult(result: PersonResult | ResultRow): boolean {
   if (result.status && result.status !== "deltagit") {
     return false;
   }
-  return !!result.time;
+  if (!result.time || isUnreasonableTime(result.time)) {
+    return false;
+  }
+  return true;
 }
 
 export function getPersonStats(person: Person): PersonStats {
@@ -445,7 +449,7 @@ export function getPersonStats(person: Person): PersonStats {
 
   let totalTimeSeconds = 0;
   for (const result of results) {
-    if (result.time) {
+    if (result.time && !isUnreasonableTime(result.time)) {
       const seconds = parseTimeToSeconds(result.time);
       if (seconds !== null) {
         totalTimeSeconds += seconds;

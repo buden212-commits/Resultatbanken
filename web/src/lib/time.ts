@@ -1,3 +1,5 @@
+export const MAX_REASONABLE_TIME_SECONDS = 3 * 3_600;
+
 export function parseTimeToSeconds(time: string): number | null {
   const trimmed = time.trim().replace(",", ".");
   if (!trimmed) {
@@ -59,4 +61,13 @@ export function parseTimeToSeconds(time: string): number | null {
   }
 
   return null;
+}
+
+export function isUnreasonableTime(time: string | null | undefined): boolean {
+  if (!time) {
+    return false;
+  }
+
+  const seconds = parseTimeToSeconds(time);
+  return seconds !== null && seconds > MAX_REASONABLE_TIME_SECONDS;
 }

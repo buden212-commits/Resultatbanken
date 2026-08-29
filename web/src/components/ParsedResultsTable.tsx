@@ -5,6 +5,7 @@ import { useMemo } from "react";
 
 import type { ResolvedResultRow } from "@/lib/data";
 import type { ResultRow } from "@/lib/types";
+import { ResultTimeCell } from "@/components/ResultTimeCell";
 
 const COLUMNS = [
   { key: "place", label: "Plac" },
@@ -118,7 +119,9 @@ function GroupRows({
             </Link>
           </td>
           <td className="text-slate-600">{row.class_name ?? "–"}</td>
-          <td className="font-mono text-sm text-slate-700">{row.time ?? "–"}</td>
+          <td className="font-mono text-sm text-slate-700">
+            <ResultTimeCell time={row.time} />
+          </td>
           <td className="text-slate-500">{row.status ?? "–"}</td>
         </tr>
       ))}

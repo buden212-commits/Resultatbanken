@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 
 import { parseTimeToSeconds } from "@/lib/time";
 import type { PersonResult } from "@/lib/types";
+import { ResultTimeCell } from "@/components/ResultTimeCell";
 
 type SortKey = "date" | "event_name" | "location" | "class_name" | "place" | "time";
 type SortDirection = "asc" | "desc";
@@ -134,7 +135,9 @@ export function PersonResultsTable({ results }: { results: PersonResult[] }) {
               <td className="text-slate-600">{result.location || "–"}</td>
               <td className="text-slate-600">{result.class_name || "–"}</td>
               <td className="font-medium">{result.place ?? "–"}</td>
-              <td className="font-mono text-sm">{result.status ?? result.time ?? "–"}</td>
+              <td className="font-mono text-sm">
+                <ResultTimeCell time={result.time} status={result.status} />
+              </td>
             </tr>
           ))}
         </tbody>
