@@ -97,7 +97,8 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
             <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">Mästarnas Mästare</p>
             <p className="mt-1 text-2xl font-bold text-slate-900">{awards.overall.name}</p>
             <p className="mt-1 text-sm text-slate-500">
-              {awards.overall.class_name} · {formatPoints(awards.overall.total)} p · {awards.overall.starts} starter
+              {awards.overall.class_name} · {formatPoints(awards.overall.total)} p (6 bästa) ·{" "}
+              {formatPoints(awards.overall.totalAll)} totalt · {awards.overall.starts} starter
               {overallRepeat ? " · tavla redan utdelad tidigare år" : ""}
             </p>
           </div>
@@ -106,7 +107,8 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
               <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">Bästa ungdom</p>
               <p className="mt-1 text-2xl font-bold text-slate-900">{extraYouth.name}</p>
               <p className="mt-1 text-sm text-slate-500">
-                {extraYouth.class_name} · {formatPoints(extraYouth.total)} p · {extraYouth.starts} starter
+                {extraYouth.class_name} · {formatPoints(extraYouth.total)} p (6 bästa) ·{" "}
+                {formatPoints(extraYouth.totalAll)} totalt · {extraYouth.starts} starter
               </p>
             </div>
           ) : null}

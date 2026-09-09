@@ -109,3 +109,7 @@ export function sumBestResults(values: number[], count = COUNTED_RESULTS): numbe
   const sorted = [...values].filter((value) => value > 0).sort((a, b) => b - a);
   return roundPoints(sorted.slice(0, count).reduce((sum, value) => sum + value, 0));
 }
+
+export function sumAllResults(values: number[]): number {
+  return roundPoints(values.filter((value) => value > 0).reduce((sum, value) => sum + value, 0));
+}

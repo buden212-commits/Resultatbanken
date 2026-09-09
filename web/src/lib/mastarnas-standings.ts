@@ -1,4 +1,4 @@
-import { COUNTED_RESULTS, resultPoints, sumBestResults } from "./mastarnas-points";
+import { COUNTED_RESULTS, resultPoints, sumAllResults, sumBestResults } from "./mastarnas-points";
 import type {
   MastarnasClass,
   MastarnasData,
@@ -14,20 +14,21 @@ export type StandingRow = {
   is_youth: boolean;
   place: number;
   total: number;
+  totalAll: number;
   starts: number;
   medel: number;
   byDiscipline: Record<string, number | null>;
 };
 
 const globalForStandings = globalThis as typeof globalThis & {
-  __rbStandingsBySeason?: WeakMap<MastarnasSeason, StandingRow[]>;
+  __rbStandingsBySeasonV2?: WeakMap<MastarnasSeason, StandingRow[]>;
 };
 
 function standingsBySeason(): WeakMap<MastarnasSeason, StandingRow[]> {
-  if (!globalForStandings.__rbStandingsBySeason) {
-    globalForStandings.__rbStandingsBySeason = new WeakMap();
+  if (!globalForStandings.__rbStandingsBySeasonV2) {
+    globalForStandings.__rbStandingsBySeasonV2 = new WeakMap();
   }
-  return globalForStandings.__rbStandingsBySeason;
+  return globalForStandings.__rbStandingsBySeasonV2;
 }
 
 export type SeasonAwards = {
@@ -96,6 +97,7 @@ export function computeStandings(data: MastarnasData, season: MastarnasSeason): 
       class_name: klass?.name ?? class_id,
       is_youth: klass?.is_youth ?? false,
       total: sumBestResults(values, COUNTED_RESULTS),
+      totalAll: sumAllResults(values),
       starts: values.length,
       medel: medelId ? (acc.byDiscipline[medelId] ?? 0) : 0,
       byDiscipline,

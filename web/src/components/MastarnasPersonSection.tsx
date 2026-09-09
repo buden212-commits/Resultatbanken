@@ -22,7 +22,8 @@ export function MastarnasPersonSection({ personKey }: { personKey: string }) {
               <th>År</th>
               <th>Klass</th>
               <th>Plac totalt</th>
-              <th>Poäng (6 bästa)</th>
+              <th>6 bästa</th>
+              <th>Totalt</th>
               <th>Starter</th>
             </tr>
           </thead>
@@ -37,6 +38,7 @@ export function MastarnasPersonSection({ personKey }: { personKey: string }) {
                 <td className="text-slate-600">{row.class_name}</td>
                 <td className="font-medium">{row.place}</td>
                 <td className="tabular-nums">{formatPoints(row.total)}</td>
+                <td className="text-slate-600 tabular-nums">{formatPoints(row.totalAll)}</td>
                 <td className="text-slate-600">{row.starts}</td>
               </tr>
             ))}
