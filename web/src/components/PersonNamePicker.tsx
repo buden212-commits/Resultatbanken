@@ -1,6 +1,7 @@
 "use client";
 
-import { KeyboardEvent, useCallback, useEffect, useId, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 type Suggestion = {
   person_key: string;
@@ -14,12 +15,21 @@ type Props = {
   onChange: (value: { name: string; person_key: string }) => void;
 };
 
+type MenuRect = {
+  top: number;
+  left: number;
+  width: number;
+};
+
 export function PersonNamePicker({ value, personKey, onChange }: Props) {
   const listboxId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [menuRect, setMenuRect] = useState<MenuRect | null>(null);
 
   const trimmed = value.trim();
   const showSuggestions = isOpen && trimmed.length >= 2 && suggestions.length > 0;
@@ -52,11 +62,43 @@ export function PersonNamePicker({ value, personKey, onChange }: Props) {
     return () => window.clearTimeout(timer);
   }, [value, fetchSuggestions]);
 
+  function updateMenuPosition() {
+    const input = inputRef.current;
+    if (!input) {
+      return;
+    }
+    const rect = input.getBoundingClientRect();
+    setMenuRect({
+      top: rect.bottom + 4,
+      left: rect.left,
+      width: Math.max(rect.width, 256),
+    });
+  }
+
+  useLayoutEffect(() => {
+    if (!showSuggestions) {
+      setMenuRect(null);
+      return;
+    }
+    updateMenuPosition();
+    function onScrollOrResize() {
+      updateMenuPosition();
+    }
+    window.addEventListener("scroll", onScrollOrResize, true);
+    window.addEventListener("resize", onScrollOrResize);
+    return () => {
+      window.removeEventListener("scroll", onScrollOrResize, true);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
+  }, [showSuggestions, value]);
+
   useEffect(() => {
     function onPointerDown(event: MouseEvent) {
-      if (!containerRef.current?.contains(event.target as Node)) {
-        setIsOpen(false);
+      const target = event.target as Node;
+      if (containerRef.current?.contains(target) || listRef.current?.contains(target)) {
+        return;
       }
+      setIsOpen(false);
     }
     document.addEventListener("mousedown", onPointerDown);
     return () => document.removeEventListener("mousedown", onPointerDown);
@@ -85,9 +127,41 @@ export function PersonNamePicker({ value, personKey, onChange }: Props) {
     }
   }
 
+  const suggestionList =
+    showSuggestions && menuRect && typeof document !== "undefined"
+      ? createPortal(
+          <ul
+            ref={listRef}
+            id={listboxId}
+            role="listbox"
+            style={{ top: menuRect.top, left: menuRect.left, width: menuRect.width }}
+            className="fixed z-[70] max-h-56 overflow-y-auto rounded-xl border border-slate-200 bg-white py-1 shadow-xl"
+          >
+            {suggestions.map((suggestion, index) => (
+              <li key={suggestion.person_key} role="option" aria-selected={index === activeIndex}>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => choose(suggestion)}
+                  className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm ${
+                    index === activeIndex ? "bg-brand-50 text-brand-700" : "text-slate-800 hover:bg-brand-50/70"
+                  }`}
+                >
+                  <span className="font-medium">{suggestion.display_name}</span>
+                  <span className="text-xs text-slate-500">{suggestion.result_count} resultat</span>
+                </button>
+              </li>
+            ))}
+          </ul>,
+          document.body,
+        )
+      : null;
+
   return (
     <div ref={containerRef} className="relative">
       <input
+        ref={inputRef}
         type="text"
         role="combobox"
         aria-expanded={showSuggestions}
@@ -106,33 +180,10 @@ export function PersonNamePicker({ value, personKey, onChange }: Props) {
       />
       {personKey ? (
         <p className="mt-1 text-xs text-emerald-700">Från arkivet</p>
-      ) : value.trim().length > 1 ? (
+      ) : value.trim().length > 1 && !showSuggestions ? (
         <p className="mt-1 text-xs text-slate-500">Nytt namn läggs till i cupen</p>
       ) : null}
-      {showSuggestions ? (
-        <ul
-          id={listboxId}
-          role="listbox"
-          className="absolute left-0 right-0 top-[calc(100%+0.25rem)] z-50 max-h-56 overflow-y-auto rounded-xl border border-slate-200 bg-white py-1 shadow-xl"
-        >
-          {suggestions.map((suggestion, index) => (
-            <li key={suggestion.person_key} role="option" aria-selected={index === activeIndex}>
-              <button
-                type="button"
-                tabIndex={-1}
-                onMouseDown={(event) => event.preventDefault()}
-                onClick={() => choose(suggestion)}
-                className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm ${
-                  index === activeIndex ? "bg-brand-50 text-brand-700" : "text-slate-800 hover:bg-brand-50/70"
-                }`}
-              >
-                <span className="font-medium">{suggestion.display_name}</span>
-                <span className="text-xs text-slate-500">{suggestion.result_count} resultat</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      {suggestionList}
     </div>
   );
 }

@@ -124,7 +124,7 @@ export function ClassResultsDraftTable({ rows, onChange, showManualPoints = fals
 
   return (
     <div className="space-y-3">
-      <div className="overflow-x-auto">
+      <div className="overflow-visible">
         <table className="min-w-full text-sm">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
