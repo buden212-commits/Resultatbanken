@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const nav = [
   { href: "/resultat", label: "Alla resultat" },
-  { href: "/mastarnas", label: "Mästarna" },
+  { href: "/mastarnas", label: "Mästarnas mästare" },
   { href: "/statistik", label: "Statistik" },
   { href: "/sok", label: "Sök person" },
   { href: "/ladda-upp", label: "Ladda upp" },

@@ -95,7 +95,7 @@ export async function addMastarnasClass(name: string, isYouth: boolean): Promise
   return persist(data, `Ny MM-klass: ${trimmed}`);
 }
 
-export async function addMastarnasDiscipline(name: string, isMedel = false): Promise<MastarnasDeploy> {
+export async function addMastarnasDiscipline(name: string, isMedel = false, year?: number): Promise<MastarnasDeploy> {
   const trimmed = name.trim();
   if (!trimmed) {
     throw new Error("Grennamn krävs.");
@@ -111,6 +111,20 @@ export async function addMastarnasDiscipline(name: string, isMedel = false): Pro
     : data.disciplines;
   disciplines.push({ id, name: trimmed, sort_order, is_medel: isMedel });
   data.disciplines = disciplines;
+
+  if (year) {
+    const season = data.seasons.find((item) => item.year === year);
+    if (season && !season.events.some((event) => event.discipline_id === id)) {
+      season.events.push({
+        id: `${year}-${id}`,
+        discipline_id: id,
+        name: trimmed,
+        date: "",
+        results: [],
+      });
+    }
+  }
+
   return persist(data, `Ny MM-gren: ${trimmed}`);
 }
 
@@ -195,6 +209,10 @@ export async function saveMastarnasClassResults(
       throw new Error(`${name} är redan tillagd i klassen.`);
     }
     seen.add(personKey);
+    const points =
+      row.points === undefined || row.points === null || Number.isNaN(Number(row.points))
+        ? null
+        : Number(row.points);
     next.push({
       id: crypto.randomUUID(),
       person_key: personKey,
@@ -202,7 +220,7 @@ export async function saveMastarnasClassResults(
       class_id: classId,
       place: status === "ok" ? row.place : row.place,
       status,
-      points: null,
+      points,
     });
   }
 

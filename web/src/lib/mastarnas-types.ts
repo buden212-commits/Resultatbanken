@@ -48,4 +48,5 @@ export type MastarnasResultInput = {
   name: string;
   place: number | null;
   status: MastarnasStatus;
+  points?: number | null;
 };

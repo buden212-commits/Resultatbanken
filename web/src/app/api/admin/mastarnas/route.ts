@@ -59,7 +59,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, deploy });
     }
     if (action === "addDiscipline") {
-      const deploy = await addMastarnasDiscipline(String(body.name ?? ""), Boolean(body.is_medel));
+      const deploy = await addMastarnasDiscipline(
+        String(body.name ?? ""),
+        Boolean(body.is_medel),
+        Number.isInteger(body.year) ? Number(body.year) : undefined,
+      );
       return NextResponse.json({ ok: true, deploy });
     }
     if (action === "upsertEvent") {

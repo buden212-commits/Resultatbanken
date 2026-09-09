@@ -5,9 +5,11 @@ import type { MastarnasDiscipline } from "@/lib/mastarnas-types";
 import type { StandingRow } from "@/lib/mastarnas-standings";
 
 export function MastarnasStandingsTable({
+  year,
   rows,
   disciplines,
 }: {
+  year: number;
   rows: StandingRow[];
   disciplines: MastarnasDiscipline[];
 }) {
@@ -31,7 +33,11 @@ export function MastarnasStandingsTable({
             <th>Klass</th>
             <th>Summa</th>
             {used.map((discipline) => (
-              <th key={discipline.id}>{discipline.name}</th>
+              <th key={discipline.id}>
+                <Link href={`/mastarnas/${year}?gren=${encodeURIComponent(discipline.id)}`} className="hover:text-brand-800">
+                  {discipline.name}
+                </Link>
+              </th>
             ))}
             <th>Starter</th>
           </tr>
@@ -49,7 +55,16 @@ export function MastarnasStandingsTable({
               <td className="font-semibold tabular-nums">{formatPoints(row.total)}</td>
               {used.map((discipline) => (
                 <td key={discipline.id} className="font-mono text-slate-700 tabular-nums">
-                  {row.byDiscipline[discipline.id] != null ? formatPoints(row.byDiscipline[discipline.id] as number) : ""}
+                  {row.byDiscipline[discipline.id] != null ? (
+                    <Link
+                      href={`/mastarnas/${year}?gren=${encodeURIComponent(discipline.id)}`}
+                      className="hover:text-brand-800"
+                    >
+                      {formatPoints(row.byDiscipline[discipline.id] as number)}
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </td>
               ))}
               <td className="text-slate-600 tabular-nums">{row.starts}</td>

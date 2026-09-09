@@ -139,6 +139,10 @@ export function standingsForClass(rows: StandingRow[], classId: string | null): 
   return assignStandingPlaces(filtered);
 }
 
+export function standingsForYouth(rows: StandingRow[]): StandingRow[] {
+  return assignStandingPlaces(rows.filter((row) => row.is_youth));
+}
+
 export function getSeasonAwards(
   data: MastarnasData,
   year: number,
