@@ -1,26 +1,32 @@
 import fs from "fs";
 import path from "path";
 
+import { readCachedJsonIfExists } from "./json-cache";
 import type { PersonAliasGroup } from "./types";
 
 const ALIASES_PATH = path.join(process.cwd(), "..", "data", "person-aliases.json");
 
 function readGroups(): PersonAliasGroup[] {
-  if (!fs.existsSync(ALIASES_PATH)) {
-    return [];
-  }
-  return JSON.parse(fs.readFileSync(ALIASES_PATH, "utf-8")) as PersonAliasGroup[];
+  return readCachedJsonIfExists<PersonAliasGroup[]>(ALIASES_PATH, []);
 }
 
+let lookupCache: { groups: PersonAliasGroup[]; lookup: Map<string, { canonical_key: string; display_name: string }> } | null =
+  null;
+
 function buildLookup(): Map<string, { canonical_key: string; display_name: string }> {
+  const groups = readGroups();
+  if (lookupCache && lookupCache.groups === groups) {
+    return lookupCache.lookup;
+  }
   const lookup = new Map<string, { canonical_key: string; display_name: string }>();
-  for (const group of readGroups()) {
+  for (const group of groups) {
     const entry = { canonical_key: group.canonical_key, display_name: group.display_name };
     lookup.set(group.canonical_key, entry);
     for (const alias of group.alias_keys) {
       lookup.set(alias, entry);
     }
   }
+  lookupCache = { groups, lookup };
   return lookup;
 }
 

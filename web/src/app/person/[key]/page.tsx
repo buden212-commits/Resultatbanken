@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 import { BackLink } from "@/components/PageHeader";
+import { MastarnasPersonSection } from "@/components/MastarnasPersonSection";
 import { PersonResultsTable } from "@/components/PersonResultsTable";
 import { StatsBarChart, StatsCountTable } from "@/components/StatsSections";
 import { StatCard } from "@/components/ui";
@@ -142,6 +143,8 @@ export default async function PersonPage({ params }: Props) {
           ) : null}
         </section>
       )}
+
+      <MastarnasPersonSection personKey={person.person_key} />
 
       <section className="mt-10">
         <h2 className="mb-4 text-lg font-bold text-slate-900">Resultathistorik</h2>

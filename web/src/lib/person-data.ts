@@ -1,7 +1,7 @@
-import fs from "fs";
 import path from "path";
 
 import type { Person, PersonResult } from "./types";
+import { readCachedJson } from "./json-cache";
 import {
   getKeysForGroup,
   resolveDisplayName,
@@ -10,10 +10,26 @@ import {
 
 const DATA_DIR = path.join(process.cwd(), "..", "data");
 
+const globalForPeopleIndex = globalThis as typeof globalThis & {
+  __rbPeopleByKey?: WeakMap<Person[], Map<string, Person>>;
+};
+
 function getPeopleIndex(): Person[] {
-  return JSON.parse(
-    fs.readFileSync(path.join(DATA_DIR, "people-index.json"), "utf-8"),
-  ) as Person[];
+  return readCachedJson<Person[]>(path.join(DATA_DIR, "people-index.json"));
+}
+
+function getPeopleByKey(): Map<string, Person> {
+  const index = getPeopleIndex();
+  if (!globalForPeopleIndex.__rbPeopleByKey) {
+    globalForPeopleIndex.__rbPeopleByKey = new WeakMap();
+  }
+  const cached = globalForPeopleIndex.__rbPeopleByKey.get(index);
+  if (cached) {
+    return cached;
+  }
+  const byKey = new Map(index.map((person) => [person.person_key, person]));
+  globalForPeopleIndex.__rbPeopleByKey.set(index, byKey);
+  return byKey;
 }
 
 function mergePeople(people: Person[], canonicalKey: string, displayName: string): Person {
@@ -67,8 +83,9 @@ function mergePeople(people: Person[], canonicalKey: string, displayName: string
 export function getMergedPerson(key: string): Person | undefined {
   const canonicalKey = resolvePersonKey(key);
   const keys = getKeysForGroup(canonicalKey);
+  const byKey = getPeopleByKey();
   const people = keys
-    .map((personKey) => getPeopleIndex().find((person) => person.person_key === personKey))
+    .map((personKey) => byKey.get(personKey))
     .filter((person): person is Person => !!person);
 
   if (people.length === 0) {

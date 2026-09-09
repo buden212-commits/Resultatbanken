@@ -4,6 +4,8 @@ import path from "path";
 import type { Event, Person, ResultRow } from "./types";
 import { derivePlaces } from "./derive-places";
 import { getMergedPerson, searchMergedPeople } from "./person-data";
+import { getMastarnasOnlyPerson, searchMastarnasPeople } from "./mastarnas";
+import { readCachedJson } from "./json-cache";
 import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import { isUnreasonableTime, parseTimeToSeconds } from "./time";
 
@@ -47,7 +49,7 @@ const DATA_DIR = path.join(process.cwd(), "..", "data");
 const CONTENT_DIR = path.join(DATA_DIR, "content");
 
 function readJson<T>(filename: string): T {
-  return JSON.parse(fs.readFileSync(path.join(DATA_DIR, filename), "utf-8")) as T;
+  return readCachedJson<T>(path.join(DATA_DIR, filename));
 }
 
 export function getEvents(): Event[] {
@@ -67,11 +69,16 @@ export function getPeopleIndex(): Person[] {
 }
 
 export function getPerson(key: string): Person | undefined {
-  return getMergedPerson(key);
+  return getMergedPerson(key) ?? getMastarnasOnlyPerson(key);
 }
 
 export function searchPeople(query: string): Person[] {
-  return searchMergedPeople(query);
+  const merged = searchMergedPeople(query);
+  const seen = new Set(merged.map((person) => person.person_key));
+  const extra = searchMastarnasPeople(query).filter((person) => !seen.has(person.person_key));
+  return [...merged, ...extra]
+    .sort((a, b) => a.display_name.localeCompare(b.display_name, "sv"))
+    .slice(0, 50);
 }
 
 export type ResolvedResultRow = ResultRow & {

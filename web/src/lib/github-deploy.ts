@@ -383,6 +383,40 @@ export async function fetchTypeAliasesFromGitHub(): Promise<TypeAliasGroup[]> {
   }
 }
 
+export async function fetchMastarnasFromGitHub(): Promise<import("./mastarnas-types").MastarnasData> {
+  const config = getGitHubConfig();
+  if (!config) {
+    throw new Error("Git-deploy är inte konfigurerat.");
+  }
+
+  try {
+    const raw = await fetchRawFileFromGitHub(config, "data/mastarnas.json");
+    return JSON.parse(raw) as import("./mastarnas-types").MastarnasData;
+  } catch {
+    const { emptyMastarnasData } = await import("./mastarnas-defaults");
+    return emptyMastarnasData();
+  }
+}
+
+export async function publishMastarnasToGitHub(
+  data: import("./mastarnas-types").MastarnasData,
+  message: string,
+): Promise<{ ok: boolean; message: string; commitSha?: string }> {
+  const content = `${JSON.stringify(data, null, 2)}\n`;
+  const { commitSha, branch } = await commitFilesToGitHub(
+    [{ path: "data/mastarnas.json", content }],
+    message,
+  );
+
+  const build = await triggerProductionDeploy();
+
+  return {
+    ok: build.ok,
+    message: `${build.message} (commit ${commitSha.slice(0, 7)} på ${branch})`,
+    commitSha,
+  };
+}
+
 export async function publishTypeAliasesToGitHub(
   groups: TypeAliasGroup[],
   message: string,

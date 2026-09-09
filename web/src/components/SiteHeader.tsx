@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const nav = [
   { href: "/resultat", label: "Alla resultat" },
+  { href: "/mastarnas", label: "Mästarna" },
   { href: "/statistik", label: "Statistik" },
   { href: "/sok", label: "Sök person" },
   { href: "/ladda-upp", label: "Ladda upp" },
@@ -24,7 +25,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-2">
+        <nav className="flex flex-wrap items-center justify-end gap-1 sm:gap-2">
           {nav.map((item) => (
             <Link
               key={item.href}
