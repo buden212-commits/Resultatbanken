@@ -779,8 +779,342 @@
           "id": "2026-terrang",
           "discipline_id": "terrang",
           "name": "Terräng",
-          "date": "",
-          "results": []
+          "date": "2026-09-02",
+          "results": [
+            {
+              "id": "1d920167-2f32-4177-adc3-fd59bb990274",
+              "person_key": "alice-eggoy-markhester",
+              "name": "Alice Eggöy Markhester",
+              "class_id": "d12",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "09261157-7482-41bf-a10b-2eb0a5c3e65f",
+              "person_key": "elin-wrahme",
+              "name": "Elin Wrahme",
+              "class_id": "d12",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "a9740158-63d1-4cdf-aa2c-fceea97d6c64",
+              "person_key": "minna-wrahme",
+              "name": "Minna Wrahme",
+              "class_id": "d12",
+              "place": 3,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "aaca4771-9d38-476c-8fa4-7461d759de47",
+              "person_key": "amelie-hamelius",
+              "name": "Amelie Hamelius",
+              "class_id": "d12",
+              "place": 4,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "be789c14-56a2-4c5f-998a-92765b436c2c",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d16",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "7caa9217-a80b-4681-af88-547d1dd5c696",
+              "person_key": "eva-huber-svensson",
+              "name": "Eva Huber-Svensson",
+              "class_id": "d17-34",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "5e437afc-8027-4405-8bfd-f7e666515803",
+              "person_key": "matilda-jonsson-alund",
+              "name": "Matilda Jonsson Ålund",
+              "class_id": "d35",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "2136b79b-a92d-46cc-87a4-82631423e82e",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csúcs-Fenyvesi",
+              "class_id": "d35",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "b2d760b9-1f53-45f7-a8b9-be116814085d",
+              "person_key": "lena-hermansson",
+              "name": "Lena Hermansson",
+              "class_id": "d45",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "20766b5f-7d7d-4933-ba1d-5d007203912f",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "2dd77b15-e2a0-496f-917f-84966a290113",
+              "person_key": "kane-andersson",
+              "name": "Kane Andersson",
+              "class_id": "d65",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "852a0b66-b0d0-4b81-bb47-97b8eb60848e",
+              "person_key": "siv-svahn",
+              "name": "Siv Svahn",
+              "class_id": "d65",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "00f30806-4fe6-465a-a326-b315bb49795e",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csúcs",
+              "class_id": "h10",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "aa10d744-d6c4-4bab-97c9-a268d64c6619",
+              "person_key": "erik-csucs",
+              "name": "Erik Csúcs",
+              "class_id": "h10",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "dd4e9065-5353-4141-89a2-97a5f6ac67fa",
+              "person_key": "william-rost",
+              "name": "William Rost",
+              "class_id": "h10",
+              "place": 3,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "3a1f2cfb-3aaf-4392-8f8b-40b9538d92ed",
+              "person_key": "martin-ryapolov",
+              "name": "Martin Ryapolov",
+              "class_id": "h12",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "36b40ebd-273b-4cea-94ab-cd367b6b2112",
+              "person_key": "oskar-hermansson",
+              "name": "Oskar Hermansson",
+              "class_id": "h12",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "2216261a-a949-42a3-8e69-031670bc16ff",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h16",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "43745ab3-5e3c-46aa-bfaa-d6e629926915",
+              "person_key": "roman-ryapolov",
+              "name": "Roman Ryapolov",
+              "class_id": "h35",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "2e199116-422f-4acd-bbae-081754758a40",
+              "person_key": "erik-rost",
+              "name": "Erik Rost",
+              "class_id": "h35",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "8779e84f-a69f-47be-8a9e-61aad3f43a4c",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": 3,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "a9463180-0a41-468e-97ee-831da2b3e2e0",
+              "person_key": "johan-hamelius",
+              "name": "Johan Hamelius",
+              "class_id": "h35",
+              "place": 4,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "33524cd1-3814-4eb8-a39f-1060bb90cda8",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csúcs",
+              "class_id": "h35",
+              "place": 5,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "b2c86a8b-8115-494b-bc8c-b29fa9106d4e",
+              "person_key": "thomas-hermansson",
+              "name": "Thomas Hermansson",
+              "class_id": "h45",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "c15b9898-6ffa-4e9c-87b3-a933ab51304d",
+              "person_key": "bjorn-kajs",
+              "name": "Björn Kajs",
+              "class_id": "h45",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "53e99575-391d-4fe9-b6f7-9805fe889a0f",
+              "person_key": "bjorn-wrahme",
+              "name": "Björn Wrahme",
+              "class_id": "h45",
+              "place": 3,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "c1707060-a645-4779-a3cb-57c8c58ab606",
+              "person_key": "edward-larsson",
+              "name": "Edward Larsson",
+              "class_id": "h45",
+              "place": 4,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "c4611c41-234b-4324-a775-e6475be40096",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "12349bde-07cb-4b5b-8fcb-153cd929d448",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "93bf7add-31c6-415e-91ec-5a75a6756cc8",
+              "person_key": "henrik-jonsson",
+              "name": "Henrik Jonsson",
+              "class_id": "h55",
+              "place": 3,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "eb93be99-1d29-43ce-8bb0-53fa5a662503",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": 4,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "b7be77f0-751b-4eab-a8fe-4f7770801e1c",
+              "person_key": "bjorn-albinsson",
+              "name": "Björn Albinsson",
+              "class_id": "h55",
+              "place": 5,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "179f75ff-8700-43ef-b7e3-f8c457d10b2a",
+              "person_key": "borje-liljekvist",
+              "name": "Börje Liljekvist",
+              "class_id": "h65",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "d4f8c27c-d4d2-438d-9c27-f30a1f05bb72",
+              "person_key": "anders-thomee",
+              "name": "Anders Thomée",
+              "class_id": "h65",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "5213b169-1fd4-4a4f-9b42-cd461020c63b",
+              "person_key": "lennart-akerstrom",
+              "name": "Lennart Åkerström",
+              "class_id": "h75",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "5370a825-4a28-4bf8-a6a4-76b1f215a8c0",
+              "person_key": "yngve-karlsson",
+              "name": "Yngve Karlsson",
+              "class_id": "h75",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "4d3c2f60-5020-4a3f-9e86-f16507d1a72e",
+              "person_key": "kea",
+              "name": "KEA",
+              "class_id": "h75",
+              "place": 3,
+              "status": "ok",
+              "points": null
+            }
+          ]
         },
         {
           "id": "2026-natt",
@@ -56328,6 +56662,9 @@
     "H45": "h45",
     "H55": "h55",
     "H65": "h65",
-    "H75": "h75"
+    "H75": "h75",
+    "D16": "d16",
+    "D17-34": "d17-34",
+    "D65": "d65"
   }
 }
