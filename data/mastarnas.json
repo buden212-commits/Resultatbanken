@@ -26,6 +26,11 @@
       "is_youth": false
     },
     {
+      "id": "d18",
+      "name": "D18",
+      "is_youth": false
+    },
+    {
       "id": "d21",
       "name": "D21",
       "is_youth": false
@@ -185,6 +190,4097 @@
     }
   ],
   "seasons": [
+    {
+      "year": 2025,
+      "events": [
+        {
+          "id": "2025-skidor",
+          "discipline_id": "skidor",
+          "name": "Skidor",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-skidor-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-henrik-johnsson-h55",
+              "person_key": "henrik-johnsson",
+              "name": "Henrik Johnsson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-martin-bratt-h45",
+              "person_key": "martin-bratt",
+              "name": "Martin Bratt",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-alice-eggoy-markhester-d12",
+              "person_key": "alice-eggoy-markhester",
+              "name": "Alice Eggöy Markhester",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-tage-bratt-h12",
+              "person_key": "tage-bratt",
+              "name": "Tage Bratt",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-sofie-wuopio-kvarnstrom-d10",
+              "person_key": "sofie-wuopio-kvarnstrom",
+              "name": "Sofie Wuopio Kvarnström",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-wilma-hermansson-d14",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-oskar-hermansson-h10",
+              "person_key": "oskar-hermansson",
+              "name": "Oskar Hermansson",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skidor-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-vendela-bratt-d14",
+              "person_key": "vendela-bratt",
+              "name": "Vendela Bratt",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-thomas-sparr-h55",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skidor-edit-thoris-d10",
+              "person_key": "edit-thoris",
+              "name": "Edit Thoris",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skidor-erik-csucs-h10",
+              "person_key": "erik-csucs",
+              "name": "Erik Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-skidor-laura-csucs-fenyvesi-d35",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csucs-Fenyvesi",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skidor-lars-erik-tjader-h75",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-jonas-alund-h35",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-simon-hodler-h35",
+              "person_key": "simon-hodler",
+              "name": "Simon Hodler",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skidor-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-skidor-magnus-granlund-h45",
+              "person_key": "magnus-granlund",
+              "name": "Magnus Granlund",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-elin-wrahme-d12",
+              "person_key": "elin-wrahme",
+              "name": "Elin Wrahme",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-erik-klockar-h17-34",
+              "person_key": "erik-klockar",
+              "name": "Erik Klockar",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-thomas-hermansson-h45",
+              "person_key": "thomas-hermansson",
+              "name": "Thomas Hermansson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skidor-sara-hodler-d35",
+              "person_key": "sara-hodler",
+              "name": "Sara Hodler",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-birk-hodler-h10",
+              "person_key": "birk-hodler",
+              "name": "Birk Hodler",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-oskar-wrahme-h10",
+              "person_key": "oskar-wrahme",
+              "name": "Oskar Wrahme",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-skidor-lena-hermansson-d45",
+              "person_key": "lena-hermansson",
+              "name": "Lena Hermansson",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-michaela-metelkova-d17-34",
+              "person_key": "michaela-metelkova",
+              "name": "Michaela Metelkova",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-lena-karlsson-holmer-d45",
+              "person_key": "lena-karlsson-holmer",
+              "name": "Lena Karlsson Holmer",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skidor-linus-rapp-h17-34",
+              "person_key": "linus-rapp",
+              "name": "Linus Rapp",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skidor-my-hodler-d10",
+              "person_key": "my-hodler",
+              "name": "My Hodler",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-skidor-alma-bratt-d10",
+              "person_key": "alma-bratt",
+              "name": "Alma Bratt",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skidor-bjorn-wrahme-h45",
+              "person_key": "bjorn-wrahme",
+              "name": "Björn Wrahme",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-skidor-erik-wadman-h65",
+              "person_key": "erik-wadman",
+              "name": "Erik Wadman",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skidor-sofie-karlsson-holmer-d17-34",
+              "person_key": "sofie-karlsson-holmer",
+              "name": "Sofie Karlsson-Holmer",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skidor-agnes-bratt-d35",
+              "person_key": "agnes-bratt",
+              "name": "Agnes Bratt",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-skidor-magnus-wrahme-h45",
+              "person_key": "magnus-wrahme",
+              "name": "Magnus Wrahme",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-skidor-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-skidor-elsa-hermansson-d18",
+              "person_key": "elsa-hermansson",
+              "name": "Elsa Hermansson",
+              "class_id": "d18",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skidor-henrik-karlsson-holmer-h45",
+              "person_key": "henrik-karlsson-holmer",
+              "name": "Henrik Karlsson Holmer",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skidor-peter-hermansson-okand",
+              "person_key": "peter-hermansson",
+              "name": "Peter Hermansson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skidor-annelie-hermansson-okand",
+              "person_key": "annelie-hermansson",
+              "name": "Annelie Hermansson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            }
+          ]
+        },
+        {
+          "id": "2025-skid-o",
+          "discipline_id": "skid-o",
+          "name": "Skid-o",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-skid-o-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skid-o-henrik-johnsson-h55",
+              "person_key": "henrik-johnsson",
+              "name": "Henrik Johnsson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skid-o-martin-bratt-h45",
+              "person_key": "martin-bratt",
+              "name": "Martin Bratt",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skid-o-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-tage-bratt-h12",
+              "person_key": "tage-bratt",
+              "name": "Tage Bratt",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-vendela-bratt-d14",
+              "person_key": "vendela-bratt",
+              "name": "Vendela Bratt",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-erik-csucs-h10",
+              "person_key": "erik-csucs",
+              "name": "Erik Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-laura-csucs-fenyvesi-d35",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csucs-Fenyvesi",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skid-o-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-simon-hodler-h35",
+              "person_key": "simon-hodler",
+              "name": "Simon Hodler",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 14.0
+            },
+            {
+              "id": "2025-skid-o-magnus-granlund-h45",
+              "person_key": "magnus-granlund",
+              "name": "Magnus Granlund",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-elin-wrahme-d12",
+              "person_key": "elin-wrahme",
+              "name": "Elin Wrahme",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-erik-klockar-h17-34",
+              "person_key": "erik-klockar",
+              "name": "Erik Klockar",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skid-o-sara-hodler-d35",
+              "person_key": "sara-hodler",
+              "name": "Sara Hodler",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-lina-berggren-d55",
+              "person_key": "lina-berggren",
+              "name": "Lina Berggren",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-birk-hodler-h10",
+              "person_key": "birk-hodler",
+              "name": "Birk Hodler",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-lena-hermansson-d45",
+              "person_key": "lena-hermansson",
+              "name": "Lena Hermansson",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-minna-wrahme-d10",
+              "person_key": "minna-wrahme",
+              "name": "Minna Wrahme",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-michaela-metelkova-d17-34",
+              "person_key": "michaela-metelkova",
+              "name": "Michaela Metelkova",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-lena-karlsson-holmer-d45",
+              "person_key": "lena-karlsson-holmer",
+              "name": "Lena Karlsson Holmer",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-linus-rapp-h17-34",
+              "person_key": "linus-rapp",
+              "name": "Linus Rapp",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-skid-o-erik-rost-h17-34",
+              "person_key": "erik-rost",
+              "name": "Erik Rost",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-skid-o-bjorn-wrahme-h45",
+              "person_key": "bjorn-wrahme",
+              "name": "Björn Wrahme",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-jonas-buud-h45",
+              "person_key": "jonas-buud",
+              "name": "Jonas Buud",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skid-o-gustav-johnsson-h17-34",
+              "person_key": "gustav-johnsson",
+              "name": "Gustav Johnsson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-kent-berggren-h55",
+              "person_key": "kent-berggren",
+              "name": "Kent Berggren",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-erik-wadman-h65",
+              "person_key": "erik-wadman",
+              "name": "Erik Wadman",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-sofie-karlsson-holmer-d17-34",
+              "person_key": "sofie-karlsson-holmer",
+              "name": "Sofie Karlsson-Holmer",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-elisabeth-akarbjar-d45",
+              "person_key": "elisabeth-akarbjar",
+              "name": "Elisabeth Åkärbjär",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skid-o-magnus-wrahme-h45",
+              "person_key": "magnus-wrahme",
+              "name": "Magnus Wrahme",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-skid-o-lillian-palm-d17-34",
+              "person_key": "lillian-palm",
+              "name": "Lillian Palm",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skid-o-andrey-lamov-h17-34",
+              "person_key": "andrey-lamov",
+              "name": "Andrey Lamov",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-skid-o-hanna-eriksson-d17-34",
+              "person_key": "hanna-eriksson",
+              "name": "Hanna Eriksson",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-olivia-hermansson-d18",
+              "person_key": "olivia-hermansson",
+              "name": "Olivia Hermansson",
+              "class_id": "d18",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-jonathan-stahl-h17-34",
+              "person_key": "jonathan-stahl",
+              "name": "Jonathan Ståhl",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-skid-o-hanna-rost-d17-34",
+              "person_key": "hanna-rost",
+              "name": "Hanna Rost",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-skid-o-erik-larsson-h17-34",
+              "person_key": "erik-larsson",
+              "name": "Erik Larsson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-skid-o-susanna-wrahme-h45",
+              "person_key": "susanna-wrahme",
+              "name": "Susanna Wrahme",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            }
+          ]
+        },
+        {
+          "id": "2025-indoor",
+          "discipline_id": "indoor",
+          "name": "Indoor",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-indoor-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-henrik-johnsson-h55",
+              "person_key": "henrik-johnsson",
+              "name": "Henrik Johnsson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-kane-andersson-d65",
+              "person_key": "kane-andersson",
+              "name": "Kane Andersson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-sofie-wuopio-kvarnstrom-d10",
+              "person_key": "sofie-wuopio-kvarnstrom",
+              "name": "Sofie Wuopio Kvarnström",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-wilma-hermansson-d14",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-edit-thoris-d10",
+              "person_key": "edit-thoris",
+              "name": "Edit Thoris",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-erik-csucs-h10",
+              "person_key": "erik-csucs",
+              "name": "Erik Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-laura-csucs-fenyvesi-d35",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csucs-Fenyvesi",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-indoor-leo-ryapolov-h14",
+              "person_key": "leo-ryapolov",
+              "name": "Leo Ryapolov",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-martin-ryapolov-h10",
+              "person_key": "martin-ryapolov",
+              "name": "Martin Ryapolov",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-jonas-alund-h35",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-magnus-granlund-h45",
+              "person_key": "magnus-granlund",
+              "name": "Magnus Granlund",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-lennart-akerstrom-h65",
+              "person_key": "lennart-akerstrom",
+              "name": "Lennart Åkerström",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-mats-lagerblad-h65",
+              "person_key": "mats-lagerblad",
+              "name": "Mats Lagerblad",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-indoor-thomas-hermansson-h45",
+              "person_key": "thomas-hermansson",
+              "name": "Thomas Hermansson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-hans-johansson-h75",
+              "person_key": "hans-johansson",
+              "name": "Hans Johansson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-edward-larsson-h45",
+              "person_key": "edward-larsson",
+              "name": "Edward Larsson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-pia-frost-d55",
+              "person_key": "pia-frost",
+              "name": "Pia Frost",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-orjan-svahn-h65",
+              "person_key": "orjan-svahn",
+              "name": "Örjan Svahn",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-anders-claesson-h75",
+              "person_key": "anders-claesson",
+              "name": "Anders Claesson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-annlouise-almqvist-d55",
+              "person_key": "annlouise-almqvist",
+              "name": "Annlouise Almqvist",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-gustav-johnsson-h17-34",
+              "person_key": "gustav-johnsson",
+              "name": "Gustav Johnsson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-matilda-jonsson-d35",
+              "person_key": "matilda-jonsson",
+              "name": "Matilda Jonsson",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-berit-gummus-d55",
+              "person_key": "berit-gummus",
+              "name": "Berit Gummus",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-linnea-carlsson-d65",
+              "person_key": "linnea-carlsson",
+              "name": "Linnea Carlsson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-conny-eriksson-h55",
+              "person_key": "conny-eriksson",
+              "name": "Conny Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-indoor-elisabeth-akarbjar-d45",
+              "person_key": "elisabeth-akarbjar",
+              "name": "Elisabeth Åkärbjär",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-annika-bjorklund-d55",
+              "person_key": "annika-bjorklund",
+              "name": "Annika Björklund",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-ulla-svahn-d65",
+              "person_key": "ulla-svahn",
+              "name": "Ulla Svahn",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-lars-ambrosiusson-h65",
+              "person_key": "lars-ambrosiusson",
+              "name": "Lars Ambrosiusson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-indoor-maria-danielsson-d45",
+              "person_key": "maria-danielsson",
+              "name": "Maria Danielsson",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-alfred-danielsson-h17-34",
+              "person_key": "alfred-danielsson",
+              "name": "Alfred Danielsson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-hans-alin-h45",
+              "person_key": "hans-alin",
+              "name": "Hans Alin",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-maja-falk-d17-34",
+              "person_key": "maja-falk",
+              "name": "Maja Falk",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-katarina-svahn-d35",
+              "person_key": "katarina-svahn",
+              "name": "Katarina Svahn",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-thobias-brodin-h17-34",
+              "person_key": "thobias-brodin",
+              "name": "Thobias Brodin",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-indoor-maffe-frost-h65",
+              "person_key": "maffe-frost",
+              "name": "Maffe Frost",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-sara-kindlund-d17-34",
+              "person_key": "sara-kindlund",
+              "name": "Sara Kindlund",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-indoor-roman-ryapolov-h35",
+              "person_key": "roman-ryapolov",
+              "name": "Roman Ryapolov",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-indoor-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-indoor-sofia-osterdahl-d45",
+              "person_key": "sofia-osterdahl",
+              "name": "Sofia Österdahl",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-indoor-sebastian-alin-h17-34",
+              "person_key": "sebastian-alin",
+              "name": "Sebastian Alin",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            }
+          ]
+        },
+        {
+          "id": "2025-medel",
+          "discipline_id": "medel",
+          "name": "Medel",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-medel-martin-bratt-h45",
+              "person_key": "martin-bratt",
+              "name": "Martin Bratt",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-kane-andersson-d65",
+              "person_key": "kane-andersson",
+              "name": "Kane Andersson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-alice-eggoy-markhester-d12",
+              "person_key": "alice-eggoy-markhester",
+              "name": "Alice Eggöy Markhester",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-tage-bratt-h12",
+              "person_key": "tage-bratt",
+              "name": "Tage Bratt",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-sofie-wuopio-kvarnstrom-d10",
+              "person_key": "sofie-wuopio-kvarnstrom",
+              "name": "Sofie Wuopio Kvarnström",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-wilma-hermansson-d14",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-oskar-hermansson-h10",
+              "person_key": "oskar-hermansson",
+              "name": "Oskar Hermansson",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-vendela-bratt-d14",
+              "person_key": "vendela-bratt",
+              "name": "Vendela Bratt",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-thomas-sparr-h55",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-edit-thoris-d10",
+              "person_key": "edit-thoris",
+              "name": "Edit Thoris",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-lars-erik-tjader-h75",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-yngve-karlsson-h75",
+              "person_key": "yngve-karlsson",
+              "name": "Yngve Karlsson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-leo-ryapolov-h14",
+              "person_key": "leo-ryapolov",
+              "name": "Leo Ryapolov",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-medel-martin-ryapolov-h10",
+              "person_key": "martin-ryapolov",
+              "name": "Martin Ryapolov",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-jonas-alund-h35",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-sixten-buud-h16",
+              "person_key": "sixten-buud",
+              "name": "Sixten Buud",
+              "class_id": "h16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-medel-magnus-granlund-h45",
+              "person_key": "magnus-granlund",
+              "name": "Magnus Granlund",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-medel-elin-wrahme-d12",
+              "person_key": "elin-wrahme",
+              "name": "Elin Wrahme",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-lennart-akerstrom-h65",
+              "person_key": "lennart-akerstrom",
+              "name": "Lennart Åkerström",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-medel-anders-thomee-h65",
+              "person_key": "anders-thomee",
+              "name": "Anders Thomee",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-mats-lagerblad-h65",
+              "person_key": "mats-lagerblad",
+              "name": "Mats Lagerblad",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-elvira-buud-d16",
+              "person_key": "elvira-buud",
+              "name": "Elvira Buud",
+              "class_id": "d16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-edward-larsson-h45",
+              "person_key": "edward-larsson",
+              "name": "Edward Larsson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-lina-berggren-d55",
+              "person_key": "lina-berggren",
+              "name": "Lina Berggren",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-anki-pousette-d55",
+              "person_key": "anki-pousette",
+              "name": "Anki Pousette",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-medel-orjan-svahn-h65",
+              "person_key": "orjan-svahn",
+              "name": "Örjan Svahn",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-medel-oskar-wrahme-h10",
+              "person_key": "oskar-wrahme",
+              "name": "Oskar Wrahme",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-heinz-eric-develius-h65",
+              "person_key": "heinz-eric-develius",
+              "name": "Heinz-Eric Develius",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-medel-anders-claesson-h75",
+              "person_key": "anders-claesson",
+              "name": "Anders Claesson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-lena-hermansson-d45",
+              "person_key": "lena-hermansson",
+              "name": "Lena Hermansson",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-minna-wrahme-d10",
+              "person_key": "minna-wrahme",
+              "name": "Minna Wrahme",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-michaela-metelkova-d17-34",
+              "person_key": "michaela-metelkova",
+              "name": "Michaela Metelkova",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-anders-oberg-h65",
+              "person_key": "anders-oberg",
+              "name": "Anders Öberg",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-annlouise-almqvist-d55",
+              "person_key": "annlouise-almqvist",
+              "name": "Annlouise Almqvist",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-erik-rost-h17-34",
+              "person_key": "erik-rost",
+              "name": "Erik Rost",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-gustav-johnsson-h17-34",
+              "person_key": "gustav-johnsson",
+              "name": "Gustav Johnsson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-kent-berggren-h55",
+              "person_key": "kent-berggren",
+              "name": "Kent Berggren",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-eric-wuopio-kvarnstrom-h10",
+              "person_key": "eric-wuopio-kvarnstrom",
+              "name": "Eric Wuopio Kvarnström",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-anders-sandberg-h35",
+              "person_key": "anders-sandberg",
+              "name": "Anders Sandberg",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-tove-kihlstrom-ahlsen-d10",
+              "person_key": "tove-kihlstrom-ahlsen",
+              "name": "Tove Kihlström Ahlsén",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-malin-jones-d45",
+              "person_key": "malin-jones",
+              "name": "Malin Jones",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-erik-eriksson-h45",
+              "person_key": "erik-eriksson",
+              "name": "Erik Eriksson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-matilda-jonsson-d35",
+              "person_key": "matilda-jonsson",
+              "name": "Matilda Jonsson",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-berit-gummus-d55",
+              "person_key": "berit-gummus",
+              "name": "Berit Gummus",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-mollie-sandberg-d10",
+              "person_key": "mollie-sandberg",
+              "name": "Mollie Sandberg",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-linnea-carlsson-d65",
+              "person_key": "linnea-carlsson",
+              "name": "Linnea Carlsson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-edvin-eriksson-h17-34",
+              "person_key": "edvin-eriksson",
+              "name": "Edvin Eriksson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-annika-bjorklund-d55",
+              "person_key": "annika-bjorklund",
+              "name": "Annika Björklund",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-medel-ulla-svahn-d65",
+              "person_key": "ulla-svahn",
+              "name": "Ulla Svahn",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-medel-yngve-frost-h65",
+              "person_key": "yngve-frost",
+              "name": "Yngve Frost",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-medel-ludvig-eggoy-markhester-h17-34",
+              "person_key": "ludvig-eggoy-markhester",
+              "name": "Ludvig Eggöy Markhester",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-tommy-ahman-h55",
+              "person_key": "tommy-ahman",
+              "name": "Tommy Åhman",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-medel-marie-rapp-d65",
+              "person_key": "marie-rapp",
+              "name": "Marie Rapp",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-medel-lena-henriksson-d65",
+              "person_key": "lena-henriksson",
+              "name": "Lena Henriksson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-lars-erik-cederlof-h75",
+              "person_key": "lars-erik-cederlof",
+              "name": "Lars-Erik Cederlöf",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-medel-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-medel-lars-erik-larsson-h65",
+              "person_key": "lars-erik-larsson",
+              "name": "Lars-Erik Larsson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-medel-lars-gunnar-bjorklund-okand",
+              "person_key": "lars-gunnar-bjorklund",
+              "name": "Lars-Gunnar Björklund",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            }
+          ]
+        },
+        {
+          "id": "2025-lang",
+          "discipline_id": "lang",
+          "name": "Lång",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-lang-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-henrik-johnsson-h55",
+              "person_key": "henrik-johnsson",
+              "name": "Henrik Johnsson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-martin-bratt-h45",
+              "person_key": "martin-bratt",
+              "name": "Martin Bratt",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-kane-andersson-d65",
+              "person_key": "kane-andersson",
+              "name": "Kane Andersson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-alice-eggoy-markhester-d12",
+              "person_key": "alice-eggoy-markhester",
+              "name": "Alice Eggöy Markhester",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-tage-bratt-h12",
+              "person_key": "tage-bratt",
+              "name": "Tage Bratt",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-sofie-wuopio-kvarnstrom-d10",
+              "person_key": "sofie-wuopio-kvarnstrom",
+              "name": "Sofie Wuopio Kvarnström",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-lang-wilma-hermansson-d14",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-oskar-hermansson-h10",
+              "person_key": "oskar-hermansson",
+              "name": "Oskar Hermansson",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-vendela-bratt-d14",
+              "person_key": "vendela-bratt",
+              "name": "Vendela Bratt",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 5.0
+            },
+            {
+              "id": "2025-lang-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-thomas-sparr-h55",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 14.0
+            },
+            {
+              "id": "2025-lang-lars-erik-tjader-h75",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 11.0
+            },
+            {
+              "id": "2025-lang-martin-ryapolov-h10",
+              "person_key": "martin-ryapolov",
+              "name": "Martin Ryapolov",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-jonas-alund-h35",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-lang-simon-hodler-h35",
+              "person_key": "simon-hodler",
+              "name": "Simon Hodler",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-sixten-buud-h16",
+              "person_key": "sixten-buud",
+              "name": "Sixten Buud",
+              "class_id": "h16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-magnus-granlund-h45",
+              "person_key": "magnus-granlund",
+              "name": "Magnus Granlund",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-lang-elin-wrahme-d12",
+              "person_key": "elin-wrahme",
+              "name": "Elin Wrahme",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-lennart-akerstrom-h65",
+              "person_key": "lennart-akerstrom",
+              "name": "Lennart Åkerström",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-lang-anders-thomee-h65",
+              "person_key": "anders-thomee",
+              "name": "Anders Thomee",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-erik-klockar-h17-34",
+              "person_key": "erik-klockar",
+              "name": "Erik Klockar",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-lang-thomas-hermansson-h45",
+              "person_key": "thomas-hermansson",
+              "name": "Thomas Hermansson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-elvira-buud-d16",
+              "person_key": "elvira-buud",
+              "name": "Elvira Buud",
+              "class_id": "d16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-hans-johansson-h75",
+              "person_key": "hans-johansson",
+              "name": "Hans Johansson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-sara-hodler-d35",
+              "person_key": "sara-hodler",
+              "name": "Sara Hodler",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-edward-larsson-h45",
+              "person_key": "edward-larsson",
+              "name": "Edward Larsson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-lang-birk-hodler-h10",
+              "person_key": "birk-hodler",
+              "name": "Birk Hodler",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-lang-anki-pousette-d55",
+              "person_key": "anki-pousette",
+              "name": "Anki Pousette",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-oskar-wrahme-h10",
+              "person_key": "oskar-wrahme",
+              "name": "Oskar Wrahme",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-lang-heinz-eric-develius-h65",
+              "person_key": "heinz-eric-develius",
+              "name": "Heinz-Eric Develius",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-lang-raffael-huber-svensson-h17-34",
+              "person_key": "raffael-huber-svensson",
+              "name": "Raffael Huber Svensson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-anders-oberg-h65",
+              "person_key": "anders-oberg",
+              "name": "Anders Öberg",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-my-hodler-d10",
+              "person_key": "my-hodler",
+              "name": "My Hodler",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-eric-wuopio-kvarnstrom-h10",
+              "person_key": "eric-wuopio-kvarnstrom",
+              "name": "Eric Wuopio Kvarnström",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-lang-tord-norell-h55",
+              "person_key": "tord-norell",
+              "name": "Tord Norell",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-lang-bjorn-kajs-h45",
+              "person_key": "bjorn-kajs",
+              "name": "Björn Kajs",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-lang-conny-blomberg-dolff-h65",
+              "person_key": "conny-blomberg-dolff",
+              "name": "Conny Blomberg-Dolff",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-lang-yngve-frost-h65",
+              "person_key": "yngve-frost",
+              "name": "Yngve Frost",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 14.0
+            },
+            {
+              "id": "2025-lang-mats-bergh-h55",
+              "person_key": "mats-bergh",
+              "name": "Mats Bergh",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-lang-arne-holmer-h65",
+              "person_key": "arne-holmer",
+              "name": "Arne Holmer",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-lang-sten-svangren-h65",
+              "person_key": "sten-svangren",
+              "name": "Sten Svangren",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 12.0
+            },
+            {
+              "id": "2025-lang-maria-bergkvist-d35",
+              "person_key": "maria-bergkvist",
+              "name": "Maria Bergkvist",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-alfred-jacobsson-h12",
+              "person_key": "alfred-jacobsson",
+              "name": "Alfred Jacobsson",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-lang-linn-jacobsson-d12",
+              "person_key": "linn-jacobsson",
+              "name": "Linn Jacobsson",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-wataru-teragauchi-h17-34",
+              "person_key": "wataru-teragauchi",
+              "name": "Wataru Teragauchi",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-casper-wrahme-okand",
+              "person_key": "casper-wrahme",
+              "name": "Casper Wrahme",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-lang-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-lang-hans-ake-skott-h55",
+              "person_key": "hans-ake-skott",
+              "name": "Hans-Åke Skött",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-lang-bengt-plahn-h65",
+              "person_key": "bengt-plahn",
+              "name": "Bengt Plahn",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 13.0
+            }
+          ]
+        },
+        {
+          "id": "2025-sprint",
+          "discipline_id": "sprint",
+          "name": "Sprint",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-sprint-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-henrik-johnsson-h55",
+              "person_key": "henrik-johnsson",
+              "name": "Henrik Johnsson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-martin-bratt-h45",
+              "person_key": "martin-bratt",
+              "name": "Martin Bratt",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-kane-andersson-d65",
+              "person_key": "kane-andersson",
+              "name": "Kane Andersson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-alice-eggoy-markhester-d12",
+              "person_key": "alice-eggoy-markhester",
+              "name": "Alice Eggöy Markhester",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-tage-bratt-h12",
+              "person_key": "tage-bratt",
+              "name": "Tage Bratt",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-sofie-wuopio-kvarnstrom-d10",
+              "person_key": "sofie-wuopio-kvarnstrom",
+              "name": "Sofie Wuopio Kvarnström",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-wilma-hermansson-d14",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-oskar-hermansson-h10",
+              "person_key": "oskar-hermansson",
+              "name": "Oskar Hermansson",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-vendela-bratt-d14",
+              "person_key": "vendela-bratt",
+              "name": "Vendela Bratt",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-thomas-sparr-h55",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-sprint-edit-thoris-d10",
+              "person_key": "edit-thoris",
+              "name": "Edit Thoris",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-erik-csucs-h10",
+              "person_key": "erik-csucs",
+              "name": "Erik Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-sprint-laura-csucs-fenyvesi-d35",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csucs-Fenyvesi",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-sprint-lars-erik-tjader-h75",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-yngve-karlsson-h75",
+              "person_key": "yngve-karlsson",
+              "name": "Yngve Karlsson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-leo-ryapolov-h14",
+              "person_key": "leo-ryapolov",
+              "name": "Leo Ryapolov",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-sprint-jonas-alund-h35",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-simon-hodler-h35",
+              "person_key": "simon-hodler",
+              "name": "Simon Hodler",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-sixten-buud-h16",
+              "person_key": "sixten-buud",
+              "name": "Sixten Buud",
+              "class_id": "h16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 5.0
+            },
+            {
+              "id": "2025-sprint-magnus-granlund-h45",
+              "person_key": "magnus-granlund",
+              "name": "Magnus Granlund",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-sprint-lennart-akerstrom-h65",
+              "person_key": "lennart-akerstrom",
+              "name": "Lennart Åkerström",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-anders-thomee-h65",
+              "person_key": "anders-thomee",
+              "name": "Anders Thomee",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-sprint-erik-klockar-h17-34",
+              "person_key": "erik-klockar",
+              "name": "Erik Klockar",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-sprint-mats-lagerblad-h65",
+              "person_key": "mats-lagerblad",
+              "name": "Mats Lagerblad",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-thomas-hermansson-h45",
+              "person_key": "thomas-hermansson",
+              "name": "Thomas Hermansson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-sprint-elvira-buud-d16",
+              "person_key": "elvira-buud",
+              "name": "Elvira Buud",
+              "class_id": "d16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-hans-johansson-h75",
+              "person_key": "hans-johansson",
+              "name": "Hans Johansson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-sara-hodler-d35",
+              "person_key": "sara-hodler",
+              "name": "Sara Hodler",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-lina-berggren-d55",
+              "person_key": "lina-berggren",
+              "name": "Lina Berggren",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-pia-frost-d55",
+              "person_key": "pia-frost",
+              "name": "Pia Frost",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-birk-hodler-h10",
+              "person_key": "birk-hodler",
+              "name": "Birk Hodler",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-anki-pousette-d55",
+              "person_key": "anki-pousette",
+              "name": "Anki Pousette",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-sprint-orjan-svahn-h65",
+              "person_key": "orjan-svahn",
+              "name": "Örjan Svahn",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-sprint-heinz-eric-develius-h65",
+              "person_key": "heinz-eric-develius",
+              "name": "Heinz-Eric Develius",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-raffael-huber-svensson-h17-34",
+              "person_key": "raffael-huber-svensson",
+              "name": "Raffael Huber Svensson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-minna-wrahme-d10",
+              "person_key": "minna-wrahme",
+              "name": "Minna Wrahme",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-anders-oberg-h65",
+              "person_key": "anders-oberg",
+              "name": "Anders Öberg",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-lena-karlsson-holmer-d45",
+              "person_key": "lena-karlsson-holmer",
+              "name": "Lena Karlsson Holmer",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-annlouise-almqvist-d55",
+              "person_key": "annlouise-almqvist",
+              "name": "Annlouise Almqvist",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 5.0
+            },
+            {
+              "id": "2025-sprint-erik-rost-h17-34",
+              "person_key": "erik-rost",
+              "name": "Erik Rost",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-my-hodler-d10",
+              "person_key": "my-hodler",
+              "name": "My Hodler",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-sprint-alma-bratt-d10",
+              "person_key": "alma-bratt",
+              "name": "Alma Bratt",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-sprint-bjorn-wrahme-h45",
+              "person_key": "bjorn-wrahme",
+              "name": "Björn Wrahme",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-sprint-jonas-buud-h45",
+              "person_key": "jonas-buud",
+              "name": "Jonas Buud",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-eric-wuopio-kvarnstrom-h10",
+              "person_key": "eric-wuopio-kvarnstrom",
+              "name": "Eric Wuopio Kvarnström",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-sprint-anders-sandberg-h35",
+              "person_key": "anders-sandberg",
+              "name": "Anders Sandberg",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-sprint-malin-jones-d45",
+              "person_key": "malin-jones",
+              "name": "Malin Jones",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-sprint-erik-eriksson-h45",
+              "person_key": "erik-eriksson",
+              "name": "Erik Eriksson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-berit-gummus-d55",
+              "person_key": "berit-gummus",
+              "name": "Berit Gummus",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-mollie-sandberg-d10",
+              "person_key": "mollie-sandberg",
+              "name": "Mollie Sandberg",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-tord-norell-h55",
+              "person_key": "tord-norell",
+              "name": "Tord Norell",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-agnes-bratt-d35",
+              "person_key": "agnes-bratt",
+              "name": "Agnes Bratt",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-sprint-maffe-frost-h65",
+              "person_key": "maffe-frost",
+              "name": "Maffe Frost",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-sprint-lova-sandberg-d14",
+              "person_key": "lova-sandberg",
+              "name": "Lova Sandberg",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-lena-eriksson-d65",
+              "person_key": "lena-eriksson",
+              "name": "Lena Eriksson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-sprint-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-sprint-ake-berglund-h55",
+              "person_key": "ake-berglund",
+              "name": "Åke Berglund",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            }
+          ]
+        },
+        {
+          "id": "2025-mtb-o",
+          "discipline_id": "mtb-o",
+          "name": "Mtb-o",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-mtb-o-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-mtb-o-henrik-johnsson-h55",
+              "person_key": "henrik-johnsson",
+              "name": "Henrik Johnsson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-mtb-o-martin-bratt-h45",
+              "person_key": "martin-bratt",
+              "name": "Martin Bratt",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-mtb-o-kane-andersson-d65",
+              "person_key": "kane-andersson",
+              "name": "Kane Andersson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-mtb-o-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-thomas-sparr-h55",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-mtb-o-erik-csucs-h10",
+              "person_key": "erik-csucs",
+              "name": "Erik Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-laura-csucs-fenyvesi-d35",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csucs-Fenyvesi",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-lars-erik-tjader-h75",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-yngve-karlsson-h75",
+              "person_key": "yngve-karlsson",
+              "name": "Yngve Karlsson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-mtb-o-leo-ryapolov-h14",
+              "person_key": "leo-ryapolov",
+              "name": "Leo Ryapolov",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-mtb-o-martin-ryapolov-h10",
+              "person_key": "martin-ryapolov",
+              "name": "Martin Ryapolov",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-jonas-alund-h35",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-sixten-buud-h16",
+              "person_key": "sixten-buud",
+              "name": "Sixten Buud",
+              "class_id": "h16",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-mtb-o-anders-thomee-h65",
+              "person_key": "anders-thomee",
+              "name": "Anders Thomee",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-erik-klockar-h17-34",
+              "person_key": "erik-klockar",
+              "name": "Erik Klockar",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-mtb-o-mats-lagerblad-h65",
+              "person_key": "mats-lagerblad",
+              "name": "Mats Lagerblad",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-mtb-o-pia-frost-d55",
+              "person_key": "pia-frost",
+              "name": "Pia Frost",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-mtb-o-anki-pousette-d55",
+              "person_key": "anki-pousette",
+              "name": "Anki Pousette",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-orjan-svahn-h65",
+              "person_key": "orjan-svahn",
+              "name": "Örjan Svahn",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-anders-claesson-h75",
+              "person_key": "anders-claesson",
+              "name": "Anders Claesson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-tove-kihlstrom-ahlsen-d10",
+              "person_key": "tove-kihlstrom-ahlsen",
+              "name": "Tove Kihlström Ahlsén",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-vira-gostas-johnzen-d12",
+              "person_key": "vira-gostas-johnzen",
+              "name": "Vira göstas johnzén",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-conny-eriksson-h55",
+              "person_key": "conny-eriksson",
+              "name": "Conny Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-mtb-o-sten-svangren-h65",
+              "person_key": "sten-svangren",
+              "name": "Sten Svangren",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-mtb-o-gustav-eggoy-markhester-h16",
+              "person_key": "gustav-eggoy-markhester",
+              "name": "Gustav Eggöy Markhester",
+              "class_id": "h16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-martin-alsen-h35",
+              "person_key": "martin-alsen",
+              "name": "Martin Alsen",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-mtb-o-sally-ericsson-d10",
+              "person_key": "sally-ericsson",
+              "name": "Sally Ericsson",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-vilhelm-falldin-svahn-h12",
+              "person_key": "vilhelm-falldin-svahn",
+              "name": "Vilhelm Fälldin Svahn",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-mtb-o-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            }
+          ]
+        },
+        {
+          "id": "2025-terrang",
+          "discipline_id": "terrang",
+          "name": "Terräng",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-terrang-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-terrang-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-kane-andersson-d65",
+              "person_key": "kane-andersson",
+              "name": "Kane Andersson",
+              "class_id": "d65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-alice-eggoy-markhester-d12",
+              "person_key": "alice-eggoy-markhester",
+              "name": "Alice Eggöy Markhester",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-tage-bratt-h12",
+              "person_key": "tage-bratt",
+              "name": "Tage Bratt",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-wilma-hermansson-d14",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-oskar-hermansson-h10",
+              "person_key": "oskar-hermansson",
+              "name": "Oskar Hermansson",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-vendela-bratt-d14",
+              "person_key": "vendela-bratt",
+              "name": "Vendela Bratt",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-thomas-sparr-h55",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-terrang-edit-thoris-d10",
+              "person_key": "edit-thoris",
+              "name": "Edit Thoris",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-erik-csucs-h10",
+              "person_key": "erik-csucs",
+              "name": "Erik Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-laura-csucs-fenyvesi-d35",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csucs-Fenyvesi",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-lars-erik-tjader-h75",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-yngve-karlsson-h75",
+              "person_key": "yngve-karlsson",
+              "name": "Yngve Karlsson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-leo-ryapolov-h14",
+              "person_key": "leo-ryapolov",
+              "name": "Leo Ryapolov",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-elin-wrahme-d12",
+              "person_key": "elin-wrahme",
+              "name": "Elin Wrahme",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-lennart-akerstrom-h65",
+              "person_key": "lennart-akerstrom",
+              "name": "Lennart Åkerström",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-edward-larsson-h45",
+              "person_key": "edward-larsson",
+              "name": "Edward Larsson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-lina-berggren-d55",
+              "person_key": "lina-berggren",
+              "name": "Lina Berggren",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-terrang-oskar-wrahme-h10",
+              "person_key": "oskar-wrahme",
+              "name": "Oskar Wrahme",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-terrang-raffael-huber-svensson-h17-34",
+              "person_key": "raffael-huber-svensson",
+              "name": "Raffael Huber Svensson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-terrang-linus-rapp-h17-34",
+              "person_key": "linus-rapp",
+              "name": "Linus Rapp",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-alma-bratt-d10",
+              "person_key": "alma-bratt",
+              "name": "Alma Bratt",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-amelie-hamelius-d10",
+              "person_key": "amelie-hamelius",
+              "name": "Amelie Hamelius",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-terrang-kent-berggren-h55",
+              "person_key": "kent-berggren",
+              "name": "Kent Berggren",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-terrang-edvin-eriksson-h17-34",
+              "person_key": "edvin-eriksson",
+              "name": "Edvin Eriksson",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-bjorn-kajs-h45",
+              "person_key": "bjorn-kajs",
+              "name": "Björn Kajs",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-olle-eriksson-h14",
+              "person_key": "olle-eriksson",
+              "name": "Olle Eriksson",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-terrang-borje-liljekvist-h65",
+              "person_key": "borje-liljekvist",
+              "name": "Börje Liljekvist",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-terrang-eva-svensson-huber-d17-34",
+              "person_key": "eva-svensson-huber",
+              "name": "Eva Svensson-Huber",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-terrang-emelie-brudin-d17-34",
+              "person_key": "emelie-brudin",
+              "name": "Emelie Brudin",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-terrang-william-rost-h10",
+              "person_key": "william-rost",
+              "name": "William Rost",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-terrang-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            }
+          ]
+        },
+        {
+          "id": "2025-natt",
+          "discipline_id": "natt",
+          "name": "Natt",
+          "date": "",
+          "results": [
+            {
+              "id": "2025-natt-kristian-csucs-h10",
+              "person_key": "kristian-csucs",
+              "name": "Kristian Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-henrik-johnsson-h55",
+              "person_key": "henrik-johnsson",
+              "name": "Henrik Johnsson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-martin-bratt-h45",
+              "person_key": "martin-bratt",
+              "name": "Martin Bratt",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-evgeniya-ryapolova-d35",
+              "person_key": "evgeniya-ryapolova",
+              "name": "Evgeniya Ryapolova",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-alice-eggoy-markhester-d12",
+              "person_key": "alice-eggoy-markhester",
+              "name": "Alice Eggöy Markhester",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-gunnel-rask-d55",
+              "person_key": "gunnel-rask",
+              "name": "Gunnel Rask",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-tage-bratt-h12",
+              "person_key": "tage-bratt",
+              "name": "Tage Bratt",
+              "class_id": "h12",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-sofie-wuopio-kvarnstrom-d10",
+              "person_key": "sofie-wuopio-kvarnstrom",
+              "name": "Sofie Wuopio Kvarnström",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-klaus-csucs-h35",
+              "person_key": "klaus-csucs",
+              "name": "Klaus Csucs",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-wilma-hermansson-d14",
+              "person_key": "wilma-hermansson",
+              "name": "Wilma Hermansson",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-oskar-hermansson-h10",
+              "person_key": "oskar-hermansson",
+              "name": "Oskar Hermansson",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-gustav-elmgren-h14",
+              "person_key": "gustav-elmgren",
+              "name": "Gustav Elmgren",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-vendela-bratt-d14",
+              "person_key": "vendela-bratt",
+              "name": "Vendela Bratt",
+              "class_id": "d14",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-anders-ohlin-h55",
+              "person_key": "anders-ohlin",
+              "name": "Anders Ohlin",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-thomas-sparr-h55",
+              "person_key": "thomas-sparr",
+              "name": "Thomas Sparr",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-natt-edit-thoris-d10",
+              "person_key": "edit-thoris",
+              "name": "Edit Thoris",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-erik-csucs-h10",
+              "person_key": "erik-csucs",
+              "name": "Erik Csucs",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-natt-laura-csucs-fenyvesi-d35",
+              "person_key": "laura-csucs-fenyvesi",
+              "name": "Laura Csucs-Fenyvesi",
+              "class_id": "d35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-lars-erik-tjader-h75",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-yngve-karlsson-h75",
+              "person_key": "yngve-karlsson",
+              "name": "Yngve Karlsson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-leo-ryapolov-h14",
+              "person_key": "leo-ryapolov",
+              "name": "Leo Ryapolov",
+              "class_id": "h14",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-karl-erik-andersson-h65",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 17.0
+            },
+            {
+              "id": "2025-natt-martin-ryapolov-h10",
+              "person_key": "martin-ryapolov",
+              "name": "Martin Ryapolov",
+              "class_id": "h10",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-jonas-alund-h35",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-simon-hodler-h35",
+              "person_key": "simon-hodler",
+              "name": "Simon Hodler",
+              "class_id": "h35",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-sixten-buud-h16",
+              "person_key": "sixten-buud",
+              "name": "Sixten Buud",
+              "class_id": "h16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-olof-eriksson-h55",
+              "person_key": "olof-eriksson",
+              "name": "Olof Eriksson",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-natt-lennart-akerstrom-h65",
+              "person_key": "lennart-akerstrom",
+              "name": "Lennart Åkerström",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 16.0
+            },
+            {
+              "id": "2025-natt-anders-thomee-h65",
+              "person_key": "anders-thomee",
+              "name": "Anders Thomee",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-erik-klockar-h17-34",
+              "person_key": "erik-klockar",
+              "name": "Erik Klockar",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-thomas-hermansson-h45",
+              "person_key": "thomas-hermansson",
+              "name": "Thomas Hermansson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 5.0
+            },
+            {
+              "id": "2025-natt-elvira-buud-d16",
+              "person_key": "elvira-buud",
+              "name": "Elvira Buud",
+              "class_id": "d16",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-hans-johansson-h75",
+              "person_key": "hans-johansson",
+              "name": "Hans Johansson",
+              "class_id": "h75",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-edward-larsson-h45",
+              "person_key": "edward-larsson",
+              "name": "Edward Larsson",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-pia-frost-d55",
+              "person_key": "pia-frost",
+              "name": "Pia Frost",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-heinz-eric-develius-h65",
+              "person_key": "heinz-eric-develius",
+              "name": "Heinz-Eric Develius",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-lena-karlsson-holmer-d45",
+              "person_key": "lena-karlsson-holmer",
+              "name": "Lena Karlsson Holmer",
+              "class_id": "d45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-annlouise-almqvist-d55",
+              "person_key": "annlouise-almqvist",
+              "name": "Annlouise Almqvist",
+              "class_id": "d55",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-jonas-buud-h45",
+              "person_key": "jonas-buud",
+              "name": "Jonas Buud",
+              "class_id": "h45",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-amelie-hamelius-d10",
+              "person_key": "amelie-hamelius",
+              "name": "Amelie Hamelius",
+              "class_id": "d10",
+              "place": null,
+              "status": "ok",
+              "points": 24.0
+            },
+            {
+              "id": "2025-natt-vira-gostas-johnzen-d12",
+              "person_key": "vira-gostas-johnzen",
+              "name": "Vira göstas johnzén",
+              "class_id": "d12",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-sofie-karlsson-holmer-d17-34",
+              "person_key": "sofie-karlsson-holmer",
+              "name": "Sofie Karlsson-Holmer",
+              "class_id": "d17-34",
+              "place": null,
+              "status": "ok",
+              "points": 5.0
+            },
+            {
+              "id": "2025-natt-tord-norell-h55",
+              "person_key": "tord-norell",
+              "name": "Tord Norell",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 5.0
+            },
+            {
+              "id": "2025-natt-conny-blomberg-dolff-h65",
+              "person_key": "conny-blomberg-dolff",
+              "name": "Conny Blomberg-Dolff",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 15.0
+            },
+            {
+              "id": "2025-natt-lars-ambrosiusson-h65",
+              "person_key": "lars-ambrosiusson",
+              "name": "Lars Ambrosiusson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-natt-mats-bergh-h55",
+              "person_key": "mats-bergh",
+              "name": "Mats Bergh",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-natt-arne-holmer-h65",
+              "person_key": "arne-holmer",
+              "name": "Arne Holmer",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            },
+            {
+              "id": "2025-natt-tommy-eriksson-h65",
+              "person_key": "tommy-eriksson",
+              "name": "Tommy Eriksson",
+              "class_id": "h65",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-johan-hamelius-h17-34",
+              "person_key": "johan-hamelius",
+              "name": "Johan Hamelius",
+              "class_id": "h17-34",
+              "place": null,
+              "status": "ok",
+              "points": 21.0
+            },
+            {
+              "id": "2025-natt-ulf-rask-h55",
+              "person_key": "ulf-rask",
+              "name": "Ulf Rask",
+              "class_id": "h55",
+              "place": null,
+              "status": "ok",
+              "points": 19.0
+            },
+            {
+              "id": "2025-natt-bjorn-albinsson-okand",
+              "person_key": "bjorn-albinsson",
+              "name": "Björn Albinsson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 10.0
+            }
+          ]
+        }
+      ]
+    },
     {
       "year": 2024,
       "events": [

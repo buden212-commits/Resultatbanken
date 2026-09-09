@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { BackLink } from "@/components/PageHeader";
 import { EventStatsExclusionSwitch } from "@/components/EventStatsExclusionSwitch";
 import { EventTypePicker } from "@/components/EventTypePicker";
 import { ParsedResultsTable } from "@/components/ParsedResultsTable";
-import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
 import { findContentFile, formatDate, getEvent, getResolvedResultsForEvent } from "@/lib/data";
 import { getCanonicalEventTypesForPicker } from "@/lib/event-types";
 import { isEventExcludedFromStats } from "@/lib/stats-exclusions";
@@ -37,6 +38,7 @@ export default async function EventPage({ params }: Props) {
   const title = event.name || event.type || `Resultat ${event.id}`;
   const excludedFromStats = isEventExcludedFromStats(eventId);
   const canEdit = await isAdminAuthenticated();
+  const showMmImport = isAdminConfigured();
   const availableTypes = getCanonicalEventTypesForPicker();
 
   return (
@@ -52,13 +54,23 @@ export default async function EventPage({ params }: Props) {
                 {title}
               </h1>
             </div>
-            <EventTypePicker
-              eventId={eventId}
-              initialType={event.type ?? ""}
-              initialDisplayType={event.type ? resolveEventType(event.type) : ""}
-              canEdit={canEdit}
-              availableTypes={availableTypes}
-            />
+            <div className="flex flex-col items-start gap-2 sm:items-end">
+              <EventTypePicker
+                eventId={eventId}
+                initialType={event.type ?? ""}
+                initialDisplayType={event.type ? resolveEventType(event.type) : ""}
+                canEdit={canEdit}
+                availableTypes={availableTypes}
+              />
+              {showMmImport ? (
+                <Link
+                  href={`/mastarnas/importera?event=${eventId}`}
+                  className="rounded-xl bg-brand-50 px-4 py-2 text-sm font-medium text-brand-800 ring-1 ring-brand-100 hover:bg-brand-100"
+                >
+                  Läs in till Mästarnas Mästare
+                </Link>
+              ) : null}
+            </div>
           </div>
         </div>
 

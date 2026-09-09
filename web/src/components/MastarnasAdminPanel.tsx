@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 import { PersonNamePicker } from "@/components/PersonNamePicker";
@@ -183,6 +184,16 @@ export function MastarnasAdminPanel({
         >
           Logga ut
         </button>
+      </div>
+
+      <div className="card space-y-3 p-5">
+        <p className="font-medium text-slate-800">Läs in från resultatarkivet</p>
+        <p className="text-sm text-slate-600">
+          Hämta ett KM eller annat resultat och översätt klasserna till Mästarnas Mästare. Poäng räknas automatiskt.
+        </p>
+        <Link href={`/mastarnas/importera?year=${year}`} className="btn-primary inline-flex">
+          Öppna inläsningsguiden
+        </Link>
       </div>
 
       {error ? (

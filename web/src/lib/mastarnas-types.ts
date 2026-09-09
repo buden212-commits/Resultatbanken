@@ -41,6 +41,8 @@ export type MastarnasData = {
   classes: MastarnasClass[];
   disciplines: MastarnasDiscipline[];
   seasons: MastarnasSeason[];
+  /** Maps cleaned archive class names (e.g. D21) to MM class ids. */
+  class_import_map?: Record<string, string>;
 };
 
 export type MastarnasResultInput = {

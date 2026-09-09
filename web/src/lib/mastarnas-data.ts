@@ -228,6 +228,75 @@ export async function saveMastarnasClassResults(
   return persist(data, `MM-resultat ${year} / ${classId}`);
 }
 
+export async function importArchiveToMastarnas(options: {
+  year: number;
+  disciplineId: string;
+  eventDate: string;
+  mapping: Record<string, string>;
+  groups: import("./mastarnas-import").ImportPreviewGroup[];
+}): Promise<MastarnasDeploy> {
+  const data = await readForWrite();
+  const season = data.seasons.find((item) => item.year === options.year);
+  if (!season) {
+    throw new Error(`År ${options.year} finns inte. Skapa året först.`);
+  }
+  const discipline = data.disciplines.find((item) => item.id === options.disciplineId);
+  if (!discipline) {
+    throw new Error("Grenen finns inte.");
+  }
+
+  let event = season.events.find((item) => item.discipline_id === options.disciplineId);
+  if (!event) {
+    event = {
+      id: `${options.year}-${options.disciplineId}`,
+      discipline_id: options.disciplineId,
+      name: discipline.name,
+      date: options.eventDate,
+      results: [],
+    };
+    season.events.push(event);
+  } else if (options.eventDate) {
+    event.date = options.eventDate;
+  }
+
+  const importedClassIds = new Set(options.groups.map((group) => group.class_id));
+  const kept = event.results.filter((result) => !importedClassIds.has(result.class_id));
+  const imported: MastarnasResult[] = [];
+  for (const group of options.groups) {
+    if (!data.classes.some((item) => item.id === group.class_id)) {
+      throw new Error(`Klassen ${group.class_name} finns inte.`);
+    }
+    const seen = new Set<string>();
+    for (const row of group.rows) {
+      const personKey = resolvePersonKey(row.person_key || toSlug(row.name));
+      if (!personKey || seen.has(personKey)) {
+        continue;
+      }
+      seen.add(personKey);
+      imported.push({
+        id: crypto.randomUUID(),
+        person_key: personKey,
+        name: row.name,
+        class_id: group.class_id,
+        place: row.status === "ok" ? row.place : row.place,
+        status: row.status,
+        points: null,
+      });
+    }
+  }
+  event.results = [...kept, ...imported];
+
+  const map = { ...(data.class_import_map ?? {}) };
+  for (const [source, classId] of Object.entries(options.mapping)) {
+    if (classId) {
+      map[source] = classId;
+    }
+  }
+  data.class_import_map = map;
+
+  return persist(data, `Importera ${discipline.name} ${options.year} från resultatarkivet`);
+}
+
 export function getMastarnasDataOrEmpty(): MastarnasData {
   try {
     return readMastarnasData();

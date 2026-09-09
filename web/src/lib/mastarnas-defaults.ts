@@ -40,5 +40,6 @@ export function emptyMastarnasData(): MastarnasData {
     classes: DEFAULT_CLASSES.map((item) => ({ ...item })),
     disciplines: DEFAULT_DISCIPLINES.map((item) => ({ ...item })),
     seasons: [],
+    class_import_map: {},
   };
 }
