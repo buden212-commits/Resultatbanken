@@ -10,7 +10,7 @@ import {
   saveMastarnasClassResults,
   upsertMastarnasEvent,
 } from "@/lib/mastarnas-data";
-import { readMastarnasData, getMastarnasSeason } from "@/lib/mastarnas";
+import { readMastarnasData } from "@/lib/mastarnas";
 import {
   buildImportPreview,
   searchArchiveEvents,
@@ -55,13 +55,7 @@ export async function GET(request: Request) {
     });
   }
 
-  const year = Number(url.searchParams.get("year"));
-  const eventId = url.searchParams.get("event_id") ?? "";
-  const classId = url.searchParams.get("class_id") ?? "";
-  const season = getMastarnasSeason(year);
-  const event = season?.events.find((item) => item.id === eventId);
-  const results = (event?.results ?? []).filter((result) => result.class_id === classId);
-  return NextResponse.json({ results });
+  return NextResponse.json({ error: "Ogiltig förfrågan." }, { status: 400 });
 }
 
 type Body = {
@@ -103,8 +97,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, deploy });
     }
     if (action === "addClass") {
-      const deploy = await addMastarnasClass(String(body.name ?? ""), Boolean(body.is_youth));
-      return NextResponse.json({ ok: true, deploy });
+      const { deploy, klass } = await addMastarnasClass(String(body.name ?? ""), Boolean(body.is_youth));
+      return NextResponse.json({ ok: true, deploy, klass });
     }
     if (action === "addDiscipline") {
       const deploy = await addMastarnasDiscipline(

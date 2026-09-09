@@ -60,8 +60,9 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
   const awards = getSeasonAwards(data, year, allRows);
   const usedClasses = data.classes.filter((item) => allRows.some((row) => row.class_id === item.id) && item.id !== "okand");
   const canEdit = isAdminConfigured() && (await isAdminAuthenticated());
-  const extraYouth = awards.overall && !awards.overall.is_youth ? awards.youth : null;
-  const overallRepeat = awards.overall && awards.previousOverallKeys.includes(awards.overall.person_key);
+  const overallLeaders = awards.overall;
+  const extraYouth = overallLeaders.some((row) => !row.is_youth) ? awards.youth : [];
+  const overallRepeat = overallLeaders.some((row) => awards.previousOverallKeys.includes(row.person_key));
   const showAwards = !selectedEvent && !classId && !isYouthList;
   const eventChips = [...season.events].sort((a, b) => {
     const orderA = data.disciplines.find((item) => item.id === a.discipline_id)?.sort_order ?? 99;
@@ -91,24 +92,42 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
         ))}
       </div>
 
-      {showAwards && awards.overall ? (
+      {showAwards && overallLeaders.length > 0 ? (
         <div className="mb-8 grid gap-3 sm:grid-cols-2">
           <div className="card px-5 py-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">Mästarnas Mästare</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">{awards.overall.name}</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">
+              {overallLeaders.length > 1 ? "Mästarnas Mästare · delad förstaplats" : "Mästarnas Mästare"}
+            </p>
+            <ul className="mt-1 space-y-1">
+              {overallLeaders.map((row) => (
+                <li key={row.person_key} className={overallLeaders.length > 1 ? "text-lg font-bold text-slate-900" : "text-2xl font-bold text-slate-900"}>
+                  {row.name}
+                  <span className="ml-2 text-sm font-medium text-slate-500">{row.class_name}</span>
+                </li>
+              ))}
+            </ul>
             <p className="mt-1 text-sm text-slate-500">
-              {awards.overall.class_name} · {formatPoints(awards.overall.total)} p (6 bästa) ·{" "}
-              {formatPoints(awards.overall.totalAll)} totalt · {awards.overall.starts} starter
+              {formatPoints(overallLeaders[0]!.total)} p (6 bästa) · {formatPoints(overallLeaders[0]!.totalAll)} totalt ·{" "}
+              {overallLeaders[0]!.starts} starter
               {overallRepeat ? " · tavla redan utdelad tidigare år" : ""}
             </p>
           </div>
-          {extraYouth ? (
+          {extraYouth.length > 0 ? (
             <div className="card px-5 py-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">Bästa ungdom</p>
-              <p className="mt-1 text-2xl font-bold text-slate-900">{extraYouth.name}</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">
+                {extraYouth.length > 1 ? "Bästa ungdom · delad förstaplats" : "Bästa ungdom"}
+              </p>
+              <ul className="mt-1 space-y-1">
+                {extraYouth.map((row) => (
+                  <li key={row.person_key} className={extraYouth.length > 1 ? "text-lg font-bold text-slate-900" : "text-2xl font-bold text-slate-900"}>
+                    {row.name}
+                    <span className="ml-2 text-sm font-medium text-slate-500">{row.class_name}</span>
+                  </li>
+                ))}
+              </ul>
               <p className="mt-1 text-sm text-slate-500">
-                {extraYouth.class_name} · {formatPoints(extraYouth.total)} p (6 bästa) ·{" "}
-                {formatPoints(extraYouth.totalAll)} totalt · {extraYouth.starts} starter
+                {formatPoints(extraYouth[0]!.total)} p (6 bästa) · {formatPoints(extraYouth[0]!.totalAll)} totalt ·{" "}
+                {extraYouth[0]!.starts} starter
               </p>
             </div>
           ) : null}
@@ -175,10 +194,7 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
       {canEdit ? (
         <MastarnasAdminPanel
           year={year}
-          classes={data.classes}
           disciplines={data.disciplines}
-          initialEventId={selectedEvent?.id}
-          initialClassId={classId ?? undefined}
           events={season.events.map(({ id, discipline_id, name, date }) => ({
             id,
             discipline_id,

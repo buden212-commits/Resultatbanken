@@ -79,7 +79,10 @@ export async function createMastarnasSeason(year: number): Promise<MastarnasDepl
   return persist(data, `Skapa Mästarnas Mästare ${year}`);
 }
 
-export async function addMastarnasClass(name: string, isYouth: boolean): Promise<MastarnasDeploy> {
+export async function addMastarnasClass(
+  name: string,
+  isYouth: boolean,
+): Promise<{ deploy: MastarnasDeploy; klass: MastarnasClass }> {
   const trimmed = name.trim();
   if (!trimmed) {
     throw new Error("Klassnamn krävs.");
@@ -92,7 +95,8 @@ export async function addMastarnasClass(name: string, isYouth: boolean): Promise
   const klass: MastarnasClass = { id, name: trimmed, is_youth: isYouth };
   data.classes.push(klass);
   data.classes.sort((a, b) => a.name.localeCompare(b.name, "sv"));
-  return persist(data, `Ny MM-klass: ${trimmed}`);
+  const deploy = await persist(data, `Ny MM-klass: ${trimmed}`);
+  return { deploy, klass };
 }
 
 export async function addMastarnasDiscipline(name: string, isMedel = false, year?: number): Promise<MastarnasDeploy> {

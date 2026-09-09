@@ -32,8 +32,8 @@ function standingsBySeason(): WeakMap<MastarnasSeason, StandingRow[]> {
 }
 
 export type SeasonAwards = {
-  overall: StandingRow | null;
-  youth: StandingRow | null;
+  overall: StandingRow[];
+  youth: StandingRow[];
   previousOverallKeys: string[];
   previousYouthKeys: string[];
 };
@@ -120,20 +120,26 @@ export function computeStandings(data: MastarnasData, season: MastarnasSeason): 
 }
 
 function assignStandingPlaces(rows: Omit<StandingRow, "place">[]): StandingRow[] {
-  return rows.map((row, index) => {
-    const previous = index > 0 ? rows[index - 1] : null;
+  const ranked: StandingRow[] = [];
+  for (let index = 0; index < rows.length; index += 1) {
+    const row = rows[index]!;
+    const previous = ranked[index - 1];
     const tied =
-      !!previous &&
-      previous.total === row.total &&
-      previous.starts === row.starts &&
-      previous.medel === row.medel;
-    const place = tied ? (undefined as unknown as number) : index + 1;
-    return { ...row, place };
-  }).reduce<StandingRow[]>((list, row) => {
-    const place = row.place || list[list.length - 1]?.place || 1;
-    list.push({ ...row, place });
-    return list;
-  }, []);
+      Boolean(previous) &&
+      previous!.total === row.total &&
+      previous!.starts === row.starts &&
+      previous!.medel === row.medel;
+    ranked.push({ ...row, place: tied ? previous!.place : index + 1 });
+  }
+  return ranked;
+}
+
+function tiedLeaders(rows: StandingRow[]): StandingRow[] {
+  const first = rows[0];
+  if (!first) {
+    return [];
+  }
+  return rows.filter((row) => row.place === first.place);
 }
 
 export function standingsForClass(rows: StandingRow[], classId: string | null): StandingRow[] {
@@ -150,9 +156,8 @@ export function getSeasonAwards(
   year: number,
   rows: StandingRow[],
 ): SeasonAwards {
-  const overall = rows[0] ?? null;
-  const youthPool = rows.filter((row) => row.is_youth);
-  const youth = overall && !overall.is_youth ? (youthPool[0] ?? null) : overall?.is_youth ? overall : youthPool[0] ?? null;
+  const overall = tiedLeaders(rows);
+  const youth = tiedLeaders(standingsForYouth(rows));
 
   const previousOverallKeys: string[] = [];
   const previousYouthKeys: string[] = [];
@@ -161,13 +166,8 @@ export function getSeasonAwards(
       continue;
     }
     const previous = computeStandings(data, season);
-    if (previous[0]) {
-      previousOverallKeys.push(previous[0].person_key);
-      const prevYouth = previous.find((row) => row.is_youth);
-      if (prevYouth) {
-        previousYouthKeys.push(prevYouth.person_key);
-      }
-    }
+    previousOverallKeys.push(...tiedLeaders(previous).map((row) => row.person_key));
+    previousYouthKeys.push(...tiedLeaders(standingsForYouth(previous)).map((row) => row.person_key));
   }
 
   return { overall, youth, previousOverallKeys, previousYouthKeys };

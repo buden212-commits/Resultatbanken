@@ -184,7 +184,7 @@ export function summarizeSourceClasses(
 function archiveStatus(row: ResolvedResultRow): MastarnasStatus | "skip" {
   const status = (row.status || "").toLowerCase();
   if (status === "dns") {
-    return "skip";
+    return "dns";
   }
   if (status === "dnf" || status === "felst" || status.includes("utg")) {
     return "dnf";
@@ -199,6 +199,16 @@ function archiveStatus(row: ResolvedResultRow): MastarnasStatus | "skip" {
     return "dnf";
   }
   return "skip";
+}
+
+function statusRank(status: MastarnasStatus): number {
+  if (status === "ok") {
+    return 2;
+  }
+  if (status === "dnf") {
+    return 1;
+  }
+  return 0;
 }
 
 function timeSortValue(time: string | null, preferReasonable: boolean): number {
@@ -290,7 +300,10 @@ export function buildImportPreview(
     } else {
       const existingTime = parseTimeToSeconds(existing.time ?? "") ?? Number.POSITIVE_INFINITY;
       const nextTime = parseTimeToSeconds(next.time ?? "") ?? Number.POSITIVE_INFINITY;
-      if (next.status === "ok" && (existing.status !== "ok" || nextTime < existingTime)) {
+      if (
+        statusRank(next.status) > statusRank(existing.status) ||
+        (next.status === "ok" && existing.status === "ok" && nextTime < existingTime)
+      ) {
         people.set(personKey, next);
       }
     }
@@ -322,7 +335,12 @@ export function buildImportPreview(
       class_id: classId,
       class_name: className.get(classId) ?? classId,
       rows: scored
-        .sort((a, b) => (a.place ?? 999) - (b.place ?? 999) || a.name.localeCompare(b.name, "sv"))
+        .sort(
+          (a, b) =>
+            (a.place ?? 999) - (b.place ?? 999) ||
+            statusRank(b.status) - statusRank(a.status) ||
+            a.name.localeCompare(b.name, "sv"),
+        )
         .map((row) => ({
           name: row.name,
           person_key: row.person_key,

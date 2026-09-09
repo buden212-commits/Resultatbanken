@@ -63,6 +63,9 @@ export function MastarnasImportGuide({ years, classes, disciplines, initialEvent
     () => sourceClasses.filter((item) => mapping[mappingKey(item)]).length,
     [sourceClasses, mapping],
   );
+  const previewDnsCount = preview
+    ? preview.groups.reduce((sum, group) => sum + group.rows.filter((row) => row.status === "dns").length, 0)
+    : 0;
 
   useEffect(() => {
     const handle = window.setTimeout(() => {
@@ -248,8 +251,9 @@ export function MastarnasImportGuide({ years, classes, disciplines, initialEvent
             <p className="font-medium text-slate-800">3. Översätt klasser</p>
             <p className="text-sm text-slate-600">
               Koppla varje klass i resultatfilen till en MM-klass. Lämna tomt för att hoppa över (t.ex. inskolning).
-              DNS tas inte med. Felstämpling räknas som DNF (10 p). {mappedCount} av {sourceClasses.length} klasser är
-              kopplade. Saknas en klass i listan kan du lägga till den under administrera på{" "}
+              DNS ger 0 poäng och räknas inte som startande. Felstämpling räknas som DNF (10 p). {mappedCount} av{" "}
+              {sourceClasses.length} klasser är kopplade. Saknas en klass i listan kan du lägga till den under
+              administrera på{" "}
               <Link href={yearExists ? `/mastarnas/${year}` : "/mastarnas"} className="link-brand">
                 års-sidan
               </Link>
@@ -330,8 +334,9 @@ export function MastarnasImportGuide({ years, classes, disciplines, initialEvent
           <p className="font-medium text-slate-800">4. Kontrollera och spara</p>
           <p className="text-sm text-slate-600">
             {preview.groups.reduce((sum, group) => sum + group.rows.length, 0)} resultat i {preview.groups.length}{" "}
-            klasser. {preview.skipped ? `${preview.skipped} DNS hoppades över. ` : ""}
-            {preview.unmapped ? `${preview.unmapped} rader utan klasskoppling hoppades över.` : ""}
+            klasser. {previewDnsCount ? `${previewDnsCount} DNS med 0 poäng. ` : ""}
+            {preview.skipped ? `${preview.skipped} rader utan resultat hoppades över. ` : ""}
+            {preview.unmapped ? `${preview.unmapped} rader utan klasskoppling hoppades över. ` : ""}
             Placeringar tas från arkivet; om flera arkivklasser kopplas till samma MM-klass räknas tid om.
             Befintliga resultat i samma gren och klasser skrivs över.
           </p>
