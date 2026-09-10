@@ -128,6 +128,7 @@ export function suggestDisciplineId(event: Pick<Event, "name" | "type">, discipl
     [/natt/, "natt"],
     [/sprint/, "sprint"],
     [/lång|langdistans|långdistans/, "lang"],
+    [/kort/, "medel"],
     [/medel/, "medel"],
     [/terräng|terrang/, "terrang"],
     [/skid/, "skidor"],

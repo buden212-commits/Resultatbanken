@@ -2,6 +2,7 @@ import path from "path";
 
 import { emptyMastarnasData } from "./mastarnas-defaults";
 import { readCachedJsonIfExists } from "./json-cache";
+import { normalizeMastarnasData } from "./mastarnas-normalize";
 import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import type { MastarnasData, MastarnasSeason } from "./mastarnas-types";
 import type { Person } from "./types";
@@ -19,8 +20,18 @@ function peopleByData(): WeakMap<MastarnasData, { person_key: string; display_na
   return globalForPeople.__rbMastarnasPeople;
 }
 
+const normalizedData = new WeakSet<MastarnasData>();
+
 export function readMastarnasData(): MastarnasData {
-  return readCachedJsonIfExists(DATA_PATH, emptyMastarnasData());
+  const data = readCachedJsonIfExists(DATA_PATH, emptyMastarnasData());
+  if (normalizedData.has(data)) {
+    return data;
+  }
+  const normalized = normalizeMastarnasData(data);
+  data.disciplines = normalized.disciplines;
+  data.seasons = normalized.seasons;
+  normalizedData.add(data);
+  return data;
 }
 
 export function getMastarnasSeasons(): MastarnasSeason[] {

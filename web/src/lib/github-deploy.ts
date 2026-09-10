@@ -391,7 +391,8 @@ export async function fetchMastarnasFromGitHub(): Promise<import("./mastarnas-ty
 
   try {
     const raw = await fetchRawFileFromGitHub(config, "data/mastarnas.json");
-    return JSON.parse(raw) as import("./mastarnas-types").MastarnasData;
+    const { normalizeMastarnasData } = await import("./mastarnas-normalize");
+    return normalizeMastarnasData(JSON.parse(raw) as import("./mastarnas-types").MastarnasData);
   } catch {
     const { emptyMastarnasData } = await import("./mastarnas-defaults");
     return emptyMastarnasData();

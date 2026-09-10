@@ -175,18 +175,6 @@
       "name": "Natt",
       "sort_order": 9,
       "is_medel": false
-    },
-    {
-      "id": "kort",
-      "name": "Kort",
-      "sort_order": 10,
-      "is_medel": false
-    },
-    {
-      "id": "dag",
-      "name": "Dag",
-      "sort_order": 11,
-      "is_medel": false
     }
   ],
   "seasons": [
@@ -1120,20 +1108,6 @@
           "id": "2026-natt",
           "discipline_id": "natt",
           "name": "Natt",
-          "date": "",
-          "results": []
-        },
-        {
-          "id": "2026-kort",
-          "discipline_id": "kort",
-          "name": "Kort",
-          "date": "",
-          "results": []
-        },
-        {
-          "id": "2026-dag",
-          "discipline_id": "dag",
-          "name": "Dag",
           "date": "",
           "results": []
         }
@@ -51208,13 +51182,13 @@
               "points": 17
             },
             {
-              "id": "2005-lang-marcus-allerhed-okand",
+              "id": "2005-dag-marcus-allerhed-okand",
               "person_key": "marcus-allerhed",
               "name": "Marcus Allerhed",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 12
+              "points": 17
             },
             {
               "id": "2005-lang-mattias-argards-okand",
@@ -51280,13 +51254,13 @@
               "points": 14
             },
             {
-              "id": "2005-lang-marcus-liljedal-okand",
+              "id": "2005-dag-marcus-liljedal-okand",
               "person_key": "marcus-liljedal",
               "name": "Marcus Liljedal",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 17
             },
             {
               "id": "2005-lang-erik-nordahl-okand",
@@ -51325,13 +51299,13 @@
               "points": 14
             },
             {
-              "id": "2005-lang-linus-lovgren-okand",
+              "id": "2005-dag-linus-lovgren-okand",
               "person_key": "linus-lovgren",
               "name": "Linus Lövgren",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 12
+              "points": 14
             },
             {
               "id": "2005-lang-hanna-eriksson-okand",
@@ -51377,6 +51351,348 @@
               "place": null,
               "status": "ok",
               "points": 12
+            },
+            {
+              "id": "2005-dag-karl-erik-andersson-okand",
+              "person_key": "karl-erik-andersson",
+              "name": "Karl-Erik Andersson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-olle-zander-okand",
+              "person_key": "olle-zander",
+              "name": "Olle Zander",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-martin-andersson-okand",
+              "person_key": "martin-andersson",
+              "name": "Martin Andersson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-pia-frost-okand",
+              "person_key": "pia-frost",
+              "name": "Pia Frost",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-frida-roos-okand",
+              "person_key": "frida-roos",
+              "name": "Frida Roos",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-maffe-frost-okand",
+              "person_key": "maffe-frost",
+              "name": "Maffe Frost",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-per-nordahl-okand",
+              "person_key": "per-nordahl",
+              "name": "Per Nordahl",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-olof-gummus-okand",
+              "person_key": "olof-gummus",
+              "name": "Olof Gummus",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 10
+            },
+            {
+              "id": "2005-dag-tomas-roos-okand",
+              "person_key": "tomas-roos",
+              "name": "Tomas Roos",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-lennart-lindh-okand",
+              "person_key": "lennart-lindh",
+              "name": "Lennart Lindh",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-anton-snees-okand",
+              "person_key": "anton-snees",
+              "name": "Anton Snees",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 12
+            },
+            {
+              "id": "2005-dag-per-olov-eriksson-okand",
+              "person_key": "per-olov-eriksson",
+              "name": "Per-Olov Eriksson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-sara-rapp-okand",
+              "person_key": "sara-rapp",
+              "name": "Sara Rapp",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2005-dag-berit-gummus-okand",
+              "person_key": "berit-gummus",
+              "name": "Berit Gummus",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-per-rapp-okand",
+              "person_key": "per-rapp",
+              "name": "Per Rapp",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-frida-lovgren-okand",
+              "person_key": "frida-lovgren",
+              "name": "Frida Lövgren",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-thomas-ostlund-okand",
+              "person_key": "thomas-ostlund",
+              "name": "Thomas Östlund",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 11
+            },
+            {
+              "id": "2005-dag-lars-ambrosiusson-okand",
+              "person_key": "lars-ambrosiusson",
+              "name": "Lars Ambrosiusson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2005-dag-jonas-buud-okand",
+              "person_key": "jonas-buud",
+              "name": "Jonas Buud",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2005-dag-anders-johansson-okand",
+              "person_key": "anders-johansson",
+              "name": "Anders Johansson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2005-dag-karina-ostlund-okand",
+              "person_key": "karina-ostlund",
+              "name": "Karina Östlund",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2005-dag-ingrid-andersson-okand",
+              "person_key": "ingrid-andersson",
+              "name": "Ingrid Andersson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-kerstin-argards-okand",
+              "person_key": "kerstin-argards",
+              "name": "Kerstin Argårds",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-lena-hojling-okand",
+              "person_key": "lena-hojling",
+              "name": "Lena Höjling",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-stepan-kodeda-okand",
+              "person_key": "stepan-kodeda",
+              "name": "Stepan Kodeda",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-tommy-wrahme-okand",
+              "person_key": "tommy-wrahme",
+              "name": "Tommy Wrahme",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2005-dag-christer-allerhed-okand",
+              "person_key": "christer-allerhed",
+              "name": "Christer Allerhed",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-stefan-andersson-okand",
+              "person_key": "stefan-andersson",
+              "name": "Stefan Andersson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-mats-eriksson-okand",
+              "person_key": "mats-eriksson",
+              "name": "Mats Eriksson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-peter-fredricson-okand",
+              "person_key": "peter-fredricson",
+              "name": "Peter Fredricson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-kerstin-gummus-okand",
+              "person_key": "kerstin-gummus",
+              "name": "Kerstin Gummus",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-lena-henriksson-okand",
+              "person_key": "lena-henriksson",
+              "name": "Lena Henriksson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-karin-hvittfeldt-okand",
+              "person_key": "karin-hvittfeldt",
+              "name": "Karin Hvittfeldt",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-lars-erik-tjader-okand",
+              "person_key": "lars-erik-tjader",
+              "name": "Lars-Erik Tjäder",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2005-dag-holger-gummus-okand",
+              "person_key": "holger-gummus",
+              "name": "Holger Gummus",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 12
+            },
+            {
+              "id": "2005-dag-anders-hvittfeldt-okand",
+              "person_key": "anders-hvittfeldt",
+              "name": "Anders Hvittfeldt",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 12
+            },
+            {
+              "id": "2005-dag-lena-liljedal-okand",
+              "person_key": "lena-liljedal",
+              "name": "Lena Liljedal",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 12
+            },
+            {
+              "id": "2005-dag-martin-palm-okand",
+              "person_key": "martin-palm",
+              "name": "Martin Palm",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 10
             }
           ]
         },
@@ -52215,9 +52531,9 @@
           ]
         },
         {
-          "id": "2005-kort",
-          "discipline_id": "kort",
-          "name": "Kort",
+          "id": "2005-medel",
+          "discipline_id": "medel",
+          "name": "Medel",
           "date": "",
           "results": [
             {
@@ -52860,491 +53176,6 @@
               "points": 14
             }
           ]
-        },
-        {
-          "id": "2005-dag",
-          "discipline_id": "dag",
-          "name": "Dag",
-          "date": "",
-          "results": [
-            {
-              "id": "2005-dag-andreas-allerhed-okand",
-              "person_key": "andreas-allerhed",
-              "name": "Andreas Allerhed",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-katarina-svahn-okand",
-              "person_key": "katarina-svahn",
-              "name": "Katarina Svahn",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-daniel-svensson-okand",
-              "person_key": "daniel-svensson",
-              "name": "Daniel Svensson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-marcus-allerhed-okand",
-              "person_key": "marcus-allerhed",
-              "name": "Marcus Allerhed",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-mattias-argards-okand",
-              "person_key": "mattias-argards",
-              "name": "Mattias Argårds",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-sara-wadman-okand",
-              "person_key": "sara-wadman",
-              "name": "Sara Wadman",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-per-frost-okand",
-              "person_key": "per-frost",
-              "name": "Per Frost",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-fredrik-gummus-okand",
-              "person_key": "fredrik-gummus",
-              "name": "Fredrik Gummus",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-ola-svahn-okand",
-              "person_key": "ola-svahn",
-              "name": "Ola Svahn",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-erik-frost-okand",
-              "person_key": "erik-frost",
-              "name": "Erik Frost",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 11
-            },
-            {
-              "id": "2005-dag-karl-erik-andersson-okand",
-              "person_key": "karl-erik-andersson",
-              "name": "Karl-Erik Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-olle-zander-okand",
-              "person_key": "olle-zander",
-              "name": "Olle Zander",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-martin-andersson-okand",
-              "person_key": "martin-andersson",
-              "name": "Martin Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-pia-frost-okand",
-              "person_key": "pia-frost",
-              "name": "Pia Frost",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-frida-roos-okand",
-              "person_key": "frida-roos",
-              "name": "Frida Roos",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-maffe-frost-okand",
-              "person_key": "maffe-frost",
-              "name": "Maffe Frost",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-marcus-liljedal-okand",
-              "person_key": "marcus-liljedal",
-              "name": "Marcus Liljedal",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-mattias-gothberg-okand",
-              "person_key": "mattias-gothberg",
-              "name": "Mattias Göthberg",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2005-dag-gaberiell-hoijlind-okand",
-              "person_key": "gaberiell-hoijlind",
-              "name": "Gaberiell Höijlind",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-per-nordahl-okand",
-              "person_key": "per-nordahl",
-              "name": "Per Nordahl",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-olof-gummus-okand",
-              "person_key": "olof-gummus",
-              "name": "Olof Gummus",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 10
-            },
-            {
-              "id": "2005-dag-tomas-roos-okand",
-              "person_key": "tomas-roos",
-              "name": "Tomas Roos",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-lennart-lindh-okand",
-              "person_key": "lennart-lindh",
-              "name": "Lennart Lindh",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-linus-lovgren-okand",
-              "person_key": "linus-lovgren",
-              "name": "Linus Lövgren",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-anton-snees-okand",
-              "person_key": "anton-snees",
-              "name": "Anton Snees",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2005-dag-per-olov-eriksson-okand",
-              "person_key": "per-olov-eriksson",
-              "name": "Per-Olov Eriksson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-hanna-eriksson-okand",
-              "person_key": "hanna-eriksson",
-              "name": "Hanna Eriksson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-sara-rapp-okand",
-              "person_key": "sara-rapp",
-              "name": "Sara Rapp",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-berit-gummus-okand",
-              "person_key": "berit-gummus",
-              "name": "Berit Gummus",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-per-rapp-okand",
-              "person_key": "per-rapp",
-              "name": "Per Rapp",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-frida-lovgren-okand",
-              "person_key": "frida-lovgren",
-              "name": "Frida Lövgren",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-thomas-ostlund-okand",
-              "person_key": "thomas-ostlund",
-              "name": "Thomas Östlund",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 11
-            },
-            {
-              "id": "2005-dag-lars-ambrosiusson-okand",
-              "person_key": "lars-ambrosiusson",
-              "name": "Lars Ambrosiusson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-jonas-buud-okand",
-              "person_key": "jonas-buud",
-              "name": "Jonas Buud",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-anders-johansson-okand",
-              "person_key": "anders-johansson",
-              "name": "Anders Johansson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-karina-ostlund-okand",
-              "person_key": "karina-ostlund",
-              "name": "Karina Östlund",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2005-dag-ingrid-andersson-okand",
-              "person_key": "ingrid-andersson",
-              "name": "Ingrid Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-kerstin-argards-okand",
-              "person_key": "kerstin-argards",
-              "name": "Kerstin Argårds",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-lena-hojling-okand",
-              "person_key": "lena-hojling",
-              "name": "Lena Höjling",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-stepan-kodeda-okand",
-              "person_key": "stepan-kodeda",
-              "name": "Stepan Kodeda",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-tommy-wrahme-okand",
-              "person_key": "tommy-wrahme",
-              "name": "Tommy Wrahme",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2005-dag-christer-allerhed-okand",
-              "person_key": "christer-allerhed",
-              "name": "Christer Allerhed",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-stefan-andersson-okand",
-              "person_key": "stefan-andersson",
-              "name": "Stefan Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-mats-eriksson-okand",
-              "person_key": "mats-eriksson",
-              "name": "Mats Eriksson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-peter-fredricson-okand",
-              "person_key": "peter-fredricson",
-              "name": "Peter Fredricson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-kerstin-gummus-okand",
-              "person_key": "kerstin-gummus",
-              "name": "Kerstin Gummus",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-lena-henriksson-okand",
-              "person_key": "lena-henriksson",
-              "name": "Lena Henriksson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-karin-hvittfeldt-okand",
-              "person_key": "karin-hvittfeldt",
-              "name": "Karin Hvittfeldt",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-lars-erik-tjader-okand",
-              "person_key": "lars-erik-tjader",
-              "name": "Lars-Erik Tjäder",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2005-dag-holger-gummus-okand",
-              "person_key": "holger-gummus",
-              "name": "Holger Gummus",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2005-dag-anders-hvittfeldt-okand",
-              "person_key": "anders-hvittfeldt",
-              "name": "Anders Hvittfeldt",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2005-dag-lena-liljedal-okand",
-              "person_key": "lena-liljedal",
-              "name": "Lena Liljedal",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2005-dag-martin-palm-okand",
-              "person_key": "martin-palm",
-              "name": "Martin Palm",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 10
-            }
-          ]
         }
       ]
     },
@@ -53824,22 +53655,22 @@
           "date": "",
           "results": [
             {
-              "id": "2003-lang-marcus-allerhed-okand",
+              "id": "2003-dag-marcus-allerhed-okand",
               "person_key": "marcus-allerhed",
               "name": "Marcus Allerhed",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 20
             },
             {
-              "id": "2003-lang-mattias-arrgards-okand",
+              "id": "2003-dag-mattias-arrgards-okand",
               "person_key": "mattias-arrgards",
               "name": "Mattias Arrgårds",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 17
+              "points": 20
             },
             {
               "id": "2003-lang-linus-rapp-okand",
@@ -53869,13 +53700,13 @@
               "points": 17
             },
             {
-              "id": "2003-lang-kea-andersson-okand",
+              "id": "2003-dag-kea-andersson-okand",
               "person_key": "kea-andersson",
               "name": "Kea Andersson",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 12
+              "points": 17
             },
             {
               "id": "2003-lang-sara-rapp-okand",
@@ -53887,13 +53718,13 @@
               "points": 14
             },
             {
-              "id": "2003-lang-anna-gunnars-okand",
+              "id": "2003-dag-anna-gunnars-okand",
               "person_key": "anna-gunnars",
               "name": "Anna Gunnars",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 17
             },
             {
               "id": "2003-lang-eva-svensson-okand",
@@ -53905,13 +53736,13 @@
               "points": 20
             },
             {
-              "id": "2003-lang-martin-palm-okand",
+              "id": "2003-dag-martin-palm-okand",
               "person_key": "martin-palm",
               "name": "Martin Palm",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 17
             },
             {
               "id": "2003-lang-tomas-sparr-okand",
@@ -53923,13 +53754,13 @@
               "points": 17
             },
             {
-              "id": "2003-lang-olle-zander-okand",
+              "id": "2003-dag-olle-zander-okand",
               "person_key": "olle-zander",
               "name": "Olle Zander",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 17
             },
             {
               "id": "2003-lang-therese-rapp-okand",
@@ -53986,22 +53817,22 @@
               "points": 14
             },
             {
-              "id": "2003-lang-ola-svan-okand",
+              "id": "2003-dag-ola-svan-okand",
               "person_key": "ola-svan",
               "name": "Ola Svan",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 12
+              "points": 17
             },
             {
-              "id": "2003-lang-ida-johansson-okand",
+              "id": "2003-dag-ida-johansson-okand",
               "person_key": "ida-johansson",
               "name": "Ida Johansson",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 12
+              "points": 17
             },
             {
               "id": "2003-lang-helen-soderlund-okand",
@@ -54022,13 +53853,13 @@
               "points": 20
             },
             {
-              "id": "2003-lang-hans-develius-okand",
+              "id": "2003-dag-hans-develius-okand",
               "person_key": "hans-develius",
               "name": "Hans Develius",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 20
             },
             {
               "id": "2003-lang-lennart-lindh-okand",
@@ -54040,22 +53871,22 @@
               "points": 17
             },
             {
-              "id": "2003-lang-olle-andersson-okand",
+              "id": "2003-dag-olle-andersson-okand",
               "person_key": "olle-andersson",
               "name": "Olle Andersson",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 17
+              "points": 20
             },
             {
-              "id": "2003-lang-niclas-strom-okand",
+              "id": "2003-dag-niclas-strom-okand",
               "person_key": "niclas-strom",
               "name": "Niclas Ström",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 20
             },
             {
               "id": "2003-lang-marie-rapp-okand",
@@ -54067,13 +53898,13 @@
               "points": 14
             },
             {
-              "id": "2003-lang-maffe-frost-okand",
+              "id": "2003-dag-maffe-frost-okand",
               "person_key": "maffe-frost",
               "name": "Maffe Frost",
               "class_id": "okand",
               "place": null,
               "status": "ok",
-              "points": 14
+              "points": 17
             },
             {
               "id": "2003-lang-henning-norstrom-okand",
@@ -54223,6 +54054,276 @@
               "id": "2003-lang-kristina-karlsson-okand",
               "person_key": "kristina-karlsson",
               "name": "Kristina Karlsson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-andreas-allerhed-okand",
+              "person_key": "andreas-allerhed",
+              "name": "Andreas Allerhed",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-erik-zander-okand",
+              "person_key": "erik-zander",
+              "name": "Erik Zander",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2003-dag-johanna-soderstedt-okand",
+              "person_key": "johanna-soderstedt",
+              "name": "Johanna Söderstedt",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2003-dag-lars-ambrosiusson-okand",
+              "person_key": "lars-ambrosiusson",
+              "name": "Lars Ambrosiusson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2003-dag-jacob-soderstedt-okand",
+              "person_key": "jacob-soderstedt",
+              "name": "Jacob Söderstedt",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2003-dag-emelie-broms-okand",
+              "person_key": "emelie-broms",
+              "name": "Emelie Bröms",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-linus-lovgren-okand",
+              "person_key": "linus-lovgren",
+              "name": "Linus Lövgren",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-camilla-soderstedt-okand",
+              "person_key": "camilla-soderstedt",
+              "name": "Camilla Söderstedt",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 12
+            },
+            {
+              "id": "2003-dag-tore-skottheim-okand",
+              "person_key": "tore-skottheim",
+              "name": "Tore Skottheim",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-anders-pers-okand",
+              "person_key": "anders-pers",
+              "name": "Anders Pers",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-soren-lovgren-okand",
+              "person_key": "soren-lovgren",
+              "name": "Sören Lövgren",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-elisabeth-johansson-okand",
+              "person_key": "elisabeth-johansson",
+              "name": "Elisabeth Johansson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-erik-svensson-okand",
+              "person_key": "erik-svensson",
+              "name": "Erik Svensson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2003-dag-anders-johansson-okand",
+              "person_key": "anders-johansson",
+              "name": "Anders Johansson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 20
+            },
+            {
+              "id": "2003-dag-lars-johansson-okand",
+              "person_key": "lars-johansson",
+              "name": "Lars Johansson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-olof-gummus-okand",
+              "person_key": "olof-gummus",
+              "name": "Olof Gummus",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 11
+            },
+            {
+              "id": "2003-dag-mats-erik-ax-okand",
+              "person_key": "mats-erik-ax",
+              "name": "Mats-Erik Ax",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-sara-wadman-okand",
+              "person_key": "sara-wadman",
+              "name": "Sara Wadman",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-martin-johansson-okand",
+              "person_key": "martin-johansson",
+              "name": "Martin Johansson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-kerstin-argards-okand",
+              "person_key": "kerstin-argards",
+              "name": "Kerstin Argårds",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-anders-hvittfeldt-okand",
+              "person_key": "anders-hvittfeldt",
+              "name": "Anders Hvittfeldt",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-karina-ostlund-okand",
+              "person_key": "karina-ostlund",
+              "name": "Karina Östlund",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-fredrik-gummus-okand",
+              "person_key": "fredrik-gummus",
+              "name": "Fredrik Gummus",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-lars-kalin-okand",
+              "person_key": "lars-kalin",
+              "name": "Lars Kalin",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 11
+            },
+            {
+              "id": "2003-dag-magnus-andersson-okand",
+              "person_key": "magnus-andersson",
+              "name": "Magnus Andersson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 12
+            },
+            {
+              "id": "2003-dag-leif-soderlund-okand",
+              "person_key": "leif-soderlund",
+              "name": "Leif Söderlund",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 17
+            },
+            {
+              "id": "2003-dag-karin-hvittfeldt-okand",
+              "person_key": "karin-hvittfeldt",
+              "name": "Karin Hvittfeldt",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-maria-gunnars-okand",
+              "person_key": "maria-gunnars",
+              "name": "Maria Gunnars",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-mats-eriksson-okand",
+              "person_key": "mats-eriksson",
+              "name": "Mats Eriksson",
+              "class_id": "okand",
+              "place": null,
+              "status": "ok",
+              "points": 14
+            },
+            {
+              "id": "2003-dag-bertil-berglund-okand",
+              "person_key": "bertil-berglund",
+              "name": "Bertil Berglund",
               "class_id": "okand",
               "place": null,
               "status": "ok",
@@ -55668,9 +55769,9 @@
           ]
         },
         {
-          "id": "2003-kort",
-          "discipline_id": "kort",
-          "name": "Kort",
+          "id": "2003-medel",
+          "discipline_id": "medel",
+          "name": "Medel",
           "date": "",
           "results": [
             {
@@ -56100,545 +56201,6 @@
               "id": "2003-kort-tommy-hoglund-okand",
               "person_key": "tommy-hoglund",
               "name": "Tommy Höglund",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            }
-          ]
-        },
-        {
-          "id": "2003-dag",
-          "discipline_id": "dag",
-          "name": "Dag",
-          "date": "",
-          "results": [
-            {
-              "id": "2003-dag-marcus-allerhed-okand",
-              "person_key": "marcus-allerhed",
-              "name": "Marcus Allerhed",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-mattias-arrgards-okand",
-              "person_key": "mattias-arrgards",
-              "name": "Mattias Arrgårds",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-linus-rapp-okand",
-              "person_key": "linus-rapp",
-              "name": "Linus Rapp",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-jonas-buud-okand",
-              "person_key": "jonas-buud",
-              "name": "Jonas Buud",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-andreas-allerhed-okand",
-              "person_key": "andreas-allerhed",
-              "name": "Andreas Allerhed",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-erik-zander-okand",
-              "person_key": "erik-zander",
-              "name": "Erik Zander",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-daniel-svensson-okand",
-              "person_key": "daniel-svensson",
-              "name": "Daniel Svensson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2003-dag-kea-andersson-okand",
-              "person_key": "kea-andersson",
-              "name": "Kea Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-sara-rapp-okand",
-              "person_key": "sara-rapp",
-              "name": "Sara Rapp",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-anna-gunnars-okand",
-              "person_key": "anna-gunnars",
-              "name": "Anna Gunnars",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-eva-svensson-okand",
-              "person_key": "eva-svensson",
-              "name": "Eva Svensson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-martin-palm-okand",
-              "person_key": "martin-palm",
-              "name": "Martin Palm",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-tomas-sparr-okand",
-              "person_key": "tomas-sparr",
-              "name": "Tomas Sparr",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2003-dag-olle-zander-okand",
-              "person_key": "olle-zander",
-              "name": "Olle Zander",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-therese-rapp-okand",
-              "person_key": "therese-rapp",
-              "name": "Therese Rapp",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-johanna-soderstedt-okand",
-              "person_key": "johanna-soderstedt",
-              "name": "Johanna Söderstedt",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-katarina-lovgren-okand",
-              "person_key": "katarina-lovgren",
-              "name": "Katarina Lövgren",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-martin-andersson-okand",
-              "person_key": "martin-andersson",
-              "name": "Martin Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2003-dag-katarina-svan-okand",
-              "person_key": "katarina-svan",
-              "name": "Katarina Svan",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-andreas-argards-okand",
-              "person_key": "andreas-argards",
-              "name": "Andreas Argårds",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-lars-ambrosiusson-okand",
-              "person_key": "lars-ambrosiusson",
-              "name": "Lars Ambrosiusson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-ola-svan-okand",
-              "person_key": "ola-svan",
-              "name": "Ola Svan",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-ida-johansson-okand",
-              "person_key": "ida-johansson",
-              "name": "Ida Johansson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-jacob-soderstedt-okand",
-              "person_key": "jacob-soderstedt",
-              "name": "Jacob Söderstedt",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-hans-develius-okand",
-              "person_key": "hans-develius",
-              "name": "Hans Develius",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-lennart-lindh-okand",
-              "person_key": "lennart-lindh",
-              "name": "Lennart Lindh",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-emelie-broms-okand",
-              "person_key": "emelie-broms",
-              "name": "Emelie Bröms",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-olle-andersson-okand",
-              "person_key": "olle-andersson",
-              "name": "Olle Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-niclas-strom-okand",
-              "person_key": "niclas-strom",
-              "name": "Niclas Ström",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-linus-lovgren-okand",
-              "person_key": "linus-lovgren",
-              "name": "Linus Lövgren",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-camilla-soderstedt-okand",
-              "person_key": "camilla-soderstedt",
-              "name": "Camilla Söderstedt",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2003-dag-tore-skottheim-okand",
-              "person_key": "tore-skottheim",
-              "name": "Tore Skottheim",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-anders-pers-okand",
-              "person_key": "anders-pers",
-              "name": "Anders Pers",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-maffe-frost-okand",
-              "person_key": "maffe-frost",
-              "name": "Maffe Frost",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-henning-norstrom-okand",
-              "person_key": "henning-norstrom",
-              "name": "Henning Norström",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-soren-lovgren-okand",
-              "person_key": "soren-lovgren",
-              "name": "Sören Lövgren",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-elisabeth-johansson-okand",
-              "person_key": "elisabeth-johansson",
-              "name": "Elisabeth Johansson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-anders-flodin-okand",
-              "person_key": "anders-flodin",
-              "name": "Anders Flodin",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-p-o-eriksson-okand",
-              "person_key": "p-o-eriksson",
-              "name": "P-O Eriksson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-ingrid-andersson-okand",
-              "person_key": "ingrid-andersson",
-              "name": "Ingrid Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-erik-svensson-okand",
-              "person_key": "erik-svensson",
-              "name": "Erik Svensson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-anders-johansson-okand",
-              "person_key": "anders-johansson",
-              "name": "Anders Johansson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 20
-            },
-            {
-              "id": "2003-dag-lars-johansson-okand",
-              "person_key": "lars-johansson",
-              "name": "Lars Johansson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-olof-gummus-okand",
-              "person_key": "olof-gummus",
-              "name": "Olof Gummus",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 11
-            },
-            {
-              "id": "2003-dag-johan-gunnars-okand",
-              "person_key": "johan-gunnars",
-              "name": "Johan Gunnars",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 9
-            },
-            {
-              "id": "2003-dag-mats-erik-ax-okand",
-              "person_key": "mats-erik-ax",
-              "name": "Mats-Erik Ax",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-sara-wadman-okand",
-              "person_key": "sara-wadman",
-              "name": "Sara Wadman",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-martin-johansson-okand",
-              "person_key": "martin-johansson",
-              "name": "Martin Johansson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-kerstin-argards-okand",
-              "person_key": "kerstin-argards",
-              "name": "Kerstin Argårds",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-anders-hvittfeldt-okand",
-              "person_key": "anders-hvittfeldt",
-              "name": "Anders Hvittfeldt",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-karina-ostlund-okand",
-              "person_key": "karina-ostlund",
-              "name": "Karina Östlund",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-fredrik-gummus-okand",
-              "person_key": "fredrik-gummus",
-              "name": "Fredrik Gummus",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-lars-kalin-okand",
-              "person_key": "lars-kalin",
-              "name": "Lars Kalin",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 11
-            },
-            {
-              "id": "2003-dag-magnus-andersson-okand",
-              "person_key": "magnus-andersson",
-              "name": "Magnus Andersson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 12
-            },
-            {
-              "id": "2003-dag-leif-soderlund-okand",
-              "person_key": "leif-soderlund",
-              "name": "Leif Söderlund",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 17
-            },
-            {
-              "id": "2003-dag-karin-hvittfeldt-okand",
-              "person_key": "karin-hvittfeldt",
-              "name": "Karin Hvittfeldt",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-maria-gunnars-okand",
-              "person_key": "maria-gunnars",
-              "name": "Maria Gunnars",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-mats-eriksson-okand",
-              "person_key": "mats-eriksson",
-              "name": "Mats Eriksson",
-              "class_id": "okand",
-              "place": null,
-              "status": "ok",
-              "points": 14
-            },
-            {
-              "id": "2003-dag-bertil-berglund-okand",
-              "person_key": "bertil-berglund",
-              "name": "Bertil Berglund",
               "class_id": "okand",
               "place": null,
               "status": "ok",

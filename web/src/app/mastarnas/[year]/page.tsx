@@ -9,6 +9,7 @@ import { MastarnasStandingsTable } from "@/components/MastarnasStandingsTable";
 import { PageHeader } from "@/components/PageHeader";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
 import { readMastarnasData } from "@/lib/mastarnas";
+import { canonicalDisciplineId } from "@/lib/mastarnas-normalize";
 import { formatPoints } from "@/lib/mastarnas-points";
 import { computeStandings, getSeasonAwards, standingsForClass, standingsForYouth } from "@/lib/mastarnas-standings";
 
@@ -52,8 +53,10 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
   const allRows = computeStandings(data, season);
   const classId = klass && data.classes.some((item) => item.id === klass) ? klass : null;
   const isYouthList = lista === "ungdom" && !classId;
-  const selectedEvent = gren
-    ? season.events.find((item) => item.discipline_id === gren) ??
+  const grenId = gren ? canonicalDisciplineId(gren) : "";
+  const selectedEvent = grenId
+    ? season.events.find((item) => item.discipline_id === grenId) ??
+      season.events.find((item) => item.id === grenId) ??
       season.events.find((item) => item.id === gren)
     : undefined;
   const rows = isYouthList ? standingsForYouth(allRows) : standingsForClass(allRows, classId);
