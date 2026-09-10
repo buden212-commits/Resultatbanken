@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -53,9 +54,14 @@ export function SiteHeader() {
     <header className="glass-header sticky top-0 z-50 pt-[env(safe-area-inset-top)]">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2 sm:px-6 md:py-3">
         <Link href="/" className="group flex min-w-0 items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-xs font-bold text-white shadow-md shadow-brand-600/25 md:h-9 md:w-9 md:text-sm">
-            RB
-          </span>
+          <Image
+            src="/ifk-mora.png"
+            alt="IFK Mora OK"
+            width={36}
+            height={36}
+            className="h-8 w-8 shrink-0 rounded-xl object-cover shadow-md shadow-brand-600/25 md:h-9 md:w-9"
+            priority
+          />
           <span className="flex min-w-0 flex-col leading-tight">
             <span className="text-sm font-bold tracking-tight text-slate-900 group-hover:text-brand-800 md:text-[15px]">
               Resultatbanken
