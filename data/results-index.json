@@ -96126,10 +96126,10 @@
     "club": null,
     "class_name": "D10 (2 / 2) Tid Efter Bomtid",
     "place": 1,
-    "time": "28:54 0:00",
+    "time": "28:54",
     "status": null,
-    "parse_source": "pdf-text",
-    "parse_confidence": "medium"
+    "parse_source": "manual",
+    "parse_confidence": "high"
   },
   {
     "event_id": 631,
