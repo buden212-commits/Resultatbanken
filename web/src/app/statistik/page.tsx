@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { MastarnasStatsSection } from "@/components/MastarnasStatsSection";
 import { PageHeader } from "@/components/PageHeader";
 import { StatsBarChart, StatsCountTable, StatsLeaderboard } from "@/components/StatsSections";
 import { StatCard } from "@/components/ui";
@@ -114,6 +115,8 @@ export default function StatistikPage() {
         <StatsCountTable title="Statusfördelning" items={getStatusBreakdown()} labelHeader="Status" />
       </section>
 
+      <MastarnasStatsSection />
+
       <section className="mt-10">
         <h2 className="text-xl font-bold text-slate-900">Topplistor — genom tiderna</h2>
         <p className="mt-1 text-sm text-slate-500">
@@ -177,6 +180,10 @@ export default function StatistikPage() {
       <section className="mt-10 card border-brand-100 bg-brand-50/50 p-5">
         <h2 className="text-base font-semibold text-slate-900">Om siffrorna</h2>
         <ul className="mt-3 list-inside list-disc space-y-1 text-sm text-slate-600">
+          <li>
+            Mästarnas Mästare räknar sex bästa grenarna. Titlar och tätaste kupperna tar bara med säsonger med minst sex
+            grenar som har resultat.
+          </li>
           <li>Personliga rekord och detaljerad historik finns på respektive personsida.</li>
           <li>Klassnamn varierar i källfilerna — PR per klass kan dupliceras för liknande banor.</li>
           <li>Äldre PDF:er och skannade ark kan sakna namn eller tider.</li>
