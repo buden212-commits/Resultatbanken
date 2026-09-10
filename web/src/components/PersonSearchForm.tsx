@@ -11,16 +11,30 @@ import {
   useState,
 } from "react";
 
-type Suggestion = {
+type PersonSuggestion = {
+  kind: "person";
   person_key: string;
   display_name: string;
   result_count: number;
 };
 
+type EventSuggestion = {
+  kind: "event";
+  id: number;
+  name: string;
+  subtitle: string;
+};
+
+type Suggestion = PersonSuggestion | EventSuggestion;
+
 type Props = {
   initialQuery?: string;
   variant?: "hero" | "default";
 };
+
+function suggestionKey(item: Suggestion): string {
+  return item.kind === "person" ? `person-${item.person_key}` : `event-${item.id}`;
+}
 
 export function PersonSearchForm({ initialQuery = "", variant = "default" }: Props) {
   const router = useRouter();
@@ -36,6 +50,8 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
   const isHero = variant === "hero";
   const trimmedQuery = query.trim();
   const showSuggestions = isOpen && trimmedQuery.length >= 2 && suggestions.length > 0;
+  const people = suggestions.filter((item): item is PersonSuggestion => item.kind === "person");
+  const events = suggestions.filter((item): item is EventSuggestion => item.kind === "event");
 
   const fetchSuggestions = useCallback(async (searchQuery: string) => {
     const normalized = searchQuery.trim();
@@ -53,9 +69,22 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
         setSuggestions([]);
         return;
       }
-      const data = (await response.json()) as { results: Suggestion[] };
-      setSuggestions(data.results);
-      setIsOpen(data.results.length > 0);
+      const data = (await response.json()) as {
+        people?: Array<{ person_key: string; display_name: string; result_count: number }>;
+        events?: Array<{ id: number; name: string; subtitle: string }>;
+        results?: Array<{ person_key: string; display_name: string; result_count: number }>;
+      };
+      const nextPeople = (data.people ?? data.results ?? []).map((person) => ({
+        kind: "person" as const,
+        ...person,
+      }));
+      const nextEvents = (data.events ?? []).map((event) => ({
+        kind: "event" as const,
+        ...event,
+      }));
+      const next = [...nextPeople, ...nextEvents];
+      setSuggestions(next);
+      setIsOpen(next.length > 0);
       setActiveIndex(-1);
     } catch {
       setSuggestions([]);
@@ -85,10 +114,14 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
     return () => document.removeEventListener("mousedown", onPointerDown);
   }, []);
 
-  function navigateToPerson(personKey: string) {
+  function goToSuggestion(item: Suggestion) {
     setIsOpen(false);
     setActiveIndex(-1);
-    router.push(`/person/${encodeURIComponent(personKey)}`);
+    if (item.kind === "person") {
+      router.push(`/person/${encodeURIComponent(item.person_key)}`);
+      return;
+    }
+    router.push(`/resultat/${item.id}`);
   }
 
   function onSubmit(event: FormEvent) {
@@ -99,7 +132,7 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
     }
 
     if (activeIndex >= 0 && suggestions[activeIndex]) {
-      navigateToPerson(suggestions[activeIndex].person_key);
+      goToSuggestion(suggestions[activeIndex]);
       return;
     }
 
@@ -127,7 +160,7 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
       case "Enter":
         if (activeIndex >= 0) {
           event.preventDefault();
-          navigateToPerson(suggestions[activeIndex].person_key);
+          goToSuggestion(suggestions[activeIndex]);
         }
         break;
       case "Escape":
@@ -146,6 +179,12 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
     activeIndex >= 0 && suggestions[activeIndex]
       ? `${listboxId}-option-${activeIndex}`
       : undefined;
+
+  function optionClass(index: number) {
+    return `flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
+      index === activeIndex ? "bg-brand-50 text-brand-700" : "text-slate-800 hover:bg-brand-50/70"
+    }`;
+  }
 
   return (
     <form
@@ -185,7 +224,8 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
             }
           }}
           onKeyDown={onInputKeyDown}
-          placeholder="Sök på namn"
+          placeholder="Namn, tävling, plats eller år"
+          aria-label="Sök namn, tävling, plats eller år"
           className={`input-field input-field-with-icon ${isHero ? "h-12 text-base shadow-lg shadow-black/5" : ""}`}
         />
         {showSuggestions ? (
@@ -193,33 +233,70 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
             id={listboxId}
             role="listbox"
             aria-label="Förslag"
-            className="absolute left-0 right-0 top-[calc(100%+0.375rem)] z-50 max-h-72 overflow-y-auto rounded-xl border border-slate-200 bg-white py-1 shadow-xl"
+            className="absolute left-0 right-0 top-[calc(100%+0.375rem)] z-50 max-h-[22rem] overflow-y-auto rounded-xl border border-slate-200 bg-white py-1 shadow-xl"
           >
-            {suggestions.map((suggestion, index) => (
-              <li
-                key={suggestion.person_key}
-                id={`${listboxId}-option-${index}`}
-                role="option"
-                aria-selected={index === activeIndex}
-              >
-                <button
-                  type="button"
-                  tabIndex={-1}
-                  onMouseDown={(event) => event.preventDefault()}
-                  onClick={() => navigateToPerson(suggestion.person_key)}
-                  className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
-                    index === activeIndex
-                      ? "bg-brand-50 text-brand-700"
-                      : "text-slate-800 hover:bg-brand-50/70"
-                  }`}
-                >
-                  <span className="font-medium">{suggestion.display_name}</span>
-                  <span className="shrink-0 text-xs text-slate-500">
-                    {suggestion.result_count} resultat
-                  </span>
-                </button>
+            {people.length > 0 ? (
+              <li className="px-4 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                Personer
               </li>
-            ))}
+            ) : null}
+            {people.map((suggestion) => {
+              const index = suggestions.indexOf(suggestion);
+              return (
+                <li
+                  key={suggestionKey(suggestion)}
+                  id={`${listboxId}-option-${index}`}
+                  role="option"
+                  aria-selected={index === activeIndex}
+                >
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => goToSuggestion(suggestion)}
+                    className={optionClass(index)}
+                  >
+                    <span className="truncate font-medium">{suggestion.display_name}</span>
+                    <span className="shrink-0 text-xs text-slate-500">
+                      {suggestion.result_count} resultat
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+            {events.length > 0 ? (
+              <li className="px-4 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                Tävlingar
+              </li>
+            ) : null}
+            {events.map((suggestion) => {
+              const index = suggestions.indexOf(suggestion);
+              return (
+                <li
+                  key={suggestionKey(suggestion)}
+                  id={`${listboxId}-option-${index}`}
+                  role="option"
+                  aria-selected={index === activeIndex}
+                >
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => goToSuggestion(suggestion)}
+                    className={optionClass(index)}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate font-medium">{suggestion.name}</span>
+                      {suggestion.subtitle ? (
+                        <span className="block truncate text-xs font-normal text-slate-500">
+                          {suggestion.subtitle}
+                        </span>
+                      ) : null}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         ) : null}
         {isLoading && trimmedQuery.length >= 2 && !showSuggestions ? (

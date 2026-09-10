@@ -33,7 +33,7 @@ type Acc = { name: string; value: number; years: number[] };
 const MIN_EVENTS_FOR_TITLES = 6;
 
 const globalForStats = globalThis as typeof globalThis & {
-  __rbMastarnasStats?: WeakMap<MastarnasData, ComputedStats>;
+  __rbMastarnasStatsV3?: WeakMap<MastarnasData, ComputedStats>;
 };
 
 type ComputedStats = {
@@ -47,16 +47,18 @@ type ComputedStats = {
   mostStarts: LeaderboardEntry[];
   mostSeasons: LeaderboardEntry[];
   completeYears: LeaderboardEntry[];
+  marathon5Years: LeaderboardEntry[];
+  marathonPeriod: { from: number; to: number } | null;
   highestSeasons: LeaderboardEntry[];
   closeRaces: CloseTitleRace[];
   funFacts: MastarnasFunFact[];
 };
 
 function statsCache(): WeakMap<MastarnasData, ComputedStats> {
-  if (!globalForStats.__rbMastarnasStats) {
-    globalForStats.__rbMastarnasStats = new WeakMap();
+  if (!globalForStats.__rbMastarnasStatsV3) {
+    globalForStats.__rbMastarnasStatsV3 = new WeakMap();
   }
-  return globalForStats.__rbMastarnasStats;
+  return globalForStats.__rbMastarnasStatsV3;
 }
 
 function person(key: string, fallback: string): { person_key: string; name: string } {
@@ -109,10 +111,13 @@ function compute(data: MastarnasData): ComputedStats {
   const seasonYears = new Map<string, Acc>();
   const completeBest = new Map<string, Acc>();
   const highestSeasons = new Map<string, Acc>();
+  const marathon = new Map<string, Acc>();
   const closeRaces: CloseTitleRace[] = [];
 
   const disciplineName = new Map(data.disciplines.map((item) => [item.id, item.name]));
   const years = data.seasons.map((season) => season.year).sort((a, b) => a - b);
+  const marathonTo = years[years.length - 1] ?? null;
+  const marathonFrom = marathonTo !== null ? marathonTo - 4 : null;
 
   for (const season of data.seasons) {
     const yearPeople = participantsByYearMap.get(season.year) ?? new Set<string>();
@@ -166,11 +171,21 @@ function compute(data: MastarnasData): ComputedStats {
       }
     }
 
-    if (scoredEventCount(season) < MIN_EVENTS_FOR_TITLES) {
+    if (scoredEventCount(season) === 0) {
       continue;
     }
 
     const rows = computeStandings(data, season);
+    if (marathonFrom !== null && season.year >= marathonFrom) {
+      for (const row of rows) {
+        bump(marathon, row.person_key, row.name, row.total, season.year);
+      }
+    }
+
+    if (scoredEventCount(season) < MIN_EVENTS_FOR_TITLES) {
+      continue;
+    }
+
     const awards = getSeasonAwards(data, season.year, rows);
     for (const row of awards.overall) {
       bump(titles, row.person_key, row.name, 1, season.year);
@@ -278,6 +293,10 @@ function compute(data: MastarnasData): ComputedStats {
     mostStarts: toLeaderboard(mostStarts, 10),
     mostSeasons,
     completeYears: iron,
+    marathon5Years: toLeaderboard(marathon, 10, (acc) =>
+      acc.years.length === 1 ? String(acc.years[0]) : `${acc.years.length} säsonger`,
+    ),
+    marathonPeriod: marathonFrom !== null && marathonTo !== null ? { from: marathonFrom, to: marathonTo } : null,
     highestSeasons: toLeaderboard(highestSeasons, 10, (acc) => String(acc.years[0])),
     closeRaces: closeRaces.slice(0, 8),
     funFacts,
@@ -290,6 +309,36 @@ function yearSpan(years: number[]): string {
   }
   const sorted = [...years].sort((a, b) => a - b);
   return `${sorted[0]}–${sorted[sorted.length - 1]}`;
+}
+
+export function getCurrentMastarnasLeader(): {
+  year: number;
+  names: string[];
+  person_key: string;
+  total: number;
+} | null {
+  const data = readMastarnasData();
+  const season = [...data.seasons]
+    .sort((a, b) => b.year - a.year)
+    .find((item) => item.events.some((event) => event.results.length > 0));
+  if (!season) {
+    return null;
+  }
+
+  const rows = computeStandings(data, season);
+  const leaderPlace = rows[0]?.place ?? 1;
+  const leaders = rows.filter((row) => row.place === leaderPlace);
+  if (leaders.length === 0) {
+    return null;
+  }
+
+  const names = leaders.map((row) => person(row.person_key, row.name).name);
+  return {
+    year: season.year,
+    names,
+    person_key: person(leaders[0]!.person_key, leaders[0]!.name).person_key,
+    total: leaders[0]!.total,
+  };
 }
 
 export function getMastarnasCupStats(): ComputedStats {

@@ -8,6 +8,8 @@ import {
   formatDuration,
   getEvents,
 } from "@/lib/data";
+import { formatPoints } from "@/lib/mastarnas-points";
+import { getCurrentMastarnasLeader } from "@/lib/mastarnas-stats";
 import {
   getLongestTotalTimeInLastYear,
   getMostParticipationsInLastYear,
@@ -26,6 +28,7 @@ export default function HomePage() {
   const resultsCount = overview.resultCount;
   const mostParticipations = getMostParticipationsInLastYear(1)[0];
   const longestTotalTime = getLongestTotalTimeInLastYear(1)[0];
+  const mmLeader = getCurrentMastarnasLeader();
 
   return (
     <main>
@@ -38,7 +41,7 @@ export default function HomePage() {
             Alla orienteringsresultat på ett ställe
           </h1>
           <p className="mt-3 max-w-xl text-base leading-relaxed text-brand-50/90 sm:mt-5 sm:text-lg">
-            Sök på namn, bläddra bland träningar och tävlingar — från 2004 till idag.
+            Sök på namn, tävling, plats eller år — från 2004 till idag.
           </p>
 
           <div className="relative z-30 mt-6 max-w-2xl overflow-visible rounded-2xl bg-white/95 p-2 shadow-2xl shadow-black/20 backdrop-blur sm:mt-8 sm:p-3">
@@ -66,7 +69,7 @@ export default function HomePage() {
               </p>
               <p className="mt-1 text-sm text-brand-100/80">Flest träningar (senaste året)</p>
             </div>
-            <div className="col-span-2 rounded-xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur sm:col-span-1">
+            <div className="rounded-xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur">
               <p className="text-base font-bold leading-snug text-white sm:text-lg">
                 {longestTotalTime
                   ? `${longestTotalTime.display_name} · ${formatDuration(longestTotalTime.value)}`
@@ -74,6 +77,22 @@ export default function HomePage() {
               </p>
               <p className="mt-1 text-sm text-brand-100/80">Längst tid totalt (senaste året)</p>
             </div>
+            {mmLeader ? (
+              <Link
+                href={`/mastarnas/${mmLeader.year}`}
+                className="rounded-xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur transition hover:bg-white/15"
+              >
+                <p className="text-base font-bold leading-snug text-white sm:text-lg">
+                  {mmLeader.names.join(" & ")} · {formatPoints(mmLeader.total)} p
+                </p>
+                <p className="mt-1 text-sm text-brand-100/80">Ledare Mästarnas Mästare {mmLeader.year}</p>
+              </Link>
+            ) : (
+              <div className="rounded-xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur">
+                <p className="text-base font-bold leading-snug text-white sm:text-lg">–</p>
+                <p className="mt-1 text-sm text-brand-100/80">Ledare Mästarnas Mästare</p>
+              </div>
+            )}
           </div>
         </div>
       </section>

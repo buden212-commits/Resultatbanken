@@ -80,9 +80,14 @@ export function MastarnasStatsSection() {
           valueKind="years"
         />
         <StatsLeaderboard
-          title="Mest komplett år"
-          subtitle="Flest grenar under en säsong"
-          entries={stats.completeYears}
+          title="Marathon"
+          subtitle={
+            stats.marathonPeriod
+              ? `Mest poäng ${stats.marathonPeriod.from}–${stats.marathonPeriod.to}. Sex bästa grenarna per säsong.`
+              : "Mest poäng de senaste fem säsongerna"
+          }
+          entries={stats.marathon5Years}
+          valueKind="points"
         />
         <StatsLeaderboard
           title="Högsta säsongspoäng"
