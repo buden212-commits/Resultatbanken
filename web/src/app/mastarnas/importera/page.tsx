@@ -26,7 +26,7 @@ export default async function MastarnasImportPage({ searchParams }: Props) {
   const initialYear = year ? Number(year) : years[0];
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10 md:py-14">
       <BackLink href={initialYear ? `/mastarnas/${initialYear}` : "/mastarnas"}>Mästarnas Mästare</BackLink>
       <div className="mt-6">
         <PageHeader

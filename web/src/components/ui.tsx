@@ -16,7 +16,7 @@ export function StatCard({
   subtitle?: string;
 }) {
   return (
-    <div className="card px-5 py-4">
+    <div className="card px-4 py-3 sm:px-5 sm:py-4">
       {subtitle ? <p className="text-sm font-medium text-slate-500">{subtitle}</p> : null}
       <p className={`font-bold tracking-tight text-slate-900 ${subtitle ? "mt-1 text-xl" : "text-2xl"}`}>
         {value}

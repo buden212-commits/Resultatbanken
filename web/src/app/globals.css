@@ -83,7 +83,9 @@ body {
 }
 
 .table-shell {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   border-radius: 1rem;
   border: 1px solid var(--color-border);
   background: white;
@@ -102,18 +104,29 @@ body {
 }
 
 .table-shell th {
-  padding: 0.75rem 1rem;
+  padding: 0.625rem 0.75rem;
   text-align: left;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-muted);
+  white-space: nowrap;
 }
 
 .table-shell td {
-  padding: 0.875rem 1rem;
+  padding: 0.75rem;
   border-top: 1px solid rgb(15 23 42 / 0.05);
+}
+
+@media (min-width: 640px) {
+  .table-shell th {
+    padding: 0.75rem 1rem;
+  }
+
+  .table-shell td {
+    padding: 0.875rem 1rem;
+  }
 }
 
 .table-shell tbody tr {
@@ -131,7 +144,7 @@ body {
   background: white;
   padding-block: 0.75rem;
   padding-inline: 1rem;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   color: #0f172a;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -201,4 +214,9 @@ body {
   color: #002f5a;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.chip-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }

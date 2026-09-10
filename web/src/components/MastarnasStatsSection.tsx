@@ -49,7 +49,7 @@ export function MastarnasStatsSection() {
       ) : null}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <h3 className="text-base font-semibold text-slate-900">Deltagare per år</h3>
           <p className="mt-1 text-sm text-slate-500">Unika namn i cupen varje säsong.</p>
           <div className="mt-5 max-h-[28rem] overflow-y-auto pr-1">

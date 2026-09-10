@@ -37,7 +37,7 @@ export default function StatistikPage() {
   const recentYears = resultsByYear.filter((item) => item.year >= "2004");
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 md:py-14">
       <PageHeader
         eyebrow="Fas 2"
         title="Statistik"
@@ -87,14 +87,14 @@ export default function StatistikPage() {
       </section>
 
       <section className="mt-10 grid gap-6 lg:grid-cols-2">
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <h2 className="text-lg font-bold text-slate-900">Starter per år</h2>
           <p className="mt-1 text-sm text-slate-500">Antal registrerade starter per kalenderår.</p>
           <div className="mt-5 max-h-[28rem] overflow-y-auto pr-1">
             <StatsBarChart items={recentYears.length > 0 ? recentYears : resultsByYear} />
           </div>
         </div>
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <h2 className="text-lg font-bold text-slate-900">Event per år</h2>
           <p className="mt-1 text-sm text-slate-500">Antal träningar och tävlingar i arkivet per år.</p>
           <div className="mt-5 max-h-[28rem] overflow-y-auto pr-1">

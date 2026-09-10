@@ -36,11 +36,11 @@ export function EventList({
           <li key={event.id}>
             <Link
               href={`/resultat/${event.id}`}
-              className={`card card-hover group flex gap-4 p-4 sm:gap-5 sm:p-5${
+              className={`card card-hover group flex gap-3 p-3 sm:gap-5 sm:p-5${
                 hasUnreasonableTimes ? " ring-2 ring-red-500 bg-red-50/40" : ""
               }`}
             >
-              <div className="flex shrink-0 flex-col items-center justify-center rounded-xl bg-slate-50 px-3 py-2 text-center min-w-[3.5rem] group-hover:bg-brand-50">
+              <div className="flex min-w-[3rem] shrink-0 flex-col items-center justify-center rounded-xl bg-slate-50 px-2 py-2 text-center sm:min-w-[3.5rem] sm:px-3 group-hover:bg-brand-50">
                 <span className="text-lg font-bold leading-none text-slate-900">{dateParts.day}</span>
                 <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
                   {dateParts.month}
@@ -109,7 +109,7 @@ export function PersonResultList({
         <li key={person.person_key}>
           <Link
             href={`/person/${person.person_key}`}
-            className="card card-hover flex items-center justify-between gap-4 px-5 py-4"
+            className="card card-hover flex items-center justify-between gap-4 px-4 py-3 sm:px-5 sm:py-4"
           >
             <div>
               <p className="font-semibold text-slate-900">{person.display_name}</p>

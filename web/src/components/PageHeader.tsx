@@ -30,14 +30,14 @@ export function PageHeader({
   description?: string;
 }) {
   return (
-    <header className="mb-8">
+    <header className="mb-5 sm:mb-8">
       {eyebrow ? (
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-600">
           {eyebrow}
         </p>
       ) : null}
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
-      {description ? <p className="mt-3 max-w-2xl text-base text-slate-600">{description}</p> : null}
+      <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">{title}</h1>
+      {description ? <p className="mt-2 max-w-2xl text-sm text-slate-600 sm:mt-3 sm:text-base">{description}</p> : null}
     </header>
   );
 }

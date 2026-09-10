@@ -1,6 +1,6 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -16,6 +16,12 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Resultatbanken — IFK Mora OK",
   description: "Resultatarkiv för IFK Mora OK — träningar, KM och motionsorientering.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

@@ -42,15 +42,15 @@ export default async function EventPage({ params }: Props) {
   const availableTypes = getCanonicalEventTypesForPicker();
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 md:py-14">
       <BackLink href="/resultat">Alla resultat</BackLink>
 
-      <header className="card mt-6 overflow-hidden">
-        <div className="border-b border-slate-100 bg-gradient-to-r from-brand-50 to-white px-6 py-6 sm:px-8">
+      <header className="card mt-4 overflow-hidden sm:mt-6">
+        <div className="border-b border-slate-100 bg-gradient-to-r from-brand-50 to-white px-4 py-4 sm:px-8 sm:py-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <time className="text-sm font-medium text-brand-700">{formatDate(event.date)}</time>
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:mt-2 sm:text-4xl">
                 {title}
               </h1>
             </div>
@@ -74,7 +74,7 @@ export default async function EventPage({ params }: Props) {
           </div>
         </div>
 
-        <dl className="grid gap-6 px-6 py-6 sm:grid-cols-2 sm:px-8">
+        <dl className="grid gap-4 px-4 py-4 sm:grid-cols-2 sm:gap-6 sm:px-8 sm:py-6">
           <div>
             <dt className="text-xs font-semibold uppercase tracking-wider text-slate-400">Plats</dt>
             <dd className="mt-1 text-base font-medium text-slate-800">{event.location || "–"}</dd>

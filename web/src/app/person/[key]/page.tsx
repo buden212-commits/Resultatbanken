@@ -43,15 +43,15 @@ export default async function PersonPage({ params }: Props) {
       : null;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 md:py-14">
       <BackLink href="/sok">Sök person</BackLink>
 
-      <header className="mt-6">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">Orienterare</p>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-900">{person.display_name}</h1>
+      <header className="mt-4 sm:mt-6">
+        <p className="text-xs font-semibold uppercase tracking-widest text-brand-600 sm:text-sm">Orienterare</p>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:mt-2 sm:text-4xl">{person.display_name}</h1>
       </header>
 
-      <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Antal resultat" value={person.result_count} />
         <StatCard label="Unika event" value={stats.uniqueEvents} />
         <StatCard label="Segrar" value={stats.wins} />

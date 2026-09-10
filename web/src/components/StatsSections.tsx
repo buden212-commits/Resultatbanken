@@ -25,16 +25,17 @@ export function StatsBarChart({
         const label = isYearSeries ? (item as YearCount).year : (item as CountEntry).label;
         const width = max > 0 ? Math.max(4, Math.round((item.count / max) * 100)) : 0;
         return (
-          <div key={label} className="grid grid-cols-[4.5rem_1fr_auto] items-center gap-3 text-sm">
+          <div key={label} className="grid grid-cols-[3.25rem_minmax(0,1fr)_auto] items-center gap-2 text-sm sm:grid-cols-[4.5rem_1fr_auto] sm:gap-3">
             <span className="font-medium text-slate-600">{label}</span>
-            <div className="h-3 rounded-full bg-slate-100">
+            <div className="h-3 min-w-0 rounded-full bg-slate-100">
               <div
                 className="h-3 rounded-full bg-gradient-to-r from-brand-500 to-brand-600"
                 style={{ width: `${width}%` }}
               />
             </div>
-            <span className="tabular-nums text-slate-500">
-              {item.count.toLocaleString("sv-SE")} {valueLabel}
+            <span className="whitespace-nowrap tabular-nums text-slate-500">
+              {item.count.toLocaleString("sv-SE")}
+              <span className="hidden sm:inline"> {valueLabel}</span>
             </span>
           </div>
         );
@@ -57,7 +58,7 @@ export function StatsLeaderboard({
   emptyMessage?: string;
 }) {
   return (
-    <div className="card p-5">
+    <div className="card p-4 sm:p-5">
       <h3 className="text-base font-semibold text-slate-900">{title}</h3>
       {subtitle ? <p className="mt-1 text-sm text-slate-500">{subtitle}</p> : null}
       {entries.length === 0 ? (
@@ -68,7 +69,7 @@ export function StatsLeaderboard({
             <li key={entry.person_key}>
               <Link
                 href={`/person/${encodeURIComponent(entry.person_key)}`}
-                className="flex items-center justify-between gap-3 rounded-lg px-2 py-2 transition hover:bg-brand-50"
+                className="flex items-center justify-between gap-3 rounded-lg px-1 py-2 sm:px-2 transition hover:bg-brand-50"
               >
                 <span className="flex min-w-0 items-center gap-3">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600">
@@ -76,7 +77,7 @@ export function StatsLeaderboard({
                   </span>
                   <span className="truncate font-medium text-slate-800">{entry.display_name}</span>
                 </span>
-                <span className="shrink-0 text-right">
+                <span className="min-w-0 max-w-[42%] shrink-0 text-right">
                   <span className="font-semibold tabular-nums text-brand-700">
                     {valueKind === "duration"
                       ? (entry.detail ?? `${entry.value}`)
@@ -87,7 +88,7 @@ export function StatsLeaderboard({
                           : entry.value.toLocaleString("sv-SE")}
                   </span>
                   {entry.detail && valueKind !== "duration" ? (
-                    <span className="block text-xs text-slate-500">{entry.detail}</span>
+                    <span className="block text-xs leading-snug text-slate-500">{entry.detail}</span>
                   ) : null}
                 </span>
               </Link>
@@ -109,7 +110,7 @@ export function StatsCountTable({
   labelHeader?: string;
 }) {
   return (
-    <div className="card p-5">
+    <div className="card p-4 sm:p-5">
       <h3 className="text-base font-semibold text-slate-900">{title}</h3>
       {items.length === 0 ? (
         <p className="mt-4 text-sm text-slate-500">Ingen data.</p>
@@ -145,7 +146,7 @@ export function StatsCloseRaces({ races }: { races: CloseTitleRace[] }) {
   }
 
   return (
-    <div className="card p-5">
+    <div className="card p-4 sm:p-5">
       <h3 className="text-base font-semibold text-slate-900">Tätaste kupperna</h3>
       <p className="mt-1 text-sm text-slate-500">Minsta avståndet mellan ettan och tvåan, räknat på de sex bästa.</p>
       <ol className="mt-4 space-y-3">
@@ -153,9 +154,9 @@ export function StatsCloseRaces({ races }: { races: CloseTitleRace[] }) {
           <li key={race.year}>
             <Link
               href={`/mastarnas/${race.year}`}
-              className="flex items-start justify-between gap-3 rounded-lg px-2 py-2 transition hover:bg-brand-50"
+              className="flex items-start justify-between gap-3 rounded-lg px-1 py-2 sm:px-2 transition hover:bg-brand-50"
             >
-              <span>
+              <span className="min-w-0">
                 <span className="font-semibold text-slate-800">{race.year}</span>
                 <span className="mt-0.5 block text-sm text-slate-600">
                   {race.leaders.map((row) => row.display_name).join(" & ")}

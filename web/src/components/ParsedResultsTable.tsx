@@ -149,7 +149,7 @@ function GroupRows({
               {rowDisplayName(row)}
             </Link>
           </td>
-          <td className="text-slate-600">{row.class_name ?? "–"}</td>
+          <td className="max-w-[7.5rem] truncate text-slate-600">{row.class_name ?? "–"}</td>
           <td className="font-mono text-sm text-slate-700">
             <ResultTimeEditor
               eventId={eventId ?? row.event_id}

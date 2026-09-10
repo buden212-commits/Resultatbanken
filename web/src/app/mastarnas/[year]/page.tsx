@@ -74,19 +74,19 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
   });
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 md:py-14">
       <PageHeader
         eyebrow="Klubbmästerskap"
         title={`Mästarnas Mästare ${year}`}
         description="Sex bästa resultaten räknas. Vid lika poäng avgör antal starter, därefter medel-KM."
       />
 
-      <div className="mb-8 flex flex-wrap gap-2">
+      <div className="chip-scroll -mx-4 mb-6 flex gap-2 overflow-x-auto overscroll-x-contain px-4 pb-1 sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
         {years.map((item) => (
           <Link
             key={item}
             href={`/mastarnas/${item}`}
-            className={`rounded-full px-3 py-1.5 text-sm font-medium ${
+            className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-medium ${
               item === year ? "bg-brand-700 text-white" : "bg-white text-slate-600 ring-1 ring-slate-200 hover:text-brand-800"
             }`}
           >
@@ -137,10 +137,10 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
         </div>
       ) : null}
 
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="chip-scroll -mx-4 mb-4 flex gap-2 overflow-x-auto overscroll-x-contain px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
         <Link
           href={yearHref(year)}
-          className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
+          className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium ${
             !classId && !isYouthList && !selectedEvent ? "bg-brand-50 text-brand-800" : "text-slate-600 hover:bg-slate-50"
           }`}
         >
@@ -148,7 +148,7 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
         </Link>
         <Link
           href={yearHref(year, { lista: "ungdom" })}
-          className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
+          className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium ${
             isYouthList && !selectedEvent ? "bg-brand-50 text-brand-800" : "text-slate-600 hover:bg-slate-50"
           }`}
         >
@@ -158,7 +158,7 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
           <Link
             key={item.id}
             href={yearHref(year, { klass: item.id })}
-            className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
+            className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium ${
               classId === item.id && !selectedEvent ? "bg-brand-50 text-brand-800" : "text-slate-600 hover:bg-slate-50"
             }`}
           >
@@ -167,7 +167,7 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
         ))}
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="chip-scroll -mx-4 mb-6 flex gap-2 overflow-x-auto overscroll-x-contain px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
         {eventChips.map((item) => {
           const disc = data.disciplines.find((discipline) => discipline.id === item.discipline_id);
           const label = disc?.name ?? item.name;
@@ -176,7 +176,7 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
             <Link
               key={item.id}
               href={yearHref(year, { gren: item.discipline_id, klass: classId ?? undefined })}
-              className={`rounded-full px-3 py-1.5 text-sm font-medium ring-1 ${
+              className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-medium ring-1 ${
                 active
                   ? "bg-slate-900 text-white ring-slate-900"
                   : "bg-white text-slate-600 ring-slate-200 hover:text-brand-800"

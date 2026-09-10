@@ -150,7 +150,7 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
   return (
     <form
       onSubmit={onSubmit}
-      className={`relative flex flex-col gap-3 sm:flex-row ${showSuggestions ? "z-30" : ""}`}
+      className={`relative flex gap-2 ${isHero ? "flex-row" : "flex-col sm:flex-row"} ${showSuggestions ? "z-30" : ""}`}
       role="search"
     >
       <div ref={containerRef} className="relative z-30 flex-1">
@@ -228,7 +228,7 @@ export function PersonSearchForm({ initialQuery = "", variant = "default" }: Pro
           </span>
         ) : null}
       </div>
-      <button type="submit" className={`btn-primary ${isHero ? "h-12 px-6" : ""}`}>
+      <button type="submit" className={`btn-primary shrink-0 ${isHero ? "h-12 px-4 sm:px-6" : ""}`}>
         Sök
       </button>
     </form>
