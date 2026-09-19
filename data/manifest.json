@@ -6311,5 +6311,20 @@
     "source_url": "",
     "local_file": "content/638.pdf",
     "downloaded_at": "2026-09-11T17:59:55.105Z"
+  },
+  {
+    "id": 639,
+    "name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+    "type": "MTBO KM",
+    "date": "2026-09-15",
+    "organizer": "IFK Mora OK",
+    "location": "",
+    "free_text": "Importerat från Eventor (klubbresultat). https://eventor.orientering.se/Events/Show/60361",
+    "result_file": "eventor-60361.xml",
+    "file_size": 48686,
+    "file_type": "application/xml",
+    "source_url": "https://eventor.orientering.se/Events/Show/60361",
+    "local_file": "content/639.xml",
+    "downloaded_at": "2026-09-19T19:55:27.847Z"
   }
 ]
