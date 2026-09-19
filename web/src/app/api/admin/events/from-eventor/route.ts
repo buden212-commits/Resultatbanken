@@ -21,6 +21,7 @@ export async function POST(request: Request) {
       eventorId?: string;
       type?: string;
       free_text?: string;
+      resultsScope?: "club" | "full";
     };
 
     const eventorId = String(body.eventorId ?? "").trim();
@@ -31,6 +32,7 @@ export async function POST(request: Request) {
     const result = await createEventFromEventor(eventorId, {
       type: body.type,
       free_text: body.free_text,
+      resultsScope: body.resultsScope === "club" ? "club" : "full",
     });
 
     return NextResponse.json({

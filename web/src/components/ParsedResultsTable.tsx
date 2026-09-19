@@ -11,6 +11,7 @@ import { isUnreasonableTime } from "@/lib/time";
 const COLUMNS = [
   { key: "place", label: "Plac" },
   { key: "name", label: "Namn" },
+  { key: "club", label: "Klubb" },
   { key: "class_name", label: "Klass" },
   { key: "time", label: "Tid" },
   { key: "status", label: "Status" },
@@ -148,6 +149,9 @@ function GroupRows({
             <Link href={`/person/${rowLinkKey(row)}`} className="link-brand">
               {rowDisplayName(row)}
             </Link>
+          </td>
+          <td className="max-w-[9rem] truncate text-slate-600" title={row.club ?? undefined}>
+            {row.club ?? "–"}
           </td>
           <td className="max-w-[7.5rem] truncate text-slate-600">{row.class_name ?? "–"}</td>
           <td className="font-mono text-sm text-slate-700">

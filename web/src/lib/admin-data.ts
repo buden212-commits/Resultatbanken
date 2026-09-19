@@ -8,7 +8,7 @@ import {
   publishEventToGitHub,
   publishManifestToGitHub,
 } from "./github-deploy";
-import { eventorEventUrl, fetchClubResults, searchEventorEvents } from "./eventor";
+import { eventorEventUrl, fetchClubResults, fetchFullEventResults, searchEventorEvents } from "./eventor";
 import type { EventorSearchHit, EventorSearchScope } from "./eventor";
 import type { Event } from "./types";
 
@@ -311,12 +311,14 @@ export type CreateEventorImportResult = CreateEventResult & {
 
 export async function createEventFromEventor(
   eventorIdRaw: string,
-  overrides?: { type?: string; free_text?: string },
+  overrides?: { type?: string; free_text?: string; resultsScope?: "club" | "full" },
 ): Promise<CreateEventorImportResult> {
   const eventorId = eventorIdRaw.trim();
   if (!/^\d+$/.test(eventorId)) {
     throw new Error("Ogiltigt Eventor-id — ange bara siffror.");
   }
+
+  const resultsScope = overrides?.resultsScope === "club" ? "club" : "full";
 
   const manifest = await readManifest();
   const existing = findEventorImport(manifest, eventorId);
@@ -326,18 +328,28 @@ export async function createEventFromEventor(
     );
   }
 
-  const { meta, xml } = await fetchClubResults(eventorId);
+  const { meta, xml } =
+    resultsScope === "club"
+      ? await fetchClubResults(eventorId)
+      : await fetchFullEventResults(eventorId);
   const personMatches = xml.match(/<PersonResult\b/g);
   const resultCountHint = personMatches?.length ?? 0;
   if (resultCountHint === 0) {
     throw new Error(
-      `Inga klubbresultat hittades för Eventor-event ${eventorId} (${meta.name}).`,
+      resultsScope === "club"
+        ? `Inga klubbresultat hittades för Eventor-event ${eventorId} (${meta.name}).`
+        : `Inga resultat hittades för Eventor-event ${eventorId} (${meta.name}).`,
     );
   }
 
+  const importLabel =
+    resultsScope === "club"
+      ? "Importerat från Eventor (klubbresultat)."
+      : "Importerat från Eventor (hela tävlingen).";
+
   const freeTextParts = [
     overrides?.free_text?.trim() || "",
-    `Importerat från Eventor (klubbresultat). ${eventorEventUrl(eventorId)}`,
+    `${importLabel} ${eventorEventUrl(eventorId)}`,
   ].filter(Boolean);
 
   const input: CreateEventInput = {

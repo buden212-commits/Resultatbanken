@@ -57,6 +57,8 @@ export function MastarnasImportGuide({ years, classes, disciplines, initialEvent
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [eventorMoraOnly, setEventorMoraOnly] = useState(false);
+  const [filteredOutCount, setFilteredOutCount] = useState(0);
 
   const mappingKey = (item: SourceClass) => item.cleaned || item.source;
   const mappedCount = useMemo(
@@ -108,12 +110,16 @@ export function MastarnasImportGuide({ years, classes, disciplines, initialEvent
         suggested_year: number | null;
         suggested_discipline_id: string;
         source_classes: SourceClass[];
+        eventor_mora_only?: boolean;
+        filtered_out_count?: number;
       };
       if (!response.ok) {
         throw new Error(data.error ?? "Kunde inte läsa resultatet.");
       }
       setSelected(data.event);
       setSourceClasses(data.source_classes);
+      setEventorMoraOnly(Boolean(data.eventor_mora_only));
+      setFilteredOutCount(Number(data.filtered_out_count) || 0);
       setMapping(Object.fromEntries(data.source_classes.map((item) => [item.cleaned || item.source, item.suggested_class_id])));
       if (data.suggested_year) {
         setYear(String(data.suggested_year));
@@ -249,6 +255,12 @@ export function MastarnasImportGuide({ years, classes, disciplines, initialEvent
 
           <section className="card space-y-4 p-5">
             <p className="font-medium text-slate-800">3. Översätt klasser</p>
+            {eventorMoraOnly ? (
+              <p className="rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-900">
+                Eventor-källa: bara deltagare från IFK Mora OK läses in
+                {filteredOutCount > 0 ? ` (${filteredOutCount} övriga filtrerades bort)` : ""}.
+              </p>
+            ) : null}
             <p className="text-sm text-slate-600">
               Koppla varje klass i resultatfilen till en MM-klass. Lämna tomt för att hoppa över (t.ex. inskolning).
               DNS ger 0 poäng och räknas inte som startande. Felstämpling räknas som DNF (10 p). {mappedCount} av{" "}

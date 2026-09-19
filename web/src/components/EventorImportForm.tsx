@@ -49,6 +49,7 @@ export function EventorImportForm({ eventTypes, eventorConfigured }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [type, setType] = useState("");
   const [freeText, setFreeText] = useState("");
+  const [resultsScope, setResultsScope] = useState<"full" | "club">("full");
   const [isSearching, setIsSearching] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const [error, setError] = useState("");
@@ -119,6 +120,7 @@ export function EventorImportForm({ eventTypes, eventorConfigured }: Props) {
           eventorId: selected.eventorId,
           type: type.trim() || undefined,
           free_text: freeText.trim() || undefined,
+          resultsScope,
         }),
       });
 
@@ -173,7 +175,7 @@ export function EventorImportForm({ eventTypes, eventorConfigured }: Props) {
         <div>
           <h2 className="text-base font-semibold text-slate-900">Importera från Eventor</h2>
           <p className="mt-1 text-sm text-slate-600">
-            Sök tävlingar, välj en i listan och importera IFK Mora OK:s klubbresultat.
+            Sök tävlingar, välj en i listan och importera resultat. Klubb sparas per deltagare.
           </p>
         </div>
 
@@ -312,6 +314,27 @@ export function EventorImportForm({ eventTypes, eventorConfigured }: Props) {
 
             {!selected.alreadyImported ? (
               <div className="grid gap-4 sm:grid-cols-2">
+                <div className="sm:col-span-2 space-y-2">
+                  <p className="text-sm font-medium text-slate-700">Resultat</p>
+                  <label className="flex items-center gap-2 text-sm text-slate-700">
+                    <input
+                      type="radio"
+                      name="resultsScope"
+                      checked={resultsScope === "full"}
+                      onChange={() => setResultsScope("full")}
+                    />
+                    Hela tävlingen (alla klubbar)
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-slate-700">
+                    <input
+                      type="radio"
+                      name="resultsScope"
+                      checked={resultsScope === "club"}
+                      onChange={() => setResultsScope("club")}
+                    />
+                    Endast IFK Mora OK
+                  </label>
+                </div>
                 <div>
                   <label htmlFor="eventor-type" className="mb-1.5 block text-sm font-medium text-slate-700">
                     Typ (valfritt)
@@ -369,7 +392,7 @@ export function EventorImportForm({ eventTypes, eventorConfigured }: Props) {
                 disabled={isImporting}
                 onClick={() => void onImport()}
               >
-                {isImporting ? "Importerar…" : "Importera klubbresultat"}
+                {isImporting ? "Importerar…" : "Importera resultat"}
               </button>
             )}
           </div>

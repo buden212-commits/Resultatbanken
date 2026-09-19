@@ -153,6 +153,41 @@ export function searchArchiveEvents(events: Event[], query: string): ArchiveEven
   }));
 }
 
+/** Eventor-importerade arkivposter (hela tävling eller klubb). */
+export function isEventorArchiveEvent(event: Pick<Event, "source_url" | "result_file">): boolean {
+  if (/eventor\.orientering\.se\/Events\/Show\//i.test(event.source_url ?? "")) {
+    return true;
+  }
+  return /^eventor-\d+\.xml$/i.test(event.result_file ?? "");
+}
+
+/** Matchar IFK Mora OK / IFK Mora Orienteringsklubb o.likn. */
+export function isIfkMoraClub(club: string | null | undefined): boolean {
+  const raw = (club ?? "").trim();
+  if (!raw) {
+    return false;
+  }
+  if (/ifk\s*mora/i.test(raw)) {
+    return true;
+  }
+  const compact = raw.toLowerCase().replace(/[\s.\-_'/]/g, "");
+  return compact.includes("ifkmora");
+}
+
+/**
+ * Vid Eventor-källa: behåll bara IFK Mora OK i MM-inläsning.
+ * Övriga arkivkällor lämnas orörda.
+ */
+export function filterRowsForMastarnasImport<T extends { club: string | null }>(
+  event: Pick<Event, "source_url" | "result_file">,
+  rows: T[],
+): T[] {
+  if (!isEventorArchiveEvent(event)) {
+    return rows;
+  }
+  return rows.filter((row) => isIfkMoraClub(row.club));
+}
+
 export function summarizeSourceClasses(
   rows: ResolvedResultRow[],
   classes: MastarnasClass[],

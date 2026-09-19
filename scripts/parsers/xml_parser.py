@@ -120,7 +120,12 @@ def parse_xml_file(path: Path, event_id: int) -> list[ResultRow]:
                 continue
             name = _person_name(person)
             org = _child(person_result, "Organisation")
-            club = _text(org, "Name") or _text(org, "ShortName") or None
+            club = (
+                _text(org, "ShortName")
+                or _text(org, "Name")
+                or _text(org, "MediaName")
+                or None
+            )
 
             result = _child(person_result, "Result")
             if result is None:

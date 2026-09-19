@@ -13,6 +13,8 @@ import {
 import { readMastarnasData } from "@/lib/mastarnas";
 import {
   buildImportPreview,
+  filterRowsForMastarnasImport,
+  isEventorArchiveEvent,
   searchArchiveEvents,
   suggestDisciplineId,
   summarizeSourceClasses,
@@ -39,7 +41,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Resultat hittades inte." }, { status: 404 });
     }
     const data = readMastarnasData();
-    const rows = getResolvedResultsForEvent(previewEventId);
+    const allRows = getResolvedResultsForEvent(previewEventId);
+    const rows = filterRowsForMastarnasImport(event, allRows);
     return NextResponse.json({
       event: {
         id: event.id,
@@ -52,6 +55,8 @@ export async function GET(request: Request) {
       suggested_discipline_id: suggestDisciplineId(event, data.disciplines),
       source_classes: summarizeSourceClasses(rows, data.classes, data.class_import_map ?? {}),
       result_count: rows.length,
+      eventor_mora_only: isEventorArchiveEvent(event),
+      filtered_out_count: Math.max(0, allRows.length - rows.length),
     });
   }
 
@@ -79,7 +84,8 @@ function previewFromArchive(archiveEventId: number, mapping: Record<string, stri
     throw new Error("Resultat hittades inte.");
   }
   const data = readMastarnasData();
-  const preview = buildImportPreview(getResolvedResultsForEvent(archiveEventId), mapping, data.classes);
+  const rows = filterRowsForMastarnasImport(event, getResolvedResultsForEvent(archiveEventId));
+  const preview = buildImportPreview(rows, mapping, data.classes);
   return { event, preview };
 }
 

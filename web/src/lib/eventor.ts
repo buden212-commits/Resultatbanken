@@ -265,6 +265,17 @@ export async function fetchClubResults(eventorId: string): Promise<EventorFetchR
   return { meta, xml, organisationId };
 }
 
+/** Hämtar hela tävlingens resultat (alla klubbar) + metadata. */
+export async function fetchFullEventResults(eventorId: string): Promise<EventorFetchResult> {
+  const organisationId = await fetchOrganisationId();
+  const xml = await eventorGet("results/event", {
+    eventId: eventorId,
+    includeSplitTimes: "false",
+  });
+  const meta = parseMetaFromResultList(xml, eventorId);
+  return { meta, xml, organisationId: organisationId || "" };
+}
+
 export function eventorEventUrl(eventorId: string): string {
   return `https://eventor.orientering.se/Events/Show/${eventorId}`;
 }
