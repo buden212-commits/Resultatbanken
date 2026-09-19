@@ -1880,42 +1880,6 @@
               "points": null
             },
             {
-              "id": "9d2470b0-01ea-4d1f-b932-4582753d72a1",
-              "person_key": "henrik-johnsson",
-              "name": "Henrik Johnsson",
-              "class_id": "h35",
-              "place": 1,
-              "status": "ok",
-              "points": null
-            },
-            {
-              "id": "96f8e27b-617b-4d46-b36c-4d8646487c53",
-              "person_key": "simon-hodler",
-              "name": "Simon Hodler",
-              "class_id": "h35",
-              "place": 2,
-              "status": "ok",
-              "points": null
-            },
-            {
-              "id": "4e77a7af-d308-4d39-8749-b0fa0b75bd36",
-              "person_key": "johan-hamelius",
-              "name": "Johan Hamelius",
-              "class_id": "h35",
-              "place": 3,
-              "status": "ok",
-              "points": null
-            },
-            {
-              "id": "fa2f44b5-6636-4adf-aa14-2f12aa6b61d5",
-              "person_key": "jonas-alund",
-              "name": "Jonas Ålund",
-              "class_id": "h35",
-              "place": null,
-              "status": "dns",
-              "points": null
-            },
-            {
               "id": "b6cc4bb5-4437-4127-962d-54ce178fa71d",
               "person_key": "henrik-jonsson",
               "name": "Henrik Jonsson",
@@ -1985,6 +1949,33 @@
               "class_id": "h75",
               "place": 3,
               "status": "ok",
+              "points": null
+            },
+            {
+              "id": "88d7dfbe-8db9-4a55-81d7-daed441e7b49",
+              "person_key": "simon-hodler",
+              "name": "Simon Hodler",
+              "class_id": "h35",
+              "place": 2,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "2212182d-045a-421a-8bd9-8a13ac16992c",
+              "person_key": "johan-hamelius",
+              "name": "Johan Hamelius",
+              "class_id": "h35",
+              "place": 3,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "4923f0b0-2788-4fb3-a3b5-9fc77e89101d",
+              "person_key": "jonas-alund",
+              "name": "Jonas Ålund",
+              "class_id": "h35",
+              "place": null,
+              "status": "dns",
               "points": null
             }
           ]
