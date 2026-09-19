@@ -1952,25 +1952,25 @@
               "points": null
             },
             {
-              "id": "8d537df6-72e3-4b06-b98c-53e006e7ec09",
+              "id": "b9cde364-d06d-4333-af1b-91140f378732",
               "person_key": "simon-hodler",
               "name": "Simon Hodler",
+              "class_id": "h35",
+              "place": 1,
+              "status": "ok",
+              "points": null
+            },
+            {
+              "id": "edc6f9c7-a410-45b6-b906-c36160fee07a",
+              "person_key": "johan-hamelius",
+              "name": "Johan Hamelius",
               "class_id": "h35",
               "place": 2,
               "status": "ok",
               "points": null
             },
             {
-              "id": "790fbe26-45b5-4442-8c89-b9e81f149ebf",
-              "person_key": "johan-hamelius",
-              "name": "Johan Hamelius",
-              "class_id": "h35",
-              "place": 3,
-              "status": "ok",
-              "points": null
-            },
-            {
-              "id": "c9d255a5-dd5e-4e65-8296-b08c5f44adf7",
+              "id": "449eda73-e93b-469d-84fa-f0300d7ca83a",
               "person_key": "jonas-alund",
               "name": "Jonas Ålund",
               "class_id": "h35",
