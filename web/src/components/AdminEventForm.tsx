@@ -155,11 +155,12 @@ export function AdminEventForm({ eventTypes }: Props) {
               name="file"
               type="file"
               className="input-field file:mr-3 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-700"
-              accept=".pdf,.html,.htm,.txt,.xls,.xlsx,.ods,.doc,.docx,.rtf,.jpeg,.jpg"
+              accept=".pdf,.html,.htm,.txt,.xls,.xlsx,.ods,.doc,.docx,.rtf,.jpeg,.jpg,.xml"
               required
             />
             <p className="mt-1.5 text-xs text-slate-500">
-              PDF, HTML, text, Excel, Word eller bild. Filen sparas som {"{id}.filändelse"}.
+              PDF, HTML, text, Excel, Word, XML (Eventor/IOF) eller bild. Filen sparas som{" "}
+              {"{id}.filändelse"}.
             </p>
           </div>
         </div>

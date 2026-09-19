@@ -53,6 +53,7 @@ På Vercel kan servern inte skriva filer direkt. När `GITHUB_TOKEN` och `GITHUB
 | Variabel | Beskrivning |
 |----------|-------------|
 | `ADMIN_PASSWORD` | Lösenord för `/admin` |
+| `EVENTOR_API_KEY` | Klubbens Eventor API-nyckel (import på `/ladda-upp`) |
 | `GITHUB_TOKEN` | Personal Access Token med `Contents: Read and write` |
 | `GITHUB_REPO` | `ägare/reponamn`, t.ex. `buden212-commits/Resultatbanken` |
 | `GITHUB_BRANCH` | Branch att committa till (standard: `main`) |
@@ -71,4 +72,5 @@ Lokalt (utan `GITHUB_TOKEN`) sparas filer direkt i `data/` och index uppdateras 
 ```bash
 # web/.env.local
 ADMIN_PASSWORD=ditt-lösenord
+EVENTOR_API_KEY=din-eventor-nyckel
 ```

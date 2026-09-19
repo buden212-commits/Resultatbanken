@@ -18,10 +18,9 @@ export function UploadFormatHelp() {
           <h3 className="font-medium text-slate-900">Filformat</h3>
           <p>
             Du kan ladda upp PDF, Excel (.xlsx, .xls, .ods), HTML, text (.txt), Word
-            (.doc, .docx) eller bild. För bäst resultat:{" "}
-            <strong className="font-medium text-slate-900">Excel eller en textbaserad PDF</strong>{" "}
-            där texten går att markera (inte en skannad bild). Exporter från MeOS och
-            OE2003 (HTML) fungerar oftast direkt.
+            (.doc, .docx), XML (Eventor/IOF) eller bild. För bäst resultat:{" "}
+            <strong className="font-medium text-slate-900">Excel, textbaserad PDF eller Eventor-import</strong>.
+            Exporter från MeOS och OE2003 (HTML) fungerar oftast direkt.
           </p>
         </section>
 

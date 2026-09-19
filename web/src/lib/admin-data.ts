@@ -8,6 +8,8 @@ import {
   publishEventToGitHub,
   publishManifestToGitHub,
 } from "./github-deploy";
+import { eventorEventUrl, fetchClubResults, searchEventorEvents } from "./eventor";
+import type { EventorSearchHit, EventorSearchScope } from "./eventor";
 import type { Event } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "..", "data");
@@ -28,6 +30,7 @@ const ALLOWED_EXTENSIONS = new Set([
   ".rtf",
   ".jpeg",
   ".jpg",
+  ".xml",
 ]);
 
 const MIME_BY_EXT: Record<string, string> = {
@@ -43,6 +46,7 @@ const MIME_BY_EXT: Record<string, string> = {
   ".rtf": "application/rtf",
   ".jpeg": "image/jpeg",
   ".jpg": "image/jpeg",
+  ".xml": "application/xml",
 };
 
 export type CreateEventInput = {
@@ -52,6 +56,7 @@ export type CreateEventInput = {
   organizer: string;
   location: string;
   free_text: string;
+  source_url?: string;
 };
 
 export type DeployResult = {
@@ -135,7 +140,7 @@ function buildEvent(
     result_file: file.filename,
     file_size: file.buffer.byteLength,
     file_type: MIME_BY_EXT[ext] ?? "application/octet-stream",
-    source_url: "",
+    source_url: input.source_url?.trim() || "",
     local_file: `content/${file.storedName}`,
     downloaded_at: new Date().toISOString(),
   };
@@ -269,6 +274,89 @@ export async function createEvent(
     return createEventViaGit(input, file);
   }
   return createEventLocally(input, file);
+}
+
+function findEventorImport(manifest: Event[], eventorId: string): Event | undefined {
+  const needle = `/Events/Show/${eventorId}`;
+  return manifest.find((event) => event.source_url.includes(needle));
+}
+
+export type EventorSearchResultItem = EventorSearchHit & {
+  alreadyImported: boolean;
+  localEventId: number | null;
+};
+
+export async function searchEventorForImport(options: {
+  fromDate: string;
+  toDate: string;
+  scope: EventorSearchScope;
+  query?: string;
+}): Promise<EventorSearchResultItem[]> {
+  const hits = await searchEventorEvents(options);
+  const manifest = await readManifest();
+  return hits.map((hit) => {
+    const existing = findEventorImport(manifest, hit.eventorId);
+    return {
+      ...hit,
+      alreadyImported: Boolean(existing),
+      localEventId: existing?.id ?? null,
+    };
+  });
+}
+
+export type CreateEventorImportResult = CreateEventResult & {
+  eventorId: string;
+  resultCountHint: number;
+};
+
+export async function createEventFromEventor(
+  eventorIdRaw: string,
+  overrides?: { type?: string; free_text?: string },
+): Promise<CreateEventorImportResult> {
+  const eventorId = eventorIdRaw.trim();
+  if (!/^\d+$/.test(eventorId)) {
+    throw new Error("Ogiltigt Eventor-id — ange bara siffror.");
+  }
+
+  const manifest = await readManifest();
+  const existing = findEventorImport(manifest, eventorId);
+  if (existing) {
+    throw new Error(
+      `Eventor-event ${eventorId} finns redan som resultat ${existing.id} (${existing.name}).`,
+    );
+  }
+
+  const { meta, xml } = await fetchClubResults(eventorId);
+  const personMatches = xml.match(/<PersonResult\b/g);
+  const resultCountHint = personMatches?.length ?? 0;
+  if (resultCountHint === 0) {
+    throw new Error(
+      `Inga klubbresultat hittades för Eventor-event ${eventorId} (${meta.name}).`,
+    );
+  }
+
+  const freeTextParts = [
+    overrides?.free_text?.trim() || "",
+    `Importerat från Eventor (klubbresultat). ${eventorEventUrl(eventorId)}`,
+  ].filter(Boolean);
+
+  const input: CreateEventInput = {
+    name: meta.name,
+    type: overrides?.type?.trim() || meta.type,
+    date: meta.date,
+    organizer: meta.organizer,
+    location: meta.location,
+    free_text: freeTextParts.join("\n"),
+    source_url: eventorEventUrl(eventorId),
+  };
+
+  const buffer = Buffer.from(xml, "utf-8");
+  const result = await createEvent(input, {
+    buffer,
+    filename: `eventor-${eventorId}.xml`,
+  });
+
+  return { ...result, eventorId, resultCountHint };
 }
 
 export type UpdateEventTypeResult = {

@@ -5,6 +5,7 @@ from .image_parser import parse_image_file
 from .office_parser import parse_office_file
 from .pdf_parser import parse_pdf_file
 from .text_parser import parse_text_file
+from .xml_parser import parse_xml_file
 
 PARSERS = {
     ".html": parse_html_file,
@@ -21,4 +22,5 @@ PARSERS = {
     ".jpeg": parse_image_file,
     ".jpg": parse_image_file,
     ".png": parse_image_file,
+    ".xml": parse_xml_file,
 }
