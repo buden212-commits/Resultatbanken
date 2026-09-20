@@ -72,10 +72,6 @@ export function MastarnasClassSection({
 
   async function save() {
     const payload = draftRowsToPayload(rows, true);
-    if (payload.length === 0) {
-      setError("Lägg till minst en deltagare.");
-      return;
-    }
     setError("");
     setIsSaving(true);
     try {
@@ -146,7 +142,11 @@ export function MastarnasClassSection({
           ) : null}
           <ClassResultsDraftTable rows={rows} onChange={setRows} />
           <button type="button" className="btn-primary" disabled={isSaving} onClick={() => void save()}>
-            {isSaving ? "Sparar…" : "Spara klassen"}
+            {isSaving
+              ? "Sparar…"
+              : rows.some((row) => row.name.trim())
+                ? "Spara klassen"
+                : "Spara tom klass"}
           </button>
         </div>
       ) : (

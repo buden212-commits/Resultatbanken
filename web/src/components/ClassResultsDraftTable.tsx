@@ -139,6 +139,13 @@ export function ClassResultsDraftTable({ rows, onChange, showManualPoints = fals
             </tr>
           </thead>
           <tbody>
+            {rows.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="py-4 text-sm text-slate-500">
+                  Inga deltagare. Spara för att tömma klassen, eller lägg till någon.
+                </td>
+              </tr>
+            ) : null}
             {rows.map((row, index) => (
               <tr
                 key={row.localId}
@@ -230,7 +237,9 @@ export function ClassResultsDraftTable({ rows, onChange, showManualPoints = fals
                   <button
                     type="button"
                     className="mt-2 text-sm text-slate-500 hover:text-red-700"
-                    onClick={() => onChange(rows.filter((item) => item.localId !== row.localId))}
+                    onClick={() => {
+                      onChange(assignDraftPlaces(rows.filter((_, i) => i !== index)));
+                    }}
                   >
                     Ta bort
                   </button>
