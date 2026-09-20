@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
 
-import { StatsBarChart, StatsCountTable } from "@/components/StatsSections";
+import { StatsBarChart, StatsCountTable } from "@/components/StatsCharts";
 import { StatCard } from "@/components/ui";
 import type { EventorClubPerson, EventorPersonResult } from "@/lib/eventor-person";
 import type { EventorPersonStats } from "@/lib/eventor-person-stats";
