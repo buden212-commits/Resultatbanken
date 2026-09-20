@@ -203,7 +203,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
             Senast importerat: <span className="font-medium text-slate-700">{formatImportedAt(data.importedAt)}</span>
           </p>
           <p className="mt-1 text-sm text-slate-500">
-            År {data.year} · {data.totals.people} personer · {data.totals.dnsStarts} DNS
+            År {data.year} · {data.totals.people} medlemmar · {data.totals.dnsStarts} DNS/DNF
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -235,11 +235,11 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.people}</p>
-          <p className="mt-1 text-sm text-slate-500">Personer med DNS</p>
+          <p className="mt-1 text-sm text-slate-500">Klubbmedlemmar</p>
         </div>
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.dnsStarts}</p>
-          <p className="mt-1 text-sm text-slate-500">DNS-starter</p>
+          <p className="mt-1 text-sm text-slate-500">DNS/DNF-starter</p>
         </div>
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">{formatSek(data.totals.feeSek)} kr</p>
@@ -255,7 +255,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna tävlingar</h2>
           <p className="mt-1 text-sm text-slate-500">
-            För dessa sätts &quot;Anmälningsavgift att betala&quot; till 0 kr. Råavgiften syns fortfarande.
+            För DNS sätts &quot;Anmälningsavgift att betala&quot; till 0 kr. DNF betalas alltid. Stafetter ingår inte.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -339,7 +339,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                   </th>
                   <th className="px-3 py-3 sm:px-4">
                     <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("dnsCount")}>
-                      DNS
+                      DNS/DNF
                     </button>
                   </th>
                   <th className="px-3 py-3 sm:px-4">
@@ -389,26 +389,30 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                   <th className="py-1 pr-3">Datum</th>
                                   <th className="py-1 pr-3">Tävling</th>
                                   <th className="py-1 pr-3">Klass</th>
+                                  <th className="py-1 pr-3">Status</th>
                                   <th className="py-1 pr-3">Avgift</th>
                                   <th className="py-1">Att betala</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {person.rows.map((row) => {
+                                  const status = row.status === "dnf" ? "dnf" : "dns";
                                   const exempt = data.exemptEventIds.includes(row.eventId);
-                                  const toPay = exempt ? 0 : row.feeSek ?? 0;
+                                  const toPay =
+                                    status === "dnf" ? row.feeSek ?? 0 : exempt ? 0 : row.feeSek ?? 0;
                                   return (
-                                    <tr key={`${row.eventId}-${row.className}-${row.entryId}`}>
+                                    <tr key={`${row.eventId}-${row.className}-${row.entryId}-${status}`}>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {formatDate(row.date)}
                                       </td>
                                       <td className="py-1 pr-3 text-slate-700">
                                         {row.eventName}
-                                        {exempt ? (
+                                        {exempt && status === "dns" ? (
                                           <span className="ml-2 text-amber-700">(undantagen)</span>
                                         ) : null}
                                       </td>
                                       <td className="py-1 pr-3 text-slate-600">{row.className}</td>
+                                      <td className="py-1 pr-3 uppercase text-slate-600">{status}</td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
                                       </td>

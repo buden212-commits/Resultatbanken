@@ -1,3 +1,5 @@
+export type DnsFeeStatus = "dns" | "dnf";
+
 export type DnsFeeRow = {
   personId: string;
   personName: string;
@@ -5,6 +7,8 @@ export type DnsFeeRow = {
   eventName: string;
   date: string;
   className: string;
+  /** dns = DidNotStart, dnf = DidNotFinish */
+  status: DnsFeeStatus;
   /** Full entry fee in SEK from Eventor (raw). */
   feeSek: number | null;
   entryId: string | null;
@@ -16,10 +20,17 @@ export type DnsFeeEventRef = {
   date: string;
 };
 
+export type DnsFeeMember = {
+  personId: string;
+  personName: string;
+};
+
 export type DnsFeeTrackerData = {
   year: number;
   importedAt: string | null;
   rows: DnsFeeRow[];
+  /** All IFK Mora club members at last import (including those without DNS/DNF). */
+  members: DnsFeeMember[];
   /** Eventor event IDs where fee should not be charged to the participant. */
   exemptEventIds: string[];
 };
@@ -27,6 +38,7 @@ export type DnsFeeTrackerData = {
 export type DnsFeePersonSummary = {
   personId: string;
   personName: string;
+  /** DNS + DNF starts counted. */
   dnsCount: number;
   feeSek: number;
   feeToPaySek: number;
@@ -38,17 +50,29 @@ export function emptyDnsFeeTracker(year = 2026): DnsFeeTrackerData {
     year,
     importedAt: null,
     rows: [],
+    members: [],
     exemptEventIds: [],
   };
+}
+
+export function normalizeDnsFeeStatus(value: unknown): DnsFeeStatus {
+  return value === "dnf" ? "dnf" : "dns";
 }
 
 export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean {
   return data.exemptEventIds.includes(eventId);
 }
 
+/** Exempt events waive DNS fees; DNF is always payable. */
 export function feeToPaySek(data: DnsFeeTrackerData, row: DnsFeeRow): number {
-  if (isEventExempt(data, row.eventId)) return 0;
-  return row.feeSek ?? 0;
+  const fee = row.feeSek ?? 0;
+  if (normalizeDnsFeeStatus(row.status) === "dnf") {
+    return fee;
+  }
+  if (isEventExempt(data, row.eventId)) {
+    return 0;
+  }
+  return fee;
 }
 
 export function listEventsFromRows(rows: DnsFeeRow[]): DnsFeeEventRef[] {
@@ -74,6 +98,17 @@ export function listEventsFromRows(rows: DnsFeeRow[]): DnsFeeEventRef[] {
 export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonSummary[] {
   const byPerson = new Map<string, DnsFeePersonSummary>();
 
+  for (const member of data.members ?? []) {
+    byPerson.set(member.personId, {
+      personId: member.personId,
+      personName: member.personName,
+      dnsCount: 0,
+      feeSek: 0,
+      feeToPaySek: 0,
+      rows: [],
+    });
+  }
+
   for (const row of data.rows) {
     const existing = byPerson.get(row.personId);
     const fee = row.feeSek ?? 0;
@@ -88,6 +123,9 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
         rows: [row],
       });
       continue;
+    }
+    if (!existing.personName && row.personName) {
+      existing.personName = row.personName;
     }
     existing.dnsCount += 1;
     existing.feeSek += fee;

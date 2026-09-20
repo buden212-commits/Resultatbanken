@@ -43,7 +43,7 @@ export default async function KollAnmalanPage() {
       <PageHeader
         eyebrow="Administration"
         title="Koll på anmälan"
-        description="DNS under 2026 för IFK Mora OK — summerat per deltagare med anmälningsavgift och belopp att betala."
+        description="DNS och DNF under 2026 för IFK Mora OK — summerat per deltagare. Stafetter ingår inte."
       />
 
       <div className="mt-8">
@@ -52,7 +52,7 @@ export default async function KollAnmalanPage() {
         ) : (
           <div>
             <p className="mb-4 text-center text-sm text-slate-600">
-              Sidan är lösenordsskyddad. Logga in för att se och uppdatera DNS-avgifter.
+              Sidan är lösenordsskyddad. Logga in för att se och uppdatera avgifter för DNS/DNF.
             </p>
             <AnmalanLoginForm />
           </div>

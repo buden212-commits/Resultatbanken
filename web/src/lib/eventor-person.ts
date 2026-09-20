@@ -139,6 +139,10 @@ async function loadClubPersons(): Promise<EventorClubPerson[]> {
   return persons;
 }
 
+export async function listClubPersons(): Promise<EventorClubPerson[]> {
+  return loadClubPersons();
+}
+
 export async function searchClubPersons(query: string, limit = 20): Promise<EventorClubPerson[]> {
   if (!isEventorConfigured()) {
     throw new Error("Eventor är inte konfigurerat.");

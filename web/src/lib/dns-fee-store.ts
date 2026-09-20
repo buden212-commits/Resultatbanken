@@ -4,7 +4,7 @@ import path from "path";
 import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import { applySchema, getDb } from "./db/client";
 import { getDocument, setDocument } from "./db/documents";
-import { emptyDnsFeeTracker, type DnsFeeTrackerData } from "./dns-fee-types";
+import { emptyDnsFeeTracker, normalizeDnsFeeStatus, type DnsFeeTrackerData } from "./dns-fee-types";
 
 const LOCAL_PATH = path.join(process.cwd(), "..", "data", "dns-fee-tracker.json");
 
@@ -32,14 +32,29 @@ export async function loadDnsFeeTracker(): Promise<DnsFeeTrackerData> {
     if (!data || !Array.isArray(data.rows)) {
       return emptyDnsFeeTracker();
     }
-    return {
-      year: data.year ?? 2026,
-      importedAt: data.importedAt ?? null,
-      rows: data.rows,
-      exemptEventIds: Array.isArray(data.exemptEventIds) ? data.exemptEventIds.map(String) : [],
-    };
+    return normalizeTracker(data);
   }
-  return readLocal();
+  return normalizeTracker(readLocal());
+}
+
+function normalizeTracker(data: DnsFeeTrackerData): DnsFeeTrackerData {
+  return {
+    year: data.year ?? 2026,
+    importedAt: data.importedAt ?? null,
+    rows: (data.rows ?? []).map((row) => ({
+      ...row,
+      status: normalizeDnsFeeStatus(row.status),
+    })),
+    members: Array.isArray(data.members)
+      ? data.members
+          .filter((m) => m && typeof m.personId === "string")
+          .map((m) => ({
+            personId: String(m.personId),
+            personName: String(m.personName || `Person ${m.personId}`),
+          }))
+      : [],
+    exemptEventIds: Array.isArray(data.exemptEventIds) ? data.exemptEventIds.map(String) : [],
+  };
 }
 
 export async function saveDnsFeeTracker(data: DnsFeeTrackerData): Promise<void> {
