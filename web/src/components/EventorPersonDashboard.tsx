@@ -371,7 +371,7 @@ export function EventorPersonDashboard({
         </div>
       ) : !loadingPerson && !initialPersonId ? (
         <div className="card px-6 py-10 text-center text-slate-500">
-          Sök och välj en person — prova <button type="button" className="link-brand" onClick={() => setQuery("Jonas Buud")}>Jonas Buud</button>.
+          Sök och välj en person som är medlem i IFK Mora.
         </div>
       ) : null}
     </div>
