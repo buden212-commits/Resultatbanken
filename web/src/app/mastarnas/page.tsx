@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { AdminLoginForm } from "@/components/AdminLoginForm";
 import { PageHeader } from "@/components/PageHeader";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
+import { ensureMastarnasLoaded } from "@/lib/data";
 import { getLatestMastarnasYear } from "@/lib/mastarnas";
 
 export const metadata: Metadata = {
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function MastarnasIndexPage() {
+  await ensureMastarnasLoaded();
   const latest = getLatestMastarnasYear();
   if (latest) {
     redirect(`/mastarnas/${latest}`);

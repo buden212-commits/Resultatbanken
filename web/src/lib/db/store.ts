@@ -10,19 +10,21 @@ import {
   listResultsForEvent,
 } from "./events";
 
+/** Light cache — safe to warm on every request (no multi‑MB payloads). */
 export type DbSnapshot = {
   events: Event[];
-  results: ResultRow[];
-  people: Person[];
   personAliases: unknown;
   typeAliases: unknown;
   statsExclusions: unknown;
-  mastarnas: unknown;
 };
 
 const globalForCache = globalThis as typeof globalThis & {
   __rbDbSnapshot?: DbSnapshot | null;
   __rbDbSnapshotLoading?: Promise<DbSnapshot> | null;
+  __rbResultsCache?: ResultRow[] | null;
+  __rbResultsLoading?: Promise<ResultRow[]> | null;
+  __rbPeopleCache?: Person[] | null;
+  __rbMastarnasCache?: unknown;
 };
 
 export function useDbData(): boolean {
@@ -33,25 +35,18 @@ export async function loadDbSnapshot(client?: DbClient): Promise<DbSnapshot> {
   const db = client ?? (await getDb());
   await applySchema(db);
 
-  const [events, results, people, personAliases, typeAliases, statsExclusions, mastarnas] =
-    await Promise.all([
-      listEvents(db),
-      listResults(db),
-      getDocument<Person[]>(db, "people-index", []),
-      getDocument(db, "person-aliases", []),
-      getDocument(db, "type-aliases", []),
-      getDocument(db, "stats-exclusions", []),
-      getDocument(db, "mastarnas", null),
-    ]);
+  const [events, personAliases, typeAliases, statsExclusions] = await Promise.all([
+    listEvents(db),
+    getDocument(db, "person-aliases", []),
+    getDocument(db, "type-aliases", []),
+    getDocument(db, "stats-exclusions", []),
+  ]);
 
   return {
     events,
-    results,
-    people,
     personAliases,
     typeAliases,
     statsExclusions,
-    mastarnas,
   };
 }
 
@@ -63,11 +58,16 @@ export async function ensureDbSnapshot(): Promise<DbSnapshot | null> {
     return globalForCache.__rbDbSnapshot;
   }
   if (!globalForCache.__rbDbSnapshotLoading) {
-    globalForCache.__rbDbSnapshotLoading = loadDbSnapshot().then((snapshot) => {
-      globalForCache.__rbDbSnapshot = snapshot;
-      globalForCache.__rbDbSnapshotLoading = null;
-      return snapshot;
-    });
+    globalForCache.__rbDbSnapshotLoading = loadDbSnapshot()
+      .then((snapshot) => {
+        globalForCache.__rbDbSnapshot = snapshot;
+        globalForCache.__rbDbSnapshotLoading = null;
+        return snapshot;
+      })
+      .catch((error) => {
+        globalForCache.__rbDbSnapshotLoading = null;
+        throw error;
+      });
   }
   return globalForCache.__rbDbSnapshotLoading;
 }
@@ -92,6 +92,10 @@ export function requireDbSnapshot(): DbSnapshot {
 export async function refreshDbSnapshot(): Promise<DbSnapshot> {
   globalForCache.__rbDbSnapshot = null;
   globalForCache.__rbDbSnapshotLoading = null;
+  globalForCache.__rbResultsCache = null;
+  globalForCache.__rbResultsLoading = null;
+  globalForCache.__rbPeopleCache = null;
+  globalForCache.__rbMastarnasCache = undefined;
   const snapshot = await loadDbSnapshot();
   globalForCache.__rbDbSnapshot = snapshot;
   return snapshot;
@@ -100,6 +104,68 @@ export async function refreshDbSnapshot(): Promise<DbSnapshot> {
 export function invalidateDbSnapshot(): void {
   globalForCache.__rbDbSnapshot = null;
   globalForCache.__rbDbSnapshotLoading = null;
+  globalForCache.__rbResultsCache = null;
+  globalForCache.__rbResultsLoading = null;
+  globalForCache.__rbPeopleCache = null;
+  globalForCache.__rbMastarnasCache = undefined;
+}
+
+export async function ensureResultsLoaded(): Promise<ResultRow[]> {
+  if (!isDbEnabled()) {
+    return [];
+  }
+  if (globalForCache.__rbResultsCache) {
+    return globalForCache.__rbResultsCache;
+  }
+  if (!globalForCache.__rbResultsLoading) {
+    globalForCache.__rbResultsLoading = (async () => {
+      const db = await getDb();
+      await applySchema(db);
+      const rows = await listResults(db);
+      globalForCache.__rbResultsCache = rows;
+      globalForCache.__rbResultsLoading = null;
+      return rows;
+    })();
+  }
+  return globalForCache.__rbResultsLoading;
+}
+
+export async function ensurePeopleLoaded(): Promise<Person[]> {
+  if (!isDbEnabled()) {
+    return [];
+  }
+  if (globalForCache.__rbPeopleCache) {
+    return globalForCache.__rbPeopleCache;
+  }
+  const db = await getDb();
+  const people = await getDocument<Person[]>(db, "people-index", []);
+  globalForCache.__rbPeopleCache = people;
+  return people;
+}
+
+export async function ensureMastarnasLoaded(): Promise<unknown> {
+  if (!isDbEnabled()) {
+    return null;
+  }
+  if (globalForCache.__rbMastarnasCache !== undefined) {
+    return globalForCache.__rbMastarnasCache;
+  }
+  const db = await getDb();
+  const data = await getDocument(db, "mastarnas", null);
+  globalForCache.__rbMastarnasCache = data;
+  return data;
+}
+
+export function getResultsCacheSync(): ResultRow[] | null {
+  return globalForCache.__rbResultsCache ?? null;
+}
+
+export function getPeopleCacheSync(): Person[] | null {
+  return globalForCache.__rbPeopleCache ?? null;
+}
+
+export function getMastarnasCacheSync(): unknown {
+  return globalForCache.__rbMastarnasCache;
 }
 
 export async function readEventsFromDb(): Promise<Event[]> {
@@ -108,13 +174,11 @@ export async function readEventsFromDb(): Promise<Event[]> {
 }
 
 export async function readResultsFromDb(): Promise<ResultRow[]> {
-  await ensureDbSnapshot();
-  return requireDbSnapshot().results;
+  return ensureResultsLoaded();
 }
 
 export async function readPeopleFromDb(): Promise<Person[]> {
-  await ensureDbSnapshot();
-  return requireDbSnapshot().people;
+  return ensurePeopleLoaded();
 }
 
 export async function readEventFromDb(id: number): Promise<Event | undefined> {
@@ -126,12 +190,10 @@ export async function readEventFromDb(id: number): Promise<Event | undefined> {
   return getEventById(db, id);
 }
 
+/** Always query one event — avoids loading the full results index. */
 export async function readResultsForEventFromDb(eventId: number): Promise<ResultRow[]> {
-  const snapshot = await ensureDbSnapshot();
-  if (snapshot) {
-    return snapshot.results.filter((row) => row.event_id === eventId);
-  }
   const db = await getDb();
+  await applySchema(db);
   return listResultsForEvent(db, eventId);
 }
 

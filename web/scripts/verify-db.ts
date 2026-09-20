@@ -53,6 +53,7 @@ async function main(): Promise<void> {
   const event1 = await getEventById(db, 1);
   const results1 = await listResultsForEvent(db, 1);
   const snapshot = await loadDbSnapshot(db);
+  const mastarnas = await getDocument<{ seasons?: unknown[] } | null>(db, "mastarnas", null);
 
   const report = {
     kind: db.kind,
@@ -62,10 +63,7 @@ async function main(): Promise<void> {
     event1Name: event1?.name ?? null,
     event1Results: results1.length,
     snapshotEvents: snapshot.events.length,
-    snapshotResults: snapshot.results.length,
-    mastarnasSeasons: Array.isArray((snapshot.mastarnas as { seasons?: unknown[] } | null)?.seasons)
-      ? (snapshot.mastarnas as { seasons: unknown[] }).seasons.length
-      : 0,
+    mastarnasSeasons: mastarnas?.seasons?.length ?? 0,
     ok:
       db.kind === "postgres" &&
       events === 422 &&

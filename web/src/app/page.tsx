@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import { EventList } from "@/components/EventList";
 import { PersonSearchForm } from "@/components/PersonSearchForm";
 import {
+  ensureHeavyDataReady,
+  ensureMastarnasLoaded,
   formatDuration,
   getEvents,
 } from "@/lib/data";
@@ -21,7 +23,9 @@ export const metadata: Metadata = {
   description: "Resultatarkiv för IFK Mora OK — träningar, KM och motionsorientering.",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  await ensureHeavyDataReady();
+  await ensureMastarnasLoaded();
   const events = getEvents();
   const overview = getOverviewStats();
   const peopleCount = overview.peopleCount;

@@ -6,7 +6,7 @@ import { MastarnasPersonSection } from "@/components/MastarnasPersonSection";
 import { PersonResultsTable } from "@/components/PersonResultsTable";
 import { StatsBarChart, StatsCountTable } from "@/components/StatsSections";
 import { StatCard } from "@/components/ui";
-import { formatDate, formatDuration, getPerson } from "@/lib/data";
+import { ensureHeavyDataReady, ensureMastarnasLoaded, formatDate, formatDuration, getPerson } from "@/lib/data";
 import { resolvePersonKey } from "@/lib/person-aliases";
 import { getPersonStats } from "@/lib/stats";
 
@@ -15,6 +15,7 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  await ensureHeavyDataReady();
   const { key } = await params;
   const person = getPerson(key);
   return {
@@ -23,6 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PersonPage({ params }: Props) {
+  await ensureHeavyDataReady();
+  await ensureMastarnasLoaded();
   const { key } = await params;
   const canonicalKey = resolvePersonKey(key);
   if (canonicalKey !== key) {

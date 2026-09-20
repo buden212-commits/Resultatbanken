@@ -119,7 +119,6 @@ describe("db schema and CRUD", () => {
     const snapshot = await loadDbSnapshot(db);
     expect(snapshot.events).toHaveLength(1);
     expect(snapshot.events[0].name).toBe("Snapshot");
-    expect(snapshot.results).toHaveLength(1);
     expect(snapshot.statsExclusions).toEqual([458]);
   });
 });

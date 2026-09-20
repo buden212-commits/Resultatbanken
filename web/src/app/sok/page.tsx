@@ -4,7 +4,7 @@ import Link from "next/link";
 import { EventList, PersonResultList } from "@/components/EventList";
 import { PageHeader } from "@/components/PageHeader";
 import { PersonSearchForm } from "@/components/PersonSearchForm";
-import { getEvents, searchPeople } from "@/lib/data";
+import { ensureHeavyDataReady, getEvents, searchPeople } from "@/lib/data";
 import { searchEvents } from "@/lib/event-search";
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ type Props = {
 };
 
 export default async function SearchPage({ searchParams }: Props) {
+  await ensureHeavyDataReady();
   const { q = "" } = await searchParams;
   const people = searchPeople(q);
   const events = q.trim() ? searchEvents(getEvents(), q) : [];

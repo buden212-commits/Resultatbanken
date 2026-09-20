@@ -8,6 +8,7 @@ import { MastarnasEventResults } from "@/components/MastarnasEventResults";
 import { MastarnasStandingsTable } from "@/components/MastarnasStandingsTable";
 import { PageHeader } from "@/components/PageHeader";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
+import { ensureMastarnasLoaded } from "@/lib/data";
 import { readMastarnasData } from "@/lib/mastarnas";
 import { canonicalDisciplineId } from "@/lib/mastarnas-normalize";
 import { formatPoints } from "@/lib/mastarnas-points";
@@ -39,6 +40,7 @@ function yearHref(year: number, opts: { lista?: string; klass?: string; gren?: s
 }
 
 export default async function MastarnasYearPage({ params, searchParams }: Props) {
+  await ensureMastarnasLoaded();
   const { year: yearParam } = await params;
   const { klass, lista, gren } = await searchParams;
   const year = Number(yearParam);

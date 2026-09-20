@@ -7,7 +7,13 @@ import { EventStatsExclusionSwitch } from "@/components/EventStatsExclusionSwitc
 import { EventTypePicker } from "@/components/EventTypePicker";
 import { ParsedResultsTable } from "@/components/ParsedResultsTable";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
-import { findContentFile, formatDate, getEvent, getResolvedResultsForEvent } from "@/lib/data";
+import {
+  ensureDataReady,
+  findContentFile,
+  formatDate,
+  getEvent,
+  getResolvedResultsForEventAsync,
+} from "@/lib/data";
 import { getCanonicalEventTypesForPicker } from "@/lib/event-types";
 import { isEventExcludedFromStats } from "@/lib/stats-exclusions";
 import { resolveEventType } from "@/lib/type-aliases";
@@ -17,6 +23,7 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  await ensureDataReady();
   const { id } = await params;
   const event = getEvent(Number(id));
   return {
@@ -25,6 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function EventPage({ params }: Props) {
+  await ensureDataReady();
   const { id } = await params;
   const eventId = Number(id);
   const event = getEvent(eventId);
@@ -34,7 +42,7 @@ export default async function EventPage({ params }: Props) {
   }
 
   const content = findContentFile(eventId);
-  const parsedRows = getResolvedResultsForEvent(eventId);
+  const parsedRows = await getResolvedResultsForEventAsync(eventId);
   const title = event.name || event.type || `Resultat ${event.id}`;
   const excludedFromStats = isEventExcludedFromStats(eventId);
   const canEdit = await isAdminAuthenticated();

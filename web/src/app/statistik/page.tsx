@@ -5,7 +5,7 @@ import { MastarnasStatsSection } from "@/components/MastarnasStatsSection";
 import { PageHeader } from "@/components/PageHeader";
 import { StatsBarChart, StatsCountTable, StatsLeaderboard } from "@/components/StatsSections";
 import { StatCard } from "@/components/ui";
-import { getLastYearDateRange } from "@/lib/data";
+import { getLastYearDateRange, ensureHeavyDataReady } from "@/lib/data";
 import {
   getEventsByYear,
   getLeaderboardBestSingleYear,
@@ -29,7 +29,8 @@ export const metadata: Metadata = {
   description: "Statistik och topplistor från IFK Mora OK:s resultatarkiv.",
 };
 
-export default function StatistikPage() {
+export default async function StatistikPage() {
+  await ensureHeavyDataReady();
   const overview = getOverviewStats();
   const excludedEventCount = getStatsExcludedEventCount();
   const lastYearRange = getLastYearDateRange();

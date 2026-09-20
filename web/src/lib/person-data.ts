@@ -1,7 +1,7 @@
 import path from "path";
 
 import type { Person, PersonResult } from "./types";
-import { getDbSnapshotSync, useDbData } from "./db/store";
+import { getPeopleCacheSync, useDbData } from "./db/store";
 import { readCachedJson } from "./json-cache";
 import {
   getKeysForGroup,
@@ -17,7 +17,7 @@ const globalForPeopleIndex = globalThis as typeof globalThis & {
 
 function getPeopleIndex(): Person[] {
   if (useDbData()) {
-    return getDbSnapshotSync()?.people ?? [];
+    return getPeopleCacheSync() ?? readCachedJson<Person[]>(path.join(DATA_DIR, "people-index.json"));
   }
   return readCachedJson<Person[]>(path.join(DATA_DIR, "people-index.json"));
 }

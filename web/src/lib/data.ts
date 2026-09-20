@@ -11,15 +11,20 @@ import { isUnreasonableTime, parseTimeToSeconds } from "./time";
 import { findLocalContentFile } from "./db/content";
 import {
   ensureDbSnapshot,
+  ensurePeopleLoaded,
+  ensureResultsLoaded,
   getDbSnapshotSync,
+  getPeopleCacheSync,
+  getResultsCacheSync,
   readContentUrlFromDb,
-  requireDbSnapshot,
+  readResultsForEventFromDb,
   useDbData,
 } from "./db/store";
 
 export { parseTimeToSeconds };
 export { ensureDbSnapshot, useDbData };
 export { ensureDataReady } from "./db/ready";
+export { ensureMastarnasLoaded } from "./db/store";
 
 function resultRowScore(row: ResultRow): number {
   let score = 0;
@@ -64,7 +69,12 @@ function readJson<T>(filename: string): T {
 
 export function getEvents(): Event[] {
   if (useDbData()) {
-    return requireDbSnapshot().events;
+    const snap = getDbSnapshotSync();
+    if (snap) {
+      return snap.events;
+    }
+    // Fallback so generateMetadata / cold paths don't crash
+    return readJson<Event[]>("manifest.json").sort((a, b) => b.date.localeCompare(a.date));
   }
   return readJson<Event[]>("manifest.json").sort((a, b) => b.date.localeCompare(a.date));
 }
@@ -75,14 +85,22 @@ export function getEvent(id: number): Event | undefined {
 
 export function getResultsIndex(): ResultRow[] {
   if (useDbData()) {
-    return requireDbSnapshot().results;
+    const cached = getResultsCacheSync();
+    if (cached) {
+      return cached;
+    }
+    return readJson<ResultRow[]>("results-index.json");
   }
   return readJson<ResultRow[]>("results-index.json");
 }
 
 export function getPeopleIndex(): Person[] {
   if (useDbData()) {
-    return requireDbSnapshot().people;
+    const cached = getPeopleCacheSync();
+    if (cached) {
+      return cached;
+    }
+    return readJson<Person[]>("people-index.json");
   }
   return readJson<Person[]>("people-index.json");
 }
@@ -129,6 +147,27 @@ export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[]
     resolved_person_key: resolvePersonKey(row.person_key),
     resolved_name: resolveDisplayName(row.person_key, row.name),
   }));
+}
+
+/** Prefer DB query for one event (avoids loading the full results index). */
+export async function getResolvedResultsForEventAsync(eventId: number): Promise<ResolvedResultRow[]> {
+  const rows = useDbData()
+    ? await readResultsForEventFromDb(eventId)
+    : getResultsForEvent(eventId);
+  return dedupeResultsByPerson(derivePlaces(rows)).map((row) => ({
+    ...row,
+    resolved_person_key: resolvePersonKey(row.person_key),
+    resolved_name: resolveDisplayName(row.person_key, row.name),
+  }));
+}
+
+/** Warm caches needed by stats / people search. */
+export async function ensureHeavyDataReady(): Promise<void> {
+  if (!useDbData()) {
+    return;
+  }
+  await ensureDbSnapshot();
+  await Promise.all([ensureResultsLoaded(), ensurePeopleLoaded()]);
 }
 
 export function findContentFile(id: number): { path: string; ext: string } | null {
