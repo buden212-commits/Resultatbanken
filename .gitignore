@@ -11,4 +11,5 @@ web/.env.local
 !.env.example
 !web/.env.example
 data/mastarnas-source/
+data/dns-fee-tracker.json
 .data/
