@@ -9,6 +9,7 @@ const nav = [
   { href: "/resultat", label: "Alla resultat" },
   { href: "/mastarnas", label: "Mästarnas mästare" },
   { href: "/statistik", label: "Statistik" },
+  { href: "/eventor", label: "Eventor" },
   { href: "/sok", label: "Sök" },
   { href: "/ladda-upp", label: "Ladda upp" },
   { href: "/koppla-namn", label: "Koppla namn" },

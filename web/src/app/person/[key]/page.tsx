@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 import { BackLink } from "@/components/PageHeader";
@@ -52,6 +53,11 @@ export default async function PersonPage({ params }: Props) {
       <header className="mt-4 sm:mt-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-brand-600 sm:text-sm">Orienterare</p>
         <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:mt-2 sm:text-4xl">{person.display_name}</h1>
+        <p className="mt-2 text-sm text-slate-500">
+          <Link href={`/eventor?q=${encodeURIComponent(person.display_name)}`} className="link-brand">
+            Öppna Eventor-statistik →
+          </Link>
+        </p>
       </header>
 
       <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">

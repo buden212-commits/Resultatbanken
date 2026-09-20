@@ -45,7 +45,8 @@ function getApiKey(): string {
   return key;
 }
 
-async function eventorGet(path: string, params?: Record<string, string>): Promise<string> {
+/** Low-level Eventor GET (XML). Used by person-dashboard helpers. */
+export async function eventorGet(path: string, params?: Record<string, string>): Promise<string> {
   const url = new URL(`${BASE_URL}/${path.replace(/^\//, "")}`);
   if (params) {
     for (const [key, value] of Object.entries(params)) {
