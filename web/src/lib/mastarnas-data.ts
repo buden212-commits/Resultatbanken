@@ -9,7 +9,7 @@ import {
 } from "./github-deploy";
 import { emptyMastarnasData } from "./mastarnas-defaults";
 import { readMastarnasData } from "./mastarnas";
-import { isDbEnabled } from "./db/config";
+import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import { writeDocumentToDb } from "./db/store";
 import { toSlug } from "./slug";
 import { resolvePersonKey } from "./person-aliases";
@@ -44,7 +44,10 @@ async function readForWrite(): Promise<MastarnasData> {
 async function persist(data: MastarnasData, message: string): Promise<MastarnasDeploy> {
   if (isDbEnabled()) {
     await writeDocumentToDb("mastarnas", data);
-    writeLocal(data);
+    // Vercel/Lambda FS is read-only; Neon is the source of truth.
+    if (!isServerlessRuntime()) {
+      writeLocal(data);
+    }
     revalidatePath("/mastarnas");
     revalidatePath("/mastarnas/[year]", "page");
     return { mode: "db", ok: true, message: "Sparat i databasen." };

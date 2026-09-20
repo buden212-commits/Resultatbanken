@@ -3,7 +3,7 @@ import {
   isGitDeployConfigured,
   publishTypeAliasesToGitHub,
 } from "./github-deploy";
-import { isDbEnabled } from "./db/config";
+import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import { writeDocumentToDb } from "./db/store";
 import {
   getTypeAliasGroups,
@@ -24,7 +24,9 @@ async function persistTypeAliasGroups(
 ): Promise<SaveTypeAliasResult> {
   if (isDbEnabled()) {
     await writeDocumentToDb("type-aliases", groups);
-    writeTypeAliasGroupsLocal(groups);
+    if (!isServerlessRuntime()) {
+      writeTypeAliasGroupsLocal(groups);
+    }
     return {
       groups,
       deploy: { mode: "db", ok: true, message: "Typkoppling sparad i databasen." },

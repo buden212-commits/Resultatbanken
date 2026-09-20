@@ -3,7 +3,7 @@ import {
   isGitDeployConfigured,
   publishPersonAliasesToGitHub,
 } from "./github-deploy";
-import { isDbEnabled } from "./db/config";
+import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import { writeDocumentToDb } from "./db/store";
 import {
   getAliasGroups,
@@ -21,7 +21,9 @@ export type SaveAliasResult = {
 async function persistAliasGroups(groups: PersonAliasGroup[], message: string): Promise<SaveAliasResult> {
   if (isDbEnabled()) {
     await writeDocumentToDb("person-aliases", groups);
-    writeAliasGroupsLocal(groups);
+    if (!isServerlessRuntime()) {
+      writeAliasGroupsLocal(groups);
+    }
     return {
       groups,
       deploy: { mode: "db", ok: true, message: "Namnkoppling sparad i databasen." },

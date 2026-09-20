@@ -206,4 +206,8 @@ export async function writeDocumentToDb(key: AppDocumentKey, data: unknown): Pro
   const db = await getDb();
   await setDocument(db, key, data);
   invalidateDbSnapshot();
+  // Keep MM in-memory after write so same-request reads stay current.
+  if (key === "mastarnas") {
+    globalForCache.__rbMastarnasCache = data;
+  }
 }

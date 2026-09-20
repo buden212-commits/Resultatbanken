@@ -3,7 +3,7 @@ import {
   isGitDeployConfigured,
   publishStatsExclusionsToGitHub,
 } from "./github-deploy";
-import { isDbEnabled } from "./db/config";
+import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import { writeDocumentToDb } from "./db/store";
 import {
   getStatsExcludedEventIds,
@@ -21,7 +21,9 @@ async function persistExclusions(
 ): Promise<SaveStatsExclusionResult> {
   if (isDbEnabled()) {
     await writeDocumentToDb("stats-exclusions", eventIds);
-    setStatsExcludedEventIds(eventIds);
+    if (!isServerlessRuntime()) {
+      setStatsExcludedEventIds(eventIds);
+    }
     return {
       excluded_event_ids: eventIds,
       deploy: { mode: "db", ok: true, message: "Inställning sparad i databasen." },
