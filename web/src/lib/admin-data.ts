@@ -11,16 +11,18 @@ import {
 import { eventorEventUrl, fetchClubResults, fetchFullEventResults, searchEventorEvents } from "./eventor";
 import type { EventorSearchHit, EventorSearchScope } from "./eventor";
 import type { Event } from "./types";
-import { isDbEnabled } from "./db/config";
+import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import {
   allocateEventId,
   createEventInDb,
+  replaceEventResultsInDb,
   syncEventFromJsonIntoDb,
   updateEventTypeDb,
 } from "./db/write";
 import { ensureDbSnapshot, getDbSnapshotSync, refreshDbSnapshot } from "./db/store";
 import { getDb } from "./db/client";
 import { listEvents } from "./db/events";
+import { parseResultListXml } from "./parse-result-xml";
 
 const DATA_DIR = path.join(process.cwd(), "..", "data");
 const CONTENT_DIR = path.join(DATA_DIR, "content");
@@ -316,11 +318,62 @@ async function createEventInDatabase(
 
   const { event: saved } = await createEventInDb(event, file);
 
-  // Keep JSON manifest in sync so Python extract can find the event
-  const manifest = readManifestLocal();
-  if (!manifest.some((item) => item.id === saved.id)) {
-    manifest.push(saved);
-    writeManifestLocal(manifest);
+  // Eventor / IOF XML: parse in Node and write results straight to DB (works on Vercel).
+  if (ext === ".xml") {
+    try {
+      const rows = parseResultListXml(file.buffer, saved.id);
+      if (rows.length === 0) {
+        return {
+          event: saved,
+          deploy: {
+            mode: "db",
+            ok: false,
+            message: "XML sparad men inga resultat kunde parsas.",
+          },
+        };
+      }
+      await replaceEventResultsInDb(saved.id, rows);
+      return {
+        event: saved,
+        deploy: {
+          mode: "db",
+          ok: true,
+          message: `Sparat i databasen (${rows.length} starter).`,
+        },
+      };
+    } catch (error) {
+      return {
+        event: saved,
+        deploy: {
+          mode: "db",
+          ok: false,
+          message: error instanceof Error ? error.message : "Kunde inte parsa XML till DB.",
+        },
+      };
+    }
+  }
+
+  if (isServerlessRuntime()) {
+    return {
+      event: saved,
+      deploy: {
+        mode: "db",
+        ok: false,
+        message:
+          "Filen sparades i Blob/DB, men parsning av PDF/Office på Vercel stöds inte ännu. Använd Eventor-XML eller importera lokalt.",
+      },
+    };
+  }
+
+  // Local: keep JSON manifest in sync so Python extract can find the event
+  try {
+    const manifest = readManifestLocal();
+    if (!manifest.some((item) => item.id === saved.id)) {
+      manifest.push(saved);
+      writeManifestLocal(manifest);
+    }
+  } catch {
+    // ignore missing local manifest
   }
 
   const extract = await extractEventLocally(id);

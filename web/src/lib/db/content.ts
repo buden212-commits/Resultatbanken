@@ -3,7 +3,12 @@ import path from "path";
 
 import { put } from "@vercel/blob";
 
-import { getRepoDataDir, isBlobEnabled } from "./config";
+import {
+  getRepoDataDir,
+  getWritableContentDir,
+  isBlobEnabled,
+  isServerlessRuntime,
+} from "./config";
 
 export type StoredContent = {
   storedName: string;
@@ -12,11 +17,7 @@ export type StoredContent = {
   byteLength: number;
 };
 
-function contentDir(): string {
-  return path.join(getRepoDataDir(), "content");
-}
-
-/** Always keeps a local copy (for Python parsers). Also uploads to Blob when configured. */
+/** Store upload: Blob on Vercel; local data/content when writable. */
 export async function storeContentFile(options: {
   eventId: number;
   buffer: Buffer;
@@ -26,7 +27,13 @@ export async function storeContentFile(options: {
   const storedName = `${options.eventId}${ext}`;
   const byteLength = options.buffer.byteLength;
 
-  const dir = contentDir();
+  if (isServerlessRuntime() && !isBlobEnabled()) {
+    throw new Error(
+      "Vercel Blob är inte konfigurerat. Koppla Blob-store till projektet (BLOB_STORE_ID / BLOB_READ_WRITE_TOKEN).",
+    );
+  }
+
+  const dir = getWritableContentDir();
   fs.mkdirSync(dir, { recursive: true });
   const storedPath = path.join(dir, storedName);
   fs.writeFileSync(storedPath, options.buffer);
@@ -51,22 +58,25 @@ export async function storeContentFile(options: {
 }
 
 export function findLocalContentFile(eventId: number): { path: string; ext: string } | null {
-  const dir = contentDir();
-  if (!fs.existsSync(dir)) {
-    return null;
+  const dirs = [getWritableContentDir(), path.join(getRepoDataDir(), "content")];
+  for (const dir of dirs) {
+    if (!fs.existsSync(dir)) {
+      continue;
+    }
+    const matches = fs
+      .readdirSync(dir)
+      .filter((file) => file.startsWith(`${eventId}.`))
+      .sort();
+    if (matches.length === 0) {
+      continue;
+    }
+    const filename = matches[0];
+    return {
+      path: path.join(dir, filename),
+      ext: path.extname(filename).toLowerCase(),
+    };
   }
-  const matches = fs
-    .readdirSync(dir)
-    .filter((file) => file.startsWith(`${eventId}.`))
-    .sort();
-  if (matches.length === 0) {
-    return null;
-  }
-  const filename = matches[0];
-  return {
-    path: path.join(dir, filename),
-    ext: path.extname(filename).toLowerCase(),
-  };
+  return null;
 }
 
 function guessMime(ext: string): string {

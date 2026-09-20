@@ -1,4 +1,5 @@
 import path from "path";
+import os from "os";
 
 function env(name: string): string | undefined {
   const raw = process.env[name];
@@ -31,7 +32,6 @@ export function getDatabaseUrl(): string | null {
   return null;
 }
 
-
 export function getPgliteDataDir(): string {
   const configured = env("PGLITE_DATA_DIR");
   if (configured) {
@@ -44,6 +44,20 @@ export function getRepoDataDir(): string {
   return path.join(process.cwd(), "..", "data");
 }
 
+/** True on Vercel / Lambda where the app bundle FS is read-only. */
+export function isServerlessRuntime(): boolean {
+  return Boolean(env("VERCEL") || env("AWS_LAMBDA_FUNCTION_NAME"));
+}
+
+/** Writable content directory (repo data/ locally, /tmp on serverless). */
+export function getWritableContentDir(): string {
+  if (isServerlessRuntime()) {
+    return path.join(os.tmpdir(), "resultatbanken", "content");
+  }
+  return path.join(getRepoDataDir(), "content");
+}
+
+/** Blob token (local) or store id (Vercel OIDC). */
 export function isBlobEnabled(): boolean {
-  return Boolean(env("BLOB_READ_WRITE_TOKEN"));
+  return Boolean(env("BLOB_READ_WRITE_TOKEN") || env("BLOB_STORE_ID"));
 }
