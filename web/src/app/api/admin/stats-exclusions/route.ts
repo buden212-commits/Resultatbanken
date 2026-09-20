@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { getEvent } from "@/lib/data";
+import { ensureDataReady, getEvent } from "@/lib/data";
 import { saveEventStatsExclusion } from "@/lib/stats-exclusion-data";
 
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Obehörig." }, { status: 401 });
   }
+
+  await ensureDataReady();
 
   try {
     const body = (await request.json()) as {

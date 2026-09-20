@@ -1,12 +1,16 @@
 import fs from "fs";
 import path from "path";
 
+import { getDbSnapshotSync, useDbData } from "./db/store";
 import { typeKey } from "./slug";
 import type { TypeAliasGroup } from "./types";
 
 const ALIASES_PATH = path.join(process.cwd(), "..", "data", "type-aliases.json");
 
 function readGroups(): TypeAliasGroup[] {
+  if (useDbData()) {
+    return (getDbSnapshotSync()?.typeAliases as TypeAliasGroup[] | undefined) ?? [];
+  }
   if (!fs.existsSync(ALIASES_PATH)) {
     return [];
   }

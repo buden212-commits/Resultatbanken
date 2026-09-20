@@ -8,7 +8,10 @@ import {
   publishResultsDataToGitHub,
 } from "./github-deploy";
 import { rebuildPeopleIndexFromResults } from "./rebuild-people-index";
-import { getEvent, getEvents, getResultsIndex } from "./data";
+import { ensureDbSnapshot, getEvent, getEvents, getResultsIndex } from "./data";
+import { isDbEnabled } from "./db/config";
+import { syncResultsAndPeopleIntoDb } from "./db/write";
+import { refreshDbSnapshot } from "./db/store";
 import { isValidCorrectedTime } from "./time";
 import type { ResultRow } from "./types";
 
@@ -26,7 +29,7 @@ export type ResultTimeRowKey = {
 
 export type SaveResultTimeResult = {
   time: string;
-  deploy: { mode: "local" | "git"; ok: boolean; message: string };
+  deploy: { mode: "local" | "git" | "db"; ok: boolean; message: string };
 };
 
 function matchesRow(row: ResultRow, key: ResultTimeRowKey): boolean {
@@ -49,6 +52,14 @@ async function persistResultsData(
   peopleJson: string,
   message: string,
 ): Promise<SaveResultTimeResult["deploy"]> {
+  if (isDbEnabled()) {
+    const events = getEvents();
+    await syncResultsAndPeopleIntoDb(results, events);
+    writeResultsDataLocal(results, peopleJson);
+    await refreshDbSnapshot();
+    return { mode: "db", ok: true, message: "Tid sparad i databasen." };
+  }
+
   if (isGitDeployConfigured()) {
     const result = await publishResultsDataToGitHub(results, peopleJson, message);
     return { mode: "git", ok: result.ok, message: result.message };
@@ -70,12 +81,19 @@ export async function saveCorrectedResultTime(
     throw new Error("Ogiltig tid — ange t.ex. 46:34, 1:05:30 eller 58.23 (8 min–3 tim).");
   }
 
+  if (isDbEnabled()) {
+    await ensureDbSnapshot();
+  }
+
   const event = getEvent(key.event_id);
   if (!event) {
     throw new Error("Eventet finns inte.");
   }
 
-  const results = isGitDeployConfigured() ? await fetchResultsIndexFromGitHub() : getResultsIndex();
+  const results =
+    !isDbEnabled() && isGitDeployConfigured()
+      ? await fetchResultsIndexFromGitHub()
+      : getResultsIndex();
   const index = results.findIndex((row) => matchesRow(row, key));
 
   if (index === -1) {
@@ -90,7 +108,8 @@ export async function saveCorrectedResultTime(
   };
   results[index] = updatedRow;
 
-  const events = isGitDeployConfigured() ? await fetchManifestFromGitHub() : getEvents();
+  const events =
+    !isDbEnabled() && isGitDeployConfigured() ? await fetchManifestFromGitHub() : getEvents();
   const people = rebuildPeopleIndexFromResults(results, events);
   const peopleJson = `${JSON.stringify(people, null, 2)}\n`;
 

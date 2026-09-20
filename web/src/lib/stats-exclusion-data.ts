@@ -3,6 +3,8 @@ import {
   isGitDeployConfigured,
   publishStatsExclusionsToGitHub,
 } from "./github-deploy";
+import { isDbEnabled } from "./db/config";
+import { writeDocumentToDb } from "./db/store";
 import {
   getStatsExcludedEventIds,
   setStatsExcludedEventIds,
@@ -10,13 +12,22 @@ import {
 
 export type SaveStatsExclusionResult = {
   excluded_event_ids: number[];
-  deploy: { mode: "local" | "git"; ok: boolean; message: string };
+  deploy: { mode: "local" | "git" | "db"; ok: boolean; message: string };
 };
 
 async function persistExclusions(
   eventIds: number[],
   message: string,
 ): Promise<SaveStatsExclusionResult> {
+  if (isDbEnabled()) {
+    await writeDocumentToDb("stats-exclusions", eventIds);
+    setStatsExcludedEventIds(eventIds);
+    return {
+      excluded_event_ids: eventIds,
+      deploy: { mode: "db", ok: true, message: "Inställning sparad i databasen." },
+    };
+  }
+
   if (isGitDeployConfigured()) {
     const result = await publishStatsExclusionsToGitHub(eventIds, message);
     return {
@@ -37,9 +48,10 @@ export async function saveEventStatsExclusion(
   excluded: boolean,
   eventName: string,
 ): Promise<SaveStatsExclusionResult> {
-  const existing = isGitDeployConfigured()
-    ? await fetchStatsExclusionsFromGitHub()
-    : getStatsExcludedEventIds();
+  const existing =
+    !isDbEnabled() && isGitDeployConfigured()
+      ? await fetchStatsExclusionsFromGitHub()
+      : getStatsExcludedEventIds();
 
   const next = new Set(existing);
   if (excluded) {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { ensureDataReady } from "@/lib/data";
 import { getSearchSuggestions } from "@/lib/search-suggest";
 
 export async function GET(request: NextRequest) {
@@ -10,5 +11,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ people: [], events: [], results: [] });
   }
 
+  await ensureDataReady();
   return NextResponse.json(getSearchSuggestions(trimmed));
 }

@@ -9,6 +9,8 @@ import {
 } from "./github-deploy";
 import { emptyMastarnasData } from "./mastarnas-defaults";
 import { readMastarnasData } from "./mastarnas";
+import { isDbEnabled } from "./db/config";
+import { writeDocumentToDb } from "./db/store";
 import { toSlug } from "./slug";
 import { resolvePersonKey } from "./person-aliases";
 import type {
@@ -23,13 +25,16 @@ import type {
 
 const DATA_PATH = path.join(process.cwd(), "..", "data", "mastarnas.json");
 
-export type MastarnasDeploy = { mode: "local" | "git"; ok: boolean; message: string };
+export type MastarnasDeploy = { mode: "local" | "git" | "db"; ok: boolean; message: string };
 
 function writeLocal(data: MastarnasData): void {
   fs.writeFileSync(DATA_PATH, `${JSON.stringify(data, null, 2)}\n`, "utf-8");
 }
 
 async function readForWrite(): Promise<MastarnasData> {
+  if (isDbEnabled()) {
+    return readMastarnasData();
+  }
   if (isGitDeployConfigured()) {
     return fetchMastarnasFromGitHub();
   }
@@ -37,6 +42,14 @@ async function readForWrite(): Promise<MastarnasData> {
 }
 
 async function persist(data: MastarnasData, message: string): Promise<MastarnasDeploy> {
+  if (isDbEnabled()) {
+    await writeDocumentToDb("mastarnas", data);
+    writeLocal(data);
+    revalidatePath("/mastarnas");
+    revalidatePath("/mastarnas/[year]", "page");
+    return { mode: "db", ok: true, message: "Sparat i databasen." };
+  }
+
   if (isGitDeployConfigured()) {
     const result = await publishMastarnasToGitHub(data, message);
     revalidatePath("/mastarnas");

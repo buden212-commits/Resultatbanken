@@ -3,7 +3,7 @@ import path from "path";
 
 import { NextRequest, NextResponse } from "next/server";
 
-import { findContentFile } from "@/lib/data";
+import { findContentFile, findContentUrl } from "@/lib/data";
 
 const MIME: Record<string, string> = {
   ".pdf": "application/pdf",
@@ -19,6 +19,7 @@ const MIME: Record<string, string> = {
   ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   ".rtf": "application/rtf",
   ".ods": "application/vnd.oasis.opendocument.spreadsheet",
+  ".xml": "application/xml; charset=utf-8",
 };
 
 export async function GET(
@@ -27,6 +28,12 @@ export async function GET(
 ) {
   const { id } = await context.params;
   const eventId = Number(id);
+
+  const blobUrl = await findContentUrl(eventId);
+  if (blobUrl) {
+    return NextResponse.redirect(blobUrl, 302);
+  }
+
   const file = findContentFile(eventId);
 
   if (!file) {

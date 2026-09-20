@@ -3,6 +3,8 @@ import {
   isGitDeployConfigured,
   publishTypeAliasesToGitHub,
 } from "./github-deploy";
+import { isDbEnabled } from "./db/config";
+import { writeDocumentToDb } from "./db/store";
 import {
   getTypeAliasGroups,
   mergeTypeAliasGroups,
@@ -13,13 +15,22 @@ import type { TypeAliasGroup } from "./types";
 
 export type SaveTypeAliasResult = {
   groups: TypeAliasGroup[];
-  deploy: { mode: "local" | "git"; ok: boolean; message: string };
+  deploy: { mode: "local" | "git" | "db"; ok: boolean; message: string };
 };
 
 async function persistTypeAliasGroups(
   groups: TypeAliasGroup[],
   message: string,
 ): Promise<SaveTypeAliasResult> {
+  if (isDbEnabled()) {
+    await writeDocumentToDb("type-aliases", groups);
+    writeTypeAliasGroupsLocal(groups);
+    return {
+      groups,
+      deploy: { mode: "db", ok: true, message: "Typkoppling sparad i databasen." },
+    };
+  }
+
   if (isGitDeployConfigured()) {
     const result = await publishTypeAliasesToGitHub(groups, message);
     return {
@@ -40,13 +51,19 @@ export async function saveTypeAliasMerge(
   canonicalKey: string,
   displayName: string,
 ): Promise<SaveTypeAliasResult> {
-  const existing = isGitDeployConfigured() ? await fetchTypeAliasesFromGitHub() : getTypeAliasGroups();
+  const existing =
+    !isDbEnabled() && isGitDeployConfigured()
+      ? await fetchTypeAliasesFromGitHub()
+      : getTypeAliasGroups();
   const groups = mergeTypeAliasGroups(existing, selectedKeys, canonicalKey, displayName);
   return persistTypeAliasGroups(groups, `Koppla typ: ${displayName}`);
 }
 
 export async function deleteTypeAliasGroup(canonicalKey: string): Promise<SaveTypeAliasResult> {
-  const existing = isGitDeployConfigured() ? await fetchTypeAliasesFromGitHub() : getTypeAliasGroups();
+  const existing =
+    !isDbEnabled() && isGitDeployConfigured()
+      ? await fetchTypeAliasesFromGitHub()
+      : getTypeAliasGroups();
   const groups = removeTypeAliasGroup(existing, canonicalKey);
   return persistTypeAliasGroups(groups, `Ta bort typkoppling: ${canonicalKey}`);
 }

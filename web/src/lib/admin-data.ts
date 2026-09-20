@@ -11,6 +11,16 @@ import {
 import { eventorEventUrl, fetchClubResults, fetchFullEventResults, searchEventorEvents } from "./eventor";
 import type { EventorSearchHit, EventorSearchScope } from "./eventor";
 import type { Event } from "./types";
+import { isDbEnabled } from "./db/config";
+import {
+  allocateEventId,
+  createEventInDb,
+  syncEventFromJsonIntoDb,
+  updateEventTypeDb,
+} from "./db/write";
+import { ensureDbSnapshot, getDbSnapshotSync, refreshDbSnapshot } from "./db/store";
+import { getDb } from "./db/client";
+import { listEvents } from "./db/events";
 
 const DATA_DIR = path.join(process.cwd(), "..", "data");
 const CONTENT_DIR = path.join(DATA_DIR, "content");
@@ -60,7 +70,7 @@ export type CreateEventInput = {
 };
 
 export type DeployResult = {
-  mode: "local" | "git";
+  mode: "local" | "git" | "db";
   ok: boolean;
   message: string;
 };
@@ -79,6 +89,11 @@ function writeManifestLocal(events: Event[]): void {
 }
 
 async function readManifest(): Promise<Event[]> {
+  if (isDbEnabled()) {
+    await ensureDbSnapshot();
+    const db = await getDb();
+    return listEvents(db);
+  }
   if (isGitDeployConfigured()) {
     return fetchManifestFromGitHub();
   }
@@ -86,13 +101,20 @@ async function readManifest(): Promise<Event[]> {
 }
 
 export async function getNextEventId(): Promise<number> {
+  if (isDbEnabled()) {
+    return allocateEventId();
+  }
   const events = await readManifest();
   return Math.max(0, ...events.map((event) => event.id)) + 1;
 }
 
 export function getEventTypes(): string[] {
+  const events =
+    isDbEnabled() && getDbSnapshotSync()
+      ? getDbSnapshotSync()!.events
+      : readManifestLocal();
   const types = new Set<string>();
-  for (const event of readManifestLocal()) {
+  for (const event of events) {
     const value = event.type?.trim();
     if (value) {
       types.add(value);
@@ -101,7 +123,10 @@ export function getEventTypes(): string[] {
   return [...types].sort((a, b) => a.localeCompare(b, "sv"));
 }
 
-export function getDeployMode(): "local" | "git" {
+export function getDeployMode(): "local" | "git" | "db" {
+  if (isDbEnabled()) {
+    return "db";
+  }
   return isGitDeployConfigured() ? "git" : "local";
 }
 
@@ -266,10 +291,79 @@ async function createEventViaGit(
   };
 }
 
+async function extractEventLocally(eventId: number): Promise<DeployResult> {
+  const extract = await runPythonScript("extract_participants.py", ["--event-id", String(eventId)]);
+  if (!extract.ok) {
+    return { mode: "local", ok: false, message: extract.message };
+  }
+  return {
+    mode: "local",
+    ok: true,
+    message: extract.message || "Extraherat.",
+  };
+}
+
+async function createEventInDatabase(
+  input: CreateEventInput,
+  file: { buffer: Buffer; filename: string },
+): Promise<CreateEventResult> {
+  const ext = resolveExtension(file.filename);
+  validateInput(input, ext);
+
+  const id = await allocateEventId();
+  const storedName = `${id}${ext}`;
+  const event = buildEvent(id, input, { ...file, storedName }, ext);
+
+  const { event: saved } = await createEventInDb(event, file);
+
+  // Keep JSON manifest in sync so Python extract can find the event
+  const manifest = readManifestLocal();
+  if (!manifest.some((item) => item.id === saved.id)) {
+    manifest.push(saved);
+    writeManifestLocal(manifest);
+  }
+
+  const extract = await extractEventLocally(id);
+  if (extract.ok) {
+    try {
+      await syncEventFromJsonIntoDb(id);
+      return {
+        event: saved,
+        deploy: {
+          mode: "db",
+          ok: true,
+          message: `Sparat i databasen. ${extract.message}`.trim(),
+        },
+      };
+    } catch (error) {
+      return {
+        event: saved,
+        deploy: {
+          mode: "db",
+          ok: false,
+          message: error instanceof Error ? error.message : "Kunde inte synka index till DB.",
+        },
+      };
+    }
+  }
+
+  return {
+    event: saved,
+    deploy: {
+      mode: "db",
+      ok: false,
+      message: extract.message || "Event sparat i DB men indexering misslyckades.",
+    },
+  };
+}
+
 export async function createEvent(
   input: CreateEventInput,
   file: { buffer: Buffer; filename: string },
 ): Promise<CreateEventResult> {
+  if (isDbEnabled()) {
+    return createEventInDatabase(input, file);
+  }
   if (isGitDeployConfigured()) {
     return createEventViaGit(input, file);
   }
@@ -382,6 +476,25 @@ export async function updateEventType(eventId: number, type: string): Promise<Up
     throw new Error("Typ krävs.");
   }
 
+  if (isDbEnabled()) {
+    const updated = await updateEventTypeDb(eventId, trimmed);
+    try {
+      const manifest = readManifestLocal();
+      const index = manifest.findIndex((event) => event.id === eventId);
+      if (index !== -1) {
+        manifest[index] = { ...manifest[index], type: trimmed };
+        writeManifestLocal(manifest);
+      }
+    } catch {
+      // Local manifest may be missing in pure DB environments.
+    }
+    await refreshDbSnapshot();
+    return {
+      event: updated,
+      deploy: { mode: "db", ok: true, message: "Typ uppdaterad i databasen." },
+    };
+  }
+
   if (isGitDeployConfigured()) {
     const manifest = await fetchManifestFromGitHub();
     const index = manifest.findIndex((event) => event.id === eventId);
@@ -417,13 +530,8 @@ export async function updateEventType(eventId: number, type: string): Promise<Up
   manifest[index] = updated;
   writeManifestLocal(manifest);
 
-  const rebuild = await runPythonScript("rebuild_index.py");
   return {
     event: updated,
-    deploy: {
-      mode: "local",
-      ok: rebuild.ok,
-      message: rebuild.ok ? "Typ sparad och index uppdaterat." : rebuild.message,
-    },
+    deploy: { mode: "local", ok: true, message: "Typ uppdaterad." },
   };
 }

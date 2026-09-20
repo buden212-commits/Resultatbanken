@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { getEvent, getEvents, getResolvedResultsForEvent } from "@/lib/data";
+import { ensureDataReady, getEvent, getEvents, getResolvedResultsForEvent } from "@/lib/data";
 import {
   addMastarnasClass,
   addMastarnasDiscipline,
@@ -27,6 +27,8 @@ export async function GET(request: Request) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Obehörig." }, { status: 401 });
   }
+
+  await ensureDataReady();
 
   const url = new URL(request.url);
   if (url.searchParams.has("search")) {
@@ -93,6 +95,8 @@ export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Obehörig." }, { status: 401 });
   }
+
+  await ensureDataReady();
 
   try {
     const body = (await request.json()) as Body;

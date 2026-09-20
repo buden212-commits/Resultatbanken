@@ -1,6 +1,7 @@
 import path from "path";
 
 import { emptyMastarnasData } from "./mastarnas-defaults";
+import { getDbSnapshotSync, useDbData } from "./db/store";
 import { readCachedJsonIfExists } from "./json-cache";
 import { normalizeMastarnasData } from "./mastarnas-normalize";
 import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
@@ -23,7 +24,13 @@ function peopleByData(): WeakMap<MastarnasData, { person_key: string; display_na
 const normalizedData = new WeakSet<MastarnasData>();
 
 export function readMastarnasData(): MastarnasData {
-  const data = readCachedJsonIfExists(DATA_PATH, emptyMastarnasData());
+  let data: MastarnasData;
+  if (useDbData()) {
+    const fromDb = getDbSnapshotSync()?.mastarnas;
+    data = (fromDb as MastarnasData | null | undefined) ?? emptyMastarnasData();
+  } else {
+    data = readCachedJsonIfExists(DATA_PATH, emptyMastarnasData());
+  }
   if (normalizedData.has(data)) {
     return data;
   }

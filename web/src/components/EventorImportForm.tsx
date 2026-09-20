@@ -23,7 +23,7 @@ type SubmitResult = {
   url: string;
   name?: string;
   resultCountHint?: number;
-  deploy: { mode: "local" | "git"; ok: boolean; message: string };
+  deploy: { mode: "local" | "git" | "db"; ok: boolean; message: string };
 };
 
 type Scope = "club_entries" | "club_organised" | "all";
@@ -165,7 +165,9 @@ export function EventorImportForm({ eventTypes, eventorConfigured }: Props) {
             {result.deploy.ok
               ? result.deploy.mode === "git"
                 ? "Sidan uppdateras inom några minuter."
-                : "Personsökningen är uppdaterad."
+                : result.deploy.mode === "db"
+                  ? "Synligt direkt — sparat i databasen."
+                  : "Personsökningen är uppdaterad."
               : "Resultatet sparades, men indexeringen kan ha misslyckats."}
           </p>
         </div>

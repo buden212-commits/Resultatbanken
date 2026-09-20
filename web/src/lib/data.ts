@@ -8,8 +8,18 @@ import { getMastarnasOnlyPerson, searchMastarnasPeople } from "./mastarnas";
 import { readCachedJson } from "./json-cache";
 import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import { isUnreasonableTime, parseTimeToSeconds } from "./time";
+import { findLocalContentFile } from "./db/content";
+import {
+  ensureDbSnapshot,
+  getDbSnapshotSync,
+  readContentUrlFromDb,
+  requireDbSnapshot,
+  useDbData,
+} from "./db/store";
 
 export { parseTimeToSeconds };
+export { ensureDbSnapshot, useDbData };
+export { ensureDataReady } from "./db/ready";
 
 function resultRowScore(row: ResultRow): number {
   let score = 0;
@@ -53,6 +63,9 @@ function readJson<T>(filename: string): T {
 }
 
 export function getEvents(): Event[] {
+  if (useDbData()) {
+    return requireDbSnapshot().events;
+  }
   return readJson<Event[]>("manifest.json").sort((a, b) => b.date.localeCompare(a.date));
 }
 
@@ -61,10 +74,16 @@ export function getEvent(id: number): Event | undefined {
 }
 
 export function getResultsIndex(): ResultRow[] {
+  if (useDbData()) {
+    return requireDbSnapshot().results;
+  }
   return readJson<ResultRow[]>("results-index.json");
 }
 
 export function getPeopleIndex(): Person[] {
+  if (useDbData()) {
+    return requireDbSnapshot().people;
+  }
   return readJson<Person[]>("people-index.json");
 }
 
@@ -113,6 +132,11 @@ export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[]
 }
 
 export function findContentFile(id: number): { path: string; ext: string } | null {
+  const local = findLocalContentFile(id);
+  if (local) {
+    return local;
+  }
+
   if (!fs.existsSync(CONTENT_DIR)) {
     return null;
   }
@@ -131,6 +155,15 @@ export function findContentFile(id: number): { path: string; ext: string } | nul
     path: path.join(CONTENT_DIR, filename),
     ext: path.extname(filename).toLowerCase(),
   };
+}
+
+/** Blob URL when content lives in Vercel Blob (DB mode). */
+export async function findContentUrl(id: number): Promise<string | null> {
+  if (!useDbData()) {
+    return null;
+  }
+  await ensureDbSnapshot();
+  return readContentUrlFromDb(id);
 }
 
 export function formatDate(date: string): string {
@@ -160,4 +193,12 @@ export function formatDuration(totalSeconds: number): string {
     return `${hours}h ${minutes}m`;
   }
   return `${minutes}m`;
+}
+
+/** True when DB snapshot is ready (or JSON mode). */
+export function isDataReady(): boolean {
+  if (!useDbData()) {
+    return true;
+  }
+  return getDbSnapshotSync() !== null;
 }

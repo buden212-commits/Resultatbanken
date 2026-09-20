@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./data/**/*"],
   },
+  serverExternalPackages: ["@electric-sql/pglite", "postgres"],
 };
 
 export default nextConfig;

@@ -1,12 +1,16 @@
 import fs from "fs";
 import path from "path";
 
+import { getDbSnapshotSync, useDbData } from "./db/store";
 import { readCachedJsonIfExists } from "./json-cache";
 import type { PersonAliasGroup } from "./types";
 
 const ALIASES_PATH = path.join(process.cwd(), "..", "data", "person-aliases.json");
 
 function readGroups(): PersonAliasGroup[] {
+  if (useDbData()) {
+    return (getDbSnapshotSync()?.personAliases as PersonAliasGroup[] | undefined) ?? [];
+  }
   return readCachedJsonIfExists<PersonAliasGroup[]>(ALIASES_PATH, []);
 }
 

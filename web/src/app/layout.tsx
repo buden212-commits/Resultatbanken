@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next";
 
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { ensureDbSnapshot, useDbData } from "@/lib/data";
 
 import "./globals.css";
 
@@ -24,11 +25,15 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (useDbData()) {
+    await ensureDbSnapshot();
+  }
+
   return (
     <html lang="sv" className={plusJakarta.variable}>
       <body className="flex min-h-screen flex-col font-sans antialiased">

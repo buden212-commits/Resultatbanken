@@ -8,4 +8,7 @@ web/.build-venv/
 web/.env.local
 .vercel
 .env*
+!.env.example
+!web/.env.example
 data/mastarnas-source/
+.data/

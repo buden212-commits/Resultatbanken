@@ -7,10 +7,18 @@
     "build": "next build",
     "vercel-build": "python3 -m venv .build-venv && .build-venv/bin/pip install -r ../scripts/requirements.txt && .build-venv/bin/python ../scripts/extract_participants.py && .build-venv/bin/python ../scripts/rebuild_index.py && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:migrate": "tsx scripts/migrate-to-db.ts",
+    "db:verify": "tsx scripts/verify-db.ts",
+    "db:smoke": "tsx scripts/smoke-db.ts"
   },
   "dependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@vercel/blob": "^2.8.0",
     "next": "16.2.10",
+    "postgres": "^3.4.9",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -22,6 +30,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.23.14",
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

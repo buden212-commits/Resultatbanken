@@ -10,7 +10,7 @@ type Props = {
 type SubmitResult = {
   id: number;
   url: string;
-  deploy: { mode: "local" | "git"; ok: boolean; message: string };
+  deploy: { mode: "local" | "git" | "db"; ok: boolean; message: string };
 };
 
 export function AdminEventForm({ eventTypes }: Props) {
@@ -79,7 +79,9 @@ export function AdminEventForm({ eventTypes }: Props) {
             {result.deploy.ok
               ? result.deploy.mode === "git"
                 ? "Sidan uppdateras inom några minuter. Personsökningen uppdateras automatiskt."
-                : "Personsökningen är uppdaterad."
+                : result.deploy.mode === "db"
+                  ? "Synligt direkt — sparat i databasen."
+                  : "Personsökningen är uppdaterad."
               : "Resultatet sparades, men uppdateringen av sajten kan ha misslyckats. Kontakta administratören om det inte syns snart."}
           </p>
         </div>
