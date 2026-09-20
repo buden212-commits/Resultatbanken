@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { ensureDataReady, getEvent, getEvents, getResolvedResultsForEvent } from "@/lib/data";
+import {
+  ensureDataReady,
+  ensureMastarnasLoaded,
+  getEvent,
+  getEvents,
+  getResolvedResultsForEventAsync,
+} from "@/lib/data";
 import {
   addMastarnasClass,
   addMastarnasDiscipline,
@@ -29,6 +35,7 @@ export async function GET(request: Request) {
   }
 
   await ensureDataReady();
+  await ensureMastarnasLoaded();
 
   const url = new URL(request.url);
   if (url.searchParams.has("search")) {
@@ -43,7 +50,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Resultat hittades inte." }, { status: 404 });
     }
     const data = readMastarnasData();
-    const allRows = getResolvedResultsForEvent(previewEventId);
+    const allRows = await getResolvedResultsForEventAsync(previewEventId);
     const rows = filterRowsForMastarnasImport(event, allRows);
     return NextResponse.json({
       event: {
@@ -80,13 +87,16 @@ type Body = {
   results?: MastarnasResultInput[];
 };
 
-function previewFromArchive(archiveEventId: number, mapping: Record<string, string>) {
+async function previewFromArchive(archiveEventId: number, mapping: Record<string, string>) {
   const event = getEvent(archiveEventId);
   if (!event) {
     throw new Error("Resultat hittades inte.");
   }
   const data = readMastarnasData();
-  const rows = filterRowsForMastarnasImport(event, getResolvedResultsForEvent(archiveEventId));
+  const rows = filterRowsForMastarnasImport(
+    event,
+    await getResolvedResultsForEventAsync(archiveEventId),
+  );
   const preview = buildImportPreview(rows, mapping, data.classes);
   return { event, preview };
 }
@@ -97,6 +107,7 @@ export async function POST(request: Request) {
   }
 
   await ensureDataReady();
+  await ensureMastarnasLoaded();
 
   try {
     const body = (await request.json()) as Body;
@@ -135,13 +146,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, deploy });
     }
     if (action === "previewImport") {
-      const { preview } = previewFromArchive(Number(body.archive_event_id), body.mapping ?? {});
+      const { preview } = await previewFromArchive(Number(body.archive_event_id), body.mapping ?? {});
       return NextResponse.json({ ok: true, ...preview });
     }
     if (action === "importFromArchive") {
       const archiveEventId = Number(body.archive_event_id);
       const mapping = body.mapping ?? {};
-      const { event, preview } = previewFromArchive(archiveEventId, mapping);
+      const { event, preview } = await previewFromArchive(archiveEventId, mapping);
       if (preview.groups.length === 0) {
         throw new Error("Inga klasser att importera. Koppla minst en arkivklass till en MM-klass.");
       }
@@ -152,7 +163,11 @@ export async function POST(request: Request) {
         mapping,
         groups: preview.groups,
       });
-      return NextResponse.json({ ok: true, deploy, imported: preview.groups.reduce((sum, group) => sum + group.rows.length, 0) });
+      return NextResponse.json({
+        ok: true,
+        deploy,
+        imported: preview.groups.reduce((sum, group) => sum + group.rows.length, 0),
+      });
     }
 
     return NextResponse.json({ error: "Okänd åtgärd." }, { status: 400 });

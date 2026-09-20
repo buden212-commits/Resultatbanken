@@ -4,6 +4,7 @@ import { AdminLoginForm } from "@/components/AdminLoginForm";
 import { MastarnasImportGuide } from "@/components/MastarnasImportGuide";
 import { BackLink, PageHeader } from "@/components/PageHeader";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
+import { ensureDataReady, ensureMastarnasLoaded } from "@/lib/data";
 import { readMastarnasData } from "@/lib/mastarnas";
 
 type Props = {
@@ -16,6 +17,9 @@ export const metadata: Metadata = {
 };
 
 export default async function MastarnasImportPage({ searchParams }: Props) {
+  await ensureDataReady();
+  await ensureMastarnasLoaded();
+
   const { event, year } = await searchParams;
   const configured = isAdminConfigured();
   const authenticated = configured && (await isAdminAuthenticated());
