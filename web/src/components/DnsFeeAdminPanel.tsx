@@ -306,8 +306,8 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna tävlingar</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Undantagna tävlingar ger 0 kr i anmälningsavgift och DNS-kostnad. DNF betalas alltid som
-            anmälningsavgift. Stafetter ingår inte.
+            Undantagna tävlingar ger 0 kr i anmälningsavgift (OK/anmäld). DNS-kostnad räknas alltid. DNF
+            betalas som anmälningsavgift. Stafetter ingår inte.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">

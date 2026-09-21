@@ -20,7 +20,7 @@ function row(
 }
 
 describe("dns fee summary", () => {
-  it("splits anmälningsavgift and DNS cost; DNF always pays as entry fee", () => {
+  it("splits anmälningsavgift and DNS cost; DNS always charged; DNF as entry fee", () => {
     const data = emptyDnsFeeTracker(2026);
     data.exemptEventIds = ["100"];
     data.members = [
@@ -37,10 +37,10 @@ describe("dns fee summary", () => {
 
     const people = summarizeDnsFeesByPerson(data);
     const anna = people.find((p) => p.personId === "1")!;
-    // entry: dnf 200 (always) + ok 150 = 350; dns exempt 0 + dns 100 = 100
+    // entry: dnf 200 (always) + ok 150 = 350; dns always 200 + 100 = 300
     expect(anna.entryFeeToPaySek).toBe(350);
-    expect(anna.dnsFeeToPaySek).toBe(100);
-    expect(anna.totalToPaySek).toBe(450);
+    expect(anna.dnsFeeToPaySek).toBe(300);
+    expect(anna.totalToPaySek).toBe(650);
     expect(anna.dnsCount).toBe(2);
 
     const bert = people.find((p) => p.personId === "2")!;

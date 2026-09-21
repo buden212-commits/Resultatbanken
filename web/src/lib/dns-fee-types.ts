@@ -31,7 +31,7 @@ export type DnsFeeTrackerData = {
   rows: DnsFeeRow[];
   /** All IFK Mora club members at last import (including those without starts). */
   members: DnsFeeMember[];
-  /** Eventor event IDs where fees should not burden the participant (DNS waived; OK/entered waived). */
+  /** Eventor event IDs where anmälningsavgift (OK/entered) should not burden the participant. DNS is always charged. */
   exemptEventIds: string[];
 };
 
@@ -75,7 +75,7 @@ export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean
 /**
  * Split payable amounts:
  * - Anmälningsavgift: ok/entered on non-exempt events; DNF always payable
- * - DNS-kostnad: DNS only, waived on exempt events
+ * - DNS-kostnad: DNS always payable (exemptions do not apply)
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
@@ -86,7 +86,7 @@ export function rowPayableSplit(
   const exempt = isEventExempt(data, row.eventId);
 
   if (status === "dns") {
-    return { entryFeeToPaySek: 0, dnsFeeToPaySek: exempt ? 0 : fee };
+    return { entryFeeToPaySek: 0, dnsFeeToPaySek: fee };
   }
   if (status === "dnf") {
     return { entryFeeToPaySek: fee, dnsFeeToPaySek: 0 };
