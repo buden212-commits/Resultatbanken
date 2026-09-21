@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   emptyDnsFeeTracker,
+  isYouthOrJuniorClass,
   summarizeDnsFeesByPerson,
   type DnsFeeRow,
 } from "./dns-fee-types";
@@ -15,9 +16,32 @@ function row(
     date: "2026-05-01",
     className: "H21",
     entryId: "1",
+    inSweden: true,
     ...partial,
   };
 }
+
+describe("isYouthOrJuniorClass", () => {
+  it("matches youth and junior age classes", () => {
+    expect(isYouthOrJuniorClass("H16")).toBe(true);
+    expect(isYouthOrJuniorClass("D10")).toBe(true);
+    expect(isYouthOrJuniorClass("H20")).toBe(true);
+    expect(isYouthOrJuniorClass("D17-20")).toBe(true);
+    expect(isYouthOrJuniorClass("H16E")).toBe(true);
+    expect(isYouthOrJuniorClass("DH14")).toBe(true);
+    expect(isYouthOrJuniorClass("Inskolning")).toBe(true);
+    expect(isYouthOrJuniorClass("Öppen ungdom")).toBe(true);
+  });
+
+  it("rejects adult and open classes without age", () => {
+    expect(isYouthOrJuniorClass("H21")).toBe(false);
+    expect(isYouthOrJuniorClass("D35")).toBe(false);
+    expect(isYouthOrJuniorClass("D17-34")).toBe(false);
+    expect(isYouthOrJuniorClass("H21E")).toBe(false);
+    expect(isYouthOrJuniorClass("Öppen")).toBe(false);
+    expect(isYouthOrJuniorClass("–")).toBe(false);
+  });
+});
 
 describe("dns fee summary", () => {
   it("splits anmälningsavgift and DNS cost; DNS always charged; DNF as entry fee", () => {
@@ -72,5 +96,67 @@ describe("dns fee summary", () => {
     const anna = summarizeDnsFeesByPerson(data)[0];
     expect(anna.entryFeeToPaySek).toBe(0);
     expect(anna.totalToPaySek).toBe(0);
+  });
+
+  it("waives entry fee for youth/junior classes in Sweden but always charges DNS", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.members = [{ personId: "1", personName: "Ada", email: null }];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "1",
+        className: "D16",
+        feeSek: 95,
+        status: "ok",
+      }),
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "2",
+        className: "H18",
+        feeSek: 150,
+        status: "dnf",
+      }),
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "3",
+        className: "H20",
+        feeSek: 180,
+        status: "dns",
+      }),
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "4",
+        className: "H21",
+        feeSek: 180,
+        status: "ok",
+      }),
+    ];
+
+    const ada = summarizeDnsFeesByPerson(data)[0];
+    expect(ada.entryFeeToPaySek).toBe(180); // only H21
+    expect(ada.dnsFeeToPaySek).toBe(180); // H20 DNS always
+    expect(ada.totalToPaySek).toBe(360);
+  });
+
+  it("does not waive youth/junior fees for events outside Sweden", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.members = [{ personId: "1", personName: "Ada", email: null }];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "1",
+        className: "D16",
+        feeSek: 95,
+        status: "ok",
+        inSweden: false,
+      }),
+    ];
+    const ada = summarizeDnsFeesByPerson(data)[0];
+    expect(ada.entryFeeToPaySek).toBe(95);
   });
 });

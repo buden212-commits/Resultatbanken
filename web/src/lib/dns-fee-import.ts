@@ -41,7 +41,26 @@ type EventMeta = {
   eventName: string;
   date: string;
   isRelay: boolean;
+  inSweden: boolean;
 };
+
+function parseInSwedenFromXml(xml: string): boolean {
+  const values = [
+    ...[...xml.matchAll(/<CountryId(?:\s[^>]*)?>([^<]*)<\/CountryId>/gi)].map((m) => m[1].trim()),
+    ...[...xml.matchAll(/\bCountryId="([^"]+)"/gi)].map((m) => m[1].trim()),
+    ...[...xml.matchAll(/<Country(?:\s[^>]*)?>([^<]*)<\/Country>/gi)].map((m) => m[1].trim()),
+  ].filter(Boolean);
+
+  if (values.length === 0) return true; // Swedish Eventor — default Sweden
+
+  return values.some(
+    (value) =>
+      value === "752" ||
+      /^SWE$/i.test(value) ||
+      /^SE$/i.test(value) ||
+      /sverige|sweden/i.test(value),
+  );
+}
 
 function parseEventMetaFromXml(xml: string, eventId: string): EventMeta {
   const eventBlock = xml.match(/<Event\b[\s\S]*?<\/Event>/i)?.[0] ?? xml;
@@ -54,6 +73,7 @@ function parseEventMetaFromXml(xml: string, eventId: string): EventMeta {
     eventName: name || `Eventor ${eventId}`,
     date: date || "",
     isRelay: isRelayEventXml(eventBlock),
+    inSweden: parseInSwedenFromXml(eventBlock),
   };
 }
 
@@ -68,6 +88,8 @@ function mergeEventMeta(current: EventMeta | undefined, next: EventMeta): EventM
     eventName: preferNextName ? next.eventName : current.eventName,
     date: preferNextDate ? next.date : current.date || next.date,
     isRelay: current.isRelay || next.isRelay,
+    // Prefer explicit non-Sweden if either side says so
+    inSweden: current.inSweden && next.inSweden,
   };
 }
 
@@ -81,6 +103,7 @@ type ParsedEntry = {
   eventClassId: string;
   feeIds: string[];
   isRelay: boolean;
+  inSweden: boolean;
 };
 
 function parseEntriesXml(xml: string): ParsedEntry[] {
@@ -97,7 +120,7 @@ function parseEntriesXml(xml: string): ParsedEntry[] {
     const nestedEvent = block.match(/<Event\b[\s\S]*?<\/Event>/i)?.[0];
     const meta = nestedEvent
       ? parseEventMetaFromXml(nestedEvent, eventId)
-      : { eventId, eventName: `Eventor ${eventId}`, date: "", isRelay: false };
+      : { eventId, eventName: `Eventor ${eventId}`, date: "", isRelay: false, inSweden: true };
 
     const feeIds = [...block.matchAll(/<EntryEntryFee\b[\s\S]*?<EntryFeeId>(\d+)<\/EntryFeeId>/gi)].map(
       (m) => m[1],
@@ -113,6 +136,7 @@ function parseEntriesXml(xml: string): ParsedEntry[] {
       eventClassId: firstLeaf(block, "EventClassId"),
       feeIds,
       isRelay: meta.isRelay,
+      inSweden: meta.inSweden,
     });
   }
   return rows;
@@ -127,6 +151,17 @@ function parseFeeAmounts(xml: string): Map<string, number> {
     if (id && Number.isFinite(amount)) {
       map.set(id, amount);
     }
+  }
+  return map;
+}
+
+/** EventClassId → ClassShortName / Name */
+function parseEventClassNames(xml: string): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const block of splitTopLevel(xml, "EventClass")) {
+    const id = firstLeaf(block, "EventClassId");
+    const name = firstLeaf(block, "ClassShortName") || firstLeaf(block, "Name");
+    if (id && name) map.set(id, name);
   }
   return map;
 }
@@ -262,6 +297,7 @@ export async function importDnsFeesFromEventor(
         eventName: entry.eventName,
         date: entry.date,
         isRelay: entry.isRelay,
+        inSweden: entry.inSweden,
       }),
     );
   }
@@ -301,8 +337,9 @@ export async function importDnsFeesFromEventor(
 
     let feeMap = new Map<string, number>();
     let feeEntries: ParsedEntry[] = [];
+    let classNames = new Map<string, string>();
     try {
-      const [feesXml, entriesXml] = await Promise.all([
+      const [feesXml, entriesXml, classesXml] = await Promise.all([
         eventorGet(`entryfees/events/${event.eventId}`),
         eventorGet("entries", {
           organisationIds: organisationId,
@@ -311,9 +348,11 @@ export async function importDnsFeesFromEventor(
           includePersonElement: "true",
           includeEventElement: "true",
         }),
+        eventorGet("eventclasses", { eventIds: event.eventId }).catch(() => ""),
       ]);
       feeMap = parseFeeAmounts(feesXml);
       feeEntries = parseEntriesXml(entriesXml).filter((entry) => !entry.isRelay);
+      if (classesXml) classNames = parseEventClassNames(classesXml);
     } catch {
       // keep fee null if fee endpoints fail
     }
@@ -328,6 +367,7 @@ export async function importDnsFeesFromEventor(
           eventName: entry.eventName,
           date: entry.date,
           isRelay: entry.isRelay,
+          inSweden: entry.inSweden,
         }),
       );
     }
@@ -350,6 +390,8 @@ export async function importDnsFeesFromEventor(
       const hit = resultByPerson.get(personId);
       const status: DnsFeeStatus = hit?.status ?? "entered";
       const feeSek = resolveFeeSek(entry, feeMap);
+      const classFromEntry = entry.eventClassId ? classNames.get(entry.eventClassId) : undefined;
+      const className = hit?.className || classFromEntry || "–";
 
       const row: DnsFeeRow = {
         personId,
@@ -357,10 +399,11 @@ export async function importDnsFeesFromEventor(
         eventId: resolved.eventId,
         eventName: resolved.eventName,
         date: resolved.date,
-        className: hit?.className || "–",
+        className,
         status,
         feeSek,
         entryId: entry.entryId || null,
+        inSweden: resolved.inSweden,
       };
 
       const key = `${row.personId}::${row.eventId}`;

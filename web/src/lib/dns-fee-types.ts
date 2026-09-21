@@ -12,6 +12,11 @@ export type DnsFeeRow = {
   /** Full entry fee in SEK from Eventor (raw). */
   feeSek: number | null;
   entryId: string | null;
+  /**
+   * Whether the event is in Sweden. Missing/undefined treated as Sweden
+   * (legacy imports from Swedish Eventor).
+   */
+  inSweden?: boolean;
 };
 
 export type DnsFeeEventRef = {
@@ -44,7 +49,7 @@ export type DnsFeePersonSummary = {
   dnsCount: number;
   /** Number of imported starts (all statuses). */
   startCount: number;
-  /** Anmälningsavgift att betala (OK/entered on non-exempt; DNF always). */
+  /** Anmälningsavgift att betala (efter undantag för tävling / ungdom·junior). */
   entryFeeToPaySek: number;
   /** DNS-kostnad att betala (DNS always charged). */
   dnsFeeToPaySek: number;
@@ -74,10 +79,57 @@ export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean
   return data.exemptEventIds.includes(eventId);
 }
 
+export function isRowInSweden(row: DnsFeeRow): boolean {
+  return row.inSweden !== false;
+}
+
+/**
+ * Youth (≤16) and junior (17–20) classes by ClassShortName / klassnamn.
+ * Based on entered class, not birth year. Open adult classes are not exempt.
+ */
+export function isYouthOrJuniorClass(className: string): boolean {
+  const raw = className.trim();
+  if (!raw || raw === "–" || raw === "-") return false;
+
+  const normalized = raw
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (/inskol/.test(normalized)) return true;
+  if (/\bungdom\b/.test(normalized)) return true;
+  if (/\bjunior\b/.test(normalized)) return true;
+  if (/\bu[\s-]*(1[0-6]|17|18|19|20)\b/.test(normalized)) return true;
+
+  // D16, H20, DH14, HD17-20, H16E, D 18, …
+  const age = normalized.match(
+    /(?:^|[^a-z0-9])(?:dh|hd|[dh])\s*(\d{1,2})(?:\s*[-–to]+\s*(\d{1,2}))?/,
+  );
+  if (!age) return false;
+
+  const from = Number(age[1]);
+  const to = age[2] ? Number(age[2]) : from;
+  if (!Number.isInteger(from) || !Number.isInteger(to)) return false;
+  // Whole class band must be within youth/junior (≤20). D17-34 is adult.
+  return from >= 1 && from <= 20 && to >= 1 && to <= 20;
+}
+
+/** Club pays anmälningsavgift for youth/junior on Swedish events; DNS never waived this way. */
+export function isYouthJuniorEntryFeeExempt(row: DnsFeeRow): boolean {
+  return isRowInSweden(row) && isYouthOrJuniorClass(row.className);
+}
+
+export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boolean {
+  return isEventExempt(data, row.eventId) || isYouthJuniorEntryFeeExempt(row);
+}
+
 /**
  * Split payable amounts:
- * - Anmälningsavgift: ok/entered on non-exempt events; DNF always payable
- * - DNS-kostnad: DNS always payable (exemptions do not apply)
+ * - Anmälningsavgift: waived for exempt events (OK/entered only) and for
+ *   youth/junior classes in Sweden (OK/entered/DNF). DNS never waived.
+ * - DNS-kostnad: always payable
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
@@ -85,16 +137,21 @@ export function rowPayableSplit(
 ): { entryFeeToPaySek: number; dnsFeeToPaySek: number } {
   const fee = row.feeSek ?? 0;
   const status = normalizeDnsFeeStatus(row.status);
-  const exempt = isEventExempt(data, row.eventId);
 
   if (status === "dns") {
     return { entryFeeToPaySek: 0, dnsFeeToPaySek: fee };
   }
+
+  const youthJunior = isYouthJuniorEntryFeeExempt(row);
+  const eventExempt = isEventExempt(data, row.eventId);
+
   if (status === "dnf") {
-    return { entryFeeToPaySek: fee, dnsFeeToPaySek: 0 };
+    // Manual event exemptions do not cover DNF; youth/junior club policy does.
+    return { entryFeeToPaySek: youthJunior ? 0 : fee, dnsFeeToPaySek: 0 };
   }
+
   // ok | entered
-  return { entryFeeToPaySek: exempt ? 0 : fee, dnsFeeToPaySek: 0 };
+  return { entryFeeToPaySek: eventExempt || youthJunior ? 0 : fee, dnsFeeToPaySek: 0 };
 }
 
 /** @deprecated use rowPayableSplit — kept for detail rows */

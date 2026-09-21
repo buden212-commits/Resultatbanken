@@ -44,6 +44,7 @@ function normalizeTracker(data: DnsFeeTrackerData): DnsFeeTrackerData {
     rows: (data.rows ?? []).map((row) => ({
       ...row,
       status: normalizeDnsFeeStatus(row.status),
+      inSweden: row.inSweden !== false,
     })),
     members: Array.isArray(data.members)
       ? data.members

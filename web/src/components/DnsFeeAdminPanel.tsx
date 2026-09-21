@@ -3,7 +3,7 @@
 import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type { DnsFeeEventRef, DnsFeePersonSummary } from "@/lib/dns-fee-types";
-import { rowPayableSplit } from "@/lib/dns-fee-types";
+import { isYouthJuniorEntryFeeExempt, rowPayableSplit } from "@/lib/dns-fee-types";
 import { buildFeeMailtoLink } from "@/lib/dns-fee-mailto";
 
 type Totals = {
@@ -307,8 +307,9 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna tävlingar</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Undantagna tävlingar ger 0 kr i anmälningsavgift (OK/anmäld). DNS-kostnad räknas alltid. DNF
-            betalas som anmälningsavgift. Stafetter ingår inte.
+            Undantagna tävlingar ger 0 kr i anmälningsavgift (OK/anmäld). Ungdoms- och juniorklasser
+            (t.o.m. 20) i Sverige undantas alltid automatiskt. DNS-kostnad räknas alltid. Stafetter
+            ingår inte.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -494,7 +495,8 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                               </thead>
                               <tbody>
                                 {person.rows.map((row) => {
-                                  const exempt = data.exemptEventIds.includes(row.eventId);
+                                  const eventExempt = data.exemptEventIds.includes(row.eventId);
+                                  const youthJunior = isYouthJuniorEntryFeeExempt(row);
                                   const split = rowPayableSplit(trackerForSplit, row);
                                   return (
                                     <tr key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}>
@@ -503,11 +505,16 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                       </td>
                                       <td className="py-1 pr-3 text-slate-700">
                                         {row.eventName}
-                                        {exempt ? (
+                                        {eventExempt ? (
                                           <span className="ml-2 text-amber-700">(undantagen)</span>
                                         ) : null}
                                       </td>
-                                      <td className="py-1 pr-3 text-slate-600">{row.className}</td>
+                                      <td className="py-1 pr-3 text-slate-600">
+                                        {row.className}
+                                        {youthJunior ? (
+                                          <span className="ml-2 text-amber-700">(ungdom/junior)</span>
+                                        ) : null}
+                                      </td>
                                       <td className="py-1 pr-3 text-slate-600">{statusLabel(row.status)}</td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
