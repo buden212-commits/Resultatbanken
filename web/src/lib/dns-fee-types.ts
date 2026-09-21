@@ -23,6 +23,7 @@ export type DnsFeeEventRef = {
 export type DnsFeeMember = {
   personId: string;
   personName: string;
+  email: string | null;
 };
 
 export type DnsFeeTrackerData = {
@@ -38,13 +39,14 @@ export type DnsFeeTrackerData = {
 export type DnsFeePersonSummary = {
   personId: string;
   personName: string;
+  email: string | null;
   /** Number of DNS starts. */
   dnsCount: number;
   /** Number of imported starts (all statuses). */
   startCount: number;
   /** Anmälningsavgift att betala (OK/entered on non-exempt; DNF always). */
   entryFeeToPaySek: number;
-  /** DNS-kostnad att betala (DNS on non-exempt only). */
+  /** DNS-kostnad att betala (DNS always charged). */
   dnsFeeToPaySek: number;
   /** entryFeeToPaySek + dnsFeeToPaySek */
   totalToPaySek: number;
@@ -128,6 +130,7 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     byPerson.set(member.personId, {
       personId: member.personId,
       personName: member.personName,
+      email: member.email ?? null,
       dnsCount: 0,
       startCount: 0,
       entryFeeToPaySek: 0,
@@ -148,6 +151,7 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
       byPerson.set(row.personId, {
         personId: row.personId,
         personName: row.personName,
+        email: null,
         dnsCount: status === "dns" ? 1 : 0,
         startCount: 1,
         entryFeeToPaySek: split.entryFeeToPaySek,

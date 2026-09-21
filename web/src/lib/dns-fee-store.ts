@@ -51,6 +51,8 @@ function normalizeTracker(data: DnsFeeTrackerData): DnsFeeTrackerData {
           .map((m) => ({
             personId: String(m.personId),
             personName: String(m.personName || `Person ${m.personId}`),
+            email:
+              typeof m.email === "string" && m.email.includes("@") ? m.email.trim() : null,
           }))
       : [],
     exemptEventIds: Array.isArray(data.exemptEventIds) ? data.exemptEventIds.map(String) : [],

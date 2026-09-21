@@ -4,6 +4,7 @@ import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type { DnsFeeEventRef, DnsFeePersonSummary } from "@/lib/dns-fee-types";
 import { rowPayableSplit } from "@/lib/dns-fee-types";
+import { buildFeeMailtoLink } from "@/lib/dns-fee-mailto";
 
 type Totals = {
   people: number;
@@ -430,16 +431,40 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                     <Fragment key={person.personId}>
                       <tr className="border-b border-slate-50">
                         <td className="px-3 py-2.5 sm:px-4">
-                          <button
-                            type="button"
-                            className="text-left font-medium text-slate-800 hover:text-brand-800"
-                            onClick={() => setExpanded(open ? null : person.personId)}
-                          >
-                            {person.personName}
-                            <span className="ml-2 text-xs font-normal text-slate-400">
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              className="text-left font-medium text-slate-800 hover:text-brand-800"
+                              onClick={() => setExpanded(open ? null : person.personId)}
+                            >
+                              {person.personName}
+                            </button>
+                            {person.email ? (
+                              <a
+                                href={buildFeeMailtoLink(person, data.exemptEventIds, data.year) ?? undefined}
+                                className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-brand-700 hover:bg-brand-50"
+                                title={`Skicka mail: Startavgifter och Ej start (${person.email})`}
+                                aria-label={`Skicka mail till ${person.personName}`}
+                              >
+                                <svg
+                                  className="h-4 w-4"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                  aria-hidden
+                                >
+                                  <path d="M2.003 5.884 10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884Z" />
+                                  <path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118Z" />
+                                </svg>
+                              </a>
+                            ) : null}
+                            <button
+                              type="button"
+                              className="text-xs font-normal text-slate-400 hover:text-brand-700"
+                              onClick={() => setExpanded(open ? null : person.personId)}
+                            >
                               {open ? "dölj" : "detaljer"}
-                            </span>
-                          </button>
+                            </button>
+                          </div>
                         </td>
                         <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">{person.dnsCount}</td>
                         <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">

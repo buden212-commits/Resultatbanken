@@ -391,6 +391,7 @@ export async function importDnsFeesFromEventor(
     members: clubMembers.map((person) => ({
       personId: person.personId,
       personName: person.displayName,
+      email: person.email,
     })),
     exemptEventIds: [...new Set(existing.exemptEventIds.map(String))],
   };

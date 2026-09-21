@@ -37,6 +37,7 @@ export type EventorClubPerson = {
   family: string;
   displayName: string;
   birthYear: number | null;
+  email: string | null;
 };
 
 export type EventorPersonResult = {
@@ -107,6 +108,14 @@ function parseBirthYear(block: string): number | null {
   return Number.isInteger(year) && year > 1900 ? year : null;
 }
 
+function parseEmail(block: string): string | null {
+  const fromAttr = block.match(/\bmailAddress="([^"]+)"/i)?.[1]?.trim();
+  if (fromAttr && fromAttr.includes("@")) return fromAttr;
+  const fromTag = firstLeaf(block, "Email");
+  if (fromTag && fromTag.includes("@")) return fromTag;
+  return null;
+}
+
 function parseClubPerson(block: string): EventorClubPerson | null {
   const personId = firstLeaf(block, "PersonId");
   const family = firstLeaf(block, "Family");
@@ -118,6 +127,7 @@ function parseClubPerson(block: string): EventorClubPerson | null {
     family,
     displayName: [given, family].filter(Boolean).join(" "),
     birthYear: parseBirthYear(block),
+    email: parseEmail(block),
   };
 }
 
@@ -129,7 +139,9 @@ async function loadClubPersons(): Promise<EventorClubPerson[]> {
   }
 
   const organisationId = await fetchOrganisationId();
-  const xml = await eventorGet(`persons/organisations/${organisationId}`);
+  const xml = await eventorGet(`persons/organisations/${organisationId}`, {
+    includeContactDetails: "true",
+  });
   const persons = splitTopLevel(xml, "Person")
     .map(parseClubPerson)
     .filter((person): person is EventorClubPerson => Boolean(person))
