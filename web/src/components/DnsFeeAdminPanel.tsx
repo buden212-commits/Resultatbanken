@@ -133,7 +133,8 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   const [importing, setImporting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [exemptSelect, setExemptSelect] = useState("");
+  const [exemptSelected, setExemptSelected] = useState<string[]>([]);
+  const [exemptListOpen, setExemptListOpen] = useState(false);
 
   const refresh = useCallback(async () => {
     const response = await fetch("/api/anmalan/dns-fees");
@@ -167,23 +168,31 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     }
   }
 
-  async function setExemption(eventId: string, action: "add" | "remove") {
+  async function setExemptions(eventIds: string[], action: "add" | "remove") {
+    const ids = eventIds.map((id) => id.trim()).filter(Boolean);
+    if (ids.length === 0) return;
     setError(null);
     try {
       const response = await fetch("/api/anmalan/dns-fees/exemptions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eventId, action }),
+        body: JSON.stringify({ eventIds: ids, action }),
       });
       const json = (await response.json()) as { error?: string };
       if (!response.ok) {
         throw new Error(json.error || "Kunde inte spara undantag.");
       }
       await refresh();
-      if (action === "add") setExemptSelect("");
+      if (action === "add") setExemptSelected([]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Kunde inte spara undantag.");
     }
+  }
+
+  function toggleExemptSelected(eventId: string) {
+    setExemptSelected((prev) =>
+      prev.includes(eventId) ? prev.filter((id) => id !== eventId) : [...prev, eventId],
+    );
   }
 
   const people = useMemo(() => {
@@ -312,49 +321,88 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
             ingår inte.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <select
-            className="min-w-[16rem] flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm"
-            value={exemptSelect}
-            onChange={(event) => setExemptSelect(event.target.value)}
-          >
-            <option value="">Välj tävling att undanta…</option>
-            {addableEvents.map((event) => (
-              <option key={event.eventId} value={event.eventId}>
-                {formatDate(event.date)} · {event.eventName}
-              </option>
-            ))}
-          </select>
+
+        {addableEvents.length > 0 ? (
+          <div className="space-y-3">
+            <p className="text-sm font-medium text-slate-700">Lägg till undantag</p>
+            <ul className="max-h-48 divide-y divide-slate-100 overflow-y-auto rounded-xl border border-slate-200">
+              {addableEvents.map((event) => {
+                const checked = exemptSelected.includes(event.eventId);
+                return (
+                  <li key={event.eventId}>
+                    <label className="flex cursor-pointer items-start gap-3 px-3 py-2.5 text-sm hover:bg-slate-50">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5"
+                        checked={checked}
+                        onChange={() => toggleExemptSelected(event.eventId)}
+                      />
+                      <span>
+                        <span className="font-medium text-slate-800">{event.eventName}</span>
+                        <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
+                      </span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+            <button
+              type="button"
+              className="btn-primary"
+              disabled={exemptSelected.length === 0}
+              onClick={() => void setExemptions(exemptSelected, "add")}
+            >
+              {exemptSelected.length > 1
+                ? `Lägg till ${exemptSelected.length} undantag`
+                : "Lägg till undantag"}
+            </button>
+          </div>
+        ) : (
+          <p className="text-sm text-slate-500">Alla importerade tävlingar är redan undantagna.</p>
+        )}
+
+        <div className="rounded-xl border border-slate-100">
           <button
             type="button"
-            className="btn-primary"
-            disabled={!exemptSelect}
-            onClick={() => void setExemption(exemptSelect, "add")}
+            className="flex w-full items-center justify-between gap-3 px-3 py-2.5 text-left text-sm"
+            onClick={() => setExemptListOpen((open) => !open)}
+            aria-expanded={exemptListOpen}
           >
-            Lägg till undantag
+            <span className="font-medium text-slate-800">
+              Sparade undantag
+              <span className="ml-2 font-normal text-slate-400">({exemptEvents.length})</span>
+            </span>
+            <span className="text-slate-400">{exemptListOpen ? "Dölj" : "Visa"}</span>
           </button>
+          {exemptListOpen ? (
+            exemptEvents.length === 0 ? (
+              <p className="border-t border-slate-100 px-3 py-3 text-sm text-slate-500">
+                Inga undantag ännu.
+              </p>
+            ) : (
+              <ul className="divide-y divide-slate-100 border-t border-slate-100">
+                {exemptEvents.map((event) => (
+                  <li
+                    key={event.eventId}
+                    className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
+                  >
+                    <span>
+                      <span className="font-medium text-slate-800">{event.eventName}</span>
+                      <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
+                    </span>
+                    <button
+                      type="button"
+                      className="text-brand-700 hover:underline"
+                      onClick={() => void setExemptions([event.eventId], "remove")}
+                    >
+                      Ta bort
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )
+          ) : null}
         </div>
-        {exemptEvents.length === 0 ? (
-          <p className="text-sm text-slate-500">Inga undantag ännu.</p>
-        ) : (
-          <ul className="divide-y divide-slate-100 rounded-xl border border-slate-100">
-            {exemptEvents.map((event) => (
-              <li key={event.eventId} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
-                <span>
-                  <span className="font-medium text-slate-800">{event.eventName}</span>
-                  <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
-                </span>
-                <button
-                  type="button"
-                  className="text-brand-700 hover:underline"
-                  onClick={() => void setExemption(event.eventId, "remove")}
-                >
-                  Ta bort
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
       </section>
 
       <section className="space-y-4">
