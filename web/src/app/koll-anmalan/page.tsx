@@ -31,9 +31,11 @@ export default async function KollAnmalanPage() {
       events: listEventsFromRows(data.rows),
       totals: {
         people: people.length,
-        dnsStarts: data.rows.length,
-        feeSek: people.reduce((sum, row) => sum + row.feeSek, 0),
-        feeToPaySek: people.reduce((sum, row) => sum + row.feeToPaySek, 0),
+        dnsStarts: people.reduce((sum, row) => sum + row.dnsCount, 0),
+        starts: people.reduce((sum, row) => sum + row.startCount, 0),
+        entryFeeToPaySek: people.reduce((sum, row) => sum + row.entryFeeToPaySek, 0),
+        dnsFeeToPaySek: people.reduce((sum, row) => sum + row.dnsFeeToPaySek, 0),
+        totalToPaySek: people.reduce((sum, row) => sum + row.totalToPaySek, 0),
       },
     };
   }
@@ -43,7 +45,7 @@ export default async function KollAnmalanPage() {
       <PageHeader
         eyebrow="Administration"
         title="Koll på anmälan"
-        description="DNS och DNF under 2026 för IFK Mora OK — summerat per deltagare. Stafetter ingår inte."
+        description="Anmälningsavgifter och DNS under 2026 för IFK Mora OK — summerat per deltagare. Stafetter ingår inte."
       />
 
       <div className="mt-8">

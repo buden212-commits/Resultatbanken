@@ -20,7 +20,7 @@ function row(
 }
 
 describe("dns fee summary", () => {
-  it("waives DNS on exempt events but always charges DNF", () => {
+  it("splits anmälningsavgift and DNS cost; DNF always pays as entry fee", () => {
     const data = emptyDnsFeeTracker(2026);
     data.exemptEventIds = ["100"];
     data.members = [
@@ -30,34 +30,47 @@ describe("dns fee summary", () => {
     data.rows = [
       row({ personId: "1", personName: "Anna", eventId: "100", feeSek: 200, status: "dns" }),
       row({ personId: "1", personName: "Anna", eventId: "100", feeSek: 200, status: "dnf" }),
-      row({ personId: "1", personName: "Anna", eventId: "200", feeSek: 150, status: "dns" }),
-      row({ personId: "2", personName: "Bert", eventId: "200", feeSek: 170, status: "dns" }),
+      row({ personId: "1", personName: "Anna", eventId: "200", feeSek: 150, status: "ok" }),
+      row({ personId: "1", personName: "Anna", eventId: "300", feeSek: 100, status: "dns" }),
+      row({ personId: "2", personName: "Bert", eventId: "200", feeSek: 170, status: "ok" }),
     ];
 
     const people = summarizeDnsFeesByPerson(data);
-    expect(people).toHaveLength(2);
     const anna = people.find((p) => p.personId === "1")!;
-    expect(anna.dnsCount).toBe(3);
-    expect(anna.feeSek).toBe(550);
-    expect(anna.feeToPaySek).toBe(350);
+    // entry: dnf 200 (always) + ok 150 = 350; dns exempt 0 + dns 100 = 100
+    expect(anna.entryFeeToPaySek).toBe(350);
+    expect(anna.dnsFeeToPaySek).toBe(100);
+    expect(anna.totalToPaySek).toBe(450);
+    expect(anna.dnsCount).toBe(2);
+
     const bert = people.find((p) => p.personId === "2")!;
-    expect(bert.feeToPaySek).toBe(170);
+    expect(bert.entryFeeToPaySek).toBe(170);
+    expect(bert.dnsFeeToPaySek).toBe(0);
   });
 
-  it("includes members without DNS/DNF", () => {
+  it("includes members without starts", () => {
     const data = emptyDnsFeeTracker(2026);
     data.members = [
       { personId: "1", personName: "Anna" },
       { personId: "3", personName: "Cecilia" },
     ];
-    data.rows = [row({ personId: "1", personName: "Anna", eventId: "200", feeSek: 100, status: "dns" })];
+    data.rows = [row({ personId: "1", personName: "Anna", eventId: "200", feeSek: 100, status: "ok" })];
 
     const people = summarizeDnsFeesByPerson(data);
     expect(people).toHaveLength(2);
     const cecilia = people.find((p) => p.personId === "3")!;
-    expect(cecilia.dnsCount).toBe(0);
-    expect(cecilia.feeSek).toBe(0);
-    expect(cecilia.feeToPaySek).toBe(0);
-    expect(cecilia.rows).toHaveLength(0);
+    expect(cecilia.startCount).toBe(0);
+    expect(cecilia.entryFeeToPaySek).toBe(0);
+    expect(cecilia.dnsFeeToPaySek).toBe(0);
+  });
+
+  it("waives OK fees on exempt events", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.exemptEventIds = ["50"];
+    data.members = [{ personId: "1", personName: "Anna" }];
+    data.rows = [row({ personId: "1", personName: "Anna", eventId: "50", feeSek: 300, status: "ok" })];
+    const anna = summarizeDnsFeesByPerson(data)[0];
+    expect(anna.entryFeeToPaySek).toBe(0);
+    expect(anna.totalToPaySek).toBe(0);
   });
 });

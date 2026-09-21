@@ -1,6 +1,6 @@
 /**
- * Import IFK Mora DNS/DNF starts + entry fees for a calendar year from Eventor.
- * Relays (TeamMemberResult) are excluded. Multi-day events are one row per person/event.
+ * Import IFK Mora entry fees + DNS/DNF for a calendar year from Eventor.
+ * Relays are excluded. Multi-day events collapse to one row per person/event.
  */
 
 import { eventorGet, fetchOrganisationId, isEventorConfigured } from "./eventor";
@@ -32,10 +32,15 @@ function isPlaceholderEventName(name: string, eventId: string): boolean {
   return !name || name === `Eventor ${eventId}` || /^Eventor\s+\d+$/i.test(name);
 }
 
+function isRelayEventXml(xml: string): boolean {
+  return /eventForm="[^"]*Relay/i.test(xml) || /<EventForm>\s*Relay/i.test(xml);
+}
+
 type EventMeta = {
   eventId: string;
   eventName: string;
   date: string;
+  isRelay: boolean;
 };
 
 function parseEventMetaFromXml(xml: string, eventId: string): EventMeta {
@@ -48,6 +53,7 @@ function parseEventMetaFromXml(xml: string, eventId: string): EventMeta {
     eventId,
     eventName: name || `Eventor ${eventId}`,
     date: date || "",
+    isRelay: isRelayEventXml(eventBlock),
   };
 }
 
@@ -61,6 +67,7 @@ function mergeEventMeta(current: EventMeta | undefined, next: EventMeta): EventM
     eventId: current.eventId,
     eventName: preferNextName ? next.eventName : current.eventName,
     date: preferNextDate ? next.date : current.date || next.date,
+    isRelay: current.isRelay || next.isRelay,
   };
 }
 
@@ -73,6 +80,7 @@ type ParsedEntry = {
   date: string;
   eventClassId: string;
   feeIds: string[];
+  isRelay: boolean;
 };
 
 function parseEntriesXml(xml: string): ParsedEntry[] {
@@ -89,7 +97,7 @@ function parseEntriesXml(xml: string): ParsedEntry[] {
     const nestedEvent = block.match(/<Event\b[\s\S]*?<\/Event>/i)?.[0];
     const meta = nestedEvent
       ? parseEventMetaFromXml(nestedEvent, eventId)
-      : { eventId, eventName: `Eventor ${eventId}`, date: "" };
+      : { eventId, eventName: `Eventor ${eventId}`, date: "", isRelay: false };
 
     const feeIds = [...block.matchAll(/<EntryEntryFee\b[\s\S]*?<EntryFeeId>(\d+)<\/EntryFeeId>/gi)].map(
       (m) => m[1],
@@ -104,6 +112,7 @@ function parseEntriesXml(xml: string): ParsedEntry[] {
       date: meta.date,
       eventClassId: firstLeaf(block, "EventClassId"),
       feeIds,
+      isRelay: meta.isRelay,
     });
   }
   return rows;
@@ -129,14 +138,22 @@ type ResultHit = {
   status: DnsFeeStatus;
 };
 
-function mapCompetitorStatus(raw: string): DnsFeeStatus | null {
+function mapCompetitorStatus(raw: string): DnsFeeStatus {
   if (raw === "DidNotStart") return "dns";
   if (raw === "DidNotFinish") return "dnf";
-  return null;
+  if (raw === "OK" || raw === "Finished" || raw === "Active") return "ok";
+  return "ok";
 }
 
-/** Individual DNS/DNF only — relay TeamMemberResult is ignored. */
-function parseChargeableFromResults(xml: string): ResultHit[] {
+const STATUS_RANK: Record<DnsFeeStatus, number> = {
+  entered: 0,
+  ok: 1,
+  dns: 2,
+  dnf: 3,
+};
+
+/** Individual results only — TeamMemberResult (relays) ignored. */
+function parseIndividualResults(xml: string): ResultHit[] {
   const hits: ResultHit[] = [];
 
   for (const classResult of splitTopLevel(xml, "ClassResult")) {
@@ -145,8 +162,7 @@ function parseChargeableFromResults(xml: string): ResultHit[] {
 
     for (const personResult of splitTopLevel(classResult, "PersonResult")) {
       const statusMatch = personResult.match(/CompetitorStatus[^>]*value="([^"]+)"/i);
-      const mapped = mapCompetitorStatus(statusMatch?.[1] ?? "");
-      if (!mapped) continue;
+      const status = mapCompetitorStatus(statusMatch?.[1] ?? "OK");
       const personId = firstLeaf(personResult, "PersonId");
       if (!personId) continue;
       const family = firstLeaf(personResult, "Family");
@@ -155,7 +171,7 @@ function parseChargeableFromResults(xml: string): ResultHit[] {
         personId,
         personName: [given, family].filter(Boolean).join(" ") || `Person ${personId}`,
         className,
-        status: mapped,
+        status,
       });
     }
   }
@@ -163,21 +179,29 @@ function parseChargeableFromResults(xml: string): ResultHit[] {
   return hits;
 }
 
-/** One chargeable row per person+event (multi-day races collapse). DNF wins over DNS. */
-function collapseHits(hits: ResultHit[]): ResultHit[] {
-  const byKey = new Map<string, ResultHit>();
+function collapseHitsByPerson(hits: ResultHit[]): Map<string, ResultHit> {
+  const byPerson = new Map<string, ResultHit>();
   for (const hit of hits) {
-    const key = `${hit.personId}::${hit.className}`;
-    const existing = byKey.get(key);
-    if (!existing) {
-      byKey.set(key, hit);
-      continue;
-    }
-    if (existing.status === "dns" && hit.status === "dnf") {
-      byKey.set(key, hit);
+    const existing = byPerson.get(hit.personId);
+    if (!existing || STATUS_RANK[hit.status] > STATUS_RANK[existing.status]) {
+      byPerson.set(hit.personId, hit);
     }
   }
-  return [...byKey.values()];
+  return byPerson;
+}
+
+function resolveFeeSek(entry: ParsedEntry | undefined, feeMap: Map<string, number>): number | null {
+  if (!entry || entry.feeIds.length === 0) return null;
+  let sum = 0;
+  let found = false;
+  for (const feeId of entry.feeIds) {
+    const amount = feeMap.get(feeId);
+    if (amount !== undefined) {
+      sum += amount;
+      found = true;
+    }
+  }
+  return found ? sum : null;
 }
 
 async function mapPool<T, R>(items: T[], concurrency: number, fn: (item: T) => Promise<R>): Promise<R[]> {
@@ -237,25 +261,31 @@ export async function importDnsFeesFromEventor(
         eventId: entry.eventId,
         eventName: entry.eventName,
         date: entry.date,
+        isRelay: entry.isRelay,
       }),
     );
   }
 
-  const eventList = [...events.values()];
+  const eventList = [...events.values()].filter((event) => !event.isRelay);
   const rowMap = new Map<string, DnsFeeRow>();
 
   await mapPool(eventList, 4, async (eventSeed) => {
     let resultsXml = "";
+    let hasResults = false;
     try {
       resultsXml = await eventorGet("results/organisation", {
         organisationIds: organisationId,
         eventId: eventSeed.eventId,
       });
+      hasResults = true;
     } catch {
-      return;
+      hasResults = false;
     }
 
-    let event = mergeEventMeta(eventSeed, parseEventMetaFromXml(resultsXml, eventSeed.eventId));
+    let event = eventSeed;
+    if (hasResults) {
+      event = mergeEventMeta(event, parseEventMetaFromXml(resultsXml, eventSeed.eventId));
+    }
     if (isPlaceholderEventName(event.eventName, event.eventId) || !event.date) {
       try {
         event = mergeEventMeta(event, await fetchEventMeta(event.eventId));
@@ -263,10 +293,11 @@ export async function importDnsFeesFromEventor(
         // keep whatever we have
       }
     }
+    if (event.isRelay) {
+      events.set(event.eventId, event);
+      return;
+    }
     events.set(event.eventId, event);
-
-    const dnsHits = collapseHits(parseChargeableFromResults(resultsXml));
-    if (dnsHits.length === 0) return;
 
     let feeMap = new Map<string, number>();
     let feeEntries: ParsedEntry[] = [];
@@ -282,7 +313,7 @@ export async function importDnsFeesFromEventor(
         }),
       ]);
       feeMap = parseFeeAmounts(feesXml);
-      feeEntries = parseEntriesXml(entriesXml);
+      feeEntries = parseEntriesXml(entriesXml).filter((entry) => !entry.isRelay);
     } catch {
       // keep fee null if fee endpoints fail
     }
@@ -296,54 +327,52 @@ export async function importDnsFeesFromEventor(
           eventId: entry.eventId,
           eventName: entry.eventName,
           date: entry.date,
+          isRelay: entry.isRelay,
         }),
       );
     }
     for (const entry of allEntries) {
-      if (entry.eventId === event.eventId && !feeEntryByPerson.has(entry.personId)) {
+      if (entry.eventId === event.eventId && !entry.isRelay && !feeEntryByPerson.has(entry.personId)) {
         feeEntryByPerson.set(entry.personId, entry);
       }
     }
 
-    const resolved = events.get(event.eventId) ?? event;
+    if (feeEntryByPerson.size === 0) return;
 
-    for (const hit of dnsHits) {
-      const entry = feeEntryByPerson.get(hit.personId);
-      let feeSek: number | null = null;
-      if (entry && entry.feeIds.length > 0) {
-        let sum = 0;
-        let found = false;
-        for (const feeId of entry.feeIds) {
-          const amount = feeMap.get(feeId);
-          if (amount !== undefined) {
-            sum += amount;
-            found = true;
-          }
-        }
-        feeSek = found ? sum : null;
-      }
+    const resultByPerson = hasResults
+      ? collapseHitsByPerson(parseIndividualResults(resultsXml))
+      : new Map<string, ResultHit>();
+
+    const resolved = events.get(event.eventId) ?? event;
+    if (resolved.isRelay) return;
+
+    for (const [personId, entry] of feeEntryByPerson) {
+      const hit = resultByPerson.get(personId);
+      const status: DnsFeeStatus = hit?.status ?? "entered";
+      const feeSek = resolveFeeSek(entry, feeMap);
 
       const row: DnsFeeRow = {
-        personId: hit.personId,
-        personName: hit.personName || entry?.personName || `Person ${hit.personId}`,
+        personId,
+        personName: hit?.personName || entry.personName || `Person ${personId}`,
         eventId: resolved.eventId,
         eventName: resolved.eventName,
         date: resolved.date,
-        className: hit.className,
-        status: hit.status,
+        className: hit?.className || "–",
+        status,
         feeSek,
-        entryId: entry?.entryId || null,
+        entryId: entry.entryId || null,
       };
 
-      // One row per person+event (avoid multi-day fee multiplication).
       const key = `${row.personId}::${row.eventId}`;
       const existingRow = rowMap.get(key);
       if (!existingRow) {
         rowMap.set(key, row);
         continue;
       }
-      if (existingRow.status === "dns" && row.status === "dnf") {
+      if (STATUS_RANK[row.status] > STATUS_RANK[existingRow.status]) {
         rowMap.set(key, { ...row, feeSek: existingRow.feeSek ?? row.feeSek });
+      } else if (existingRow.feeSek === null && row.feeSek !== null) {
+        rowMap.set(key, { ...existingRow, feeSek: row.feeSek });
       }
     }
   });
@@ -366,10 +395,12 @@ export async function importDnsFeesFromEventor(
     exemptEventIds: [...new Set(existing.exemptEventIds.map(String))],
   };
 
+  const dnsRows = rows.filter((row) => row.status === "dns").length;
+
   return {
     data,
     eventsScanned: eventList.length,
-    dnsRows: rows.length,
-    message: `Importerade ${rows.length} DNS/DNF-starter och ${clubMembers.length} medlemmar från ${eventList.length} tävlingar (${year}).`,
+    dnsRows,
+    message: `Importerade ${rows.length} starter (${dnsRows} DNS) och ${clubMembers.length} medlemmar från ${eventList.length} tävlingar (${year}).`,
   };
 }

@@ -1,4 +1,4 @@
-export type DnsFeeStatus = "dns" | "dnf";
+export type DnsFeeStatus = "ok" | "dns" | "dnf" | "entered";
 
 export type DnsFeeRow = {
   personId: string;
@@ -7,7 +7,7 @@ export type DnsFeeRow = {
   eventName: string;
   date: string;
   className: string;
-  /** dns = DidNotStart, dnf = DidNotFinish */
+  /** ok / dns / dnf from results, or entered if no result yet */
   status: DnsFeeStatus;
   /** Full entry fee in SEK from Eventor (raw). */
   feeSek: number | null;
@@ -29,19 +29,27 @@ export type DnsFeeTrackerData = {
   year: number;
   importedAt: string | null;
   rows: DnsFeeRow[];
-  /** All IFK Mora club members at last import (including those without DNS/DNF). */
+  /** All IFK Mora club members at last import (including those without starts). */
   members: DnsFeeMember[];
-  /** Eventor event IDs where fee should not be charged to the participant. */
+  /** Eventor event IDs where fees should not burden the participant (DNS waived; OK/entered waived). */
   exemptEventIds: string[];
 };
 
 export type DnsFeePersonSummary = {
   personId: string;
   personName: string;
-  /** DNS + DNF starts counted. */
+  /** Number of DNS starts. */
   dnsCount: number;
+  /** Number of imported starts (all statuses). */
+  startCount: number;
+  /** Anmälningsavgift att betala (OK/entered on non-exempt; DNF always). */
+  entryFeeToPaySek: number;
+  /** DNS-kostnad att betala (DNS on non-exempt only). */
+  dnsFeeToPaySek: number;
+  /** entryFeeToPaySek + dnsFeeToPaySek */
+  totalToPaySek: number;
+  /** Raw fee sum (all imported rows). */
   feeSek: number;
-  feeToPaySek: number;
   rows: DnsFeeRow[];
 };
 
@@ -56,23 +64,41 @@ export function emptyDnsFeeTracker(year = 2026): DnsFeeTrackerData {
 }
 
 export function normalizeDnsFeeStatus(value: unknown): DnsFeeStatus {
-  return value === "dnf" ? "dnf" : "dns";
+  if (value === "ok" || value === "dnf" || value === "entered") return value;
+  return "dns";
 }
 
 export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean {
   return data.exemptEventIds.includes(eventId);
 }
 
-/** Exempt events waive DNS fees; DNF is always payable. */
-export function feeToPaySek(data: DnsFeeTrackerData, row: DnsFeeRow): number {
+/**
+ * Split payable amounts:
+ * - Anmälningsavgift: ok/entered on non-exempt events; DNF always payable
+ * - DNS-kostnad: DNS only, waived on exempt events
+ */
+export function rowPayableSplit(
+  data: DnsFeeTrackerData,
+  row: DnsFeeRow,
+): { entryFeeToPaySek: number; dnsFeeToPaySek: number } {
   const fee = row.feeSek ?? 0;
-  if (normalizeDnsFeeStatus(row.status) === "dnf") {
-    return fee;
+  const status = normalizeDnsFeeStatus(row.status);
+  const exempt = isEventExempt(data, row.eventId);
+
+  if (status === "dns") {
+    return { entryFeeToPaySek: 0, dnsFeeToPaySek: exempt ? 0 : fee };
   }
-  if (isEventExempt(data, row.eventId)) {
-    return 0;
+  if (status === "dnf") {
+    return { entryFeeToPaySek: fee, dnsFeeToPaySek: 0 };
   }
-  return fee;
+  // ok | entered
+  return { entryFeeToPaySek: exempt ? 0 : fee, dnsFeeToPaySek: 0 };
+}
+
+/** @deprecated use rowPayableSplit — kept for detail rows */
+export function feeToPaySek(data: DnsFeeTrackerData, row: DnsFeeRow): number {
+  const split = rowPayableSplit(data, row);
+  return split.entryFeeToPaySek + split.dnsFeeToPaySek;
 }
 
 export function listEventsFromRows(rows: DnsFeeRow[]): DnsFeeEventRef[] {
@@ -103,8 +129,11 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
       personId: member.personId,
       personName: member.personName,
       dnsCount: 0,
+      startCount: 0,
+      entryFeeToPaySek: 0,
+      dnsFeeToPaySek: 0,
+      totalToPaySek: 0,
       feeSek: 0,
-      feeToPaySek: 0,
       rows: [],
     });
   }
@@ -112,14 +141,19 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
   for (const row of data.rows) {
     const existing = byPerson.get(row.personId);
     const fee = row.feeSek ?? 0;
-    const toPay = feeToPaySek(data, row);
+    const split = rowPayableSplit(data, row);
+    const status = normalizeDnsFeeStatus(row.status);
+
     if (!existing) {
       byPerson.set(row.personId, {
         personId: row.personId,
         personName: row.personName,
-        dnsCount: 1,
+        dnsCount: status === "dns" ? 1 : 0,
+        startCount: 1,
+        entryFeeToPaySek: split.entryFeeToPaySek,
+        dnsFeeToPaySek: split.dnsFeeToPaySek,
+        totalToPaySek: split.entryFeeToPaySek + split.dnsFeeToPaySek,
         feeSek: fee,
-        feeToPaySek: toPay,
         rows: [row],
       });
       continue;
@@ -127,9 +161,12 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     if (!existing.personName && row.personName) {
       existing.personName = row.personName;
     }
-    existing.dnsCount += 1;
+    if (status === "dns") existing.dnsCount += 1;
+    existing.startCount += 1;
+    existing.entryFeeToPaySek += split.entryFeeToPaySek;
+    existing.dnsFeeToPaySek += split.dnsFeeToPaySek;
+    existing.totalToPaySek += split.entryFeeToPaySek + split.dnsFeeToPaySek;
     existing.feeSek += fee;
-    existing.feeToPaySek += toPay;
     existing.rows.push(row);
   }
 

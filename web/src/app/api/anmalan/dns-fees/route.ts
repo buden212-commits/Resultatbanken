@@ -15,8 +15,6 @@ export async function GET() {
   const data = await loadDnsFeeTracker();
   const people = summarizeDnsFeesByPerson(data);
   const events = listEventsFromRows(data.rows);
-  const totalFee = people.reduce((sum, row) => sum + row.feeSek, 0);
-  const totalToPay = people.reduce((sum, row) => sum + row.feeToPaySek, 0);
 
   return NextResponse.json({
     year: data.year,
@@ -26,9 +24,11 @@ export async function GET() {
     events,
     totals: {
       people: people.length,
-      dnsStarts: data.rows.length,
-      feeSek: totalFee,
-      feeToPaySek: totalToPay,
+      dnsStarts: people.reduce((sum, row) => sum + row.dnsCount, 0),
+      starts: people.reduce((sum, row) => sum + row.startCount, 0),
+      entryFeeToPaySek: people.reduce((sum, row) => sum + row.entryFeeToPaySek, 0),
+      dnsFeeToPaySek: people.reduce((sum, row) => sum + row.dnsFeeToPaySek, 0),
+      totalToPaySek: people.reduce((sum, row) => sum + row.totalToPaySek, 0),
     },
   });
 }

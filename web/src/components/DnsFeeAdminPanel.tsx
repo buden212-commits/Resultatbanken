@@ -3,12 +3,15 @@
 import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type { DnsFeeEventRef, DnsFeePersonSummary } from "@/lib/dns-fee-types";
+import { rowPayableSplit } from "@/lib/dns-fee-types";
 
 type Totals = {
   people: number;
   dnsStarts: number;
-  feeSek: number;
-  feeToPaySek: number;
+  starts: number;
+  entryFeeToPaySek: number;
+  dnsFeeToPaySek: number;
+  totalToPaySek: number;
 };
 
 type Payload = {
@@ -20,7 +23,13 @@ type Payload = {
   totals: Totals;
 };
 
-type SortKey = "personName" | "dnsCount" | "feeSek" | "feeToPaySek";
+type SortKey =
+  | "personName"
+  | "dnsCount"
+  | "startCount"
+  | "entryFeeToPaySek"
+  | "dnsFeeToPaySek"
+  | "totalToPaySek";
 
 function formatSek(value: number): string {
   return value.toLocaleString("sv-SE", {
@@ -40,6 +49,21 @@ function formatDate(date: string): string {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return date || "–";
   const [y, m, d] = date.split("-");
   return `${Number(d)}/${Number(m)} ${y}`;
+}
+
+function statusLabel(status: string): string {
+  switch (status) {
+    case "ok":
+      return "OK";
+    case "dns":
+      return "DNS";
+    case "dnf":
+      return "DNF";
+    case "entered":
+      return "Anmäld";
+    default:
+      return status;
+  }
 }
 
 export function AnmalanLoginForm() {
@@ -102,7 +126,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   const [data, setData] = useState(initial);
   const [query, setQuery] = useState("");
   const [onlyPayable, setOnlyPayable] = useState(false);
-  const [sortKey, setSortKey] = useState<SortKey>("feeToPaySek");
+  const [sortKey, setSortKey] = useState<SortKey>("totalToPaySek");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
@@ -168,7 +192,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
       list = list.filter((person) => person.personName.toLocaleLowerCase("sv").includes(q));
     }
     if (onlyPayable) {
-      list = list.filter((person) => person.feeToPaySek > 0);
+      list = list.filter((person) => person.totalToPaySek > 0);
     }
     const sorted = [...list].sort((a, b) => {
       const av = a[sortKey];
@@ -194,26 +218,41 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
 
   const exemptEvents = data.events.filter((event) => data.exemptEventIds.includes(event.eventId));
   const addableEvents = data.events.filter((event) => !data.exemptEventIds.includes(event.eventId));
+  const trackerForSplit = {
+    year: data.year,
+    importedAt: data.importedAt,
+    rows: [] as DnsFeePersonSummary["rows"],
+    members: [],
+    exemptEventIds: data.exemptEventIds,
+  };
 
   return (
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm text-slate-500">
-            Senast importerat: <span className="font-medium text-slate-700">{formatImportedAt(data.importedAt)}</span>
+            Senast importerat:{" "}
+            <span className="font-medium text-slate-700">{formatImportedAt(data.importedAt)}</span>
           </p>
           <p className="mt-1 text-sm text-slate-500">
-            År {data.year} · {data.totals.people} medlemmar · {data.totals.dnsStarts} DNS/DNF
+            År {data.year} · {data.totals.people} medlemmar · {data.totals.starts} starter ·{" "}
+            {data.totals.dnsStarts} DNS
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           <button type="button" className="btn-primary" disabled={importing} onClick={() => void runImport()}>
-            {importing ? "Importerar från Eventor…" : data.importedAt ? "Uppdatera från Eventor" : "Importera från Eventor"}
+            {importing
+              ? "Importerar från Eventor…"
+              : data.importedAt
+                ? "Uppdatera från Eventor"
+                : "Importera från Eventor"}
           </button>
           <button
             type="button"
             className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-            onClick={() => void fetch("/api/anmalan/logout", { method: "POST" }).then(() => window.location.reload())}
+            onClick={() =>
+              void fetch("/api/anmalan/logout", { method: "POST" }).then(() => window.location.reload())
+            }
           >
             Logga ut
           </button>
@@ -221,7 +260,9 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
       </div>
 
       {message ? (
-        <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{message}</p>
+        <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+          {message}
+        </p>
       ) : null}
       {error ? (
         <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">{error}</p>
@@ -232,22 +273,32 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         </p>
       ) : null}
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.people}</p>
           <p className="mt-1 text-sm text-slate-500">Klubbmedlemmar</p>
         </div>
         <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.dnsStarts}</p>
-          <p className="mt-1 text-sm text-slate-500">DNS/DNF-starter</p>
+          <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.starts}</p>
+          <p className="mt-1 text-sm text-slate-500">Starter</p>
         </div>
         <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">{formatSek(data.totals.feeSek)} kr</p>
+          <p className="text-2xl font-bold tabular-nums text-slate-900">
+            {formatSek(data.totals.entryFeeToPaySek)} kr
+          </p>
           <p className="mt-1 text-sm text-slate-500">Anmälningsavgift</p>
         </div>
         <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">{formatSek(data.totals.feeToPaySek)} kr</p>
-          <p className="mt-1 text-sm text-slate-500">Anmälningsavgift att betala</p>
+          <p className="text-2xl font-bold tabular-nums text-slate-900">
+            {formatSek(data.totals.dnsFeeToPaySek)} kr
+          </p>
+          <p className="mt-1 text-sm text-slate-500">DNS-kostnad</p>
+        </div>
+        <div className="card px-4 py-3">
+          <p className="text-2xl font-bold tabular-nums text-slate-900">
+            {formatSek(data.totals.totalToPaySek)} kr
+          </p>
+          <p className="mt-1 text-sm text-slate-500">Totalt att betala</p>
         </div>
       </div>
 
@@ -255,7 +306,8 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna tävlingar</h2>
           <p className="mt-1 text-sm text-slate-500">
-            För DNS sätts &quot;Anmälningsavgift att betala&quot; till 0 kr. DNF betalas alltid. Stafetter ingår inte.
+            Undantagna tävlingar ger 0 kr i anmälningsavgift och DNS-kostnad. DNF betalas alltid som
+            anmälningsavgift. Stafetter ingår inte.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -339,17 +391,34 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                   </th>
                   <th className="px-3 py-3 sm:px-4">
                     <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("dnsCount")}>
-                      DNS/DNF
+                      DNS
                     </button>
                   </th>
                   <th className="px-3 py-3 sm:px-4">
-                    <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("feeSek")}>
+                    <button
+                      type="button"
+                      className="hover:text-slate-700"
+                      onClick={() => toggleSort("entryFeeToPaySek")}
+                    >
                       Anmälningsavgift
                     </button>
                   </th>
                   <th className="px-3 py-3 sm:px-4">
-                    <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("feeToPaySek")}>
-                      Att betala
+                    <button
+                      type="button"
+                      className="hover:text-slate-700"
+                      onClick={() => toggleSort("dnsFeeToPaySek")}
+                    >
+                      DNS-kostnad
+                    </button>
+                  </th>
+                  <th className="px-3 py-3 sm:px-4">
+                    <button
+                      type="button"
+                      className="hover:text-slate-700"
+                      onClick={() => toggleSort("totalToPaySek")}
+                    >
+                      Totalt
                     </button>
                   </th>
                 </tr>
@@ -374,15 +443,18 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                         </td>
                         <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">{person.dnsCount}</td>
                         <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
-                          {formatSek(person.feeSek)} kr
+                          {formatSek(person.entryFeeToPaySek)} kr
+                        </td>
+                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                          {formatSek(person.dnsFeeToPaySek)} kr
                         </td>
                         <td className="px-3 py-2.5 tabular-nums font-medium text-slate-900 sm:px-4">
-                          {formatSek(person.feeToPaySek)} kr
+                          {formatSek(person.totalToPaySek)} kr
                         </td>
                       </tr>
                       {open ? (
                         <tr className="border-b border-slate-100 bg-slate-50/50">
-                          <td colSpan={4} className="px-3 py-3 sm:px-4">
+                          <td colSpan={5} className="px-3 py-3 sm:px-4">
                             <table className="min-w-full text-xs sm:text-sm">
                               <thead>
                                 <tr className="text-left text-slate-400">
@@ -391,32 +463,36 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                   <th className="py-1 pr-3">Klass</th>
                                   <th className="py-1 pr-3">Status</th>
                                   <th className="py-1 pr-3">Avgift</th>
-                                  <th className="py-1">Att betala</th>
+                                  <th className="py-1 pr-3">Anmäln.</th>
+                                  <th className="py-1">DNS</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {person.rows.map((row) => {
-                                  const status = row.status === "dnf" ? "dnf" : "dns";
                                   const exempt = data.exemptEventIds.includes(row.eventId);
-                                  const toPay =
-                                    status === "dnf" ? row.feeSek ?? 0 : exempt ? 0 : row.feeSek ?? 0;
+                                  const split = rowPayableSplit(trackerForSplit, row);
                                   return (
-                                    <tr key={`${row.eventId}-${row.className}-${row.entryId}-${status}`}>
+                                    <tr key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {formatDate(row.date)}
                                       </td>
                                       <td className="py-1 pr-3 text-slate-700">
                                         {row.eventName}
-                                        {exempt && status === "dns" ? (
+                                        {exempt ? (
                                           <span className="ml-2 text-amber-700">(undantagen)</span>
                                         ) : null}
                                       </td>
                                       <td className="py-1 pr-3 text-slate-600">{row.className}</td>
-                                      <td className="py-1 pr-3 uppercase text-slate-600">{status}</td>
+                                      <td className="py-1 pr-3 text-slate-600">{statusLabel(row.status)}</td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
                                       </td>
-                                      <td className="py-1 tabular-nums text-slate-800">{formatSek(toPay)} kr</td>
+                                      <td className="py-1 pr-3 tabular-nums text-slate-800">
+                                        {formatSek(split.entryFeeToPaySek)} kr
+                                      </td>
+                                      <td className="py-1 tabular-nums text-slate-800">
+                                        {formatSek(split.dnsFeeToPaySek)} kr
+                                      </td>
                                     </tr>
                                   );
                                 })}
