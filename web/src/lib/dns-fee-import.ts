@@ -420,12 +420,31 @@ export async function importDnsFeesFromEventor(
     }
   });
 
-  const rows = [...rowMap.values()].sort((a, b) => {
-    if (a.date !== b.date) return a.date < b.date ? 1 : -1;
-    const nameCmp = a.personName.localeCompare(b.personName, "sv");
-    if (nameCmp !== 0) return nameCmp;
-    return a.eventName.localeCompare(b.eventName, "sv");
-  });
+  const rows = [...rowMap.values()]
+    .map((row) => {
+      const previous = existing.rows.find(
+        (old) => old.personId === row.personId && old.eventId === row.eventId,
+      );
+      if (
+        row.status === "dns" &&
+        previous?.status === "dns" &&
+        typeof previous.dnsReason === "string" &&
+        previous.dnsReason.trim()
+      ) {
+        return {
+          ...row,
+          dnsReason: previous.dnsReason.trim(),
+          dnsReasonAt: previous.dnsReasonAt ?? null,
+        };
+      }
+      return row;
+    })
+    .sort((a, b) => {
+      if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+      const nameCmp = a.personName.localeCompare(b.personName, "sv");
+      if (nameCmp !== 0) return nameCmp;
+      return a.eventName.localeCompare(b.eventName, "sv");
+    });
 
   const data: DnsFeeTrackerData = {
     year,

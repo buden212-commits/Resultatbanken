@@ -17,6 +17,10 @@ export type DnsFeeRow = {
    * (legacy imports from Swedish Eventor).
    */
   inSweden?: boolean;
+  /** Participant-submitted reason for DNS (Ej start). */
+  dnsReason?: string | null;
+  /** ISO timestamp when dnsReason was last saved. */
+  dnsReasonAt?: string | null;
 };
 
 export type DnsFeeEventRef = {

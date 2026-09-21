@@ -45,6 +45,14 @@ function normalizeTracker(data: DnsFeeTrackerData): DnsFeeTrackerData {
       ...row,
       status: normalizeDnsFeeStatus(row.status),
       inSweden: row.inSweden !== false,
+      dnsReason:
+        typeof row.dnsReason === "string" && row.dnsReason.trim()
+          ? row.dnsReason.trim()
+          : null,
+      dnsReasonAt:
+        typeof row.dnsReasonAt === "string" && row.dnsReasonAt.trim()
+          ? row.dnsReasonAt.trim()
+          : null,
     })),
     members: Array.isArray(data.members)
       ? data.members

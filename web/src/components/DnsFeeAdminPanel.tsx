@@ -515,7 +515,14 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                           <span className="ml-2 text-amber-700">(ungdom/junior)</span>
                                         ) : null}
                                       </td>
-                                      <td className="py-1 pr-3 text-slate-600">{statusLabel(row.status)}</td>
+                                      <td className="py-1 pr-3 text-slate-600">
+                                        {statusLabel(row.status)}
+                                        {row.status === "dns" && row.dnsReason ? (
+                                          <span className="mt-0.5 block max-w-xs text-xs font-normal normal-case tracking-normal text-slate-500">
+                                            Orsak: {row.dnsReason}
+                                          </span>
+                                        ) : null}
+                                      </td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
                                       </td>
