@@ -4,13 +4,14 @@ import path from "path";
 
 import {
   fetchManifestFromGitHub,
+  fetchResultsIndexFromGitHub,
   isGitDeployConfigured,
   publishEventToGitHub,
   publishManifestToGitHub,
 } from "./github-deploy";
 import { eventorEventUrl, fetchClubResults, fetchFullEventResults, searchEventorEvents } from "./eventor";
 import type { EventorSearchHit, EventorSearchScope } from "./eventor";
-import type { Event } from "./types";
+import type { Event, ResultRow } from "./types";
 import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import {
   allocateEventId,
@@ -19,14 +20,18 @@ import {
   syncEventFromJsonIntoDb,
   updateEventTypeDb,
 } from "./db/write";
-import { ensureDbSnapshot, getDbSnapshotSync, refreshDbSnapshot } from "./db/store";
+import { ensureDbSnapshot, getDbSnapshotSync, readContentUrlFromDb, refreshDbSnapshot } from "./db/store";
 import { getDb } from "./db/client";
 import { listEvents } from "./db/events";
 import { parseResultListXml } from "./parse-result-xml";
+import { rebuildPeopleIndexFromResults } from "./rebuild-people-index";
+import { findLocalContentFile } from "./db/content";
 
 const DATA_DIR = path.join(process.cwd(), "..", "data");
 const CONTENT_DIR = path.join(DATA_DIR, "content");
 const MANIFEST_PATH = path.join(DATA_DIR, "manifest.json");
+const RESULTS_INDEX_PATH = path.join(DATA_DIR, "results-index.json");
+const PEOPLE_INDEX_PATH = path.join(DATA_DIR, "people-index.json");
 const SCRIPTS_DIR = path.join(process.cwd(), "..", "scripts");
 
 const ALLOWED_EXTENSIONS = new Set([
@@ -88,6 +93,35 @@ function readManifestLocal(): Event[] {
 
 function writeManifestLocal(events: Event[]): void {
   fs.writeFileSync(MANIFEST_PATH, `${JSON.stringify(events, null, 2)}\n`, "utf-8");
+}
+
+function mergeEventResults(existing: ResultRow[], eventId: number, rows: ResultRow[]): ResultRow[] {
+  return [...existing.filter((row) => row.event_id !== eventId), ...rows];
+}
+
+function parseXmlResultsRequired(buffer: Buffer, eventId: number): ResultRow[] {
+  const rows = parseResultListXml(buffer, eventId);
+  if (rows.length === 0) {
+    throw new Error("Inga resultat kunde parsas från XML-filen.");
+  }
+  return rows;
+}
+
+function writeLocalResultIndexes(results: ResultRow[], events: Event[]): string {
+  const people = rebuildPeopleIndexFromResults(results, events);
+  const peopleJson = `${JSON.stringify(people, null, 2)}\n`;
+  try {
+    fs.writeFileSync(RESULTS_INDEX_PATH, `${JSON.stringify(results, null, 2)}\n`, "utf-8");
+    fs.writeFileSync(PEOPLE_INDEX_PATH, peopleJson, "utf-8");
+  } catch {
+    // Serverless / missing data dir — indexes live in DB or Git only.
+  }
+  return peopleJson;
+}
+
+function readLocalResultsIndex(): ResultRow[] {
+  if (!fs.existsSync(RESULTS_INDEX_PATH)) return [];
+  return JSON.parse(fs.readFileSync(RESULTS_INDEX_PATH, "utf-8")) as ResultRow[];
 }
 
 async function readManifest(): Promise<Event[]> {
@@ -265,8 +299,21 @@ async function createEventLocally(
   manifest.push(event);
   writeManifestLocal(manifest);
 
-  const deploy = await reindexEventLocally(id);
+  if (ext === ".xml") {
+    const rows = parseXmlResultsRequired(file.buffer, id);
+    const results = mergeEventResults(readLocalResultsIndex(), id, rows);
+    writeLocalResultIndexes(results, manifest);
+    return {
+      event,
+      deploy: {
+        mode: "local",
+        ok: true,
+        message: `Sparat lokalt (${rows.length} starter indexerade).`,
+      },
+    };
+  }
 
+  const deploy = await reindexEventLocally(id);
   return { event, deploy };
 }
 
@@ -281,14 +328,34 @@ async function createEventViaGit(
   const storedName = `${id}${ext}`;
   const event = buildEvent(id, input, { ...file, storedName }, ext);
 
-  const deployResult = await publishEventToGitHub(event, { buffer: file.buffer, storedName });
+  let indexes: { results: ResultRow[]; peopleJson: string } | undefined;
+  if (ext === ".xml") {
+    const rows = parseXmlResultsRequired(file.buffer, id);
+    const existingResults = await fetchResultsIndexFromGitHub().catch(() => readLocalResultsIndex());
+    const results = mergeEventResults(existingResults, id, rows);
+    const peopleJson = writeLocalResultIndexes(results, [
+      ...((await fetchManifestFromGitHub().catch(() => readManifestLocal())).filter(
+        (item) => item.id !== id,
+      )),
+      event,
+    ]);
+    indexes = { results, peopleJson };
+  }
+
+  const deployResult = await publishEventToGitHub(
+    event,
+    { buffer: file.buffer, storedName },
+    indexes,
+  );
 
   return {
     event,
     deploy: {
       mode: "git",
       ok: deployResult.ok,
-      message: deployResult.message,
+      message: indexes
+        ? `${deployResult.message} (${indexes.results.filter((row) => row.event_id === id).length} starter indexerade).`
+        : deployResult.message,
     },
   };
 }
@@ -316,41 +383,25 @@ async function createEventInDatabase(
   const storedName = `${id}${ext}`;
   const event = buildEvent(id, input, { ...file, storedName }, ext);
 
+  // Parse XML before persisting so a bad file never creates an empty event.
+  const xmlRows = ext === ".xml" ? parseXmlResultsRequired(file.buffer, id) : null;
+
   const { event: saved } = await createEventInDb(event, file);
 
-  // Eventor / IOF XML: parse in Node and write results straight to DB (works on Vercel).
-  if (ext === ".xml") {
-    try {
-      const rows = parseResultListXml(file.buffer, saved.id);
-      if (rows.length === 0) {
-        return {
-          event: saved,
-          deploy: {
-            mode: "db",
-            ok: false,
-            message: "XML sparad men inga resultat kunde parsas.",
-          },
-        };
-      }
-      await replaceEventResultsInDb(saved.id, rows);
-      return {
-        event: saved,
-        deploy: {
-          mode: "db",
-          ok: true,
-          message: `Sparat i databasen (${rows.length} starter).`,
-        },
-      };
-    } catch (error) {
-      return {
-        event: saved,
-        deploy: {
-          mode: "db",
-          ok: false,
-          message: error instanceof Error ? error.message : "Kunde inte parsa XML till DB.",
-        },
-      };
+  if (xmlRows) {
+    await replaceEventResultsInDb(saved.id, xmlRows);
+    if (!isServerlessRuntime()) {
+      const results = mergeEventResults(readLocalResultsIndex(), saved.id, xmlRows);
+      writeLocalResultIndexes(results, [...readManifestLocal().filter((item) => item.id !== saved.id), saved]);
     }
+    return {
+      event: saved,
+      deploy: {
+        mode: "db",
+        ok: true,
+        message: `Sparat i databasen (${xmlRows.length} starter).`,
+      },
+    };
   }
 
   if (isServerlessRuntime()) {
@@ -510,10 +561,20 @@ export async function createEventFromEventor(
   };
 
   const buffer = Buffer.from(xml, "utf-8");
+  // Fail before creating the event if XML cannot be turned into result rows.
+  parseXmlResultsRequired(buffer, 0);
+
   const result = await createEvent(input, {
     buffer,
     filename: `eventor-${eventorId}.xml`,
   });
+
+  if (!result.deploy.ok) {
+    throw new Error(
+      result.deploy.message ||
+        `Eventor-import sparades men resultat indexerades inte (event ${result.event.id}).`,
+    );
+  }
 
   return { ...result, eventorId, resultCountHint };
 }
@@ -586,5 +647,95 @@ export async function updateEventType(eventId: number, type: string): Promise<Up
   return {
     event: updated,
     deploy: { mode: "local", ok: true, message: "Typ uppdaterad." },
+  };
+}
+
+async function loadEventXmlBuffer(eventId: number): Promise<Buffer> {
+  const local = findLocalContentFile(eventId);
+  if (local?.ext === ".xml") {
+    return fs.readFileSync(local.path);
+  }
+
+  if (isDbEnabled()) {
+    const url = await readContentUrlFromDb(eventId);
+    if (url) {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Kunde inte hämta resultatfilen (${response.status}).`);
+      }
+      return Buffer.from(await response.arrayBuffer());
+    }
+  }
+
+  throw new Error(`Ingen XML-fil hittades för event ${eventId}.`);
+}
+
+/** Re-parse stored Eventor/IOF XML into results (repairs empty result pages). */
+export async function reindexEventXmlResults(eventId: number): Promise<{
+  eventId: number;
+  rowCount: number;
+  deploy: DeployResult;
+}> {
+  if (!Number.isInteger(eventId) || eventId <= 0) {
+    throw new Error("Ogiltigt event-id.");
+  }
+
+  const events = await readManifest();
+  const event = events.find((item) => item.id === eventId);
+  if (!event) {
+    throw new Error("Eventet finns inte.");
+  }
+
+  const buffer = await loadEventXmlBuffer(eventId);
+  const rows = parseXmlResultsRequired(buffer, eventId);
+
+  if (isDbEnabled()) {
+    await replaceEventResultsInDb(eventId, rows);
+    if (!isServerlessRuntime()) {
+      const results = mergeEventResults(readLocalResultsIndex(), eventId, rows);
+      writeLocalResultIndexes(results, events);
+    }
+    return {
+      eventId,
+      rowCount: rows.length,
+      deploy: {
+        mode: "db",
+        ok: true,
+        message: `Indexerade ${rows.length} starter i databasen.`,
+      },
+    };
+  }
+
+  if (isGitDeployConfigured()) {
+    const { publishResultsDataToGitHub } = await import("./github-deploy");
+    const existing = await fetchResultsIndexFromGitHub().catch(() => readLocalResultsIndex());
+    const results = mergeEventResults(existing, eventId, rows);
+    const peopleJson = writeLocalResultIndexes(results, events);
+    const deployResult = await publishResultsDataToGitHub(
+      results,
+      peopleJson,
+      `Indexera resultat: ${event.name} (${eventId})`,
+    );
+    return {
+      eventId,
+      rowCount: rows.length,
+      deploy: {
+        mode: "git",
+        ok: deployResult.ok,
+        message: deployResult.message,
+      },
+    };
+  }
+
+  const results = mergeEventResults(readLocalResultsIndex(), eventId, rows);
+  writeLocalResultIndexes(results, events);
+  return {
+    eventId,
+    rowCount: rows.length,
+    deploy: {
+      mode: "local",
+      ok: true,
+      message: `Indexerade ${rows.length} starter lokalt.`,
+    },
   };
 }

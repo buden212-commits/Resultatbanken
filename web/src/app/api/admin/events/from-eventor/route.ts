@@ -37,6 +37,19 @@ export async function POST(request: Request) {
       resultsScope: body.resultsScope === "club" ? "club" : "full",
     });
 
+    if (!result.deploy.ok) {
+      return NextResponse.json(
+        {
+          error: result.deploy.message || "Importen sparades men resultaten indexerades inte.",
+          id: result.event.id,
+          url: `/resultat/${result.event.id}`,
+          eventorId: result.eventorId,
+          deploy: result.deploy,
+        },
+        { status: 422 },
+      );
+    }
+
     return NextResponse.json({
       id: result.event.id,
       url: `/resultat/${result.event.id}`,

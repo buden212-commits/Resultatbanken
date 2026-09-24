@@ -235,16 +235,26 @@ export async function publishManifestToGitHub(
 export async function publishEventToGitHub(
   event: Event,
   file: { buffer: Buffer; storedName: string },
+  indexes?: { results: ResultRow[]; peopleJson: string },
 ): Promise<{ ok: boolean; message: string; commitSha?: string }> {
   const manifest = await fetchManifestFromGitHub();
-  const updatedManifest = [...manifest, event];
+  const updatedManifest = [...manifest.filter((item) => item.id !== event.id), event];
   const manifestContent = `${JSON.stringify(updatedManifest, null, 2)}\n`;
 
+  const files: CommitFile[] = [
+    { path: "data/manifest.json", content: manifestContent },
+    { path: `data/content/${file.storedName}`, content: file.buffer },
+  ];
+
+  if (indexes) {
+    files.push(
+      { path: "data/results-index.json", content: `${JSON.stringify(indexes.results, null, 2)}\n` },
+      { path: "data/people-index.json", content: indexes.peopleJson },
+    );
+  }
+
   const { commitSha, branch } = await commitFilesToGitHub(
-    [
-      { path: "data/manifest.json", content: manifestContent },
-      { path: `data/content/${file.storedName}`, content: file.buffer },
-    ],
+    files,
     `Lägg till resultat: ${event.name} (${event.date})`,
   );
 

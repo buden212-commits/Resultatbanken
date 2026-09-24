@@ -3323,7 +3323,7 @@
   {
     "person_key": "adam-nyman",
     "display_name": "Adam Nyman",
-    "result_count": 7,
+    "result_count": 9,
     "first_date": "2023-06-07",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -3333,7 +3333,9 @@
       516,
       529,
       623,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -3345,6 +3347,28 @@
         "class_name": "H35 (5 / 5) Tid Efter Bomtid",
         "place": 2,
         "time": "5:46",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": 2,
+        "time": "58:39",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 3,
+        "time": "18:06",
         "status": null
       },
       {
@@ -3508,6 +3532,29 @@
     ]
   },
   {
+    "person_key": "adrian-jones",
+    "display_name": "Adrian Jones",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 4,
+        "time": "54:48",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "agnes",
     "display_name": "Agnes",
     "result_count": 2,
@@ -3545,17 +3592,30 @@
   {
     "person_key": "agnes-bratt",
     "display_name": "Agnes Bratt",
-    "result_count": 5,
+    "result_count": 7,
     "first_date": "2023-07-13",
-    "last_date": "2026-06-25",
+    "last_date": "2026-09-10",
     "event_ids": [
       509,
       511,
       588,
       599,
-      632
+      632,
+      638,
+      641
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 10,
+        "time": "46.45",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -3565,6 +3625,17 @@
         "class_name": "Mellan banan",
         "place": 7,
         "time": "57.00",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D45",
+        "place": 1,
+        "time": "16:36",
         "status": null
       },
       {
@@ -3802,14 +3873,26 @@
   {
     "person_key": "albin-berggren",
     "display_name": "Albin Berggren",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2025-08-21",
-    "last_date": "2025-08-28",
+    "last_date": "2026-05-31",
     "event_ids": [
       598,
-      599
+      599,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      },
       {
         "event_id": 599,
         "event_name": "Medel-KM",
@@ -4472,15 +4555,62 @@
     ]
   },
   {
-    "person_key": "alfred-jacobsson",
-    "display_name": "Alfred Jacobsson",
+    "person_key": "alfred-grudd-edling",
+    "display_name": "Alfred Grudd Edling",
     "result_count": 1,
-    "first_date": "2025-05-07",
-    "last_date": "2025-05-07",
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
     "event_ids": [
-      588
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 1,
+        "time": "29:33",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "alfred-jacobsson",
+    "display_name": "Alfred Jacobsson",
+    "result_count": 3,
+    "first_date": "2025-05-07",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      588,
+      641,
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H14",
+        "place": 1,
+        "time": "38:02",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H14",
+        "place": 1,
+        "time": "10:15",
+        "status": null
+      },
       {
         "event_id": 588,
         "event_name": "Träningsorientering - sprint",
@@ -4566,9 +4696,9 @@
   {
     "person_key": "alice-eggoy-markhester",
     "display_name": "Alice Eggöy Markhester",
-    "result_count": 9,
+    "result_count": 13,
     "first_date": "2024-08-15",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-15",
     "event_ids": [
       549,
       598,
@@ -4578,9 +4708,35 @@
       623,
       627,
       631,
-      635
+      635,
+      638,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D12",
+        "place": 1,
+        "time": "43:47",
+        "status": null
+      },
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 5,
+        "time": "37.00",
+        "status": null
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -4604,6 +4760,17 @@
         "status": null
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 1,
+        "time": "13:36",
+        "status": null
+      },
+      {
         "event_id": 627,
         "event_name": "Träningsorientering",
         "date": "2026-05-07",
@@ -4613,6 +4780,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 1,
+        "time": "7:24",
+        "status": null
       },
       {
         "event_id": 623,
@@ -4978,7 +5156,7 @@
   {
     "person_key": "alma-bratt",
     "display_name": "Alma Bratt",
-    "result_count": 10,
+    "result_count": 12,
     "first_date": "2023-07-13",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -4991,7 +5169,9 @@
       599,
       600,
       627,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -5006,6 +5186,17 @@
         "status": "dns"
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D10",
+        "place": 1,
+        "time": "26:03",
+        "status": null
+      },
+      {
         "event_id": 627,
         "event_name": "Träningsorientering",
         "date": "2026-05-07",
@@ -5015,6 +5206,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D10",
+        "place": 3,
+        "time": "27:51",
+        "status": null
       },
       {
         "event_id": 600,
@@ -5508,17 +5710,31 @@
   {
     "person_key": "amelie-hamelius",
     "display_name": "Amelie Hamelius",
-    "result_count": 5,
+    "result_count": 8,
     "first_date": "2025-09-17",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       600,
       615,
       620,
       623,
-      631
+      631,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D12",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -5528,6 +5744,28 @@
         "class_name": "D12 (7 / 7) Tid Efter Bomtid",
         "place": 2,
         "time": "5:00",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 4,
+        "time": "20:31",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 7,
+        "time": "19:12",
         "status": null
       },
       {
@@ -7207,7 +7445,7 @@
   {
     "person_key": "anders-claesson",
     "display_name": "Anders Claesson",
-    "result_count": 60,
+    "result_count": 62,
     "first_date": "2007-06-21",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -7270,7 +7508,9 @@
       625,
       629,
       631,
-      635
+      635,
+      640,
+      641
     ],
     "results": [
       {
@@ -7282,6 +7522,17 @@
         "class_name": "Mellan bana",
         "place": 9,
         "time": "01:20:00",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 8,
+        "time": "43:10",
         "status": null
       },
       {
@@ -7305,6 +7556,17 @@
         "place": null,
         "time": "59.19",
         "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": null,
+        "time": null,
+        "status": "felst"
       },
       {
         "event_id": 625,
@@ -8369,6 +8631,29 @@
     ]
   },
   {
+    "person_key": "anders-hurtig",
+    "display_name": "Anders Hurtig",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 5,
+        "time": "30:44",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "anders-hvittfeldt",
     "display_name": "Anders Hvittfeldt",
     "result_count": 19,
@@ -9117,9 +9402,9 @@
   {
     "person_key": "anders-ohlin",
     "display_name": "Anders Ohlin",
-    "result_count": 33,
+    "result_count": 37,
     "first_date": "2017-12-31",
-    "last_date": "2026-08-20",
+    "last_date": "2026-09-15",
     "event_ids": [
       327,
       482,
@@ -9153,9 +9438,24 @@
       627,
       631,
       634,
-      635
+      635,
+      639,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H55",
+        "place": 3,
+        "time": "47:57",
+        "status": null
+      },
       {
         "event_id": 634,
         "event_name": "25 manna test",
@@ -9179,6 +9479,17 @@
         "status": null
       },
       {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 15,
+        "time": "1:20:23",
+        "status": null
+      },
+      {
         "event_id": 631,
         "event_name": "Medel-KM",
         "date": "2026-06-16",
@@ -9190,6 +9501,17 @@
         "status": null
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
+      {
         "event_id": 627,
         "event_name": "Träningsorientering",
         "date": "2026-05-07",
@@ -9198,6 +9520,17 @@
         "class_name": "Lång bana",
         "place": null,
         "time": "00:41:20",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 2,
+        "time": "15:46",
         "status": null
       },
       {
@@ -9866,7 +10199,7 @@
   {
     "person_key": "anders-sandberg",
     "display_name": "Anders Sandberg",
-    "result_count": 14,
+    "result_count": 17,
     "first_date": "2016-12-31",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -9883,7 +10216,10 @@
       599,
       621,
       631,
-      635
+      635,
+      640,
+      641,
+      642
     ],
     "results": [
       {
@@ -9898,6 +10234,17 @@
         "status": null
       },
       {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 4,
+        "time": "57:48",
+        "status": null
+      },
+      {
         "event_id": 631,
         "event_name": "Medel-KM",
         "date": "2026-06-16",
@@ -9906,6 +10253,28 @@
         "class_name": "H45 (10 / 10) Tid Efter Bomtid",
         "place": 4,
         "time": "2:54",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 1,
+        "time": "39:43",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 4,
+        "time": "21:11",
         "status": null
       },
       {
@@ -10114,17 +10483,41 @@
   {
     "person_key": "anders-thomee",
     "display_name": "Anders Thomee",
-    "result_count": 5,
+    "result_count": 7,
     "first_date": "2015-04-16",
-    "last_date": "2024-08-08",
+    "last_date": "2026-05-31",
     "event_ids": [
       213,
       367,
       425,
       428,
-      548
+      548,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 8,
+        "time": "42:27",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 5,
+        "time": "18:47",
+        "status": null
+      },
       {
         "event_id": 548,
         "event_name": "Träningsorientering",
@@ -10291,7 +10684,7 @@
   {
     "person_key": "anders-oberg",
     "display_name": "Anders Öberg",
-    "result_count": 55,
+    "result_count": 56,
     "first_date": "2004-10-09",
     "last_date": "2026-06-25",
     "event_ids": [
@@ -10349,7 +10742,8 @@
       599,
       624,
       627,
-      632
+      632,
+      642
     ],
     "results": [
       {
@@ -10361,6 +10755,17 @@
         "class_name": "Mellan banan",
         "place": 4,
         "time": "55.57",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 6,
+        "time": "38:53",
         "status": null
       },
       {
@@ -11737,13 +12142,25 @@
   {
     "person_key": "angelica-rask",
     "display_name": "Angelica Rask",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2023-06-22",
-    "last_date": "2023-06-22",
+    "last_date": "2026-07-14",
     "event_ids": [
-      506
+      506,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 506,
         "event_name": "Träningsorientering Rödmyren",
@@ -11971,9 +12388,9 @@
   {
     "person_key": "anki-pousette",
     "display_name": "Anki Pousette",
-    "result_count": 17,
+    "result_count": 20,
     "first_date": "2022-07-14",
-    "last_date": "2026-05-21",
+    "last_date": "2026-09-15",
     "event_ids": [
       482,
       500,
@@ -11990,9 +12407,34 @@
       623,
       625,
       627,
-      629
+      629,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D55",
+        "place": 3,
+        "time": "1:14:22",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 629,
         "event_name": "Träningsorientering",
@@ -12013,6 +12455,17 @@
         "class_name": "Mellan bana",
         "place": null,
         "time": "00:46:20",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 3,
+        "time": "21:29",
         "status": null
       },
       {
@@ -12651,15 +13104,27 @@
   {
     "person_key": "ann-sofie-brink",
     "display_name": "Ann-Sofie Brink",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2020-08-06",
-    "last_date": "2023-08-03",
+    "last_date": "2026-07-14",
     "event_ids": [
       431,
       435,
-      510
+      510,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 6,
+        "time": "40:00",
+        "status": null
+      },
       {
         "event_id": 510,
         "event_name": "Träningsorientering",
@@ -14432,9 +14897,9 @@
   {
     "person_key": "annika-johansson",
     "display_name": "Annika Johansson",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2005-04-03",
-    "last_date": "2025-05-01",
+    "last_date": "2026-05-05",
     "event_ids": [
       31,
       66,
@@ -14442,9 +14907,21 @@
       431,
       435,
       476,
-      580
+      580,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D75",
+        "place": 2,
+        "time": "31:19",
+        "status": null
+      },
       {
         "event_id": 580,
         "event_name": "träningsorientering",
@@ -14774,7 +15251,7 @@
   {
     "person_key": "annlouise-almqvist",
     "display_name": "Annlouise Almqvist",
-    "result_count": 16,
+    "result_count": 18,
     "first_date": "2014-05-08",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -14793,7 +15270,9 @@
       435,
       541,
       599,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -14805,6 +15284,28 @@
         "class_name": "D55 (3 / 3) Tid Efter Bomtid",
         "place": 2,
         "time": "17:56",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 4,
+        "time": "41:59",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 1,
+        "time": "16:54",
         "status": null
       },
       {
@@ -16676,14 +17177,26 @@
   {
     "person_key": "astrid-eriksson",
     "display_name": "Astrid Eriksson",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2023-08-03",
-    "last_date": "2023-08-10",
+    "last_date": "2026-07-14",
     "event_ids": [
       510,
-      511
+      511,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt OL",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 511,
         "event_name": "10 Augusti",
@@ -17693,12 +18206,13 @@
   {
     "person_key": "bengt-hamelius",
     "display_name": "Bengt Hamelius",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2026-06-16",
     "last_date": "2026-07-30",
     "event_ids": [
       631,
-      635
+      635,
+      640
     ],
     "results": [
       {
@@ -17713,6 +18227,17 @@
         "status": null
       },
       {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan OL",
+        "place": 4,
+        "time": "1:09:02",
+        "status": null
+      },
+      {
         "event_id": 631,
         "event_name": "Medel-KM",
         "date": "2026-06-16",
@@ -17721,6 +18246,29 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 15,
         "time": "4:39",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "bengt-hansson",
+    "display_name": "Bengt Hansson",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 21,
+        "time": "57:19",
         "status": null
       }
     ]
@@ -18571,6 +19119,29 @@
     ]
   },
   {
+    "person_key": "bengt-plahn",
+    "display_name": "Bengt Plahn",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 18,
+        "time": "46:36",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "bengt-s-andersson",
     "display_name": "Bengt S Andersson",
     "result_count": 1,
@@ -18635,6 +19206,29 @@
         "class_name": "H55",
         "place": 2,
         "time": "0.04701388888888881",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "benjamin-christener",
+    "display_name": "Benjamin Christener",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan OL",
+        "place": 2,
+        "time": "56:09",
         "status": null
       }
     ]
@@ -18868,9 +19462,9 @@
   {
     "person_key": "berit-gummus",
     "display_name": "Berit Gummus",
-    "result_count": 71,
+    "result_count": 75,
     "first_date": "2004-08-05",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       10,
       11,
@@ -18942,9 +19536,35 @@
       624,
       625,
       627,
-      631
+      631,
+      639,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D55",
+        "place": 1,
+        "time": "1:03:35",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 13,
+        "time": "49:18",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -18957,6 +19577,17 @@
         "status": null
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 5,
+        "time": "48:16",
+        "status": null
+      },
+      {
         "event_id": 627,
         "event_name": "Träningsorientering",
         "date": "2026-05-07",
@@ -18965,6 +19596,17 @@
         "class_name": "Mellan bana",
         "place": null,
         "time": "00:45:09",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 2,
+        "time": "19:49",
         "status": null
       },
       {
@@ -20128,6 +20770,29 @@
     ]
   },
   {
+    "person_key": "birgitta-hjalmarsson",
+    "display_name": "Birgitta Hjalmarsson",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 8,
+        "time": "41:19",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "birk",
     "display_name": "Birk",
     "result_count": 5,
@@ -20201,9 +20866,9 @@
   {
     "person_key": "birk-hodler",
     "display_name": "Birk Hodler",
-    "result_count": 12,
+    "result_count": 16,
     "first_date": "2022-12-31",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-15",
     "event_ids": [
       497,
       515,
@@ -20216,9 +20881,35 @@
       615,
       620,
       631,
-      635
+      635,
+      638,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H10",
+        "place": 2,
+        "time": "36:16",
+        "status": null
+      },
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": 1,
+        "time": "30.17",
+        "status": null
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -20239,6 +20930,28 @@
         "class_name": "H10 (6 / 6) Tid Efter Bomtid",
         "place": 4,
         "time": "11:20",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": 1,
+        "time": "18:11",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": 2,
+        "time": "11:51",
         "status": null
       },
       {
@@ -20791,7 +21504,7 @@
   {
     "person_key": "bjorn-albinsson",
     "display_name": "Björn Albinsson",
-    "result_count": 34,
+    "result_count": 35,
     "first_date": "2004-08-05",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -20827,7 +21540,8 @@
       502,
       513,
       554,
-      631
+      631,
+      642
     ],
     "results": [
       {
@@ -20840,6 +21554,17 @@
         "place": 7,
         "time": "1:37",
         "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": null,
+        "time": null,
+        "status": "dns"
       },
       {
         "event_id": 554,
@@ -21419,7 +22144,7 @@
   {
     "person_key": "bjorn-kajs",
     "display_name": "Björn Kajs",
-    "result_count": 29,
+    "result_count": 31,
     "first_date": "2017-07-20",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -21451,7 +22176,9 @@
       598,
       600,
       623,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -21463,6 +22190,28 @@
         "class_name": "H45 (10 / 10) Tid Efter Bomtid",
         "place": 8,
         "time": "13:23",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 3,
+        "time": "47:44",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 3,
+        "time": "19:28",
         "status": null
       },
       {
@@ -21801,9 +22550,9 @@
   {
     "person_key": "bjorn-wrahme",
     "display_name": "Björn Wrahme",
-    "result_count": 28,
+    "result_count": 31,
     "first_date": "2004-10-09",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       24,
       26,
@@ -21831,9 +22580,23 @@
       615,
       620,
       623,
-      631
+      631,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "Bana D",
+        "place": 4,
+        "time": "1:10:30",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -21843,6 +22606,28 @@
         "class_name": "H45 (10 / 10) Tid Efter Bomtid",
         "place": 2,
         "time": "2:01",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 5,
+        "time": "21:26",
         "status": null
       },
       {
@@ -22371,17 +23156,41 @@
   {
     "person_key": "bo-wallin",
     "display_name": "Bo Wallin",
-    "result_count": 5,
+    "result_count": 7,
     "first_date": "2020-08-11",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       433,
       533,
       534,
       627,
-      631
+      631,
+      639,
+      640
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H75",
+        "place": 3,
+        "time": "55:58",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 22,
+        "time": "58:05",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -22463,6 +23272,29 @@
     ]
   },
   {
+    "person_key": "bogg-kajsa-natby",
+    "display_name": "Bogg Kajsa Nåtby",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 17,
+        "time": "1:06:12",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "bogg-magnus-andersson",
     "display_name": "Bogg Magnus Andersson",
     "result_count": 2,
@@ -22517,6 +23349,40 @@
         "place": 6,
         "time": "",
         "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "bogg-martin-natby",
+    "display_name": "Bogg Martin Nåtby",
+    "result_count": 2,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 5,
+        "time": "59:18",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": null,
+        "time": null,
+        "status": "dnf"
       }
     ]
   },
@@ -23110,13 +23976,37 @@
   {
     "person_key": "borje-liljekvist",
     "display_name": "Börje Liljekvist",
-    "result_count": 1,
+    "result_count": 3,
     "first_date": "2025-09-17",
-    "last_date": "2025-09-17",
+    "last_date": "2026-07-14",
     "event_ids": [
-      600
+      600,
+      640,
+      641
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 10,
+        "time": "1:26:21",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 7,
+        "time": "37:06",
+        "status": null
+      },
       {
         "event_id": 600,
         "event_name": "Terräng-KM 2025",
@@ -23126,6 +24016,29 @@
         "class_name": "H65 Tid",
         "place": 1,
         "time": "11:06",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "borje-sander",
+    "display_name": "Börje Sander",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 1,
+        "time": "27:25",
         "status": null
       }
     ]
@@ -23587,7 +24500,7 @@
   {
     "person_key": "casper-wrahme",
     "display_name": "Casper Wrahme",
-    "result_count": 6,
+    "result_count": 8,
     "first_date": "2021-12-31",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -23596,7 +24509,9 @@
       490,
       491,
       531,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -23609,6 +24524,28 @@
         "place": null,
         "time": null,
         "status": "felst"
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H14",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H14",
+        "place": 2,
+        "time": "10:45",
+        "status": null
       },
       {
         "event_id": 531,
@@ -24064,15 +25001,27 @@
   {
     "person_key": "christina-wuopio",
     "display_name": "Christina Wuopio",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2025-11-15",
-    "last_date": "2026-03-25",
+    "last_date": "2026-09-10",
     "event_ids": [
       605,
       621,
-      623
+      623,
+      638
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 623,
         "event_name": "Natt sprint kupp",
@@ -24569,7 +25518,7 @@
   {
     "person_key": "conny-blomberg-dolff",
     "display_name": "Conny Blomberg-Dolff",
-    "result_count": 16,
+    "result_count": 17,
     "first_date": "2020-08-20",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -24588,7 +25537,8 @@
       524,
       552,
       629,
-      631
+      631,
+      642
     ],
     "results": [
       {
@@ -24601,6 +25551,17 @@
         "place": 14,
         "time": "3:03",
         "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": null,
+        "time": null,
+        "status": "dns"
       },
       {
         "event_id": 629,
@@ -25847,6 +26808,29 @@
     ]
   },
   {
+    "person_key": "daniel-wallner",
+    "display_name": "Daniel Wallner",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan OL",
+        "place": 1,
+        "time": "44:46",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "dante-meijer",
     "display_name": "Dante Meijer",
     "result_count": 6,
@@ -26700,11 +27684,12 @@
   {
     "person_key": "ebba-hamelius",
     "display_name": "Ebba Hamelius",
-    "result_count": 1,
-    "first_date": "2026-07-30",
+    "result_count": 2,
+    "first_date": "2026-05-31",
     "last_date": "2026-07-30",
     "event_ids": [
-      635
+      635,
+      642
     ],
     "results": [
       {
@@ -26716,6 +27701,17 @@
         "class_name": "Nybörjarbana",
         "place": 2,
         "time": "00:59:30",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D10",
+        "place": 2,
+        "time": "44:08",
         "status": null
       }
     ]
@@ -26828,9 +27824,9 @@
   {
     "person_key": "edit-thoris",
     "display_name": "Edit Thoris",
-    "result_count": 8,
+    "result_count": 11,
     "first_date": "2024-04-16",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       531,
       552,
@@ -26839,9 +27835,23 @@
       600,
       615,
       623,
-      631
+      631,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D12",
+        "place": 2,
+        "time": "1:16:33",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -26852,6 +27862,28 @@
         "place": null,
         "time": null,
         "status": "felst"
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 4,
+        "time": "14:57",
+        "status": null
       },
       {
         "event_id": 623,
@@ -27768,7 +28800,7 @@
   {
     "person_key": "edward-larsson",
     "display_name": "Edward Larsson",
-    "result_count": 48,
+    "result_count": 50,
     "first_date": "2017-06-01",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -27819,7 +28851,9 @@
       625,
       631,
       632,
-      634
+      634,
+      640,
+      641
     ],
     "results": [
       {
@@ -27831,6 +28865,17 @@
         "class_name": "Violett bana 4,7 – 4,8 km",
         "place": 3,
         "time": "46.12",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 8,
+        "time": "1:03:09",
         "status": null
       },
       {
@@ -27853,6 +28898,17 @@
         "class_name": "H45 (10 / 10) Tid Efter Bomtid",
         "place": 6,
         "time": "6:01",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 6,
+        "time": "21:48",
         "status": null
       },
       {
@@ -28394,6 +29450,29 @@
         "class_name": "Mellan (5 / 5) Tid Efter Bomtid",
         "place": 2,
         "time": "03:18",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "edward-nordin",
+    "display_name": "Edward Nordin",
+    "result_count": 1,
+    "first_date": "2026-09-10",
+    "last_date": "2026-09-10",
+    "event_ids": [
+      638
+    ],
+    "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": 3,
+        "time": "41.45",
         "status": null
       }
     ]
@@ -29117,9 +30196,9 @@
   {
     "person_key": "elin-wrahme",
     "display_name": "Elin Wrahme",
-    "result_count": 10,
+    "result_count": 12,
     "first_date": "2024-08-15",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-10",
     "event_ids": [
       549,
       552,
@@ -29130,9 +30209,22 @@
       600,
       620,
       627,
-      631
+      631,
+      638,
+      641
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -29154,6 +30246,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 2,
+        "time": "7:49",
+        "status": null
       },
       {
         "event_id": 620,
@@ -29294,13 +30397,15 @@
   {
     "person_key": "elisa-hamelius",
     "display_name": "Elisa Hamelius",
-    "result_count": 3,
+    "result_count": 5,
     "first_date": "2026-03-25",
     "last_date": "2026-07-30",
     "event_ids": [
       623,
       631,
-      635
+      635,
+      641,
+      642
     ],
     "results": [
       {
@@ -29323,6 +30428,28 @@
         "class_name": "D35 (3 / 3) Tid Efter Bomtid",
         "place": 1,
         "time": "40:55 2:06",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D35",
+        "place": 2,
+        "time": "50:52",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D35",
+        "place": 1,
+        "time": "22:00",
         "status": null
       },
       {
@@ -30224,9 +31351,9 @@
   {
     "person_key": "elisabeth-akarbjar",
     "display_name": "Elisabeth Åkärbjär",
-    "result_count": 16,
+    "result_count": 17,
     "first_date": "2016-06-09",
-    "last_date": "2024-09-24",
+    "last_date": "2026-05-05",
     "event_ids": [
       272,
       283,
@@ -30243,9 +31370,21 @@
       454,
       477,
       497,
-      554
+      554,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D45",
+        "place": 2,
+        "time": "20:47",
+        "status": null
+      },
       {
         "event_id": 554,
         "event_name": "Natt-KM",
@@ -31109,9 +32248,9 @@
   {
     "person_key": "elvira-buud",
     "display_name": "Elvira Buud",
-    "result_count": 33,
+    "result_count": 34,
     "first_date": "2016-04-14",
-    "last_date": "2026-04-16",
+    "last_date": "2026-05-31",
     "event_ids": [
       256,
       304,
@@ -31145,9 +32284,21 @@
       598,
       599,
       623,
-      624
+      624,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17-34",
+        "place": 3,
+        "time": "1:04:53",
+        "status": null
+      },
       {
         "event_id": 624,
         "event_name": "Trän-OL",
@@ -31681,7 +32832,7 @@
   {
     "person_key": "emelie-brudin",
     "display_name": "Emelie Brudin",
-    "result_count": 21,
+    "result_count": 22,
     "first_date": "2013-06-11",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -31705,7 +32856,8 @@
       600,
       623,
       625,
-      631
+      631,
+      641
     ],
     "results": [
       {
@@ -31717,6 +32869,17 @@
         "class_name": "D17-34 (2 / 2) Tid Efter Bomtid",
         "place": 2,
         "time": "3:27",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17",
+        "place": 1,
+        "time": "22:35",
         "status": null
       },
       {
@@ -32608,17 +33771,31 @@
   {
     "person_key": "eric-wuopio-kvarnstrom",
     "display_name": "Eric Wuopio Kvarnström",
-    "result_count": 5,
+    "result_count": 8,
     "first_date": "2025-05-01",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-14",
     "event_ids": [
       580,
       599,
       605,
       620,
-      631
+      631,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 11,
+        "time": "55:19",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -32628,6 +33805,28 @@
         "class_name": "H10 (6 / 6) Tid Efter Bomtid",
         "place": 3,
         "time": "4:17",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": 3,
+        "time": "28:18",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": 4,
+        "time": "16:57",
         "status": null
       },
       {
@@ -33229,9 +34428,9 @@
   {
     "person_key": "erik-csucs",
     "display_name": "Erik Csucs",
-    "result_count": 7,
+    "result_count": 9,
     "first_date": "2022-09-07",
-    "last_date": "2026-01-28",
+    "last_date": "2026-09-15",
     "event_ids": [
       488,
       490,
@@ -33239,9 +34438,33 @@
       533,
       534,
       580,
-      620
+      620,
+      639,
+      641
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H10",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": 3,
+        "time": "16:38",
+        "status": null
+      },
       {
         "event_id": 620,
         "event_name": "Skid-KM",
@@ -33393,7 +34616,7 @@
   {
     "person_key": "erik-eriksson",
     "display_name": "Erik Eriksson",
-    "result_count": 52,
+    "result_count": 53,
     "first_date": "2004-10-09",
     "last_date": "2026-05-07",
     "event_ids": [
@@ -33443,7 +34666,8 @@
       534,
       554,
       599,
-      627
+      627,
+      641
     ],
     "results": [
       {
@@ -33455,6 +34679,17 @@
         "class_name": "Mellan bana",
         "place": null,
         "time": "00:30:10",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 2,
+        "time": "18:54",
         "status": null
       },
       {
@@ -34387,16 +35622,40 @@
   {
     "person_key": "erik-klockar",
     "display_name": "Erik Klockar",
-    "result_count": 4,
+    "result_count": 6,
     "first_date": "2024-02-13",
-    "last_date": "2025-01-14",
+    "last_date": "2026-09-15",
     "event_ids": [
       529,
       549,
       554,
-      567
+      567,
+      639,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "Bana A",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 567,
         "event_name": "Mora Nattsprintserie E1",
@@ -34916,9 +36175,9 @@
   {
     "person_key": "erik-rost",
     "display_name": "Erik Rost",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2020-09-24",
-    "last_date": "2025-08-28",
+    "last_date": "2026-05-05",
     "event_ids": [
       442,
       510,
@@ -34926,9 +36185,21 @@
       516,
       597,
       598,
-      599
+      599,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17",
+        "place": 1,
+        "time": "18:33",
+        "status": null
+      },
       {
         "event_id": 599,
         "event_name": "Medel-KM",
@@ -35151,9 +36422,9 @@
   {
     "person_key": "erik-wadman",
     "display_name": "Erik Wadman",
-    "result_count": 9,
+    "result_count": 10,
     "first_date": "2005-06-02",
-    "last_date": "2020-08-06",
+    "last_date": "2026-05-31",
     "event_ids": [
       35,
       36,
@@ -35163,9 +36434,21 @@
       131,
       382,
       431,
-      435
+      435,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 10,
+        "time": "46:25",
+        "status": null
+      },
       {
         "event_id": 431,
         "event_name": "Motions-ol",
@@ -36596,9 +37879,9 @@
   {
     "person_key": "evgeniya-ryapolova",
     "display_name": "Evgeniya Ryapolova",
-    "result_count": 22,
+    "result_count": 25,
     "first_date": "2013-08-08",
-    "last_date": "2026-02-11",
+    "last_date": "2026-09-10",
     "event_ids": [
       132,
       198,
@@ -36621,9 +37904,45 @@
       572,
       599,
       600,
-      621
+      621,
+      638,
+      640,
+      642
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 1,
+        "time": "35.00",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 7,
+        "time": "1:01:08",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D35",
+        "place": 1,
+        "time": "43:09",
+        "status": null
+      },
       {
         "event_id": 621,
         "event_name": "Nattcup 2026, etapp2",
@@ -37253,13 +38572,15 @@
   {
     "person_key": "filip-holm",
     "display_name": "Filip Holm",
-    "result_count": 3,
+    "result_count": 5,
     "first_date": "2026-03-25",
     "last_date": "2026-06-16",
     "event_ids": [
       623,
       624,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -37271,6 +38592,28 @@
         "class_name": "H35 (5 / 5) Tid Efter Bomtid",
         "place": 3,
         "time": "6:09",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 1,
+        "time": "50:56",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 4,
+        "time": "19:56",
         "status": null
       },
       {
@@ -37686,7 +39029,7 @@
   {
     "person_key": "folke-eriksson",
     "display_name": "Folke Eriksson",
-    "result_count": 6,
+    "result_count": 7,
     "first_date": "2022-09-07",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -37695,7 +39038,8 @@
       491,
       511,
       531,
-      631
+      631,
+      641
     ],
     "results": [
       {
@@ -37707,6 +39051,17 @@
         "class_name": "H12 (3 / 3) Tid Efter Bomtid",
         "place": 3,
         "time": "4:25",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H12",
+        "place": 2,
+        "time": "11:54",
         "status": null
       },
       {
@@ -37827,13 +39182,26 @@
   {
     "person_key": "fredrik-eggoy-markhester",
     "display_name": "Fredrik Eggoy Markhester",
-    "result_count": 1,
-    "first_date": "2026-07-30",
-    "last_date": "2026-07-30",
+    "result_count": 3,
+    "first_date": "2026-05-31",
+    "last_date": "2026-09-10",
     "event_ids": [
-      635
+      635,
+      638,
+      642
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 3,
+        "time": "36.37",
+        "status": null
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -37844,6 +39212,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 5,
+        "time": "1:08:05",
+        "status": null
       }
     ]
   },
@@ -39577,6 +40956,29 @@
     ]
   },
   {
+    "person_key": "greger-sander",
+    "display_name": "Greger Sander",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 9,
+        "time": "43:53",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "gummus",
     "display_name": "Gummus",
     "result_count": 1,
@@ -39602,13 +41004,25 @@
   {
     "person_key": "gunde-hjalmarsson",
     "display_name": "Gunde Hjalmarsson",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2020-12-31",
-    "last_date": "2020-12-31",
+    "last_date": "2026-07-14",
     "event_ids": [
-      445
+      445,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 15,
+        "time": "51:27",
+        "status": null
+      },
       {
         "event_id": 445,
         "event_name": "Sylvesterloppet",
@@ -40026,9 +41440,9 @@
   {
     "person_key": "gunnel-rask",
     "display_name": "Gunnel Rask",
-    "result_count": 46,
+    "result_count": 50,
     "first_date": "2017-09-14",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       322,
       324,
@@ -40075,9 +41489,46 @@
       623,
       625,
       630,
-      631
+      631,
+      638,
+      639,
+      640,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D55",
+        "place": 2,
+        "time": "1:10:21",
+        "status": null
+      },
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 9,
+        "time": "43.20",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 12,
+        "time": "46:28",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -40098,6 +41549,17 @@
         "class_name": "Bana A, 4,6 km",
         "place": null,
         "time": "55.45",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 3,
+        "time": "36:34",
         "status": null
       },
       {
@@ -41074,13 +42536,25 @@
   {
     "person_key": "gustav-eggoy-markhester",
     "display_name": "Gustav Eggöy Markhester",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2026-03-25",
-    "last_date": "2026-03-25",
+    "last_date": "2026-07-14",
     "event_ids": [
-      623
+      623,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 14,
+        "time": "1:17:29",
+        "status": null
+      },
       {
         "event_id": 623,
         "event_name": "Natt sprint kupp",
@@ -41097,9 +42571,9 @@
   {
     "person_key": "gustav-elmgren",
     "display_name": "Gustav Elmgren",
-    "result_count": 20,
+    "result_count": 23,
     "first_date": "2021-05-18",
-    "last_date": "2026-06-11",
+    "last_date": "2026-09-15",
     "event_ids": [
       454,
       499,
@@ -41120,9 +42594,34 @@
       623,
       624,
       625,
-      630
+      630,
+      639,
+      640,
+      641
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H16",
+        "place": 1,
+        "time": "1:11:38",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 10,
+        "time": "1:06:04",
+        "status": null
+      },
       {
         "event_id": 630,
         "event_name": "Träningsorientering",
@@ -41132,6 +42631,17 @@
         "class_name": "Bana B, 3,5 km",
         "place": null,
         "time": "36.42",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H16",
+        "place": 1,
+        "time": "11:11",
         "status": null
       },
       {
@@ -42613,7 +44123,7 @@
   {
     "person_key": "hanna-eriksson",
     "display_name": "Hanna Eriksson",
-    "result_count": 20,
+    "result_count": 21,
     "first_date": "2005-05-19",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -42636,7 +44146,8 @@
       516,
       531,
       623,
-      631
+      631,
+      642
     ],
     "results": [
       {
@@ -42648,6 +44159,17 @@
         "class_name": "D17-34 (2 / 2) Tid Efter Bomtid",
         "place": 1,
         "time": "55:34 2:31",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17-34",
+        "place": 2,
+        "time": "1:03:48",
         "status": null
       },
       {
@@ -42962,6 +44484,29 @@
         "class_name": "Korta banan",
         "place": null,
         "time": "59.00",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "hanna-rost",
+    "display_name": "Hanna Rost",
+    "result_count": 1,
+    "first_date": "2026-05-05",
+    "last_date": "2026-05-05",
+    "event_ids": [
+      641
+    ],
+    "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D35",
+        "place": 3,
+        "time": "24:36",
         "status": null
       }
     ]
@@ -43677,9 +45222,9 @@
   {
     "person_key": "hans-johansson",
     "display_name": "Hans Johansson",
-    "result_count": 54,
+    "result_count": 57,
     "first_date": "2013-04-11",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-10",
     "event_ids": [
       105,
       154,
@@ -43734,9 +45279,23 @@
       629,
       631,
       632,
-      635
+      635,
+      638,
+      640,
+      642
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -43746,6 +45305,17 @@
         "class_name": "Kort bana",
         "place": 8,
         "time": "01:09:45",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 19,
+        "time": "49:21",
         "status": null
       },
       {
@@ -43769,6 +45339,17 @@
         "place": 7,
         "time": "5:25",
         "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": null,
+        "time": null,
+        "status": "dns"
       },
       {
         "event_id": 629,
@@ -45327,7 +46908,7 @@
   {
     "person_key": "heinz-eric-develius",
     "display_name": "Heinz-Eric Develius",
-    "result_count": 8,
+    "result_count": 11,
     "first_date": "2018-05-31",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -45338,7 +46919,10 @@
       524,
       554,
       599,
-      635
+      635,
+      640,
+      641,
+      642
     ],
     "results": [
       {
@@ -45350,6 +46934,39 @@
         "class_name": "Mellan bana",
         "place": 6,
         "time": "00:58:30",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan OL",
+        "place": 3,
+        "time": "56:50",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 5,
+        "time": "35:35",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 4,
+        "time": "16:05",
         "status": null
       },
       {
@@ -46465,14 +48082,26 @@
   {
     "person_key": "henrik-johnsson",
     "display_name": "Henrik Johnsson",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2017-09-14",
-    "last_date": "2017-12-31",
+    "last_date": "2026-09-15",
     "event_ids": [
       322,
-      327
+      327,
+      639
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H35",
+        "place": 1,
+        "time": "40:33",
+        "status": null
+      },
       {
         "event_id": 327,
         "event_name": "Sylvesterloppet",
@@ -46500,9 +48129,9 @@
   {
     "person_key": "henrik-jonsson",
     "display_name": "Henrik Jonsson",
-    "result_count": 11,
+    "result_count": 14,
     "first_date": "2018-01-22",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       329,
       336,
@@ -46514,9 +48143,23 @@
       597,
       615,
       620,
-      631
+      631,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H55",
+        "place": 1,
+        "time": "34:33",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -46526,6 +48169,28 @@
         "class_name": "H55 (10 / 10) Tid Efter Bomtid",
         "place": 1,
         "time": "33:18 0:21",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 1,
+        "time": "37:32",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 1,
+        "time": "14:19",
         "status": null
       },
       {
@@ -48278,6 +49943,64 @@
     ]
   },
   {
+    "person_key": "inge-svartling",
+    "display_name": "Inge Svartling",
+    "result_count": 2,
+    "first_date": "2026-05-05",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640,
+      641
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 9,
+        "time": "35:44",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 2,
+        "time": "17:06",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "ingela-hurtig",
+    "display_name": "Ingela Hurtig",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt OL",
+        "place": 1,
+        "time": "28:32",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "ingemar",
     "display_name": "Ingemar",
     "result_count": 18,
@@ -49468,6 +51191,29 @@
     ]
   },
   {
+    "person_key": "ingrid-wiklander-nylander",
+    "display_name": "Ingrid Wiklander Nylander",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 20,
+        "time": "50:21",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "ingunn-weltzien",
     "display_name": "Ingunn Weltzien",
     "result_count": 1,
@@ -50158,6 +51904,29 @@
     ]
   },
   {
+    "person_key": "jacob-hersvall",
+    "display_name": "Jacob Hersvall",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 7,
+        "time": "1:00:52",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "jacsev-samuel",
     "display_name": "Jacsev Samuel",
     "result_count": 1,
@@ -50336,13 +52105,25 @@
   {
     "person_key": "jan-bergstrom",
     "display_name": "Jan Bergström",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2020-04-16",
-    "last_date": "2020-04-16",
+    "last_date": "2026-07-14",
     "event_ids": [
-      409
+      409,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 23,
+        "time": "1:01:55",
+        "status": null
+      },
       {
         "event_id": 409,
         "event_name": "Motionsorientering med SI + veckans bana",
@@ -50561,6 +52342,29 @@
         "class_name": null,
         "place": 10,
         "time": "49.42",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "jan-larfars",
+    "display_name": "Jan Lärfars",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 7,
+        "time": "39:20",
         "status": null
       }
     ]
@@ -50960,6 +52764,29 @@
     ]
   },
   {
+    "person_key": "jenny-wallner",
+    "display_name": "Jenny Wallner",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Lång OL",
+        "place": 2,
+        "time": "52:55",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "jens",
     "display_name": "Jens",
     "result_count": 1,
@@ -51059,6 +52886,29 @@
         "class_name": null,
         "place": null,
         "time": "20.33",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "jesper-nordqvist",
+    "display_name": "Jesper Nordqvist",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 4,
+        "time": "59:38",
         "status": null
       }
     ]
@@ -51253,13 +53103,25 @@
   {
     "person_key": "joakim-skarlen",
     "display_name": "Joakim Skärlén",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2026-02-11",
-    "last_date": "2026-02-11",
+    "last_date": "2026-07-14",
     "event_ids": [
-      621
+      621,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 13,
+        "time": "1:14:48",
+        "status": null
+      },
       {
         "event_id": 621,
         "event_name": "Nattcup 2026, etapp2",
@@ -51852,17 +53714,30 @@
   {
     "person_key": "johan-hamelius",
     "display_name": "Johan Hamelius",
-    "result_count": 5,
+    "result_count": 7,
     "first_date": "2025-08-21",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-15",
     "event_ids": [
       598,
       615,
       620,
       631,
-      635
+      635,
+      639,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H35",
+        "place": 3,
+        "time": "53:00",
+        "status": null
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -51883,6 +53758,17 @@
         "class_name": "H35 (5 / 5) Tid Efter Bomtid",
         "place": 1,
         "time": "40:53 0:41",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 2,
+        "time": "53:52",
         "status": null
       },
       {
@@ -51923,13 +53809,25 @@
   {
     "person_key": "johan-hook",
     "display_name": "Johan Höök",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2025-08-28",
-    "last_date": "2025-08-28",
+    "last_date": "2026-05-05",
     "event_ids": [
-      599
+      599,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 2,
+        "time": "18:05",
+        "status": null
+      },
       {
         "event_id": 599,
         "event_name": "Medel-KM",
@@ -52632,6 +54530,29 @@
     ]
   },
   {
+    "person_key": "john-sandin",
+    "display_name": "john sandin",
+    "result_count": 1,
+    "first_date": "2026-09-15",
+    "last_date": "2026-09-15",
+    "event_ids": [
+      639
+    ],
+    "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H10",
+        "place": 4,
+        "time": "54:20",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "johnny",
     "display_name": "Johnny",
     "result_count": 1,
@@ -52868,7 +54789,7 @@
   {
     "person_key": "jonas-buud",
     "display_name": "Jonas Buud",
-    "result_count": 28,
+    "result_count": 29,
     "first_date": "2004-08-05",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -52898,7 +54819,8 @@
       534,
       537,
       623,
-      631
+      631,
+      642
     ],
     "results": [
       {
@@ -52911,6 +54833,17 @@
         "place": 3,
         "time": "2:38",
         "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": null,
+        "time": null,
+        "status": "dns"
       },
       {
         "event_id": 623,
@@ -53434,9 +55367,9 @@
   {
     "person_key": "jonas-alund",
     "display_name": "Jonas Ålund",
-    "result_count": 9,
+    "result_count": 11,
     "first_date": "2024-08-08",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       548,
       549,
@@ -53446,9 +55379,22 @@
       599,
       623,
       625,
-      631
+      631,
+      639,
+      641
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H35",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -53459,6 +55405,17 @@
         "place": null,
         "time": null,
         "status": "dns"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": null,
+        "time": null,
+        "status": "felst"
       },
       {
         "event_id": 625,
@@ -53876,6 +55833,29 @@
     ]
   },
   {
+    "person_key": "jonna-bjork",
+    "display_name": "Jonna Björk",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17-34",
+        "place": 5,
+        "time": "1:27:31",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "jonny",
     "display_name": "Jonny",
     "result_count": 1,
@@ -53901,17 +55881,29 @@
   {
     "person_key": "jonny-birgersson",
     "display_name": "Jonny Birgersson",
-    "result_count": 5,
+    "result_count": 6,
     "first_date": "2016-12-31",
-    "last_date": "2021-11-17",
+    "last_date": "2026-07-14",
     "event_ids": [
       296,
       327,
       431,
       435,
-      467
+      467,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 3,
+        "time": "29:25",
+        "status": null
+      },
       {
         "event_id": 467,
         "event_name": "Nostalginatten 2021",
@@ -54018,15 +56010,27 @@
   {
     "person_key": "josefin-sandberg",
     "display_name": "Josefin Sandberg",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2016-12-31",
-    "last_date": "2023-08-31",
+    "last_date": "2026-07-14",
     "event_ids": [
       296,
       413,
-      513
+      513,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 513,
         "event_name": "Terräng KM",
@@ -55410,9 +57414,9 @@
   {
     "person_key": "kane-andersson",
     "display_name": "Kane Andersson",
-    "result_count": 65,
+    "result_count": 69,
     "first_date": "2004-09-23",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-15",
     "event_ids": [
       19,
       35,
@@ -55478,9 +57482,24 @@
       627,
       630,
       631,
-      635
+      635,
+      639,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D65",
+        "place": 1,
+        "time": "55:00",
+        "status": null
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -55490,6 +57509,17 @@
         "class_name": "Mellan bana",
         "place": 5,
         "time": "00:55:49",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 7,
+        "time": "41:24",
         "status": null
       },
       {
@@ -55515,6 +57545,17 @@
         "status": null
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D65",
+        "place": 1,
+        "time": "37:04",
+        "status": null
+      },
+      {
         "event_id": 627,
         "event_name": "Träningsorientering",
         "date": "2026-05-07",
@@ -55523,6 +57564,17 @@
         "class_name": "Mellan bana",
         "place": null,
         "time": "00:56:45",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D65",
+        "place": 3,
+        "time": "19:11",
         "status": null
       },
       {
@@ -57155,9 +59207,9 @@
   {
     "person_key": "karl-erik-andersson",
     "display_name": "Karl-Erik Andersson",
-    "result_count": 56,
+    "result_count": 60,
     "first_date": "2005-06-02",
-    "last_date": "2026-08-20",
+    "last_date": "2026-09-15",
     "event_ids": [
       35,
       36,
@@ -57214,9 +59266,24 @@
       623,
       631,
       632,
-      634
+      634,
+      639,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H75",
+        "place": 1,
+        "time": "35:53",
+        "status": null
+      },
       {
         "event_id": 634,
         "event_name": "25 manna test",
@@ -57226,6 +59293,17 @@
         "class_name": "Vit bana 2,0 – 2,1 km",
         "place": 2,
         "time": "32.16",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 13,
+        "time": "42:28",
         "status": null
       },
       {
@@ -57248,6 +59326,28 @@
         "class_name": "H75 (11 / 11) Tid Efter Bomtid",
         "place": 8,
         "time": "6:44",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 4,
+        "time": "53:02",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 5,
+        "time": "22:31",
         "status": null
       },
       {
@@ -59819,6 +61919,29 @@
     ]
   },
   {
+    "person_key": "kea-6-yngve",
+    "display_name": "KEA 6 Yngve",
+    "result_count": 1,
+    "first_date": "2026-09-10",
+    "last_date": "2026-09-10",
+    "event_ids": [
+      638
+    ],
+    "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      }
+    ]
+  },
+  {
     "person_key": "kea-andersson",
     "display_name": "Kea Andersson",
     "result_count": 14,
@@ -60127,14 +62250,15 @@
   {
     "person_key": "kent-berggren",
     "display_name": "Kent Berggren",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2024-08-15",
     "last_date": "2026-06-11",
     "event_ids": [
       549,
       599,
       627,
-      630
+      630,
+      642
     ],
     "results": [
       {
@@ -60147,6 +62271,17 @@
         "place": null,
         "time": "48.50",
         "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": null,
+        "time": null,
+        "status": "dnf"
       },
       {
         "event_id": 627,
@@ -60874,9 +63009,9 @@
   {
     "person_key": "klaus-csucs",
     "display_name": "Klaus Csucs",
-    "result_count": 9,
+    "result_count": 11,
     "first_date": "2013-06-11",
-    "last_date": "2026-01-28",
+    "last_date": "2026-05-31",
     "event_ids": [
       116,
       312,
@@ -60886,9 +63021,33 @@
       491,
       500,
       513,
-      620
+      620,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 3,
+        "time": "1:14:12",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 5,
+        "time": "22:02",
+        "status": null
+      },
       {
         "event_id": 620,
         "event_name": "Skid-KM",
@@ -61097,14 +63256,26 @@
   {
     "person_key": "konstantin-serebryanitskii",
     "display_name": "Konstantin Serebryanitskii",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2023-09-14",
-    "last_date": "2023-09-14",
+    "last_date": "2026-05-05",
     "event_ids": [
       515,
-      516
+      516,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17",
+        "place": 2,
+        "time": "20:19",
+        "status": null
+      },
       {
         "event_id": 515,
         "event_name": "25manna träning vinäs",
@@ -61810,9 +63981,9 @@
   {
     "person_key": "kristian-csucs",
     "display_name": "Kristian Csucs",
-    "result_count": 10,
+    "result_count": 13,
     "first_date": "2020-05-23",
-    "last_date": "2026-04-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       422,
       488,
@@ -61823,9 +63994,45 @@
       534,
       580,
       620,
-      624
+      624,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H10",
+        "place": 1,
+        "time": "25:42",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": 2,
+        "time": "19:29",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": 1,
+        "time": "8:16",
+        "status": null
+      },
       {
         "event_id": 624,
         "event_name": "Trän-OL",
@@ -62444,18 +64651,42 @@
   {
     "person_key": "kristina-eriksson",
     "display_name": "Kristina Eriksson",
-    "result_count": 6,
+    "result_count": 8,
     "first_date": "2021-09-30",
-    "last_date": "2025-11-15",
+    "last_date": "2026-07-14",
     "event_ids": [
       466,
       478,
       537,
       589,
       600,
-      605
+      605,
+      640,
+      642
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 8,
+        "time": "33:58",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D65",
+        "place": 3,
+        "time": "1:00:31",
+        "status": null
+      },
       {
         "event_id": 605,
         "event_name": "Siljan Trophy 2025",
@@ -62724,13 +64955,14 @@
   {
     "person_key": "krang-erik-eriksson",
     "display_name": "Krång Erik Eriksson",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2021-09-09",
     "last_date": "2026-06-16",
     "event_ids": [
       464,
       541,
-      631
+      631,
+      642
     ],
     "results": [
       {
@@ -62742,6 +64974,17 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 1,
         "time": "31:32 0:21",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 1,
+        "time": "30:57",
         "status": null
       },
       {
@@ -63718,7 +65961,7 @@
   {
     "person_key": "lars-eriksson",
     "display_name": "Lars Eriksson",
-    "result_count": 8,
+    "result_count": 9,
     "first_date": "2023-08-03",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -63729,7 +65972,8 @@
       624,
       630,
       632,
-      634
+      634,
+      640
     ],
     "results": [
       {
@@ -63741,6 +65985,17 @@
         "class_name": "Vit bana 2,0 – 2,1 km",
         "place": 1,
         "time": "13.16",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 6,
+        "time": "1:00:15",
         "status": null
       },
       {
@@ -63848,15 +66103,27 @@
   {
     "person_key": "lars-gunnarsson",
     "display_name": "Lars Gunnarsson",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2015-05-21",
-    "last_date": "2022-04-21",
+    "last_date": "2026-05-05",
     "event_ids": [
       218,
       383,
-      476
+      476,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      },
       {
         "event_id": 476,
         "event_name": "Tränings-Ol",
@@ -65485,7 +67752,7 @@
   {
     "person_key": "lars-erik-larsson",
     "display_name": "Lars-Erik Larsson",
-    "result_count": 17,
+    "result_count": 19,
     "first_date": "2005-05-19",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -65505,7 +67772,9 @@
       627,
       631,
       634,
-      635
+      635,
+      640,
+      642
     ],
     "results": [
       {
@@ -65531,6 +67800,17 @@
         "status": null
       },
       {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 4,
+        "time": "30:34",
+        "status": null
+      },
+      {
         "event_id": 631,
         "event_name": "Medel-KM",
         "date": "2026-06-16",
@@ -65540,6 +67820,17 @@
         "place": 13,
         "time": "15:12",
         "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": null,
+        "time": null,
+        "status": "dns"
       },
       {
         "event_id": 627,
@@ -67529,16 +69820,28 @@
   {
     "person_key": "laura-csucs-fenyvesi",
     "display_name": "Laura Csucs-Fenyvesi",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2014-08-31",
-    "last_date": "2021-12-31",
+    "last_date": "2026-09-15",
     "event_ids": [
       185,
       195,
       441,
-      468
+      468,
+      639
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D35",
+        "place": 1,
+        "time": "50:25",
+        "status": null
+      },
       {
         "event_id": 468,
         "event_name": "Sylvesterloppet 2021",
@@ -67991,6 +70294,29 @@
     ]
   },
   {
+    "person_key": "leif-akerblom",
+    "display_name": "Leif Åkerblom",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 18,
+        "time": "1:11:38",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "lena",
     "display_name": "Lena",
     "result_count": 22,
@@ -68376,16 +70702,28 @@
   {
     "person_key": "lena-eriksson",
     "display_name": "Lena Eriksson",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2024-07-04",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-14",
     "event_ids": [
       541,
       589,
       597,
-      631
+      631,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 17,
+        "time": "46:12",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -68505,14 +70843,26 @@
   {
     "person_key": "lena-hedman",
     "display_name": "Lena Hedman",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2024-08-08",
-    "last_date": "2026-06-25",
+    "last_date": "2026-07-14",
     "event_ids": [
       548,
-      632
+      632,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 11,
+        "time": "42:03",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -68540,9 +70890,9 @@
   {
     "person_key": "lena-henriksson",
     "display_name": "Lena Henriksson",
-    "result_count": 10,
+    "result_count": 11,
     "first_date": "2004-10-09",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-14",
     "event_ids": [
       24,
       76,
@@ -68553,9 +70903,21 @@
       598,
       599,
       624,
-      631
+      631,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 16,
+        "time": "55:53",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -68694,9 +71056,9 @@
   {
     "person_key": "lena-hermansson",
     "display_name": "Lena Hermansson",
-    "result_count": 12,
+    "result_count": 13,
     "first_date": "2004-10-09",
-    "last_date": "2026-01-18",
+    "last_date": "2026-07-14",
     "event_ids": [
       24,
       26,
@@ -68709,9 +71071,21 @@
       500,
       513,
       599,
-      615
+      615,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 5,
+        "time": "59:49",
+        "status": null
+      },
       {
         "event_id": 615,
         "event_name": "Skid-O KM 2026",
@@ -69466,7 +71840,7 @@
   {
     "person_key": "lena-leandersson",
     "display_name": "Lena Leandersson",
-    "result_count": 15,
+    "result_count": 17,
     "first_date": "2005-06-07",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -69484,7 +71858,9 @@
       599,
       624,
       631,
-      635
+      635,
+      641,
+      642
     ],
     "results": [
       {
@@ -69507,6 +71883,28 @@
         "class_name": "D75 (1 / 1) Tid Efter Bomtid",
         "place": 1,
         "time": "41:34 0:00",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D75",
+        "place": 1,
+        "time": "39:36",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D75",
+        "place": 1,
+        "time": "20:33",
         "status": null
       },
       {
@@ -70242,11 +72640,34 @@
     ]
   },
   {
+    "person_key": "lennart-tagtstrom",
+    "display_name": "Lennart Tägtström",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 12,
+        "time": "42:10",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "lennart-akerstrom",
     "display_name": "Lennart Åkerström",
-    "result_count": 29,
+    "result_count": 32,
     "first_date": "2004-08-05",
-    "last_date": "2026-08-20",
+    "last_date": "2026-09-15",
     "event_ids": [
       10,
       11,
@@ -70276,9 +72697,23 @@
       631,
       632,
       634,
-      635
+      635,
+      639,
+      640,
+      641
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H75",
+        "place": 2,
+        "time": "36:43",
+        "status": null
+      },
       {
         "event_id": 634,
         "event_name": "25 manna test",
@@ -70299,6 +72734,17 @@
         "class_name": "Kort bana",
         "place": 7,
         "time": "01:07:00",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 7,
+        "time": "33:03",
         "status": null
       },
       {
@@ -70332,6 +72778,17 @@
         "class_name": "Kort bana",
         "place": null,
         "time": "01:13:11",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 3,
+        "time": "18:52",
         "status": null
       },
       {
@@ -70601,6 +73058,29 @@
     ]
   },
   {
+    "person_key": "lennart-akerstrom-kerrin-petty",
+    "display_name": "Lennart Åkerström Kerrin Petty",
+    "result_count": 1,
+    "first_date": "2026-09-10",
+    "last_date": "2026-09-10",
+    "event_ids": [
+      638
+    ],
+    "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      }
+    ]
+  },
+  {
     "person_key": "lennart-akertstrom-deltagit",
     "display_name": "Lennart Åkertström Deltagit",
     "result_count": 1,
@@ -70817,9 +73297,9 @@
   {
     "person_key": "leo-ryapolov",
     "display_name": "Leo Ryapolov",
-    "result_count": 27,
+    "result_count": 29,
     "first_date": "2016-09-22",
-    "last_date": "2026-05-07",
+    "last_date": "2026-09-10",
     "event_ids": [
       290,
       301,
@@ -70847,9 +73327,33 @@
       615,
       620,
       621,
-      627
+      627,
+      638,
+      640
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 4,
+        "time": "36.58",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 6,
+        "time": "1:00:16",
+        "status": null
+      },
       {
         "event_id": 627,
         "event_name": "Träningsorientering",
@@ -71325,15 +73829,27 @@
   {
     "person_key": "lina-berggren",
     "display_name": "Lina Berggren",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2024-08-15",
-    "last_date": "2026-05-07",
+    "last_date": "2026-05-31",
     "event_ids": [
       549,
       599,
-      627
+      627,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 2,
+        "time": "35:49",
+        "status": null
+      },
       {
         "event_id": 627,
         "event_name": "Träningsorientering",
@@ -71578,6 +74094,41 @@
     ]
   },
   {
+    "person_key": "linn-jacobsson",
+    "display_name": "Linn Jacobsson",
+    "result_count": 2,
+    "first_date": "2026-05-05",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      641,
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 3,
+        "time": "18:56",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 3,
+        "time": "11:47",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "linnea",
     "display_name": "Linnea",
     "result_count": 8,
@@ -71710,9 +74261,9 @@
   {
     "person_key": "linnea-carlsson",
     "display_name": "Linnea Carlsson",
-    "result_count": 11,
+    "result_count": 14,
     "first_date": "2023-01-28",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-15",
     "event_ids": [
       499,
       515,
@@ -71724,9 +74275,23 @@
       625,
       631,
       632,
-      635
+      635,
+      639,
+      640,
+      641
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D65",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -71737,6 +74302,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 10,
+        "time": "36:52",
+        "status": null
       },
       {
         "event_id": 632,
@@ -71758,6 +74334,17 @@
         "class_name": "D65 (9 / 9) Tid Efter Bomtid",
         "place": 7,
         "time": "5:50",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D65",
+        "place": 2,
+        "time": "16:02",
         "status": null
       },
       {
@@ -71852,15 +74439,27 @@
   },
   {
     "person_key": "linnea-elmgren",
-    "display_name": "Linnea Elmgren",
-    "result_count": 2,
+    "display_name": "Linnéa Elmgren",
+    "result_count": 3,
     "first_date": "2026-02-11",
-    "last_date": "2026-03-25",
+    "last_date": "2026-05-05",
     "event_ids": [
       621,
-      623
+      623,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 8,
+        "time": "32:52",
+        "status": null
+      },
       {
         "event_id": 623,
         "event_name": "Natt sprint kupp",
@@ -71911,15 +74510,27 @@
   {
     "person_key": "linnea-granlund",
     "display_name": "Linnea Granlund",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2023-07-13",
-    "last_date": "2025-05-01",
+    "last_date": "2026-05-05",
     "event_ids": [
       509,
       548,
-      580
+      580,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D14",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 580,
         "event_name": "träningsorientering",
@@ -72381,7 +74992,7 @@
   {
     "person_key": "linus-rapp",
     "display_name": "Linus Rapp",
-    "result_count": 30,
+    "result_count": 31,
     "first_date": "2004-08-12",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -72413,7 +75024,8 @@
       554,
       600,
       623,
-      631
+      631,
+      642
     ],
     "results": [
       {
@@ -72426,6 +75038,17 @@
         "place": null,
         "time": null,
         "status": "dns"
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": 1,
+        "time": "52:26",
+        "status": null
       },
       {
         "event_id": 623,
@@ -72948,14 +75571,26 @@
   {
     "person_key": "lisa-holm",
     "display_name": "Lisa Holm",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2026-01-18",
-    "last_date": "2026-05-07",
+    "last_date": "2026-07-14",
     "event_ids": [
       615,
-      627
+      627,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 9,
+        "time": "1:05:28",
+        "status": null
+      },
       {
         "event_id": 627,
         "event_name": "Träningsorientering",
@@ -73096,6 +75731,40 @@
     ]
   },
   {
+    "person_key": "lotta-jungaker",
+    "display_name": "Lotta Jungåker",
+    "result_count": 2,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17-34",
+        "place": 4,
+        "time": "1:24:58",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17-34",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      }
+    ]
+  },
+  {
     "person_key": "loui",
     "display_name": "Loui",
     "result_count": 1,
@@ -73201,6 +75870,63 @@
     ]
   },
   {
+    "person_key": "lova-jonsson",
+    "display_name": "Lova Jönsson",
+    "result_count": 2,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17-34",
+        "place": 1,
+        "time": "1:01:26",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17-34",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      }
+    ]
+  },
+  {
+    "person_key": "lova-sandberg",
+    "display_name": "Lova Sandberg",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 2,
+        "time": "36:10",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "lova-sandberg-deltagit",
     "display_name": "Lova Sandberg Deltagit",
     "result_count": 1,
@@ -73220,6 +75946,29 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      }
+    ]
+  },
+  {
+    "person_key": "love-hamelius",
+    "display_name": "Love Hamelius",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": null,
+        "time": null,
+        "status": "felst"
       }
     ]
   },
@@ -73774,7 +76523,7 @@
   {
     "person_key": "lukas-eriksson",
     "display_name": "Lukas Eriksson",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2025-05-01",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -73784,7 +76533,8 @@
       625,
       630,
       632,
-      634
+      634,
+      640
     ],
     "results": [
       {
@@ -73796,6 +76546,17 @@
         "class_name": "Vit bana 2,0 – 2,1 km",
         "place": 3,
         "time": "35.37",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 4,
+        "time": "35:48",
         "status": null
       },
       {
@@ -73943,6 +76704,29 @@
         "class_name": null,
         "place": null,
         "time": "55.03",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "lynn-steiner",
+    "display_name": "Lynn Steiner",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 11,
+        "time": "1:06:49",
         "status": null
       }
     ]
@@ -74719,9 +77503,9 @@
   {
     "person_key": "maffe-frost",
     "display_name": "Maffe Frost",
-    "result_count": 42,
+    "result_count": 44,
     "first_date": "2004-08-05",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-14",
     "event_ids": [
       11,
       17,
@@ -74763,9 +77547,22 @@
       502,
       506,
       510,
-      631
+      631,
+      640,
+      641
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 7,
+        "time": "41:02",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -74775,6 +77572,17 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 17,
         "time": "7:10",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 6,
+        "time": "23:42",
         "status": null
       },
       {
@@ -75652,9 +78460,32 @@
     ]
   },
   {
+    "person_key": "magnus-fredriksson",
+    "display_name": "Magnus Fredriksson",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      }
+    ]
+  },
+  {
     "person_key": "magnus-granlund",
     "display_name": "Magnus Granlund",
-    "result_count": 5,
+    "result_count": 6,
     "first_date": "2024-08-08",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -75662,7 +78493,8 @@
       580,
       597,
       599,
-      631
+      631,
+      641
     ],
     "results": [
       {
@@ -75674,6 +78506,17 @@
         "class_name": "H45 (10 / 10) Tid Efter Bomtid",
         "place": 9,
         "time": "7:32",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 7,
+        "time": "30:44",
         "status": null
       },
       {
@@ -75748,16 +78591,28 @@
   {
     "person_key": "magnus-wrahme",
     "display_name": "Magnus Wrahme",
-    "result_count": 4,
+    "result_count": 5,
     "first_date": "2024-08-08",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-10",
     "event_ids": [
       548,
       588,
       627,
-      631
+      631,
+      638
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 6,
+        "time": "39.06",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -75948,13 +78803,25 @@
   {
     "person_key": "maja-rost",
     "display_name": "Maja Rost",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2025-09-17",
-    "last_date": "2025-09-17",
+    "last_date": "2026-05-05",
     "event_ids": [
-      600
+      600,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D10",
+        "place": 1,
+        "time": "21:02",
+        "status": null
+      },
       {
         "event_id": 600,
         "event_name": "Terräng-KM 2025",
@@ -76491,6 +79358,29 @@
         "class_name": null,
         "place": null,
         "time": null,
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "malin-wilhelmsson",
+    "display_name": "Malin Wilhelmsson",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 10,
+        "time": "45:08",
         "status": null
       }
     ]
@@ -77573,17 +80463,29 @@
   {
     "person_key": "maria-eriksson",
     "display_name": "Maria Eriksson",
-    "result_count": 5,
+    "result_count": 6,
     "first_date": "2025-05-01",
-    "last_date": "2026-06-25",
+    "last_date": "2026-07-14",
     "event_ids": [
       580,
       589,
       624,
       630,
-      632
+      632,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 14,
+        "time": "50:28",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -78409,6 +81311,29 @@
         "class_name": "D65 (9 / 9) Tid Efter Bomtid",
         "place": 4,
         "time": "4:30",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "marie-mork",
+    "display_name": "Marie Mörk",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D45",
+        "place": 1,
+        "time": "49:31",
         "status": null
       }
     ]
@@ -79780,13 +82705,25 @@
   {
     "person_key": "martin-alsen",
     "display_name": "Martin Alsen",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2017-08-03",
-    "last_date": "2017-08-03",
+    "last_date": "2026-09-15",
     "event_ids": [
-      315
+      315,
+      639
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "Bana D",
+        "place": 3,
+        "time": "58:40",
+        "status": null
+      },
       {
         "event_id": 315,
         "event_name": "Träningsorientering",
@@ -79910,7 +82847,7 @@
   {
     "person_key": "martin-bratt",
     "display_name": "Martin Bratt",
-    "result_count": 11,
+    "result_count": 13,
     "first_date": "2022-08-18",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -79924,7 +82861,9 @@
       599,
       615,
       627,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -79939,6 +82878,17 @@
         "status": "dns"
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 2,
+        "time": "42:51",
+        "status": null
+      },
+      {
         "event_id": 627,
         "event_name": "Träningsorientering",
         "date": "2026-05-07",
@@ -79948,6 +82898,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H45",
+        "place": 1,
+        "time": "17:26",
+        "status": null
       },
       {
         "event_id": 615,
@@ -80665,7 +83626,7 @@
   {
     "person_key": "martin-ryapolov",
     "display_name": "Martin Ryapolov",
-    "result_count": 24,
+    "result_count": 26,
     "first_date": "2019-08-22",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -80692,7 +83653,9 @@
       621,
       623,
       631,
-      635
+      635,
+      640,
+      642
     ],
     "results": [
       {
@@ -80707,6 +83670,17 @@
         "status": null
       },
       {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
+      {
         "event_id": 631,
         "event_name": "Medel-KM",
         "date": "2026-06-16",
@@ -80715,6 +83689,17 @@
         "class_name": "H12 (3 / 3) Tid Efter Bomtid",
         "place": 2,
         "time": "7:38",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H12",
+        "place": 2,
+        "time": "18:11",
         "status": null
       },
       {
@@ -81224,7 +84209,7 @@
   {
     "person_key": "matilda-jonsson",
     "display_name": "Matilda Jonsson",
-    "result_count": 19,
+    "result_count": 20,
     "first_date": "2017-08-17",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -81246,7 +84231,8 @@
       620,
       623,
       625,
-      631
+      631,
+      641
     ],
     "results": [
       {
@@ -81258,6 +84244,17 @@
         "class_name": "D35 (3 / 3) Tid Efter Bomtid",
         "place": 3,
         "time": "7:44",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D35",
+        "place": 4,
+        "time": "25:21",
         "status": null
       },
       {
@@ -82027,6 +85024,29 @@
     ]
   },
   {
+    "person_key": "mats-friberg",
+    "display_name": "Mats Friberg",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 6,
+        "time": "38:48",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "mats-friberg-deltagit",
     "display_name": "Mats Friberg Deltagit",
     "result_count": 1,
@@ -82464,6 +85484,29 @@
     ]
   },
   {
+    "person_key": "mats-jonsson",
+    "display_name": "Mats Jönsson",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 4,
+        "time": "1:25:12",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "mats-karlsson",
     "display_name": "Mats Karlsson",
     "result_count": 1,
@@ -82512,7 +85555,7 @@
   {
     "person_key": "mats-lagerblad",
     "display_name": "Mats Lagerblad",
-    "result_count": 42,
+    "result_count": 44,
     "first_date": "2014-04-24",
     "last_date": "2026-06-16",
     "event_ids": [
@@ -82557,7 +85600,9 @@
       615,
       625,
       629,
-      631
+      631,
+      641,
+      642
     ],
     "results": [
       {
@@ -82572,6 +85617,17 @@
         "status": null
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 4,
+        "time": "35:23",
+        "status": null
+      },
+      {
         "event_id": 629,
         "event_name": "Träningsorientering",
         "date": "2026-05-21",
@@ -82580,6 +85636,17 @@
         "class_name": "Bana 1 5,9 Km",
         "place": null,
         "time": "54.45",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 3,
+        "time": "15:59",
         "status": null
       },
       {
@@ -83378,6 +86445,29 @@
     ]
   },
   {
+    "person_key": "matthias-christener",
+    "display_name": "Matthias Christener",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Lång OL",
+        "place": 3,
+        "time": "58:38",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "mattias",
     "display_name": "Mattias",
     "result_count": 7,
@@ -84067,12 +87157,13 @@
   {
     "person_key": "melker-granlund",
     "display_name": "Melker Granlund",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2025-05-01",
     "last_date": "2026-06-16",
     "event_ids": [
       580,
-      631
+      631,
+      641
     ],
     "results": [
       {
@@ -84084,6 +87175,17 @@
         "class_name": "D10 (2 / 2) Tid Efter Bomtid",
         "place": 1,
         "time": "1:10:45",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H14",
+        "place": 3,
+        "time": "15:01",
         "status": null
       },
       {
@@ -84458,6 +87560,29 @@
     ]
   },
   {
+    "person_key": "mia-gustafsson",
+    "display_name": "Mia Gustafsson",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D35",
+        "place": 3,
+        "time": "1:31:58",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "mia-rylander",
     "display_name": "Mia Rylander",
     "result_count": 1,
@@ -84536,6 +87661,29 @@
         "place": null,
         "time": null,
         "status": "dnf"
+      }
+    ]
+  },
+  {
+    "person_key": "mia-steiner",
+    "display_name": "Mia Steiner",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 8,
+        "time": "1:04:53",
+        "status": null
       }
     ]
   },
@@ -84632,6 +87780,29 @@
     ]
   },
   {
+    "person_key": "mikael-ohlsson",
+    "display_name": "Mikael Ohlsson",
+    "result_count": 1,
+    "first_date": "2026-09-15",
+    "last_date": "2026-09-15",
+    "event_ids": [
+      639
+    ],
+    "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "Bana C",
+        "place": 1,
+        "time": "1:27:00",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "mikhail-kuleshov",
     "display_name": "Mikhail Kuleshov",
     "result_count": 1,
@@ -84703,7 +87874,7 @@
   {
     "person_key": "minna-wrahme",
     "display_name": "Minna Wrahme",
-    "result_count": 10,
+    "result_count": 11,
     "first_date": "2021-12-31",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -84716,7 +87887,8 @@
       620,
       623,
       631,
-      635
+      635,
+      642
     ],
     "results": [
       {
@@ -84739,6 +87911,17 @@
         "class_name": "D12 (7 / 7) Tid Efter Bomtid",
         "place": 5,
         "time": "29:29",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 2,
+        "time": "17:58",
         "status": null
       },
       {
@@ -85234,18 +88417,31 @@
   {
     "person_key": "mollie-sandberg",
     "display_name": "Mollie Sandberg",
-    "result_count": 6,
+    "result_count": 8,
     "first_date": "2024-08-15",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-14",
     "event_ids": [
       549,
       554,
       588,
       598,
       599,
-      631
+      631,
+      640,
+      641
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 5,
+        "time": "35:52",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -85256,6 +88452,17 @@
         "place": null,
         "time": null,
         "status": "felst"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 5,
+        "time": "15:15",
+        "status": null
       },
       {
         "event_id": 599,
@@ -86298,18 +89505,44 @@
   {
     "person_key": "my-hodler",
     "display_name": "My Hodler",
-    "result_count": 6,
+    "result_count": 10,
     "first_date": "2024-08-08",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-15",
     "event_ids": [
       548,
       615,
       620,
       625,
       631,
-      635
+      635,
+      638,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D10",
+        "place": 1,
+        "time": "47:00",
+        "status": null
+      },
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": 2,
+        "time": "36.36",
+        "status": null
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -86330,6 +89563,28 @@
         "class_name": "D10 (2 / 2) Tid Efter Bomtid",
         "place": 1,
         "time": "28:54",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D10",
+        "place": 3,
+        "time": "50:45",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D10",
+        "place": 2,
+        "time": "23:11",
         "status": null
       },
       {
@@ -88693,7 +91948,7 @@
   {
     "person_key": "olle-andersson",
     "display_name": "Olle Andersson",
-    "result_count": 18,
+    "result_count": 20,
     "first_date": "2004-08-05",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -88714,7 +91969,9 @@
       502,
       624,
       631,
-      635
+      635,
+      641,
+      642
     ],
     "results": [
       {
@@ -88737,6 +91994,28 @@
         "class_name": "H75 (11 / 11) Tid Efter Bomtid",
         "place": 6,
         "time": "2:25",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 3,
+        "time": "49:39",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 4,
+        "time": "21:29",
         "status": null
       },
       {
@@ -89581,7 +92860,7 @@
   {
     "person_key": "olof-eriksson",
     "display_name": "Olof Eriksson",
-    "result_count": 29,
+    "result_count": 31,
     "first_date": "2013-08-08",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -89613,7 +92892,9 @@
       601,
       625,
       634,
-      635
+      635,
+      641,
+      642
     ],
     "results": [
       {
@@ -89636,6 +92917,28 @@
         "class_name": "Mellan bana",
         "place": 1,
         "time": "00:46:22",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 5,
+        "time": "1:12:42",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 3,
+        "time": "15:52",
         "status": null
       },
       {
@@ -90621,13 +93924,14 @@
   {
     "person_key": "oscar-wrahme",
     "display_name": "Oscar Wrahme",
-    "result_count": 3,
+    "result_count": 4,
     "first_date": "2025-08-28",
     "last_date": "2026-06-16",
     "event_ids": [
       599,
       600,
-      631
+      631,
+      641
     ],
     "results": [
       {
@@ -90640,6 +93944,17 @@
         "place": 2,
         "time": "5:48",
         "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": null,
+        "time": null,
+        "status": "dns"
       },
       {
         "event_id": 600,
@@ -90867,9 +94182,9 @@
   {
     "person_key": "oskar-hermansson",
     "display_name": "Oskar Hermansson",
-    "result_count": 10,
+    "result_count": 11,
     "first_date": "2022-06-16",
-    "last_date": "2025-09-17",
+    "last_date": "2026-07-14",
     "event_ids": [
       480,
       500,
@@ -90880,9 +94195,21 @@
       552,
       588,
       599,
-      600
+      600,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 2,
+        "time": "31:01",
+        "status": null
+      },
       {
         "event_id": 600,
         "event_name": "Terräng-KM 2025",
@@ -92627,9 +95954,9 @@
   {
     "person_key": "per-holm",
     "display_name": "Per Holm",
-    "result_count": 51,
+    "result_count": 52,
     "first_date": "2007-07-12",
-    "last_date": "2024-05-23",
+    "last_date": "2026-07-14",
     "event_ids": [
       51,
       66,
@@ -92681,9 +96008,21 @@
       510,
       511,
       530,
-      537
+      537,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 3,
+        "time": "54:30",
+        "status": null
+      },
       {
         "event_id": 537,
         "event_name": "Provlöpning",
@@ -93845,6 +97184,29 @@
     ]
   },
   {
+    "person_key": "per-erik-dahlman",
+    "display_name": "Per-Erik Dahlman",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 16,
+        "time": "45:50",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "per-olof-eriksson",
     "display_name": "Per-Olof Eriksson",
     "result_count": 1,
@@ -94220,7 +97582,7 @@
   {
     "person_key": "peter-hermansson",
     "display_name": "Peter Hermansson",
-    "result_count": 24,
+    "result_count": 25,
     "first_date": "2013-06-13",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -94247,7 +97609,8 @@
       454,
       506,
       627,
-      635
+      635,
+      640
     ],
     "results": [
       {
@@ -94259,6 +97622,17 @@
         "class_name": "Mellan bana",
         "place": 7,
         "time": "01:10:30",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 9,
+        "time": "1:09:26",
         "status": null
       },
       {
@@ -94753,9 +98127,9 @@
   {
     "person_key": "pia-frost",
     "display_name": "Pia Frost",
-    "result_count": 42,
+    "result_count": 44,
     "first_date": "2004-08-05",
-    "last_date": "2026-06-25",
+    "last_date": "2026-07-14",
     "event_ids": [
       10,
       11,
@@ -94798,9 +98172,22 @@
       533,
       534,
       631,
-      632
+      632,
+      640,
+      641
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 9,
+        "time": "44:05",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -94821,6 +98208,17 @@
         "class_name": "D65 (9 / 9) Tid Efter Bomtid",
         "place": 2,
         "time": "0:34",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D65",
+        "place": 1,
+        "time": "14:53",
         "status": null
       },
       {
@@ -95698,6 +99096,29 @@
     ]
   },
   {
+    "person_key": "rahel-christener",
+    "display_name": "Rahel Christener",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan OL",
+        "place": 5,
+        "time": "1:18:22",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "ralph",
     "display_name": "Ralph",
     "result_count": 1,
@@ -96176,9 +99597,9 @@
   {
     "person_key": "rebecka-akarbjar",
     "display_name": "Rebecka Åkarbjär",
-    "result_count": 7,
+    "result_count": 8,
     "first_date": "2016-07-14",
-    "last_date": "2025-05-01",
+    "last_date": "2026-05-05",
     "event_ids": [
       283,
       301,
@@ -96186,9 +99607,21 @@
       325,
       373,
       442,
-      580
+      580,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D17",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      },
       {
         "event_id": 580,
         "event_name": "träningsorientering",
@@ -96677,13 +100110,25 @@
   {
     "person_key": "rikard-tynell",
     "display_name": "Rikard Tynell",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2019-05-30",
-    "last_date": "2019-05-30",
+    "last_date": "2026-07-14",
     "event_ids": [
-      382
+      382,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 1,
+        "time": "51:06",
+        "status": null
+      },
       {
         "event_id": 382,
         "event_name": "Motionsorientering Vridutjärnsvägen 190530",
@@ -96774,6 +100219,29 @@
         "class_name": "3 varv, herrar:",
         "place": 32,
         "time": "32:11",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "robin-eriksson",
+    "display_name": "Robin Eriksson",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 3,
+        "time": "59:24",
         "status": null
       }
     ]
@@ -96898,9 +100366,9 @@
   {
     "person_key": "roger-tynell",
     "display_name": "Roger Tynell",
-    "result_count": 10,
+    "result_count": 11,
     "first_date": "2020-08-06",
-    "last_date": "2023-09-14",
+    "last_date": "2026-09-10",
     "event_ids": [
       431,
       435,
@@ -96911,9 +100379,21 @@
       499,
       507,
       515,
-      516
+      516,
+      638
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": null,
+        "time": null,
+        "status": "deltagit"
+      },
       {
         "event_id": 515,
         "event_name": "25manna träning vinäs",
@@ -97076,17 +100556,29 @@
   {
     "person_key": "roine-andersson",
     "display_name": "Roine Andersson",
-    "result_count": 5,
+    "result_count": 6,
     "first_date": "2023-06-07",
-    "last_date": "2024-08-15",
+    "last_date": "2026-09-15",
     "event_ids": [
       504,
       507,
       515,
       516,
-      549
+      549,
+      639
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H65",
+        "place": 1,
+        "time": "36:33",
+        "status": null
+      },
       {
         "event_id": 549,
         "event_name": "25-manna-träning, Våmmevi",
@@ -97510,9 +101002,9 @@
   {
     "person_key": "roman-ryapolov",
     "display_name": "Roman Ryapolov",
-    "result_count": 19,
+    "result_count": 21,
     "first_date": "2014-09-18",
-    "last_date": "2026-03-25",
+    "last_date": "2026-07-14",
     "event_ids": [
       198,
       199,
@@ -97532,9 +101024,33 @@
       572,
       588,
       598,
-      623
+      623,
+      640,
+      642
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 2,
+        "time": "52:55",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
       {
         "event_id": 623,
         "event_name": "Natt sprint kupp",
@@ -97919,6 +101435,29 @@
     ]
   },
   {
+    "person_key": "rut-ericsson",
+    "display_name": "Rut Ericsson",
+    "result_count": 1,
+    "first_date": "2026-09-15",
+    "last_date": "2026-09-15",
+    "event_ids": [
+      639
+    ],
+    "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D10",
+        "place": 2,
+        "time": "1:06:25",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "ruth-lerjen",
     "display_name": "Ruth Lerjen",
     "result_count": 2,
@@ -98139,6 +101678,29 @@
     ]
   },
   {
+    "person_key": "saga-wallner",
+    "display_name": "Saga Wallner",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 2,
+        "time": "27:54",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "salim-shirzad",
     "display_name": "Salim Shirzad",
     "result_count": 1,
@@ -98157,6 +101719,52 @@
         "class_name": "Korta banan 2,4 km",
         "place": null,
         "time": "46.10",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "sally-ericsson",
+    "display_name": "Sally Ericsson",
+    "result_count": 1,
+    "first_date": "2026-09-15",
+    "last_date": "2026-09-15",
+    "event_ids": [
+      639
+    ],
+    "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D10",
+        "place": 3,
+        "time": "1:07:12",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "samuel-christener",
+    "display_name": "Samuel Christener",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Lång OL",
+        "place": 1,
+        "time": "52:39",
         "status": null
       }
     ]
@@ -98797,7 +102405,7 @@
   {
     "person_key": "sara-hodler",
     "display_name": "Sara Hodler",
-    "result_count": 25,
+    "result_count": 26,
     "first_date": "2015-08-29",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -98825,7 +102433,8 @@
       615,
       620,
       631,
-      635
+      635,
+      641
     ],
     "results": [
       {
@@ -98848,6 +102457,17 @@
         "class_name": "D35 (3 / 3) Tid Efter Bomtid",
         "place": 2,
         "time": "2:29",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D35",
+        "place": 2,
+        "time": "23:17",
         "status": null
       },
       {
@@ -99131,14 +102751,26 @@
   {
     "person_key": "sara-kindlund",
     "display_name": "Sara Kindlund",
-    "result_count": 2,
+    "result_count": 3,
     "first_date": "2025-05-01",
-    "last_date": "2025-08-21",
+    "last_date": "2026-09-10",
     "event_ids": [
       580,
-      598
+      598,
+      638
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 2,
+        "time": "35.51",
+        "status": null
+      },
       {
         "event_id": 598,
         "event_name": "25-mannaträning",
@@ -100668,9 +104300,9 @@
   {
     "person_key": "simon-hodler",
     "display_name": "Simon Hodler",
-    "result_count": 37,
+    "result_count": 39,
     "first_date": "2013-08-08",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       132,
       138,
@@ -100708,9 +104340,22 @@
       548,
       615,
       620,
-      631
+      631,
+      639,
+      641
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H35",
+        "place": 2,
+        "time": "44:33",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -100721,6 +104366,17 @@
         "place": null,
         "time": null,
         "status": "felst"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H35",
+        "place": 1,
+        "time": "16:44",
+        "status": null
       },
       {
         "event_id": 620,
@@ -102106,7 +105762,7 @@
   {
     "person_key": "siv-svahn",
     "display_name": "Siv Svahn",
-    "result_count": 28,
+    "result_count": 29,
     "first_date": "2007-08-23",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -102137,7 +105793,8 @@
       551,
       589,
       623,
-      634
+      634,
+      642
     ],
     "results": [
       {
@@ -102149,6 +105806,17 @@
         "class_name": "Orange bana 3,4 – 3,6 km",
         "place": 2,
         "time": "43.29",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D65",
+        "place": 2,
+        "time": "39:13",
         "status": null
       },
       {
@@ -102642,9 +106310,9 @@
   {
     "person_key": "sixten-buud",
     "display_name": "Sixten Buud",
-    "result_count": 32,
+    "result_count": 35,
     "first_date": "2017-05-18",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       304,
       321,
@@ -102677,9 +106345,45 @@
       620,
       623,
       624,
-      631
+      631,
+      638,
+      639,
+      640
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H16",
+        "place": 2,
+        "time": "1:14:22",
+        "status": null
+      },
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 11,
+        "time": "58.01",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 12,
+        "time": "1:14:04",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -104087,9 +107791,9 @@
   {
     "person_key": "sofie-wuopio-kvarnstrom",
     "display_name": "Sofie Wuopio Kvarnström",
-    "result_count": 14,
+    "result_count": 19,
     "first_date": "2023-08-03",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       510,
       511,
@@ -104104,9 +107808,47 @@
       620,
       621,
       623,
-      631
+      631,
+      638,
+      639,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D12",
+        "place": 3,
+        "time": "1:22:32",
+        "status": null
+      },
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Vit bana, 2,7 km Orange bana 3,7 km",
+        "place": 4,
+        "time": "43.00",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 9,
+        "time": "41:22",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -104116,6 +107858,28 @@
         "class_name": "D12 (7 / 7) Tid Efter Bomtid",
         "place": 4,
         "time": "4:11",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 5,
+        "time": "31:46",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D12",
+        "place": 6,
+        "time": "15:46",
         "status": null
       },
       {
@@ -105737,11 +109501,12 @@
   {
     "person_key": "stefan-bregmo",
     "display_name": "Stefan Bregmo",
-    "result_count": 1,
-    "first_date": "2026-06-25",
+    "result_count": 2,
+    "first_date": "2026-05-31",
     "last_date": "2026-06-25",
     "event_ids": [
-      632
+      632,
+      642
     ],
     "results": [
       {
@@ -105753,6 +109518,17 @@
         "class_name": "Mellan banan",
         "place": 8,
         "time": "63.15",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 3,
+        "time": "1:04:07",
         "status": null
       }
     ]
@@ -107263,6 +111039,29 @@
     ]
   },
   {
+    "person_key": "svante-lindgren",
+    "display_name": "Svante Lindgren",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      }
+    ]
+  },
+  {
     "person_key": "sven-leandersson",
     "display_name": "Sven Leandersson",
     "result_count": 1,
@@ -107369,7 +111168,7 @@
   {
     "person_key": "sven-ake-persson",
     "display_name": "Sven-Åke Persson",
-    "result_count": 7,
+    "result_count": 9,
     "first_date": "2026-02-11",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -107379,7 +111178,9 @@
       627,
       631,
       632,
-      635
+      635,
+      640,
+      642
     ],
     "results": [
       {
@@ -107391,6 +111192,17 @@
         "class_name": "Kort bana",
         "place": 3,
         "time": "00:50:20",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 14,
+        "time": "43:12",
         "status": null
       },
       {
@@ -107413,6 +111225,17 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 16,
         "time": "9:08",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 11,
+        "time": "55:17",
         "status": null
       },
       {
@@ -107515,6 +111338,29 @@
         "class_name": null,
         "place": 1,
         "time": "40.32",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "soren-holmberg",
+    "display_name": "Sören Holmberg",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 15,
+        "time": "45:44",
         "status": null
       }
     ]
@@ -107709,9 +111555,9 @@
   {
     "person_key": "tage-bratt",
     "display_name": "Tage Bratt",
-    "result_count": 19,
+    "result_count": 22,
     "first_date": "2023-02-01",
-    "last_date": "2026-06-25",
+    "last_date": "2026-09-15",
     "event_ids": [
       500,
       507,
@@ -107731,9 +111577,23 @@
       625,
       627,
       631,
-      632
+      632,
+      639,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H12",
+        "place": 1,
+        "time": "45:40",
+        "status": null
+      },
       {
         "event_id": 632,
         "event_name": "Träningsorientering",
@@ -107757,6 +111617,17 @@
         "status": null
       },
       {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H12",
+        "place": 1,
+        "time": "15:18",
+        "status": null
+      },
+      {
         "event_id": 627,
         "event_name": "Träningsorientering",
         "date": "2026-05-07",
@@ -107765,6 +111636,17 @@
         "class_name": "Kort bana",
         "place": null,
         "time": "00:24:40",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H12",
+        "place": 1,
+        "time": "7:11",
         "status": null
       },
       {
@@ -108338,6 +112220,29 @@
         "place": null,
         "time": null,
         "status": "dns"
+      }
+    ]
+  },
+  {
+    "person_key": "theodor-akerstom",
+    "display_name": "Theodor Åkerstöm",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 3,
+        "time": "35:31",
+        "status": null
       }
     ]
   },
@@ -109215,7 +113120,7 @@
   {
     "person_key": "thomas-hermansson",
     "display_name": "Thomas Hermansson",
-    "result_count": 17,
+    "result_count": 18,
     "first_date": "2013-08-29",
     "last_date": "2026-07-30",
     "event_ids": [
@@ -109235,7 +113140,8 @@
       598,
       627,
       631,
-      635
+      635,
+      640
     ],
     "results": [
       {
@@ -109247,6 +113153,17 @@
         "class_name": "Lång bana",
         "place": 1,
         "time": "00:46:00",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Långa",
+        "place": 1,
+        "time": "52:53",
         "status": null
       },
       {
@@ -109559,9 +113476,9 @@
   {
     "person_key": "thomas-sparr",
     "display_name": "Thomas Sparr",
-    "result_count": 48,
+    "result_count": 52,
     "first_date": "2004-09-30",
-    "last_date": "2026-06-16",
+    "last_date": "2026-09-15",
     "event_ids": [
       22,
       35,
@@ -109609,9 +113526,35 @@
       600,
       615,
       620,
-      631
+      631,
+      639,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H55",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": 2,
+        "time": "58:07",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -109621,6 +113564,28 @@
         "class_name": "H55 (10 / 10) Tid Efter Bomtid",
         "place": 4,
         "time": "3:58",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 2,
+        "time": "42:15",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 4,
+        "time": "15:53",
         "status": null
       },
       {
@@ -111621,9 +115586,9 @@
   {
     "person_key": "tommy-eriksson",
     "display_name": "Tommy Eriksson",
-    "result_count": 8,
+    "result_count": 10,
     "first_date": "2021-05-06",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-14",
     "event_ids": [
       452,
       467,
@@ -111632,9 +115597,22 @@
       589,
       605,
       627,
-      631
+      631,
+      640,
+      642
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": 6,
+        "time": "31:09",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -111644,6 +115622,17 @@
         "class_name": "H75 (11 / 11) Tid Efter Bomtid",
         "place": 3,
         "time": "0:44",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 1,
+        "time": "39:59",
         "status": null
       },
       {
@@ -111809,7 +115798,7 @@
   {
     "person_key": "tommy-ahman",
     "display_name": "Tommy Åhman",
-    "result_count": 8,
+    "result_count": 11,
     "first_date": "2025-08-14",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -111820,7 +115809,10 @@
       621,
       631,
       634,
-      635
+      635,
+      640,
+      641,
+      642
     ],
     "results": [
       {
@@ -111846,6 +115838,17 @@
         "status": null
       },
       {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 3,
+        "time": "36:40",
+        "status": null
+      },
+      {
         "event_id": 631,
         "event_name": "Medel-KM",
         "date": "2026-06-16",
@@ -111854,6 +115857,28 @@
         "class_name": "H65 (18 / 18) Tid Efter Bomtid",
         "place": 4,
         "time": "2:04",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 3,
+        "time": "35:15",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 1,
+        "time": "14:20",
         "status": null
       },
       {
@@ -112106,9 +116131,9 @@
   {
     "person_key": "tony-karlsson",
     "display_name": "Tony Karlsson",
-    "result_count": 39,
+    "result_count": 40,
     "first_date": "2014-05-15",
-    "last_date": "2026-05-07",
+    "last_date": "2026-09-10",
     "event_ids": [
       159,
       165,
@@ -112148,9 +116173,21 @@
       515,
       516,
       598,
-      627
+      627,
+      638
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 7,
+        "time": "40.30",
+        "status": null
+      },
       {
         "event_id": 627,
         "event_name": "Träningsorientering",
@@ -112784,13 +116821,25 @@
   {
     "person_key": "torbjorn-masser",
     "display_name": "Torbjörn Masser",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2014-05-02",
-    "last_date": "2014-05-02",
+    "last_date": "2026-05-05",
     "event_ids": [
-      155
+      155,
+      641
     ],
     "results": [
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 6,
+        "time": "23:26",
+        "status": null
+      },
       {
         "event_id": 155,
         "event_name": "Tränings-OL berget.",
@@ -112800,6 +116849,29 @@
         "class_name": "A",
         "place": 11,
         "time": "50.25",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "torbjorn-soderlund",
+    "display_name": "Torbjörn Söderlund",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 4,
+        "time": "37:00",
         "status": null
       }
     ]
@@ -114415,9 +118487,9 @@
   {
     "person_key": "ulf-k-rask",
     "display_name": "Ulf K Rask",
-    "result_count": 10,
+    "result_count": 14,
     "first_date": "2021-12-31",
-    "last_date": "2026-07-30",
+    "last_date": "2026-09-15",
     "event_ids": [
       468,
       510,
@@ -114428,9 +118500,24 @@
       612,
       621,
       623,
-      635
+      635,
+      639,
+      640,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H55",
+        "place": 2,
+        "time": "47:36",
+        "status": null
+      },
       {
         "event_id": 635,
         "event_name": "Eldris",
@@ -114440,6 +118527,39 @@
         "class_name": "Lång bana",
         "place": 6,
         "time": "01:12:00",
+        "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 1,
+        "time": "32:21",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 4,
+        "time": "1:09:22",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H55",
+        "place": 5,
+        "time": "17:20",
         "status": null
       },
       {
@@ -114569,9 +118689,9 @@
   {
     "person_key": "ulf-rask",
     "display_name": "Ulf Rask",
-    "result_count": 46,
+    "result_count": 47,
     "first_date": "2017-08-03",
-    "last_date": "2026-08-20",
+    "last_date": "2026-09-10",
     "event_ids": [
       315,
       319,
@@ -114618,9 +118738,21 @@
       627,
       629,
       630,
-      634
+      634,
+      638
     ],
     "results": [
+      {
+        "event_id": 638,
+        "event_name": "25 manna test",
+        "date": "2026-09-10",
+        "location": "Vinäs",
+        "type": "25-manna test",
+        "class_name": "Violett bana 4,7 km Blå bana 6,5 km",
+        "place": 8,
+        "time": "42.05",
+        "status": null
+      },
       {
         "event_id": 634,
         "event_name": "25 manna test",
@@ -115486,13 +119618,25 @@
   {
     "person_key": "urban-hallberg",
     "display_name": "Urban Hallberg",
-    "result_count": 1,
+    "result_count": 2,
     "first_date": "2007-07-12",
-    "last_date": "2007-07-12",
+    "last_date": "2026-07-14",
     "event_ids": [
-      51
+      51,
+      640
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 5,
+        "time": "37:09",
+        "status": null
+      },
       {
         "event_id": 51,
         "event_name": "Tränings-OL",
@@ -115766,9 +119910,9 @@
   {
     "person_key": "vendela-bratt",
     "display_name": "Vendela Bratt",
-    "result_count": 14,
+    "result_count": 16,
     "first_date": "2022-08-18",
-    "last_date": "2025-09-17",
+    "last_date": "2026-05-31",
     "event_ids": [
       486,
       500,
@@ -115783,9 +119927,33 @@
       588,
       598,
       599,
-      600
+      600,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D16",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D16",
+        "place": 1,
+        "time": "12:27",
+        "status": null
+      },
       {
         "event_id": 600,
         "event_name": "Terräng-KM 2025",
@@ -116093,6 +120261,29 @@
     ]
   },
   {
+    "person_key": "vidar-j-lindgren",
+    "display_name": "Vidar J Lindgren",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Mellan",
+        "place": null,
+        "time": null,
+        "status": "dns"
+      }
+    ]
+  },
+  {
     "person_key": "vide-zetterberg-viklund",
     "display_name": "Vide Zetterberg Viklund",
     "result_count": 1,
@@ -116111,6 +120302,29 @@
         "class_name": "Bana D 1,9 km",
         "place": 2,
         "time": "64.29",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "viggo-johansson",
+    "display_name": "Viggo Johansson",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H17-34",
+        "place": 3,
+        "time": "1:24:43",
         "status": null
       }
     ]
@@ -116531,6 +120745,29 @@
     ]
   },
   {
+    "person_key": "vira-gostas-johnzen",
+    "display_name": "Vira Göstas Johnzén",
+    "result_count": 1,
+    "first_date": "2026-09-15",
+    "last_date": "2026-09-15",
+    "event_ids": [
+      639
+    ],
+    "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "D12",
+        "place": null,
+        "time": null,
+        "status": "felst"
+      }
+    ]
+  },
+  {
     "person_key": "vojtech",
     "display_name": "Vojtech",
     "result_count": 4,
@@ -116916,14 +121153,38 @@
   {
     "person_key": "william-rost",
     "display_name": "William Rost",
-    "result_count": 2,
+    "result_count": 4,
     "first_date": "2025-08-28",
-    "last_date": "2025-09-17",
+    "last_date": "2026-09-15",
     "event_ids": [
       599,
-      600
+      600,
+      639,
+      641
     ],
     "results": [
+      {
+        "event_id": 639,
+        "event_name": "Klubbmästerskap MTBO IFK Mora OK / Dalaserien MTBO",
+        "date": "2026-09-15",
+        "location": "",
+        "type": "MTBO KM",
+        "class_name": "H10",
+        "place": 3,
+        "time": "38:21",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H10",
+        "place": null,
+        "time": null,
+        "status": "dnf"
+      },
       {
         "event_id": 600,
         "event_name": "Terräng-KM 2025",
@@ -117275,6 +121536,29 @@
         "class_name": null,
         "place": 5,
         "time": "45.49",
+        "status": null
+      }
+    ]
+  },
+  {
+    "person_key": "wilmer-akerstom",
+    "display_name": "Wilmer Åkerstöm",
+    "result_count": 1,
+    "first_date": "2026-07-14",
+    "last_date": "2026-07-14",
+    "event_ids": [
+      640
+    ],
+    "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort lätt",
+        "place": 10,
+        "time": "49:57",
         "status": null
       }
     ]
@@ -118134,7 +122418,7 @@
   {
     "person_key": "yngve-karlsson",
     "display_name": "Yngve Karlsson",
-    "result_count": 61,
+    "result_count": 63,
     "first_date": "2014-05-08",
     "last_date": "2026-08-20",
     "event_ids": [
@@ -118198,7 +122482,9 @@
       629,
       631,
       632,
-      634
+      634,
+      640,
+      641
     ],
     "results": [
       {
@@ -118211,6 +122497,17 @@
         "place": 4,
         "time": "53.50",
         "status": null
+      },
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår OL",
+        "place": null,
+        "time": null,
+        "status": "dns"
       },
       {
         "event_id": 632,
@@ -118255,6 +122552,17 @@
         "place": null,
         "time": null,
         "status": "deltagit"
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 1,
+        "time": "14:42",
+        "status": null
       },
       {
         "event_id": 625,
@@ -118968,6 +123276,29 @@
     ]
   },
   {
+    "person_key": "yvonne-sjoden",
+    "display_name": "Yvonne Sjödén",
+    "result_count": 1,
+    "first_date": "2026-05-31",
+    "last_date": "2026-05-31",
+    "event_ids": [
+      642
+    ],
+    "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "D55",
+        "place": 1,
+        "time": "31:24",
+        "status": null
+      }
+    ]
+  },
+  {
     "person_key": "zandra-buud",
     "display_name": "Zandra Buud",
     "result_count": 3,
@@ -119203,13 +123534,37 @@
   {
     "person_key": "ake-bolander",
     "display_name": "Åke Bolander",
-    "result_count": 1,
+    "result_count": 3,
     "first_date": "2025-08-28",
-    "last_date": "2025-08-28",
+    "last_date": "2026-05-31",
     "event_ids": [
-      599
+      599,
+      641,
+      642
     ],
     "results": [
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 2,
+        "time": "32:07",
+        "status": null
+      },
+      {
+        "event_id": 641,
+        "event_name": "Öppet Sprint-KM",
+        "date": "2026-05-05",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H65",
+        "place": 2,
+        "time": "15:16",
+        "status": null
+      },
       {
         "event_id": 599,
         "event_name": "Medel-KM",
@@ -119542,9 +123897,9 @@
   {
     "person_key": "orjan-svahn",
     "display_name": "Örjan Svahn",
-    "result_count": 21,
+    "result_count": 23,
     "first_date": "2013-06-02",
-    "last_date": "2026-06-16",
+    "last_date": "2026-07-14",
     "event_ids": [
       113,
       117,
@@ -119566,9 +123921,22 @@
       534,
       548,
       580,
-      631
+      631,
+      640,
+      642
     ],
     "results": [
+      {
+        "event_id": 640,
+        "event_name": "Kråkberg Triathlon",
+        "date": "2026-07-14",
+        "location": "",
+        "type": "Triathlon",
+        "class_name": "Kort svår",
+        "place": 11,
+        "time": "45:49",
+        "status": null
+      },
       {
         "event_id": 631,
         "event_name": "Medel-KM",
@@ -119578,6 +123946,17 @@
         "class_name": "H75 (11 / 11) Tid Efter Bomtid",
         "place": 2,
         "time": "0:00",
+        "status": null
+      },
+      {
+        "event_id": 642,
+        "event_name": "Öppet Lång-KM IFK Mora OK",
+        "date": "2026-05-31",
+        "location": "",
+        "type": "Klubbmästerskap",
+        "class_name": "H75",
+        "place": 2,
+        "time": "49:09",
         "status": null
       },
       {
