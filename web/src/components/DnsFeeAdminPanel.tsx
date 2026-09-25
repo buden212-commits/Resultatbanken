@@ -3,7 +3,11 @@
 import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type { DnsFeeEventRef, DnsFeePersonSummary } from "@/lib/dns-fee-types";
-import { isYouthJuniorEntryFeeExempt, rowPayableSplit } from "@/lib/dns-fee-types";
+import {
+  describeDnsFeePart,
+  isYouthJuniorEntryFeeExempt,
+  rowPayableSplit,
+} from "@/lib/dns-fee-types";
 import { buildFeeMailtoLink } from "@/lib/dns-fee-mailto";
 
 type Totals = {
@@ -573,6 +577,19 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                       </td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
+                                        {row.fees && row.fees.length > 0 ? (
+                                          <ul className="mt-1 space-y-0.5 text-left text-xs font-normal normal-case tracking-normal text-slate-500">
+                                            {row.fees.map((fee) => (
+                                              <li key={fee.entryFeeId}>
+                                                {fee.name} · {formatSek(fee.amountSek)} kr
+                                                <span className="text-slate-400">
+                                                  {" "}
+                                                  ({describeDnsFeePart(fee)})
+                                                </span>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        ) : null}
                                       </td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-800">
                                         {formatSek(split.entryFeeToPaySek)} kr

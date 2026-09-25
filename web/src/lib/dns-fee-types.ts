@@ -1,5 +1,21 @@
 export type DnsFeeStatus = "ok" | "dns" | "dnf" | "entered";
 
+/** One Eventor EntryFee applied on an entry (may be several per start). */
+export type DnsFeePart = {
+  entryFeeId: string;
+  name: string;
+  amountSek: number;
+  /**
+   * Beskattningsgrundande when Eventor sets taxIncluded="Y".
+   * null when the attribute is missing.
+   */
+  taxable: boolean | null;
+  /** Eventor attribute entryFeeType / type (often "elite" / "normal"). */
+  entryFeeType: string | null;
+  /** ValidToDate from Eventor (YYYY-MM-DD), if present. */
+  validToDate: string | null;
+};
+
 export type DnsFeeRow = {
   personId: string;
   personName: string;
@@ -9,8 +25,10 @@ export type DnsFeeRow = {
   className: string;
   /** ok / dns / dnf from results, or entered if no result yet */
   status: DnsFeeStatus;
-  /** Full entry fee in SEK from Eventor (raw). */
+  /** Full entry fee in SEK from Eventor (sum of fees). */
   feeSek: number | null;
+  /** Breakdown of Eventor EntryFee rows that make up feeSek. */
+  fees?: DnsFeePart[] | null;
   entryId: string | null;
   /**
    * Whether the event is in Sweden. Missing/undefined treated as Sweden
@@ -77,6 +95,54 @@ export function emptyDnsFeeTracker(year = 2026): DnsFeeTrackerData {
 export function normalizeDnsFeeStatus(value: unknown): DnsFeeStatus {
   if (value === "ok" || value === "dnf" || value === "entered") return value;
   return "dns";
+}
+
+export function normalizeDnsFeePart(value: unknown): DnsFeePart | null {
+  if (!value || typeof value !== "object") return null;
+  const raw = value as Record<string, unknown>;
+  const entryFeeId = String(raw.entryFeeId ?? "").trim();
+  const amountSek = Number(raw.amountSek);
+  if (!entryFeeId || !Number.isFinite(amountSek)) return null;
+  return {
+    entryFeeId,
+    name: String(raw.name ?? "").trim() || `Avgift ${entryFeeId}`,
+    amountSek,
+    taxable: typeof raw.taxable === "boolean" ? raw.taxable : null,
+    entryFeeType:
+      typeof raw.entryFeeType === "string" && raw.entryFeeType.trim()
+        ? raw.entryFeeType.trim()
+        : null,
+    validToDate:
+      typeof raw.validToDate === "string" && /^\d{4}-\d{2}-\d{2}/.test(raw.validToDate)
+        ? raw.validToDate.slice(0, 10)
+        : null,
+  };
+}
+
+/**
+ * Best-effort label from Eventor fee name / taxable flag.
+ * Eventor has no enum for ordinary vs late — organizers use free-text names.
+ */
+export function describeDnsFeePart(part: DnsFeePart): string {
+  const name = part.name.trim();
+  const lower = name
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase();
+
+  if (/efteranm|direktam|tavlingsdagen|efter.?anmal/.test(lower)) {
+    return "Efteranmälan / tillägg";
+  }
+  if (/beskattningsfri|skoter|omkostnad|tillaegg|tillagg|hogkvalitativ/.test(lower)) {
+    return "Tillägg (ofta beskattningsfri)";
+  }
+  if (part.taxable === false) {
+    return "Beskattningsfri del";
+  }
+  if (/ordinarie|anmalningsavgift|grundavgift/.test(lower) || part.taxable === true) {
+    return "Ordinarie / grundavgift";
+  }
+  return "Avgift";
 }
 
 export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean {

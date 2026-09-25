@@ -5,7 +5,7 @@
 
 import { eventorGet, fetchOrganisationId, isEventorConfigured } from "./eventor";
 import { listClubPersons } from "./eventor-person";
-import type { DnsFeeRow, DnsFeeStatus, DnsFeeTrackerData } from "./dns-fee-types";
+import type { DnsFeePart, DnsFeeRow, DnsFeeStatus, DnsFeeTrackerData } from "./dns-fee-types";
 
 function firstLeaf(xml: string, tag: string): string {
   const re = new RegExp(`<${tag}(?:\\s[^>]*)?>([^<]*)</${tag}>`, "i");
@@ -142,15 +142,41 @@ function parseEntriesXml(xml: string): ParsedEntry[] {
   return rows;
 }
 
-function parseFeeAmounts(xml: string): Map<string, number> {
-  const map = new Map<string, number>();
+/** Exported for tests — parses Eventor EntryFeeList XML. */
+export function parseEntryFeeDefinitions(xml: string): Map<string, DnsFeePart> {
+  const map = new Map<string, DnsFeePart>();
   for (const block of splitTopLevel(xml, "EntryFee")) {
     const id = firstLeaf(block, "EntryFeeId");
     const amountRaw = firstLeaf(block, "Amount");
     const amount = Number(amountRaw.replace(",", "."));
-    if (id && Number.isFinite(amount)) {
-      map.set(id, amount);
-    }
+    if (!id || !Number.isFinite(amount)) continue;
+
+    const taxAttr = block.match(/\btaxIncluded="([^"]*)"/i)?.[1]?.trim();
+    const taxable =
+      taxAttr === undefined
+        ? null
+        : /^(Y|1|true|yes)$/i.test(taxAttr)
+          ? true
+          : /^(N|0|false|no)$/i.test(taxAttr)
+            ? false
+            : null;
+
+    const entryFeeType =
+      block.match(/\bentryFeeType="([^"]*)"/i)?.[1]?.trim() ||
+      block.match(/\btype="([^"]*)"/i)?.[1]?.trim() ||
+      null;
+
+    const validToDate =
+      block.match(/<ValidToDate>[\s\S]*?<Date>([^<]+)<\/Date>/i)?.[1]?.trim().slice(0, 10) || null;
+
+    map.set(id, {
+      entryFeeId: id,
+      name: firstLeaf(block, "Name") || `Avgift ${id}`,
+      amountSek: amount,
+      taxable,
+      entryFeeType,
+      validToDate,
+    });
   }
   return map;
 }
@@ -225,18 +251,25 @@ function collapseHitsByPerson(hits: ResultHit[]): Map<string, ResultHit> {
   return byPerson;
 }
 
-function resolveFeeSek(entry: ParsedEntry | undefined, feeMap: Map<string, number>): number | null {
-  if (!entry || entry.feeIds.length === 0) return null;
+function resolveFeeParts(
+  entry: ParsedEntry | undefined,
+  feeDefs: Map<string, DnsFeePart>,
+): { feeSek: number | null; fees: DnsFeePart[] | null } {
+  if (!entry || entry.feeIds.length === 0) {
+    return { feeSek: null, fees: null };
+  }
+  const fees: DnsFeePart[] = [];
   let sum = 0;
   let found = false;
   for (const feeId of entry.feeIds) {
-    const amount = feeMap.get(feeId);
-    if (amount !== undefined) {
-      sum += amount;
-      found = true;
-    }
+    const def = feeDefs.get(feeId);
+    if (!def) continue;
+    fees.push(def);
+    sum += def.amountSek;
+    found = true;
   }
-  return found ? sum : null;
+  if (!found) return { feeSek: null, fees: null };
+  return { feeSek: sum, fees };
 }
 
 async function mapPool<T, R>(items: T[], concurrency: number, fn: (item: T) => Promise<R>): Promise<R[]> {
@@ -335,7 +368,7 @@ export async function importDnsFeesFromEventor(
     }
     events.set(event.eventId, event);
 
-    let feeMap = new Map<string, number>();
+    let feeDefs = new Map<string, DnsFeePart>();
     let feeEntries: ParsedEntry[] = [];
     let classNames = new Map<string, string>();
     try {
@@ -350,7 +383,7 @@ export async function importDnsFeesFromEventor(
         }),
         eventorGet("eventclasses", { eventIds: event.eventId }).catch(() => ""),
       ]);
-      feeMap = parseFeeAmounts(feesXml);
+      feeDefs = parseEntryFeeDefinitions(feesXml);
       feeEntries = parseEntriesXml(entriesXml).filter((entry) => !entry.isRelay);
       if (classesXml) classNames = parseEventClassNames(classesXml);
     } catch {
@@ -389,7 +422,7 @@ export async function importDnsFeesFromEventor(
     for (const [personId, entry] of feeEntryByPerson) {
       const hit = resultByPerson.get(personId);
       const status: DnsFeeStatus = hit?.status ?? "entered";
-      const feeSek = resolveFeeSek(entry, feeMap);
+      const { feeSek, fees } = resolveFeeParts(entry, feeDefs);
       const classFromEntry = entry.eventClassId ? classNames.get(entry.eventClassId) : undefined;
       const className = hit?.className || classFromEntry || "–";
 
@@ -402,6 +435,7 @@ export async function importDnsFeesFromEventor(
         className,
         status,
         feeSek,
+        fees,
         entryId: entry.entryId || null,
         inSweden: resolved.inSweden,
       };
@@ -413,9 +447,13 @@ export async function importDnsFeesFromEventor(
         continue;
       }
       if (STATUS_RANK[row.status] > STATUS_RANK[existingRow.status]) {
-        rowMap.set(key, { ...row, feeSek: existingRow.feeSek ?? row.feeSek });
+        rowMap.set(key, {
+          ...row,
+          feeSek: existingRow.feeSek ?? row.feeSek,
+          fees: existingRow.fees ?? row.fees,
+        });
       } else if (existingRow.feeSek === null && row.feeSek !== null) {
-        rowMap.set(key, { ...existingRow, feeSek: row.feeSek });
+        rowMap.set(key, { ...existingRow, feeSek: row.feeSek, fees: row.fees ?? existingRow.fees });
       }
     }
   });

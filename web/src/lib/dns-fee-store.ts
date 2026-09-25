@@ -4,7 +4,7 @@ import path from "path";
 import { isDbEnabled, isServerlessRuntime } from "./db/config";
 import { applySchema, getDb } from "./db/client";
 import { getDocument, setDocument } from "./db/documents";
-import { emptyDnsFeeTracker, normalizeDnsFeeStatus, type DnsFeeTrackerData } from "./dns-fee-types";
+import { emptyDnsFeeTracker, normalizeDnsFeePart, normalizeDnsFeeStatus, type DnsFeeTrackerData } from "./dns-fee-types";
 
 const LOCAL_PATH = path.join(process.cwd(), "..", "data", "dns-fee-tracker.json");
 
@@ -45,6 +45,9 @@ function normalizeTracker(data: DnsFeeTrackerData): DnsFeeTrackerData {
       ...row,
       status: normalizeDnsFeeStatus(row.status),
       inSweden: row.inSweden !== false,
+      fees: Array.isArray(row.fees)
+        ? row.fees.map(normalizeDnsFeePart).filter((part): part is NonNullable<typeof part> => Boolean(part))
+        : null,
       dnsReason:
         typeof row.dnsReason === "string" && row.dnsReason.trim()
           ? row.dnsReason.trim()
