@@ -2,9 +2,10 @@
 
 import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
-import type { DnsFeeEventRef, DnsFeePersonSummary } from "@/lib/dns-fee-types";
+import type { DnsFeeEventRef, DnsFeeManualExemption, DnsFeePersonSummary } from "@/lib/dns-fee-types";
 import {
   describeDnsFeePart,
+  isManualExempt,
   isYouthJuniorEntryFeeExempt,
   rowPayableSplit,
 } from "@/lib/dns-fee-types";
@@ -25,6 +26,7 @@ type Payload = {
   year: number;
   importedAt: string | null;
   exemptEventIds: string[];
+  manualExemptions: DnsFeeManualExemption[];
   people: DnsFeePersonSummary[];
   events: DnsFeeEventRef[];
   totals: Totals;
@@ -197,6 +199,28 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     }
   }
 
+  async function setManualExemption(
+    personId: string,
+    eventId: string,
+    action: "add" | "remove",
+  ) {
+    setError(null);
+    try {
+      const response = await fetch("/api/anmalan/dns-fees/manual-exemptions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ personId, eventId, action }),
+      });
+      const json = (await response.json()) as { error?: string };
+      if (!response.ok) {
+        throw new Error(json.error || "Kunde inte spara manuellt undantag.");
+      }
+      await refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Kunde inte spara manuellt undantag.");
+    }
+  }
+
   function toggleExemptSelected(eventId: string) {
     setExemptSelected((prev) =>
       prev.includes(eventId) ? prev.filter((id) => id !== eventId) : [...prev, eventId],
@@ -242,6 +266,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     rows: [] as DnsFeePersonSummary["rows"],
     members: [],
     exemptEventIds: data.exemptEventIds,
+    manualExemptions: data.manualExemptions ?? [],
   };
 
   return (
@@ -338,7 +363,8 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
           <p className="mt-1 text-sm text-slate-500">
             Undantagna tävlingar ger 0 kr i anmälan, efteranmälan och övriga tillägg (OK/anmäld).
             Ungdoms- och juniorklasser (t.o.m. 20) i Sverige undantas alltid automatiskt. DNS-kostnad
-            räknas alltid. Stafetter ingår inte.
+            räknas alltid. Stafetter ingår inte. Manuella undantag per deltagare (via detaljvyn) tar
+            bort hela kostnaden för den personen och sparas över Eventor-importer.
           </p>
         </div>
 
@@ -528,7 +554,14 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                             </button>
                             {person.email ? (
                               <a
-                                href={buildFeeMailtoLink(person, data.exemptEventIds, data.year) ?? undefined}
+                                href={
+                                  buildFeeMailtoLink(
+                                    person,
+                                    data.exemptEventIds,
+                                    data.year,
+                                    data.manualExemptions ?? [],
+                                  ) ?? undefined
+                                }
                                 className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-brand-700 hover:bg-brand-50"
                                 title={`Skicka mail: Startavgifter och Ej start (${person.email})`}
                                 aria-label={`Skicka mail till ${person.personName}`}
@@ -584,14 +617,25 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                   <th className="py-1 pr-3">Anmälan</th>
                                   <th className="py-1 pr-3">Efteranm.</th>
                                   <th className="py-1 pr-3">Övrigt</th>
-                                  <th className="py-1">DNS</th>
+                                  <th className="py-1 pr-3">DNS</th>
+                                  <th className="py-1">Åtgärd</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {person.rows.map((row) => {
                                   const eventExempt = data.exemptEventIds.includes(row.eventId);
                                   const youthJunior = isYouthJuniorEntryFeeExempt(row);
+                                  const manualExempt = isManualExempt(
+                                    trackerForSplit,
+                                    row.personId,
+                                    row.eventId,
+                                  );
                                   const split = rowPayableSplit(trackerForSplit, row);
+                                  const rowTotal =
+                                    split.entryFeeToPaySek +
+                                    split.lateFeeToPaySek +
+                                    split.otherFeeToPaySek +
+                                    split.dnsFeeToPaySek;
                                   return (
                                     <tr key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
@@ -599,7 +643,11 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                       </td>
                                       <td className="py-1 pr-3 text-slate-700">
                                         {row.eventName}
-                                        {eventExempt ? (
+                                        {manualExempt ? (
+                                          <span className="ml-2 font-medium text-violet-700">
+                                            (manuellt undantag)
+                                          </span>
+                                        ) : eventExempt ? (
                                           <span className="ml-2 text-amber-700">(undantagen)</span>
                                         ) : null}
                                       </td>
@@ -633,17 +681,82 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                           </ul>
                                         ) : null}
                                       </td>
-                                      <td className="py-1 pr-3 tabular-nums text-slate-800">
+                                      <td
+                                        className={`py-1 pr-3 tabular-nums ${
+                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                        }`}
+                                      >
                                         {formatSek(split.entryFeeToPaySek)} kr
                                       </td>
-                                      <td className="py-1 pr-3 tabular-nums text-slate-800">
+                                      <td
+                                        className={`py-1 pr-3 tabular-nums ${
+                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                        }`}
+                                      >
                                         {formatSek(split.lateFeeToPaySek)} kr
                                       </td>
-                                      <td className="py-1 pr-3 tabular-nums text-slate-800">
+                                      <td
+                                        className={`py-1 pr-3 tabular-nums ${
+                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                        }`}
+                                      >
                                         {formatSek(split.otherFeeToPaySek)} kr
                                       </td>
-                                      <td className="py-1 tabular-nums text-slate-800">
+                                      <td
+                                        className={`py-1 pr-3 tabular-nums ${
+                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                        }`}
+                                      >
                                         {formatSek(split.dnsFeeToPaySek)} kr
+                                      </td>
+                                      <td className="py-1 align-top">
+                                        <div className="flex flex-col items-start gap-1">
+                                          {manualExempt ? (
+                                            <button
+                                              type="button"
+                                              className="text-left text-xs font-medium text-violet-700 hover:underline"
+                                              onClick={() =>
+                                                void setManualExemption(
+                                                  row.personId,
+                                                  row.eventId,
+                                                  "remove",
+                                                )
+                                              }
+                                            >
+                                              Återställ kostnad
+                                            </button>
+                                          ) : rowTotal > 0 || (row.feeSek ?? 0) > 0 ? (
+                                            <button
+                                              type="button"
+                                              className="text-left text-xs font-medium text-brand-700 hover:underline"
+                                              onClick={() =>
+                                                void setManualExemption(
+                                                  row.personId,
+                                                  row.eventId,
+                                                  "add",
+                                                )
+                                              }
+                                            >
+                                              Ta bort kostnad
+                                            </button>
+                                          ) : null}
+                                          {!eventExempt ? (
+                                            <button
+                                              type="button"
+                                              className="text-left text-xs font-medium text-amber-800 hover:underline"
+                                              onClick={() =>
+                                                void setExemptions([row.eventId], "add")
+                                              }
+                                              title="Undantar tävlingen för alla deltagare (samma som undantagna tävlingar)"
+                                            >
+                                              Undanta tävling för alla
+                                            </button>
+                                          ) : (
+                                            <span className="text-xs text-amber-700">
+                                              Tävling undantagen för alla
+                                            </span>
+                                          )}
+                                        </div>
                                       </td>
                                     </tr>
                                   );

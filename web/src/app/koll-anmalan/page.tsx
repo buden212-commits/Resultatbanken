@@ -27,6 +27,7 @@ export default async function KollAnmalanPage() {
       year: data.year,
       importedAt: data.importedAt,
       exemptEventIds: data.exemptEventIds,
+      manualExemptions: data.manualExemptions ?? [],
       people,
       events: listEventsFromRows(data.rows),
     totals: {

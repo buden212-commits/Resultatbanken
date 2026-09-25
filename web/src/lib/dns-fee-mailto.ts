@@ -1,5 +1,10 @@
 import type { DnsFeePersonSummary, DnsFeeRow } from "./dns-fee-types";
-import { normalizeDnsFeeStatus, rowPayableSplit, type DnsFeeTrackerData } from "./dns-fee-types";
+import {
+  isManualExempt,
+  normalizeDnsFeeStatus,
+  rowPayableSplit,
+  type DnsFeeTrackerData,
+} from "./dns-fee-types";
 
 function formatSek(value: number): string {
   return `${value.toLocaleString("sv-SE", {
@@ -41,6 +46,7 @@ export function buildFeeMailtoLink(
   person: DnsFeePersonSummary,
   exemptEventIds: string[],
   year = 2026,
+  manualExemptions: DnsFeeTrackerData["manualExemptions"] = [],
 ): string | null {
   if (!person.email) return null;
 
@@ -50,6 +56,7 @@ export function buildFeeMailtoLink(
     rows: person.rows,
     members: [],
     exemptEventIds,
+    manualExemptions,
   };
 
   const lines: string[] = [
@@ -65,7 +72,9 @@ export function buildFeeMailtoLink(
     `• Totalt att betala: ${formatSek(person.totalToPaySek)}`,
   ];
 
+  // Manual exemptions are omitted entirely from the mail (no label, no amounts).
   const payableRows = sortRows(person.rows).filter((row) => {
+    if (isManualExempt(tracker, row.personId, row.eventId)) return false;
     const split = rowPayableSplit(tracker, row);
     return (
       split.entryFeeToPaySek > 0 ||

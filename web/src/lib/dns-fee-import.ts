@@ -494,6 +494,7 @@ export async function importDnsFeesFromEventor(
       email: person.email,
     })),
     exemptEventIds: [...new Set(existing.exemptEventIds.map(String))],
+    manualExemptions: [...(existing.manualExemptions ?? [])],
   };
 
   const dnsRows = rows.filter((row) => row.status === "dns").length;

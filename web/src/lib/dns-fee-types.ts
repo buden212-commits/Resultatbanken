@@ -53,6 +53,14 @@ export type DnsFeeMember = {
   email: string | null;
 };
 
+/** Per-person manual fee waiver for one event — survives Eventor re-imports. */
+export type DnsFeeManualExemption = {
+  personId: string;
+  eventId: string;
+  /** ISO timestamp when the exemption was created. */
+  createdAt: string;
+};
+
 export type DnsFeeTrackerData = {
   year: number;
   importedAt: string | null;
@@ -61,6 +69,11 @@ export type DnsFeeTrackerData = {
   members: DnsFeeMember[];
   /** Eventor event IDs where anmälningsavgift (OK/entered) should not burden the participant. DNS is always charged. */
   exemptEventIds: string[];
+  /**
+   * Manual per-person/event cost removals. Waives all payable amounts including DNS.
+   * Persisted separately so Eventor imports keep them.
+   */
+  manualExemptions: DnsFeeManualExemption[];
 };
 
 export type DnsFeePersonSummary = {
@@ -93,7 +106,36 @@ export function emptyDnsFeeTracker(year = 2026): DnsFeeTrackerData {
     rows: [],
     members: [],
     exemptEventIds: [],
+    manualExemptions: [],
   };
+}
+
+export function manualExemptionKey(personId: string, eventId: string): string {
+  return `${personId}::${eventId}`;
+}
+
+export function normalizeDnsFeeManualExemption(value: unknown): DnsFeeManualExemption | null {
+  if (!value || typeof value !== "object") return null;
+  const raw = value as Record<string, unknown>;
+  const personId = String(raw.personId ?? "").trim();
+  const eventId = String(raw.eventId ?? "").trim();
+  if (!personId || !eventId) return null;
+  const createdAt =
+    typeof raw.createdAt === "string" && raw.createdAt.trim()
+      ? raw.createdAt.trim()
+      : new Date(0).toISOString();
+  return { personId, eventId, createdAt };
+}
+
+export function isManualExempt(
+  data: DnsFeeTrackerData,
+  personId: string,
+  eventId: string,
+): boolean {
+  const key = manualExemptionKey(personId, eventId);
+  return (data.manualExemptions ?? []).some(
+    (item) => manualExemptionKey(item.personId, item.eventId) === key,
+  );
 }
 
 export function normalizeDnsFeeStatus(value: unknown): DnsFeeStatus {
@@ -237,10 +279,11 @@ export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boole
 
 /**
  * Split payable amounts:
+ * - Manual per-person exemption: waives everything including DNS
  * - Anmälan (ordinarie/grundavgift): waived for exempt events (OK/entered) and
  *   youth/junior in Sweden (OK/entered/DNF)
  * - Efteranmälan / övriga tillägg: same waiver rules as anmälan
- * - DNS: always full feeSek (never waived)
+ * - DNS: always full feeSek (never waived by event/youth rules)
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
@@ -260,6 +303,10 @@ export function rowPayableSplit(
     otherFeeToPaySek: 0,
     dnsFeeToPaySek: 0,
   };
+
+  if (isManualExempt(data, row.personId, row.eventId)) {
+    return zero;
+  }
 
   if (status === "dns") {
     return { ...zero, dnsFeeToPaySek: fee };

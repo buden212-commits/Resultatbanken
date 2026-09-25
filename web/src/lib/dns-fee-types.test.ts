@@ -205,4 +205,20 @@ describe("dns fee summary", () => {
     expect(anna.dnsFeeToPaySek).toBe(0);
     expect(anna.totalToPaySek).toBe(390);
   });
+
+  it("waives all costs including DNS for manual per-person exemptions", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.members = [{ personId: "1", personName: "Anna", email: null }];
+    data.manualExemptions = [
+      { personId: "1", eventId: "10", createdAt: "2026-01-01T00:00:00.000Z" },
+    ];
+    data.rows = [
+      row({ personId: "1", personName: "Anna", eventId: "10", feeSek: 250, status: "dns" }),
+      row({ personId: "1", personName: "Anna", eventId: "20", feeSek: 100, status: "ok" }),
+    ];
+    const anna = summarizeDnsFeesByPerson(data)[0];
+    expect(anna.dnsFeeToPaySek).toBe(0);
+    expect(anna.entryFeeToPaySek).toBe(100);
+    expect(anna.totalToPaySek).toBe(100);
+  });
 });

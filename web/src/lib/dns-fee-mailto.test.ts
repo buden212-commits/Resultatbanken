@@ -98,4 +98,55 @@ describe("buildFeeMailtoLink", () => {
     expect(decoded).toContain("Medel-KM");
     expect(decoded).toContain("Natt-KM");
   });
+
+  it("omits manually exempted starts from mail body and totals stay as provided", () => {
+    const person: DnsFeePersonSummary = {
+      personId: "1",
+      personName: "Anna Test",
+      email: "anna@example.com",
+      dnsCount: 1,
+      startCount: 2,
+      entryFeeToPaySek: 150,
+      lateFeeToPaySek: 0,
+      otherFeeToPaySek: 0,
+      dnsFeeToPaySek: 0,
+      totalToPaySek: 150,
+      feeSek: 350,
+      rows: [
+        {
+          personId: "1",
+          personName: "Anna Test",
+          eventId: "10",
+          eventName: "Medel-KM",
+          date: "2026-05-01",
+          className: "D35",
+          status: "ok",
+          feeSek: 150,
+          entryId: "1",
+        },
+        {
+          personId: "1",
+          personName: "Anna Test",
+          eventId: "20",
+          eventName: "Natt-KM",
+          date: "2026-06-01",
+          className: "D35",
+          status: "dns",
+          feeSek: 200,
+          entryId: "2",
+        },
+      ],
+    };
+    const href = buildFeeMailtoLink(
+      person,
+      [],
+      2026,
+      [{ personId: "1", eventId: "20", createdAt: "2026-01-01T00:00:00.000Z" }],
+    );
+    const decoded = decodeURIComponent(href!.split("?")[1] ?? "");
+    expect(decoded).toContain("Medel-KM");
+    expect(decoded).not.toContain("Natt-KM");
+    expect(decoded).not.toContain("manuellt");
+    expect(decoded).not.toContain("undantag");
+  });
 });

@@ -20,6 +20,7 @@ export async function GET() {
     year: data.year,
     importedAt: data.importedAt,
     exemptEventIds: data.exemptEventIds,
+    manualExemptions: data.manualExemptions ?? [],
     people,
     events,
     totals: {
