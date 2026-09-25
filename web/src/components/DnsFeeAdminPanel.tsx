@@ -4,7 +4,6 @@ import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type { DnsFeeEventRef, DnsFeeManualExemption, DnsFeePersonSummary } from "@/lib/dns-fee-types";
 import {
-  describeDnsFeePart,
   isManualExempt,
   isYouthJuniorEntryFeeExempt,
   rowPayableSplit,
@@ -672,10 +671,6 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                             {row.fees.map((fee) => (
                                               <li key={fee.entryFeeId}>
                                                 {fee.name} · {formatSek(fee.amountSek)} kr
-                                                <span className="text-slate-400">
-                                                  {" "}
-                                                  ({describeDnsFeePart(fee)})
-                                                </span>
                                               </li>
                                             ))}
                                           </ul>
