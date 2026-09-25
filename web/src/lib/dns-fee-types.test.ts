@@ -299,4 +299,69 @@ describe("dns fee summary", () => {
     expect(anna.lateFeeToPaySek).toBe(100); // 50 DNS-row + 50 OK-row
     expect(anna.totalToPaySek).toBe(100);
   });
+
+  it("always waives youth-named entry fees", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.members = [{ personId: "1", personName: "Ada", email: null }];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "1",
+        className: "H21",
+        feeSek: 180,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "1",
+            name: "Anmälningsavgift ungdom avgiftfri",
+            amountSek: 180,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "2",
+        className: "H21",
+        feeSek: 95,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "2",
+            name: "Ordinarie anmälningsavgift ungdom",
+            amountSek: 95,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+      row({
+        personId: "1",
+        personName: "Ada",
+        eventId: "3",
+        className: "H21",
+        feeSek: 180,
+        status: "dns",
+        fees: [
+          {
+            entryFeeId: "3",
+            name: "Ordinarie anmälningsavgift ungdom",
+            amountSek: 180,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+    ];
+    const ada = summarizeDnsFeesByPerson(data)[0];
+    expect(ada.entryFeeToPaySek).toBe(0);
+    expect(ada.dnsFeeToPaySek).toBe(0);
+    expect(ada.totalToPaySek).toBe(0);
+  });
 });

@@ -671,9 +671,10 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                         {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
                                         {row.fees && row.fees.length > 0
                                           ? (() => {
-                                              const extraFees = row.fees.filter(
-                                                (fee) => classifyDnsFeeKind(fee) !== "ordinary",
-                                              );
+                                              const extraFees = row.fees.filter((fee) => {
+                                                const kind = classifyDnsFeeKind(fee);
+                                                return kind === "late" || kind === "other";
+                                              });
                                               if (extraFees.length === 0) return null;
                                               return (
                                                 <ul className="mt-1 space-y-0.5 text-left text-xs font-normal normal-case tracking-normal text-slate-500">

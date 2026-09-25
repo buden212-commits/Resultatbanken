@@ -177,24 +177,43 @@ export function describeDnsFeePart(part: DnsFeePart): string {
       return "Efteranmälan";
     case "other":
       return "Övrigt tillägg";
+    case "waived":
+      return "Avgiftsfri";
   }
 }
 
-export type DnsFeeKind = "ordinary" | "late" | "other";
+export type DnsFeeKind = "ordinary" | "late" | "other" | "waived";
 
-/**
- * Ordinary = anmälningsavgift; late = efteranmälan; other = övriga tillägg.
- * Classification is name-based (plus taxable=false → other as fallback).
- */
-export function classifyDnsFeeKind(part: DnsFeePart): DnsFeeKind {
-  const lower = part.name
+function normalizeFeeName(name: string): string {
+  return name
     .trim()
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
     .toLowerCase();
+}
+
+/**
+ * Youth entry fees — never charged as ordinary/other.
+ * Examples: "Anmälningsavgift ungdom avgiftfri", "Ordinarie anmälningsavgift ungdom".
+ * Efteranmälan is classified as late first and is never waived.
+ */
+export function isAlwaysWaivedFee(part: DnsFeePart): boolean {
+  const lower = normalizeFeeName(part.name);
+  return /\bungdom\b/.test(lower);
+}
+
+/**
+ * Ordinary = anmälningsavgift; late = efteranmälan; other = övriga tillägg;
+ * waived = always free youth entry fees (name contains "ungdom").
+ */
+export function classifyDnsFeeKind(part: DnsFeePart): DnsFeeKind {
+  const lower = normalizeFeeName(part.name);
 
   if (/efteranm|direktam|tavlingsdagen|efter.?anmal/.test(lower)) {
     return "late";
+  }
+  if (isAlwaysWaivedFee(part)) {
+    return "waived";
   }
   if (/beskattningsfri|skoter|omkostnad|tillaegg|tillagg|hogkvalitativ/.test(lower)) {
     return "other";
@@ -210,21 +229,24 @@ export function splitFeeAmounts(row: DnsFeeRow): {
   ordinarySek: number;
   lateSek: number;
   otherSek: number;
+  waivedSek: number;
 } {
   const fees = row.fees ?? [];
   if (fees.length === 0) {
-    return { ordinarySek: row.feeSek ?? 0, lateSek: 0, otherSek: 0 };
+    return { ordinarySek: row.feeSek ?? 0, lateSek: 0, otherSek: 0, waivedSek: 0 };
   }
   let ordinarySek = 0;
   let lateSek = 0;
   let otherSek = 0;
+  let waivedSek = 0;
   for (const fee of fees) {
     const kind = classifyDnsFeeKind(fee);
     if (kind === "ordinary") ordinarySek += fee.amountSek;
     else if (kind === "late") lateSek += fee.amountSek;
+    else if (kind === "waived") waivedSek += fee.amountSek;
     else otherSek += fee.amountSek;
   }
-  return { ordinarySek, lateSek, otherSek };
+  return { ordinarySek, lateSek, otherSek, waivedSek };
 }
 
 export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean {
@@ -296,18 +318,18 @@ export function rowPayableSplit(
   dnsFeeToPaySek: number;
 } {
   const fee = row.feeSek ?? 0;
-  const { ordinarySek, lateSek, otherSek } = splitFeeAmounts(row);
+  const { ordinarySek, lateSek, otherSek, waivedSek } = splitFeeAmounts(row);
   const status = normalizeDnsFeeStatus(row.status);
   const manualExempt = isManualExempt(data, row.personId, row.eventId);
 
   if (status === "dns") {
-    // DNS charges the full fee as DNS cost (includes late). Manual exemption
+    // DNS charges the payable fee (excludes avgiftsfri). Manual exemption
     // clears DNS but efteranmälan is never waived.
     return {
       entryFeeToPaySek: 0,
       lateFeeToPaySek: manualExempt ? lateSek : 0,
       otherFeeToPaySek: 0,
-      dnsFeeToPaySek: manualExempt ? 0 : fee,
+      dnsFeeToPaySek: manualExempt ? 0 : Math.max(0, fee - waivedSek),
     };
   }
 

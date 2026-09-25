@@ -76,5 +76,27 @@ describe("describeDnsFeePart", () => {
         validToDate: null,
       }),
     ).toBe("Övrigt tillägg");
+
+    expect(
+      describeDnsFeePart({
+        entryFeeId: "4",
+        name: "Anmälningsavgift ungdom avgiftfri",
+        amountSek: 0,
+        taxable: true,
+        entryFeeType: null,
+        validToDate: null,
+      }),
+    ).toBe("Avgiftsfri");
+
+    expect(
+      describeDnsFeePart({
+        entryFeeId: "5",
+        name: "Ordinarie anmälningsavgift ungdom",
+        amountSek: 95,
+        taxable: true,
+        entryFeeType: null,
+        validToDate: null,
+      }),
+    ).toBe("Avgiftsfri");
   });
 });
