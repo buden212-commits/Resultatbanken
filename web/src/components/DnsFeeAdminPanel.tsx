@@ -361,10 +361,11 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna tävlingar</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Undantagna tävlingar ger 0 kr i anmälan, efteranmälan och övriga tillägg (OK/anmäld).
-            Ungdoms- och juniorklasser (t.o.m. 20) i Sverige undantas alltid automatiskt. DNS-kostnad
-            räknas alltid. Stafetter ingår inte. Manuella undantag per deltagare (via detaljvyn) tar
-            bort hela kostnaden för den personen och sparas över Eventor-importer.
+            Undantagna tävlingar ger 0 kr i ordinarie anmälan (OK/anmäld); efteranmälan och övriga
+            tillägg räknas fortfarande. Ungdoms- och juniorklasser (t.o.m. 20) i Sverige undantas
+            samma sätt för ordinarie avgift. DNS-kostnad räknas alltid. Stafetter ingår inte.
+            Manuella undantag per deltagare (via detaljvyn) tar bort hela kostnaden för den personen
+            och sparas över Eventor-importer.
           </p>
         </div>
 

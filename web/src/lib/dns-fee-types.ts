@@ -282,7 +282,7 @@ export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boole
  * - Manual per-person exemption: waives everything including DNS
  * - Anmälan (ordinarie/grundavgift): waived for exempt events (OK/entered) and
  *   youth/junior in Sweden (OK/entered/DNF)
- * - Efteranmälan / övriga tillägg: same waiver rules as anmälan
+ * - Efteranmälan / övriga tillägg: always charged (not waived by event/youth rules)
  * - DNS: always full feeSek (never waived by event/youth rules)
  */
 export function rowPayableSplit(
@@ -314,22 +314,11 @@ export function rowPayableSplit(
 
   const youthJunior = isYouthJuniorEntryFeeExempt(row);
   const eventExempt = isEventExempt(data, row.eventId);
+  const waiveOrdinary =
+    youthJunior || (status !== "dnf" && eventExempt);
 
-  if (status === "dnf") {
-    // Manual event exemptions do not cover DNF; youth/junior club policy does.
-    if (youthJunior) return zero;
-    return {
-      entryFeeToPaySek: ordinarySek,
-      lateFeeToPaySek: lateSek,
-      otherFeeToPaySek: otherSek,
-      dnsFeeToPaySek: 0,
-    };
-  }
-
-  // ok | entered
-  if (eventExempt || youthJunior) return zero;
   return {
-    entryFeeToPaySek: ordinarySek,
+    entryFeeToPaySek: waiveOrdinary ? 0 : ordinarySek,
     lateFeeToPaySek: lateSek,
     otherFeeToPaySek: otherSek,
     dnsFeeToPaySek: 0,

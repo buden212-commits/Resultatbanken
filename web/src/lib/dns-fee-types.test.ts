@@ -88,14 +88,42 @@ describe("dns fee summary", () => {
     expect(cecilia.dnsFeeToPaySek).toBe(0);
   });
 
-  it("waives OK fees on exempt events", () => {
+  it("waives only ordinary fees on exempt events; late/other still charged", () => {
     const data = emptyDnsFeeTracker(2026);
     data.exemptEventIds = ["50"];
     data.members = [{ personId: "1", personName: "Anna", email: null }];
-    data.rows = [row({ personId: "1", personName: "Anna", eventId: "50", feeSek: 300, status: "ok" })];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "50",
+        feeSek: 270,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "1",
+            name: "Ordinarie anmälningsavgift",
+            amountSek: 220,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "2",
+            name: "Efteranmälningsavgift",
+            amountSek: 50,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+    ];
     const anna = summarizeDnsFeesByPerson(data)[0];
     expect(anna.entryFeeToPaySek).toBe(0);
-    expect(anna.totalToPaySek).toBe(0);
+    expect(anna.lateFeeToPaySek).toBe(50);
+    expect(anna.otherFeeToPaySek).toBe(0);
+    expect(anna.totalToPaySek).toBe(50);
   });
 
   it("waives entry fee for youth/junior classes in Sweden but always charges DNS", () => {
