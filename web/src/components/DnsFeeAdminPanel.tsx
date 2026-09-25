@@ -725,7 +725,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                             >
                                               Återställ kostnad
                                             </button>
-                                          ) : rowTotal > 0 || (row.feeSek ?? 0) > 0 ? (
+                                          ) : rowTotal > 0 ? (
                                             <button
                                               type="button"
                                               className="text-left text-xs font-medium text-brand-700 hover:underline"
@@ -753,7 +753,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                             </button>
                                           ) : (
                                             <span className="text-xs text-amber-700">
-                                              Tävling undantagen för alla
+                                              Tävlingen undantagen
                                             </span>
                                           )}
                                         </div>
