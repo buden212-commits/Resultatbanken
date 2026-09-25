@@ -279,11 +279,12 @@ export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boole
 
 /**
  * Split payable amounts:
- * - Manual per-person exemption: waives everything including DNS
+ * - Efteranmälan: never waived (not by event, youth/junior, or manual exemption)
+ * - Manual per-person exemption: waives ordinary, övriga tillägg and DNS
  * - Anmälan (ordinarie/grundavgift): waived for exempt events (OK/entered) and
  *   youth/junior in Sweden (OK/entered/DNF)
- * - Efteranmälan / övriga tillägg: always charged (not waived by event/youth rules)
- * - DNS: always full feeSek (never waived by event/youth rules)
+ * - Övriga tillägg: charged unless manual exemption
+ * - DNS: always full feeSek unless manual exemption
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
@@ -297,30 +298,28 @@ export function rowPayableSplit(
   const fee = row.feeSek ?? 0;
   const { ordinarySek, lateSek, otherSek } = splitFeeAmounts(row);
   const status = normalizeDnsFeeStatus(row.status);
-  const zero = {
-    entryFeeToPaySek: 0,
-    lateFeeToPaySek: 0,
-    otherFeeToPaySek: 0,
-    dnsFeeToPaySek: 0,
-  };
-
-  if (isManualExempt(data, row.personId, row.eventId)) {
-    return zero;
-  }
+  const manualExempt = isManualExempt(data, row.personId, row.eventId);
 
   if (status === "dns") {
-    return { ...zero, dnsFeeToPaySek: fee };
+    // DNS charges the full fee as DNS cost (includes late). Manual exemption
+    // clears DNS but efteranmälan is never waived.
+    return {
+      entryFeeToPaySek: 0,
+      lateFeeToPaySek: manualExempt ? lateSek : 0,
+      otherFeeToPaySek: 0,
+      dnsFeeToPaySek: manualExempt ? 0 : fee,
+    };
   }
 
   const youthJunior = isYouthJuniorEntryFeeExempt(row);
   const eventExempt = isEventExempt(data, row.eventId);
   const waiveOrdinary =
-    youthJunior || (status !== "dnf" && eventExempt);
+    manualExempt || youthJunior || (status !== "dnf" && eventExempt);
 
   return {
     entryFeeToPaySek: waiveOrdinary ? 0 : ordinarySek,
     lateFeeToPaySek: lateSek,
-    otherFeeToPaySek: otherSek,
+    otherFeeToPaySek: manualExempt ? 0 : otherSek,
     dnsFeeToPaySek: 0,
   };
 }

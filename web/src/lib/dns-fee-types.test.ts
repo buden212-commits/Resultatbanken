@@ -234,19 +234,69 @@ describe("dns fee summary", () => {
     expect(anna.totalToPaySek).toBe(390);
   });
 
-  it("waives all costs including DNS for manual per-person exemptions", () => {
+  it("waives ordinary/other/DNS for manual exemptions but never efteranmälan", () => {
     const data = emptyDnsFeeTracker(2026);
     data.members = [{ personId: "1", personName: "Anna", email: null }];
     data.manualExemptions = [
       { personId: "1", eventId: "10", createdAt: "2026-01-01T00:00:00.000Z" },
+      { personId: "1", eventId: "20", createdAt: "2026-01-01T00:00:00.000Z" },
     ];
     data.rows = [
-      row({ personId: "1", personName: "Anna", eventId: "10", feeSek: 250, status: "dns" }),
-      row({ personId: "1", personName: "Anna", eventId: "20", feeSek: 100, status: "ok" }),
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "10",
+        feeSek: 250,
+        status: "dns",
+        fees: [
+          {
+            entryFeeId: "1",
+            name: "Ordinarie",
+            amountSek: 200,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "2",
+            name: "Efteranmälningsavgift",
+            amountSek: 50,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "20",
+        feeSek: 150,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "3",
+            name: "Ordinarie",
+            amountSek: 100,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "4",
+            name: "Efteranmälan",
+            amountSek: 50,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
     ];
     const anna = summarizeDnsFeesByPerson(data)[0];
     expect(anna.dnsFeeToPaySek).toBe(0);
-    expect(anna.entryFeeToPaySek).toBe(100);
+    expect(anna.entryFeeToPaySek).toBe(0);
+    expect(anna.lateFeeToPaySek).toBe(100); // 50 DNS-row + 50 OK-row
     expect(anna.totalToPaySek).toBe(100);
   });
 });

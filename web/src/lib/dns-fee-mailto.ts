@@ -1,6 +1,5 @@
 import type { DnsFeePersonSummary, DnsFeeRow } from "./dns-fee-types";
 import {
-  isManualExempt,
   normalizeDnsFeeStatus,
   rowPayableSplit,
   type DnsFeeTrackerData,
@@ -72,9 +71,8 @@ export function buildFeeMailtoLink(
     `• Totalt att betala: ${formatSek(person.totalToPaySek)}`,
   ];
 
-  // Manual exemptions are omitted entirely from the mail (no label, no amounts).
+  // Manual exemptions omit ordinary/other/DNS from the mail but efteranmälan is never waived.
   const payableRows = sortRows(person.rows).filter((row) => {
-    if (isManualExempt(tracker, row.personId, row.eventId)) return false;
     const split = rowPayableSplit(tracker, row);
     return (
       split.entryFeeToPaySek > 0 ||
