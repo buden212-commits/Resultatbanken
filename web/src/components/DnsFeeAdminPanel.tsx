@@ -4,6 +4,7 @@ import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type { DnsFeeEventRef, DnsFeeManualExemption, DnsFeePersonSummary } from "@/lib/dns-fee-types";
 import {
+  classifyDnsFeeKind,
   isManualExempt,
   isYouthJuniorEntryFeeExempt,
   rowPayableSplit,
@@ -666,15 +667,23 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                       </td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
                                         {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
-                                        {row.fees && row.fees.length > 0 ? (
-                                          <ul className="mt-1 space-y-0.5 text-left text-xs font-normal normal-case tracking-normal text-slate-500">
-                                            {row.fees.map((fee) => (
-                                              <li key={fee.entryFeeId}>
-                                                {fee.name} · {formatSek(fee.amountSek)} kr
-                                              </li>
-                                            ))}
-                                          </ul>
-                                        ) : null}
+                                        {row.fees && row.fees.length > 0
+                                          ? (() => {
+                                              const extraFees = row.fees.filter(
+                                                (fee) => classifyDnsFeeKind(fee) !== "ordinary",
+                                              );
+                                              if (extraFees.length === 0) return null;
+                                              return (
+                                                <ul className="mt-1 space-y-0.5 text-left text-xs font-normal normal-case tracking-normal text-slate-500">
+                                                  {extraFees.map((fee) => (
+                                                    <li key={fee.entryFeeId}>
+                                                      {fee.name} · {formatSek(fee.amountSek)} kr
+                                                    </li>
+                                                  ))}
+                                                </ul>
+                                              );
+                                            })()
+                                          : null}
                                       </td>
                                       <td
                                         className={`py-1 pr-3 tabular-nums ${
