@@ -68,6 +68,11 @@ function normalizeTracker(data: DnsFeeTrackerData): DnsFeeTrackerData {
           }))
       : [],
     exemptEventIds: Array.isArray(data.exemptEventIds) ? data.exemptEventIds.map(String) : [],
+    exemptFeeNames: Array.isArray(data.exemptFeeNames)
+      ? [...new Set(data.exemptFeeNames.map((name) => String(name).trim()).filter(Boolean))].sort(
+          (a, b) => a.localeCompare(b, "sv"),
+        )
+      : [],
     manualExemptions: Array.isArray(data.manualExemptions)
       ? data.manualExemptions
           .map(normalizeDnsFeeManualExemption)

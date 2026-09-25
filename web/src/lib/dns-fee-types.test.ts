@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   emptyDnsFeeTracker,
   isYouthOrJuniorClass,
+  listFeeNameVariants,
   summarizeDnsFeesByPerson,
   type DnsFeeRow,
 } from "./dns-fee-types";
@@ -300,9 +301,13 @@ describe("dns fee summary", () => {
     expect(anna.totalToPaySek).toBe(100);
   });
 
-  it("always waives youth-named entry fees", () => {
+  it("waives exact fee names listed in exemptFeeNames", () => {
     const data = emptyDnsFeeTracker(2026);
     data.members = [{ personId: "1", personName: "Ada", email: null }];
+    data.exemptFeeNames = [
+      "Anmälningsavgift ungdom avgiftfri",
+      "Ordinarie anmälningsavgift ungdom",
+    ];
     data.rows = [
       row({
         personId: "1",
@@ -363,5 +368,60 @@ describe("dns fee summary", () => {
     expect(ada.entryFeeToPaySek).toBe(0);
     expect(ada.dnsFeeToPaySek).toBe(0);
     expect(ada.totalToPaySek).toBe(0);
+  });
+
+  it("lists unique fee name variants", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.rows = [
+      row({
+        personId: "1",
+        eventId: "1",
+        feeSek: 270,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "1",
+            name: "Ordinarie anmälningsavgift",
+            amountSek: 180,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "2",
+            name: "Efteranmälan",
+            amountSek: 90,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+      row({
+        personId: "2",
+        eventId: "2",
+        feeSek: 180,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "3",
+            name: "Ordinarie anmälningsavgift",
+            amountSek: 180,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+    ];
+    const variants = listFeeNameVariants(data.rows);
+    expect(variants).toHaveLength(2);
+    expect(variants[0].name).toBe("Efteranmälan");
+    expect(variants[1]).toMatchObject({
+      name: "Ordinarie anmälningsavgift",
+      count: 2,
+      totalSek: 360,
+      kind: "ordinary",
+    });
   });
 });

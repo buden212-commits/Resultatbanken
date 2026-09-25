@@ -67,10 +67,15 @@ export type DnsFeeTrackerData = {
   rows: DnsFeeRow[];
   /** All IFK Mora club members at last import (including those without starts). */
   members: DnsFeeMember[];
-  /** Eventor event IDs where anmälningsavgift (OK/entered) should not burden the participant. DNS is always charged. */
+  /** Eventor event IDs where ordinarie anmälan (OK/entered) should not burden the participant. */
   exemptEventIds: string[];
   /**
-   * Manual per-person/event cost removals. Waives all payable amounts including DNS.
+   * Exact Eventor fee names that are always waived (except efteranmälan).
+   * Survives Eventor re-imports. Managed from the unique fee-name list in admin.
+   */
+  exemptFeeNames: string[];
+  /**
+   * Manual per-person/event cost removals. Waives ordinary/other/DNS but never efteranmälan.
    * Persisted separately so Eventor imports keep them.
    */
   manualExemptions: DnsFeeManualExemption[];
@@ -106,6 +111,7 @@ export function emptyDnsFeeTracker(year = 2026): DnsFeeTrackerData {
     rows: [],
     members: [],
     exemptEventIds: [],
+    exemptFeeNames: [],
     manualExemptions: [],
   };
 }
@@ -177,12 +183,18 @@ export function describeDnsFeePart(part: DnsFeePart): string {
       return "Efteranmälan";
     case "other":
       return "Övrigt tillägg";
-    case "waived":
-      return "Avgiftsfri";
   }
 }
 
-export type DnsFeeKind = "ordinary" | "late" | "other" | "waived";
+export type DnsFeeKind = "ordinary" | "late" | "other";
+
+export type DnsFeeNameVariant = {
+  name: string;
+  /** Number of fee parts with this exact name. */
+  count: number;
+  totalSek: number;
+  kind: DnsFeeKind;
+};
 
 function normalizeFeeName(name: string): string {
   return name
@@ -193,27 +205,15 @@ function normalizeFeeName(name: string): string {
 }
 
 /**
- * Youth entry fees — never charged as ordinary/other.
- * Examples: "Anmälningsavgift ungdom avgiftfri", "Ordinarie anmälningsavgift ungdom".
- * Efteranmälan is classified as late first and is never waived.
- */
-export function isAlwaysWaivedFee(part: DnsFeePart): boolean {
-  const lower = normalizeFeeName(part.name);
-  return /\bungdom\b/.test(lower);
-}
-
-/**
- * Ordinary = anmälningsavgift; late = efteranmälan; other = övriga tillägg;
- * waived = always free youth entry fees (name contains "ungdom").
+ * Ordinary = anmälningsavgift; late = efteranmälan; other = övriga tillägg.
+ * Classification is name-based (plus taxable=false → other as fallback).
+ * Name-based waivers are handled separately via exemptFeeNames.
  */
 export function classifyDnsFeeKind(part: DnsFeePart): DnsFeeKind {
   const lower = normalizeFeeName(part.name);
 
   if (/efteranm|direktam|tavlingsdagen|efter.?anmal/.test(lower)) {
     return "late";
-  }
-  if (isAlwaysWaivedFee(part)) {
-    return "waived";
   }
   if (/beskattningsfri|skoter|omkostnad|tillaegg|tillagg|hogkvalitativ/.test(lower)) {
     return "other";
@@ -224,8 +224,49 @@ export function classifyDnsFeeKind(part: DnsFeePart): DnsFeeKind {
   return "ordinary";
 }
 
-/** Split raw fee into ordinary / late / other (legacy rows without fees → all ordinary). */
-export function splitFeeAmounts(row: DnsFeeRow): {
+export function isFeeNameExempt(
+  exemptFeeNames: readonly string[] | undefined,
+  feeName: string,
+): boolean {
+  const name = feeName.trim();
+  if (!name) return false;
+  return (exemptFeeNames ?? []).includes(name);
+}
+
+/** Unique Eventor fee name variants found on imported rows. */
+export function listFeeNameVariants(rows: DnsFeeRow[]): DnsFeeNameVariant[] {
+  const map = new Map<string, { count: number; totalSek: number; kind: DnsFeeKind }>();
+  for (const row of rows) {
+    for (const fee of row.fees ?? []) {
+      const name = fee.name.trim();
+      if (!name) continue;
+      const existing = map.get(name);
+      if (existing) {
+        existing.count += 1;
+        existing.totalSek += fee.amountSek;
+      } else {
+        map.set(name, {
+          count: 1,
+          totalSek: fee.amountSek,
+          kind: classifyDnsFeeKind(fee),
+        });
+      }
+    }
+  }
+  return [...map.entries()]
+    .map(([name, value]) => ({ name, ...value }))
+    .sort((a, b) => a.name.localeCompare(b.name, "sv"));
+}
+
+/**
+ * Split raw fee into ordinary / late / other.
+ * Names in exemptFeeNames are waived (except efteranmälan, which is never waived).
+ * Legacy rows without fees → all ordinary.
+ */
+export function splitFeeAmounts(
+  row: DnsFeeRow,
+  exemptFeeNames: readonly string[] = [],
+): {
   ordinarySek: number;
   lateSek: number;
   otherSek: number;
@@ -241,9 +282,16 @@ export function splitFeeAmounts(row: DnsFeeRow): {
   let waivedSek = 0;
   for (const fee of fees) {
     const kind = classifyDnsFeeKind(fee);
+    // Efteranmälan is never waived by fee-name exemptions.
+    if (kind === "late") {
+      lateSek += fee.amountSek;
+      continue;
+    }
+    if (isFeeNameExempt(exemptFeeNames, fee.name)) {
+      waivedSek += fee.amountSek;
+      continue;
+    }
     if (kind === "ordinary") ordinarySek += fee.amountSek;
-    else if (kind === "late") lateSek += fee.amountSek;
-    else if (kind === "waived") waivedSek += fee.amountSek;
     else otherSek += fee.amountSek;
   }
   return { ordinarySek, lateSek, otherSek, waivedSek };
@@ -301,12 +349,13 @@ export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boole
 
 /**
  * Split payable amounts:
- * - Efteranmälan: never waived (not by event, youth/junior, or manual exemption)
+ * - Fee names in exemptFeeNames: waived (except efteranmälan)
+ * - Efteranmälan: never waived
  * - Manual per-person exemption: waives ordinary, övriga tillägg and DNS
- * - Anmälan (ordinarie/grundavgift): waived for exempt events (OK/entered) and
+ * - Anmälan (ordinarie): waived for exempt events (OK/entered) and
  *   youth/junior in Sweden (OK/entered/DNF)
- * - Övriga tillägg: charged unless manual exemption
- * - DNS: always full feeSek unless manual exemption
+ * - Övriga tillägg: charged unless manual or fee-name exemption
+ * - DNS: payable fee (minus name-waived) unless manual exemption
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
@@ -318,13 +367,14 @@ export function rowPayableSplit(
   dnsFeeToPaySek: number;
 } {
   const fee = row.feeSek ?? 0;
-  const { ordinarySek, lateSek, otherSek, waivedSek } = splitFeeAmounts(row);
+  const { ordinarySek, lateSek, otherSek, waivedSek } = splitFeeAmounts(
+    row,
+    data.exemptFeeNames ?? [],
+  );
   const status = normalizeDnsFeeStatus(row.status);
   const manualExempt = isManualExempt(data, row.personId, row.eventId);
 
   if (status === "dns") {
-    // DNS charges the payable fee (excludes avgiftsfri). Manual exemption
-    // clears DNS but efteranmälan is never waived.
     return {
       entryFeeToPaySek: 0,
       lateFeeToPaySek: manualExempt ? lateSek : 0,

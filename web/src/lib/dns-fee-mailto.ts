@@ -46,6 +46,7 @@ export function buildFeeMailtoLink(
   exemptEventIds: string[],
   year = 2026,
   manualExemptions: DnsFeeTrackerData["manualExemptions"] = [],
+  exemptFeeNames: string[] = [],
 ): string | null {
   if (!person.email) return null;
 
@@ -55,6 +56,7 @@ export function buildFeeMailtoLink(
     rows: person.rows,
     members: [],
     exemptEventIds,
+    exemptFeeNames,
     manualExemptions,
   };
 

@@ -494,6 +494,7 @@ export async function importDnsFeesFromEventor(
       email: person.email,
     })),
     exemptEventIds: [...new Set(existing.exemptEventIds.map(String))],
+    exemptFeeNames: [...new Set((existing.exemptFeeNames ?? []).map(String))],
     manualExemptions: [...(existing.manualExemptions ?? [])],
   };
 
