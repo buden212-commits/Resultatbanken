@@ -58,14 +58,21 @@ export function buildFeeMailtoLink(
     `Här är en sammanställning av startavgifter för IFK Mora OK ${year}.`,
     "",
     "Sammanfattning",
-    `• Anmälningsavgift: ${formatSek(person.entryFeeToPaySek)}`,
+    `• Anmälan (ordinarie): ${formatSek(person.entryFeeToPaySek)}`,
+    `• Efteranmälan: ${formatSek(person.lateFeeToPaySek)}`,
+    `• Övriga tillägg: ${formatSek(person.otherFeeToPaySek)}`,
     `• Ej start (DNS): ${formatSek(person.dnsFeeToPaySek)}`,
     `• Totalt att betala: ${formatSek(person.totalToPaySek)}`,
   ];
 
   const payableRows = sortRows(person.rows).filter((row) => {
     const split = rowPayableSplit(tracker, row);
-    return split.entryFeeToPaySek > 0 || split.dnsFeeToPaySek > 0;
+    return (
+      split.entryFeeToPaySek > 0 ||
+      split.lateFeeToPaySek > 0 ||
+      split.otherFeeToPaySek > 0 ||
+      split.dnsFeeToPaySek > 0
+    );
   });
 
   if (payableRows.length > 0) {
@@ -79,7 +86,9 @@ export function buildFeeMailtoLink(
         statusLabel(row.status),
       ].filter(Boolean);
       const amounts: string[] = [];
-      if (split.entryFeeToPaySek > 0) amounts.push(`anmälningsavgift ${formatSek(split.entryFeeToPaySek)}`);
+      if (split.entryFeeToPaySek > 0) amounts.push(`anmälan ${formatSek(split.entryFeeToPaySek)}`);
+      if (split.lateFeeToPaySek > 0) amounts.push(`efteranmälan ${formatSek(split.lateFeeToPaySek)}`);
+      if (split.otherFeeToPaySek > 0) amounts.push(`övrigt ${formatSek(split.otherFeeToPaySek)}`);
       if (split.dnsFeeToPaySek > 0) amounts.push(`ej start ${formatSek(split.dnsFeeToPaySek)}`);
       lines.push(`• ${parts.join(" · ")} — ${amounts.join(", ")}`);
     }

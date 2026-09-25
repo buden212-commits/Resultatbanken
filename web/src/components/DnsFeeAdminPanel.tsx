@@ -15,6 +15,8 @@ type Totals = {
   dnsStarts: number;
   starts: number;
   entryFeeToPaySek: number;
+  lateFeeToPaySek: number;
+  otherFeeToPaySek: number;
   dnsFeeToPaySek: number;
   totalToPaySek: number;
 };
@@ -33,6 +35,8 @@ type SortKey =
   | "dnsCount"
   | "startCount"
   | "entryFeeToPaySek"
+  | "lateFeeToPaySek"
+  | "otherFeeToPaySek"
   | "dnsFeeToPaySek"
   | "totalToPaySek";
 
@@ -287,7 +291,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         </p>
       ) : null}
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.people}</p>
           <p className="mt-1 text-sm text-slate-500">Klubbmedlemmar</p>
@@ -300,7 +304,19 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
           <p className="text-2xl font-bold tabular-nums text-slate-900">
             {formatSek(data.totals.entryFeeToPaySek)} kr
           </p>
-          <p className="mt-1 text-sm text-slate-500">Anmälningsavgift</p>
+          <p className="mt-1 text-sm text-slate-500">Anmälan</p>
+        </div>
+        <div className="card px-4 py-3">
+          <p className="text-2xl font-bold tabular-nums text-slate-900">
+            {formatSek(data.totals.lateFeeToPaySek)} kr
+          </p>
+          <p className="mt-1 text-sm text-slate-500">Efteranmälan</p>
+        </div>
+        <div className="card px-4 py-3">
+          <p className="text-2xl font-bold tabular-nums text-slate-900">
+            {formatSek(data.totals.otherFeeToPaySek)} kr
+          </p>
+          <p className="mt-1 text-sm text-slate-500">Övriga tillägg</p>
         </div>
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">
@@ -320,9 +336,9 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna tävlingar</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Undantagna tävlingar ger 0 kr i anmälningsavgift (OK/anmäld). Ungdoms- och juniorklasser
-            (t.o.m. 20) i Sverige undantas alltid automatiskt. DNS-kostnad räknas alltid. Stafetter
-            ingår inte.
+            Undantagna tävlingar ger 0 kr i anmälan, efteranmälan och övriga tillägg (OK/anmäld).
+            Ungdoms- och juniorklasser (t.o.m. 20) i Sverige undantas alltid automatiskt. DNS-kostnad
+            räknas alltid. Stafetter ingår inte.
           </p>
         </div>
 
@@ -454,7 +470,25 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                       className="hover:text-slate-700"
                       onClick={() => toggleSort("entryFeeToPaySek")}
                     >
-                      Anmälningsavgift
+                      Anmälan
+                    </button>
+                  </th>
+                  <th className="px-3 py-3 sm:px-4">
+                    <button
+                      type="button"
+                      className="hover:text-slate-700"
+                      onClick={() => toggleSort("lateFeeToPaySek")}
+                    >
+                      Efteranmälan
+                    </button>
+                  </th>
+                  <th className="px-3 py-3 sm:px-4">
+                    <button
+                      type="button"
+                      className="hover:text-slate-700"
+                      onClick={() => toggleSort("otherFeeToPaySek")}
+                    >
+                      Övrigt
                     </button>
                   </th>
                   <th className="px-3 py-3 sm:px-4">
@@ -524,6 +558,12 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                           {formatSek(person.entryFeeToPaySek)} kr
                         </td>
                         <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                          {formatSek(person.lateFeeToPaySek)} kr
+                        </td>
+                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                          {formatSek(person.otherFeeToPaySek)} kr
+                        </td>
+                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
                           {formatSek(person.dnsFeeToPaySek)} kr
                         </td>
                         <td className="px-3 py-2.5 tabular-nums font-medium text-slate-900 sm:px-4">
@@ -532,7 +572,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                       </tr>
                       {open ? (
                         <tr className="border-b border-slate-100 bg-slate-50/50">
-                          <td colSpan={5} className="px-3 py-3 sm:px-4">
+                          <td colSpan={7} className="px-3 py-3 sm:px-4">
                             <table className="min-w-full text-xs sm:text-sm">
                               <thead>
                                 <tr className="text-left text-slate-400">
@@ -541,7 +581,9 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                   <th className="py-1 pr-3">Klass</th>
                                   <th className="py-1 pr-3">Status</th>
                                   <th className="py-1 pr-3">Avgift</th>
-                                  <th className="py-1 pr-3">Anmäln.</th>
+                                  <th className="py-1 pr-3">Anmälan</th>
+                                  <th className="py-1 pr-3">Efteranm.</th>
+                                  <th className="py-1 pr-3">Övrigt</th>
                                   <th className="py-1">DNS</th>
                                 </tr>
                               </thead>
@@ -593,6 +635,12 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                       </td>
                                       <td className="py-1 pr-3 tabular-nums text-slate-800">
                                         {formatSek(split.entryFeeToPaySek)} kr
+                                      </td>
+                                      <td className="py-1 pr-3 tabular-nums text-slate-800">
+                                        {formatSek(split.lateFeeToPaySek)} kr
+                                      </td>
+                                      <td className="py-1 pr-3 tabular-nums text-slate-800">
+                                        {formatSek(split.otherFeeToPaySek)} kr
                                       </td>
                                       <td className="py-1 tabular-nums text-slate-800">
                                         {formatSek(split.dnsFeeToPaySek)} kr

@@ -71,11 +71,15 @@ export type DnsFeePersonSummary = {
   dnsCount: number;
   /** Number of imported starts (all statuses). */
   startCount: number;
-  /** Anmälningsavgift att betala (efter undantag för tävling / ungdom·junior). */
+  /** Ordinarie / grundavgift att betala (efter undantag). */
   entryFeeToPaySek: number;
+  /** Efteranmälan att betala (efter undantag). */
+  lateFeeToPaySek: number;
+  /** Övriga tillägg att betala (efter undantag). */
+  otherFeeToPaySek: number;
   /** DNS-kostnad att betala (DNS always charged). */
   dnsFeeToPaySek: number;
-  /** entryFeeToPaySek + dnsFeeToPaySek */
+  /** entryFeeToPaySek + lateFeeToPaySek + otherFeeToPaySek + dnsFeeToPaySek */
   totalToPaySek: number;
   /** Raw fee sum (all imported rows). */
   feeSek: number;
@@ -121,28 +125,64 @@ export function normalizeDnsFeePart(value: unknown): DnsFeePart | null {
 
 /**
  * Best-effort label from Eventor fee name / taxable flag.
- * Eventor has no enum for ordinary vs late — organizers use free-text names.
+ * Eventor has no enum for fee kinds — organizers use free-text names.
  */
 export function describeDnsFeePart(part: DnsFeePart): string {
-  const name = part.name.trim();
-  const lower = name
+  switch (classifyDnsFeeKind(part)) {
+    case "ordinary":
+      return "Ordinarie / grundavgift";
+    case "late":
+      return "Efteranmälan";
+    case "other":
+      return "Övrigt tillägg";
+  }
+}
+
+export type DnsFeeKind = "ordinary" | "late" | "other";
+
+/**
+ * Ordinary = anmälningsavgift; late = efteranmälan; other = övriga tillägg.
+ * Classification is name-based (plus taxable=false → other as fallback).
+ */
+export function classifyDnsFeeKind(part: DnsFeePart): DnsFeeKind {
+  const lower = part.name
+    .trim()
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
     .toLowerCase();
 
   if (/efteranm|direktam|tavlingsdagen|efter.?anmal/.test(lower)) {
-    return "Efteranmälan / tillägg";
+    return "late";
   }
   if (/beskattningsfri|skoter|omkostnad|tillaegg|tillagg|hogkvalitativ/.test(lower)) {
-    return "Tillägg (ofta beskattningsfri)";
+    return "other";
   }
   if (part.taxable === false) {
-    return "Beskattningsfri del";
+    return "other";
   }
-  if (/ordinarie|anmalningsavgift|grundavgift/.test(lower) || part.taxable === true) {
-    return "Ordinarie / grundavgift";
+  return "ordinary";
+}
+
+/** Split raw fee into ordinary / late / other (legacy rows without fees → all ordinary). */
+export function splitFeeAmounts(row: DnsFeeRow): {
+  ordinarySek: number;
+  lateSek: number;
+  otherSek: number;
+} {
+  const fees = row.fees ?? [];
+  if (fees.length === 0) {
+    return { ordinarySek: row.feeSek ?? 0, lateSek: 0, otherSek: 0 };
   }
-  return "Avgift";
+  let ordinarySek = 0;
+  let lateSek = 0;
+  let otherSek = 0;
+  for (const fee of fees) {
+    const kind = classifyDnsFeeKind(fee);
+    if (kind === "ordinary") ordinarySek += fee.amountSek;
+    else if (kind === "late") lateSek += fee.amountSek;
+    else otherSek += fee.amountSek;
+  }
+  return { ordinarySek, lateSek, otherSek };
 }
 
 export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean {
@@ -197,19 +237,32 @@ export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boole
 
 /**
  * Split payable amounts:
- * - Anmälningsavgift: waived for exempt events (OK/entered only) and for
- *   youth/junior classes in Sweden (OK/entered/DNF). DNS never waived.
- * - DNS-kostnad: always payable
+ * - Anmälan (ordinarie/grundavgift): waived for exempt events (OK/entered) and
+ *   youth/junior in Sweden (OK/entered/DNF)
+ * - Efteranmälan / övriga tillägg: same waiver rules as anmälan
+ * - DNS: always full feeSek (never waived)
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
   row: DnsFeeRow,
-): { entryFeeToPaySek: number; dnsFeeToPaySek: number } {
+): {
+  entryFeeToPaySek: number;
+  lateFeeToPaySek: number;
+  otherFeeToPaySek: number;
+  dnsFeeToPaySek: number;
+} {
   const fee = row.feeSek ?? 0;
+  const { ordinarySek, lateSek, otherSek } = splitFeeAmounts(row);
   const status = normalizeDnsFeeStatus(row.status);
+  const zero = {
+    entryFeeToPaySek: 0,
+    lateFeeToPaySek: 0,
+    otherFeeToPaySek: 0,
+    dnsFeeToPaySek: 0,
+  };
 
   if (status === "dns") {
-    return { entryFeeToPaySek: 0, dnsFeeToPaySek: fee };
+    return { ...zero, dnsFeeToPaySek: fee };
   }
 
   const youthJunior = isYouthJuniorEntryFeeExempt(row);
@@ -217,17 +270,34 @@ export function rowPayableSplit(
 
   if (status === "dnf") {
     // Manual event exemptions do not cover DNF; youth/junior club policy does.
-    return { entryFeeToPaySek: youthJunior ? 0 : fee, dnsFeeToPaySek: 0 };
+    if (youthJunior) return zero;
+    return {
+      entryFeeToPaySek: ordinarySek,
+      lateFeeToPaySek: lateSek,
+      otherFeeToPaySek: otherSek,
+      dnsFeeToPaySek: 0,
+    };
   }
 
   // ok | entered
-  return { entryFeeToPaySek: eventExempt || youthJunior ? 0 : fee, dnsFeeToPaySek: 0 };
+  if (eventExempt || youthJunior) return zero;
+  return {
+    entryFeeToPaySek: ordinarySek,
+    lateFeeToPaySek: lateSek,
+    otherFeeToPaySek: otherSek,
+    dnsFeeToPaySek: 0,
+  };
 }
 
 /** @deprecated use rowPayableSplit — kept for detail rows */
 export function feeToPaySek(data: DnsFeeTrackerData, row: DnsFeeRow): number {
   const split = rowPayableSplit(data, row);
-  return split.entryFeeToPaySek + split.dnsFeeToPaySek;
+  return (
+    split.entryFeeToPaySek +
+    split.lateFeeToPaySek +
+    split.otherFeeToPaySek +
+    split.dnsFeeToPaySek
+  );
 }
 
 export function listEventsFromRows(rows: DnsFeeRow[]): DnsFeeEventRef[] {
@@ -261,6 +331,8 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
       dnsCount: 0,
       startCount: 0,
       entryFeeToPaySek: 0,
+      lateFeeToPaySek: 0,
+      otherFeeToPaySek: 0,
       dnsFeeToPaySek: 0,
       totalToPaySek: 0,
       feeSek: 0,
@@ -273,6 +345,11 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     const fee = row.feeSek ?? 0;
     const split = rowPayableSplit(data, row);
     const status = normalizeDnsFeeStatus(row.status);
+    const rowTotal =
+      split.entryFeeToPaySek +
+      split.lateFeeToPaySek +
+      split.otherFeeToPaySek +
+      split.dnsFeeToPaySek;
 
     if (!existing) {
       byPerson.set(row.personId, {
@@ -282,8 +359,10 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
         dnsCount: status === "dns" ? 1 : 0,
         startCount: 1,
         entryFeeToPaySek: split.entryFeeToPaySek,
+        lateFeeToPaySek: split.lateFeeToPaySek,
+        otherFeeToPaySek: split.otherFeeToPaySek,
         dnsFeeToPaySek: split.dnsFeeToPaySek,
-        totalToPaySek: split.entryFeeToPaySek + split.dnsFeeToPaySek,
+        totalToPaySek: rowTotal,
         feeSek: fee,
         rows: [row],
       });
@@ -295,8 +374,10 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     if (status === "dns") existing.dnsCount += 1;
     existing.startCount += 1;
     existing.entryFeeToPaySek += split.entryFeeToPaySek;
+    existing.lateFeeToPaySek += split.lateFeeToPaySek;
+    existing.otherFeeToPaySek += split.otherFeeToPaySek;
     existing.dnsFeeToPaySek += split.dnsFeeToPaySek;
-    existing.totalToPaySek += split.entryFeeToPaySek + split.dnsFeeToPaySek;
+    existing.totalToPaySek += rowTotal;
     existing.feeSek += fee;
     existing.rows.push(row);
   }

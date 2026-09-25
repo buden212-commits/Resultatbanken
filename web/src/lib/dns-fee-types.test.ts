@@ -159,4 +159,50 @@ describe("dns fee summary", () => {
     const ada = summarizeDnsFeesByPerson(data)[0];
     expect(ada.entryFeeToPaySek).toBe(95);
   });
+
+  it("splits ordinary anmälan vs efteranmälan vs övriga tillägg", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.members = [{ personId: "1", personName: "Anna", email: null }];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "1",
+        feeSek: 390,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "1",
+            name: "Ordinarie anmälningsavgift",
+            amountSek: 180,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "2",
+            name: "Efteranmälan",
+            amountSek: 90,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "3",
+            name: "Beskattningsfri del SM",
+            amountSek: 120,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+    ];
+    const anna = summarizeDnsFeesByPerson(data)[0];
+    expect(anna.entryFeeToPaySek).toBe(180);
+    expect(anna.lateFeeToPaySek).toBe(90);
+    expect(anna.otherFeeToPaySek).toBe(120);
+    expect(anna.dnsFeeToPaySek).toBe(0);
+    expect(anna.totalToPaySek).toBe(390);
+  });
 });

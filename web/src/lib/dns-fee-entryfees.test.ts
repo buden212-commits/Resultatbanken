@@ -43,7 +43,7 @@ describe("parseEntryFeeDefinitions", () => {
 });
 
 describe("describeDnsFeePart", () => {
-  it("classifies ordinary, late and tax-free fees from name/flag", () => {
+  it("classifies ordinary, late and other fees from name/flag", () => {
     expect(
       describeDnsFeePart({
         entryFeeId: "1",
@@ -53,7 +53,7 @@ describe("describeDnsFeePart", () => {
         entryFeeType: null,
         validToDate: null,
       }),
-    ).toMatch(/Ordinarie/);
+    ).toBe("Ordinarie / grundavgift");
 
     expect(
       describeDnsFeePart({
@@ -64,7 +64,7 @@ describe("describeDnsFeePart", () => {
         entryFeeType: null,
         validToDate: null,
       }),
-    ).toMatch(/Efteranmälan/);
+    ).toBe("Efteranmälan");
 
     expect(
       describeDnsFeePart({
@@ -75,6 +75,6 @@ describe("describeDnsFeePart", () => {
         entryFeeType: null,
         validToDate: null,
       }),
-    ).toMatch(/Tillägg|Beskattningsfri/);
+    ).toBe("Övrigt tillägg");
   });
 });

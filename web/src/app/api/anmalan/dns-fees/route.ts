@@ -27,6 +27,8 @@ export async function GET() {
       dnsStarts: people.reduce((sum, row) => sum + row.dnsCount, 0),
       starts: people.reduce((sum, row) => sum + row.startCount, 0),
       entryFeeToPaySek: people.reduce((sum, row) => sum + row.entryFeeToPaySek, 0),
+      lateFeeToPaySek: people.reduce((sum, row) => sum + row.lateFeeToPaySek, 0),
+      otherFeeToPaySek: people.reduce((sum, row) => sum + row.otherFeeToPaySek, 0),
       dnsFeeToPaySek: people.reduce((sum, row) => sum + row.dnsFeeToPaySek, 0),
       totalToPaySek: people.reduce((sum, row) => sum + row.totalToPaySek, 0),
     },

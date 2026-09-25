@@ -12,6 +12,8 @@ describe("buildFeeMailtoLink", () => {
       dnsCount: 0,
       startCount: 0,
       entryFeeToPaySek: 0,
+      lateFeeToPaySek: 0,
+      otherFeeToPaySek: 0,
       dnsFeeToPaySek: 0,
       totalToPaySek: 0,
       feeSek: 0,
@@ -28,9 +30,11 @@ describe("buildFeeMailtoLink", () => {
       dnsCount: 1,
       startCount: 2,
       entryFeeToPaySek: 150,
+      lateFeeToPaySek: 50,
+      otherFeeToPaySek: 120,
       dnsFeeToPaySek: 200,
-      totalToPaySek: 350,
-      feeSek: 350,
+      totalToPaySek: 520,
+      feeSek: 520,
       rows: [
         {
           personId: "1",
@@ -40,7 +44,33 @@ describe("buildFeeMailtoLink", () => {
           date: "2026-05-01",
           className: "D35",
           status: "ok",
-          feeSek: 150,
+          feeSek: 320,
+          fees: [
+            {
+              entryFeeId: "1",
+              name: "Ordinarie anmälningsavgift",
+              amountSek: 150,
+              taxable: true,
+              entryFeeType: null,
+              validToDate: null,
+            },
+            {
+              entryFeeId: "2",
+              name: "Efteranmälan",
+              amountSek: 50,
+              taxable: false,
+              entryFeeType: null,
+              validToDate: null,
+            },
+            {
+              entryFeeId: "3",
+              name: "Beskattningsfri del SM",
+              amountSek: 120,
+              taxable: false,
+              entryFeeType: null,
+              validToDate: null,
+            },
+          ],
           entryId: "1",
         },
         {
@@ -60,9 +90,11 @@ describe("buildFeeMailtoLink", () => {
     expect(href).toContain("mailto:anna@example.com");
     expect(href).toContain(encodeURIComponent("Startavgifter och Ej start"));
     const decoded = decodeURIComponent(href!.split("?")[1] ?? "");
-    expect(decoded).toContain("Anmälningsavgift: 150 kr");
+    expect(decoded).toContain("Anmälan (ordinarie): 150 kr");
+    expect(decoded).toContain("Efteranmälan: 50 kr");
+    expect(decoded).toContain("Övriga tillägg: 120 kr");
     expect(decoded).toContain("Ej start (DNS): 200 kr");
-    expect(decoded).toContain("Totalt att betala: 350 kr");
+    expect(decoded).toContain("Totalt att betala: 520 kr");
     expect(decoded).toContain("Medel-KM");
     expect(decoded).toContain("Natt-KM");
   });
