@@ -211,6 +211,73 @@ describe("dns fee summary", () => {
     expect(detail!.removed).toBe(false);
   });
 
+  it("applies whole-event category waivers to all participants", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.eventWaivers = [
+      {
+        eventId: "50",
+        waiveAnmalan: false,
+        waiveLate: false,
+        waiveOther: true,
+        waiveDns: true,
+      },
+    ];
+    data.members = [
+      { personId: "1", personName: "Anna", email: null },
+      { personId: "2", personName: "Bert", email: null },
+    ];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "50",
+        feeSek: 350,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "1",
+            name: "Ordinarie anmälningsavgift",
+            amountSek: 180,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "2",
+            name: "Efteranmälningsavgift",
+            amountSek: 50,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "3",
+            name: "Tilläggsavgift",
+            amountSek: 120,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+      row({
+        personId: "2",
+        personName: "Bert",
+        eventId: "50",
+        feeSek: 200,
+        status: "dns",
+      }),
+    ];
+    const people = summarizeDnsFeesByPerson(data);
+    const anna = people.find((p) => p.personId === "1")!;
+    const bert = people.find((p) => p.personId === "2")!;
+    expect(anna.entryFeeToPaySek).toBe(180);
+    expect(anna.lateFeeToPaySek).toBe(50);
+    expect(anna.otherFeeToPaySek).toBe(0);
+    expect(bert.dnsFeeToPaySek).toBe(0);
+    expect(bert.totalToPaySek).toBe(0);
+  });
+
   it("waives entry fee for youth/junior classes in Sweden but always charges DNS", () => {
     const data = emptyDnsFeeTracker(2026);
     data.members = [{ personId: "1", personName: "Ada", email: null }];

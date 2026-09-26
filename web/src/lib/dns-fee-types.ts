@@ -95,6 +95,11 @@ export type DnsFeeTrackerData = {
    */
   removedEventIds: string[];
   /**
+   * Per-event category waivers (Anmälan / Efteranmälan / Övrigt / DNS) for all participants.
+   * Survives Eventor re-imports. Applied on top of base rules; manual per-person flags still win.
+   */
+  eventWaivers: DnsFeeEventWaiver[];
+  /**
    * Exact Eventor fee names that are always waived (except efteranmälan).
    * Survives Eventor re-imports. Managed from the unique fee-name list in admin.
    */
@@ -104,6 +109,15 @@ export type DnsFeeTrackerData = {
    * Applied on top of base rules. Survives Eventor re-imports.
    */
   manualExemptions: DnsFeeManualExemption[];
+};
+
+/** Whole-event fee waivers — same columns as manual per-person waivers. */
+export type DnsFeeEventWaiver = {
+  eventId: string;
+  waiveAnmalan: boolean;
+  waiveLate: boolean;
+  waiveOther: boolean;
+  waiveDns: boolean;
 };
 
 export type DnsFeePersonSummary = {
@@ -147,6 +161,7 @@ export function emptyDnsFeeTracker(year = 2026): DnsFeeTrackerData {
     members: [],
     exemptEventIds: [],
     removedEventIds: [],
+    eventWaivers: [],
     exemptFeeNames: [],
     manualExemptions: [],
   };
@@ -240,6 +255,37 @@ export function getManualWaiverFlags(
     waiveOther: Boolean(item.waiveOther),
     waiveDns: Boolean(item.waiveDns),
   };
+}
+
+export function normalizeDnsFeeEventWaiver(value: unknown): DnsFeeEventWaiver | null {
+  if (!value || typeof value !== "object") return null;
+  const raw = value as Record<string, unknown>;
+  const eventId = String(raw.eventId ?? "").trim();
+  if (!eventId) return null;
+  return {
+    eventId,
+    waiveAnmalan: Boolean(raw.waiveAnmalan),
+    waiveLate: Boolean(raw.waiveLate),
+    waiveOther: Boolean(raw.waiveOther),
+    waiveDns: Boolean(raw.waiveDns),
+  };
+}
+
+export function getEventWaiverFlags(
+  data: DnsFeeTrackerData,
+  eventId: string,
+): DnsFeeManualWaiverFlags {
+  const item = (data.eventWaivers ?? []).find((w) => w.eventId === eventId);
+  return {
+    waiveAnmalan: Boolean(item?.waiveAnmalan),
+    waiveLate: Boolean(item?.waiveLate),
+    waiveOther: Boolean(item?.waiveOther),
+    waiveDns: Boolean(item?.waiveDns),
+  };
+}
+
+export function hasAnyEventWaiver(flags: DnsFeeManualWaiverFlags): boolean {
+  return flags.waiveAnmalan || flags.waiveLate || flags.waiveOther || flags.waiveDns;
 }
 
 export function hasAnyManualWaiver(flags: DnsFeeManualWaiverFlags): boolean {
@@ -543,13 +589,13 @@ export function rowGrossSplit(row: DnsFeeRow): {
 }
 
 /**
- * Split payable amounts (base rules first, then optional per-row manual checkboxes):
+ * Split payable amounts (base rules first, then event-level and per-row waivers):
  * - Fee names in exemptFeeNames: waived (except efteranmälan)
  * - Anmälan (ordinarie): waived for exempt events (OK/entered) and
  *   youth/junior in Sweden (OK/entered/DNF)
- * - Efteranmälan: charged unless manually waived
- * - Övriga tillägg: charged unless fee-name or manually waived
- * - DNS: payable fee (minus name-waived) unless manually waived
+ * - Efteranmälan: charged unless event/manual waived
+ * - Övriga tillägg: charged unless fee-name or event/manual waived
+ * - DNS: payable fee (minus name-waived) unless event/manual waived
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
@@ -566,6 +612,7 @@ export function rowPayableSplit(
     data.exemptFeeNames ?? [],
   );
   const status = normalizeDnsFeeStatus(row.status);
+  const eventFlags = getEventWaiverFlags(data, row.eventId);
   const flags = getManualWaiverFlags(data, row.personId, row.eventId);
 
   let entryFeeToPaySek = 0;
@@ -584,10 +631,10 @@ export function rowPayableSplit(
     otherFeeToPaySek = otherSek;
   }
 
-  if (flags.waiveAnmalan) entryFeeToPaySek = 0;
-  if (flags.waiveLate) lateFeeToPaySek = 0;
-  if (flags.waiveOther) otherFeeToPaySek = 0;
-  if (flags.waiveDns) dnsFeeToPaySek = 0;
+  if (eventFlags.waiveAnmalan || flags.waiveAnmalan) entryFeeToPaySek = 0;
+  if (eventFlags.waiveLate || flags.waiveLate) lateFeeToPaySek = 0;
+  if (eventFlags.waiveOther || flags.waiveOther) otherFeeToPaySek = 0;
+  if (eventFlags.waiveDns || flags.waiveDns) dnsFeeToPaySek = 0;
 
   return {
     entryFeeToPaySek,

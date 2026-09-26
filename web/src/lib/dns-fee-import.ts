@@ -495,6 +495,7 @@ export async function importDnsFeesFromEventor(
     })),
     exemptEventIds: [...new Set(existing.exemptEventIds.map(String))],
     removedEventIds: [...new Set((existing.removedEventIds ?? []).map(String))],
+    eventWaivers: [...(existing.eventWaivers ?? [])],
     exemptFeeNames: [...new Set((existing.exemptFeeNames ?? []).map(String))],
     manualExemptions: [...(existing.manualExemptions ?? [])],
   };

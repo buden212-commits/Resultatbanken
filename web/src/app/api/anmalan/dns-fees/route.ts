@@ -25,6 +25,7 @@ export async function GET() {
     importedAt: data.importedAt,
     exemptEventIds: data.exemptEventIds,
     removedEventIds: data.removedEventIds ?? [],
+    eventWaivers: data.eventWaivers ?? [],
     exemptFeeNames: data.exemptFeeNames ?? [],
     manualExemptions: data.manualExemptions ?? [],
     people,

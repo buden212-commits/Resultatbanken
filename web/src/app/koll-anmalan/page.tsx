@@ -29,6 +29,7 @@ export default async function KollAnmalanPage() {
       importedAt: data.importedAt,
       exemptEventIds: data.exemptEventIds,
       removedEventIds: data.removedEventIds ?? [],
+      eventWaivers: data.eventWaivers ?? [],
       exemptFeeNames: data.exemptFeeNames ?? [],
       manualExemptions: data.manualExemptions ?? [],
       people,

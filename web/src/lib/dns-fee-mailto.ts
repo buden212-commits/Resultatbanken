@@ -58,6 +58,7 @@ export function buildFeeMailtoLink(
     exemptEventIds,
     removedEventIds: [],
     exemptFeeNames,
+    eventWaivers: [],
     manualExemptions,
   };
 

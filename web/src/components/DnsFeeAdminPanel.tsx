@@ -5,6 +5,7 @@ import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type {
   DnsFeeEventRef,
+  DnsFeeEventWaiver,
   DnsFeeManualExemption,
   DnsFeeNameVariant,
   DnsFeePersonSummary,
@@ -47,6 +48,7 @@ type Payload = {
   importedAt: string | null;
   exemptEventIds: string[];
   removedEventIds: string[];
+  eventWaivers: DnsFeeEventWaiver[];
   exemptFeeNames: string[];
   manualExemptions: DnsFeeManualExemption[];
   people: DnsFeePersonSummary[];
@@ -333,6 +335,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     members: [],
     exemptEventIds: data.exemptEventIds,
     removedEventIds,
+    eventWaivers: data.eventWaivers ?? [],
     exemptFeeNames,
     manualExemptions: data.manualExemptions ?? [],
   };

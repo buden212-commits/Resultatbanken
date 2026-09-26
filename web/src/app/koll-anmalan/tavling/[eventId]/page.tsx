@@ -57,6 +57,7 @@ export default async function KollAnmalanEventPage({ params }: Props) {
               year: data.year,
               exemptEventIds: data.exemptEventIds,
               removedEventIds: data.removedEventIds ?? [],
+              eventWaivers: data.eventWaivers ?? [],
               exemptFeeNames: data.exemptFeeNames ?? [],
               manualExemptions: data.manualExemptions ?? [],
               event,

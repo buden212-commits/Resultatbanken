@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useCallback, useState } from "react";
 
-import type { DnsFeeEventDetail, DnsFeeManualWaiverFlags } from "@/lib/dns-fee-types";
+import type { DnsFeeEventDetail, DnsFeeEventWaiver, DnsFeeManualWaiverFlags } from "@/lib/dns-fee-types";
 import {
   classifyDnsFeeKind,
+  getEventWaiverFlags,
   getManualWaiverFlags,
   isFeeNameExempt,
   isYouthJuniorEntryFeeExempt,
@@ -49,6 +50,7 @@ type EventPayload = {
   year: number;
   exemptEventIds: string[];
   removedEventIds: string[];
+  eventWaivers: DnsFeeEventWaiver[];
   exemptFeeNames: string[];
   manualExemptions: DnsFeeTrackerData["manualExemptions"];
   event: DnsFeeEventDetail;
@@ -89,6 +91,27 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
     }
   }
 
+  async function setEventWaiverFlag(flag: keyof DnsFeeManualWaiverFlags, value: boolean) {
+    setError(null);
+    setBusy(true);
+    try {
+      const response = await fetch("/api/anmalan/dns-fees/event-waivers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ eventId: data.event.eventId, action: "set", [flag]: value }),
+      });
+      const json = (await response.json()) as { error?: string };
+      if (!response.ok) {
+        throw new Error(json.error || "Kunde inte spara tävlingsundantag.");
+      }
+      await refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Kunde inte spara tävlingsundantag.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function setManualWaiverFlag(
     personId: string,
     flag: keyof DnsFeeManualWaiverFlags,
@@ -123,11 +146,45 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
     members: [],
     exemptEventIds: data.exemptEventIds,
     removedEventIds: data.removedEventIds,
+    eventWaivers: data.eventWaivers ?? [],
     exemptFeeNames: data.exemptFeeNames,
     manualExemptions: data.manualExemptions,
   };
 
   const event = data.event;
+  const eventFlags = getEventWaiverFlags(trackerForSplit, event.eventId);
+  const eventWaiverUi = {
+    waiveAnmalan: eventFlags.waiveAnmalan || event.exempt,
+    waiveLate: eventFlags.waiveLate,
+    waiveOther: eventFlags.waiveOther,
+    waiveDns: eventFlags.waiveDns,
+  };
+  const eventPayableParts = [
+    {
+      label: "Anmälan",
+      amount: event.totals.entryFeeToPaySek,
+      flag: "waiveAnmalan" as const,
+      waived: eventWaiverUi.waiveAnmalan,
+    },
+    {
+      label: "Efteranm.",
+      amount: event.totals.lateFeeToPaySek,
+      flag: "waiveLate" as const,
+      waived: eventWaiverUi.waiveLate,
+    },
+    {
+      label: "Övrigt",
+      amount: event.totals.otherFeeToPaySek,
+      flag: "waiveOther" as const,
+      waived: eventWaiverUi.waiveOther,
+    },
+    {
+      label: "DNS",
+      amount: event.totals.dnsFeeToPaySek,
+      flag: "waiveDns" as const,
+      waived: eventWaiverUi.waiveDns,
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -144,11 +201,6 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
             Tävlingen ingår inte i koll på anmälan. Alla kostnader undantas tills du återställer
             den.
           </p>
-        </div>
-      ) : event.exempt ? (
-        <div className="rounded-xl border border-amber-100 bg-amber-50/60 px-4 py-3 text-sm text-amber-900">
-          Ordinarie anmälan är undantagen för alla deltagare. Efteranmälan och övrigt kan fortfarande
-          räknas.
         </div>
       ) : null}
 
@@ -180,28 +232,44 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
               Sätt som borttagen tävling
             </button>
           )}
-          {!event.removed && !event.exempt ? (
-            <button
-              type="button"
-              className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-              disabled={busy}
-              onClick={() => void setEventMode("add", "exempt")}
-            >
-              Undanta ordinarie avgift
-            </button>
-          ) : null}
-          {!event.removed && event.exempt ? (
-            <button
-              type="button"
-              className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-              disabled={busy}
-              onClick={() => void setEventMode("remove", "exempt")}
-            >
-              Återställ undantag
-            </button>
-          ) : null}
         </div>
       </div>
+
+      {!event.removed ? (
+        <section className="rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm sm:px-4">
+          <p className="text-sm font-medium text-slate-800">Undantag för hela tävlingen</p>
+          <p className="mt-1 text-xs text-slate-500">
+            Gäller alla deltagare. Du kan fortfarande undanta enskilda personer nedan.
+          </p>
+          <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {eventPayableParts.map((part) => (
+              <div key={part.flag} className="rounded-lg bg-slate-50 px-2.5 py-2">
+                <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
+                  {part.label}
+                </p>
+                <p
+                  className={`mt-0.5 text-sm tabular-nums font-semibold ${
+                    part.waived ? "text-violet-700" : "text-slate-800"
+                  }`}
+                >
+                  {formatSek(part.amount)} kr
+                </p>
+                <label className="mt-2 flex cursor-pointer items-center gap-1.5 text-xs text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={part.waived}
+                    disabled={busy}
+                    onChange={(event) =>
+                      void setEventWaiverFlag(part.flag, event.target.checked)
+                    }
+                  />
+                  <span>Undanta</span>
+                </label>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <ul className="space-y-2">
         {event.participants.map((participant) => {
@@ -238,24 +306,28 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
               amount: participant.entryFeeToPaySek,
               flag: "waiveAnmalan" as const,
               waived: waiverFlags.waiveAnmalan,
+              eventWaived: eventWaiverUi.waiveAnmalan,
             },
             {
               label: "Efteranm.",
               amount: participant.lateFeeToPaySek,
               flag: "waiveLate" as const,
               waived: waiverFlags.waiveLate,
+              eventWaived: eventWaiverUi.waiveLate,
             },
             {
               label: "Övrigt",
               amount: participant.otherFeeToPaySek,
               flag: "waiveOther" as const,
               waived: waiverFlags.waiveOther,
+              eventWaived: eventWaiverUi.waiveOther,
             },
             {
               label: "DNS",
               amount: participant.dnsFeeToPaySek,
               flag: "waiveDns" as const,
               waived: waiverFlags.waiveDns,
+              eventWaived: eventWaiverUi.waiveDns,
             },
           ];
 
@@ -313,7 +385,7 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
                     </p>
                     <p
                       className={`mt-0.5 text-sm tabular-nums font-semibold ${
-                        part.waived ? "text-violet-700" : "text-slate-800"
+                        part.waived || part.eventWaived ? "text-violet-700" : "text-slate-800"
                       }`}
                     >
                       {formatSek(part.amount)} kr
@@ -322,15 +394,21 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
                       <input
                         type="checkbox"
                         checked={part.waived}
-                        onChange={(event) =>
+                        disabled={part.eventWaived}
+                        title={
+                          part.eventWaived
+                            ? "Undantagen för hela tävlingen"
+                            : undefined
+                        }
+                        onChange={(changeEvent) =>
                           void setManualWaiverFlag(
                             participant.personId,
                             part.flag,
-                            event.target.checked,
+                            changeEvent.target.checked,
                           )
                         }
                       />
-                      <span>Undanta</span>
+                      <span>{part.eventWaived ? "Hela tävlingen" : "Undanta"}</span>
                     </label>
                   </div>
                 ))}

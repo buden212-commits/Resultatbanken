@@ -24,6 +24,7 @@ export async function GET(_request: Request, { params }: Props) {
     year: data.year,
     exemptEventIds: data.exemptEventIds,
     removedEventIds: data.removedEventIds ?? [],
+    eventWaivers: data.eventWaivers ?? [],
     exemptFeeNames: data.exemptFeeNames ?? [],
     manualExemptions: data.manualExemptions ?? [],
     event,
