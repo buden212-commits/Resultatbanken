@@ -863,184 +863,165 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                         </td>
                       </tr>
                       {open ? (
-                        <tr className="border-b border-slate-100 bg-slate-50/50">
+                        <tr className="border-b border-slate-100 bg-slate-50/70">
                           <td colSpan={7} className="px-3 py-3 sm:px-4">
-                            <table className="min-w-full text-xs sm:text-sm">
-                              <thead>
-                                <tr className="text-left text-slate-400">
-                                  <th className="py-1 pr-3">Datum</th>
-                                  <th className="py-1 pr-3">Tävling</th>
-                                  <th className="py-1 pr-3">Klass</th>
-                                  <th className="py-1 pr-3">Status</th>
-                                  <th className="py-1 pr-3">Avgift</th>
-                                  <th className="py-1 pr-3">Anmälan</th>
-                                  <th className="py-1 pr-3">Efteranm.</th>
-                                  <th className="py-1 pr-3">Övrigt</th>
-                                  <th className="py-1 pr-3">DNS</th>
-                                  <th className="py-1">Åtgärd</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {person.rows.map((row) => {
-                                  const eventExempt = data.exemptEventIds.includes(row.eventId);
-                                  const youthJunior = isYouthJuniorEntryFeeExempt(row);
-                                  const waiverFlags = getManualWaiverFlags(
-                                    trackerForSplit,
-                                    row.personId,
-                                    row.eventId,
-                                  );
-                                  const manualExempt = isManualExempt(
-                                    trackerForSplit,
-                                    row.personId,
-                                    row.eventId,
-                                  );
-                                  const split = rowPayableSplit(trackerForSplit, row);
-                                  return (
-                                    <tr key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}>
-                                      <td className="py-1 pr-3 tabular-nums text-slate-600">
-                                        {formatDate(row.date)}
-                                      </td>
-                                      <td className="py-1 pr-3 text-slate-700">
-                                        {row.eventName}
-                                        {manualExempt ? (
-                                          <span className="ml-2 font-medium text-violet-700">
-                                            (manuellt undantag)
+                            <ul className="space-y-2">
+                              {person.rows.map((row) => {
+                                const eventExempt = data.exemptEventIds.includes(row.eventId);
+                                const youthJunior = isYouthJuniorEntryFeeExempt(row);
+                                const waiverFlags = getManualWaiverFlags(
+                                  trackerForSplit,
+                                  row.personId,
+                                  row.eventId,
+                                );
+                                const manualExempt = isManualExempt(
+                                  trackerForSplit,
+                                  row.personId,
+                                  row.eventId,
+                                );
+                                const split = rowPayableSplit(trackerForSplit, row);
+                                const extraFees = (row.fees ?? []).filter((fee) => {
+                                  const kind = classifyDnsFeeKind(fee);
+                                  return kind === "late" || kind === "other";
+                                });
+                                const nameExemptFees = (row.fees ?? []).filter(
+                                  (fee) =>
+                                    classifyDnsFeeKind(fee) !== "late" &&
+                                    isFeeNameExempt(exemptFeeNames, fee.name),
+                                );
+                                const payableParts = [
+                                  { label: "Anmälan", amount: split.entryFeeToPaySek, waived: waiverFlags.waiveAnmalan },
+                                  { label: "Efteranm.", amount: split.lateFeeToPaySek, waived: waiverFlags.waiveLate },
+                                  { label: "Övrigt", amount: split.otherFeeToPaySek, waived: waiverFlags.waiveOther },
+                                  { label: "DNS", amount: split.dnsFeeToPaySek, waived: waiverFlags.waiveDns },
+                                ] as const;
+
+                                return (
+                                  <li
+                                    key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}
+                                    className="rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm sm:px-4"
+                                  >
+                                    <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                                      <div className="min-w-0">
+                                        <p className="font-medium text-slate-900">
+                                          <span className="tabular-nums text-slate-500">
+                                            {formatDate(row.date)}
                                           </span>
-                                        ) : eventExempt ? (
-                                          <span className="ml-2 text-amber-700">(undantagen)</span>
-                                        ) : null}
-                                      </td>
-                                      <td className="py-1 pr-3 text-slate-600">
-                                        {row.className}
-                                        {youthJunior ? (
-                                          <span className="ml-2 text-amber-700">(ungdom/junior)</span>
-                                        ) : null}
-                                      </td>
-                                      <td className="py-1 pr-3 text-slate-600">
-                                        {statusLabel(row.status)}
-                                        {row.status === "dns" && row.dnsReason ? (
-                                          <span className="mt-0.5 block max-w-xs text-xs font-normal normal-case tracking-normal text-slate-500">
-                                            Orsak: {row.dnsReason}
-                                          </span>
-                                        ) : null}
-                                      </td>
-                                      <td className="py-1 pr-3 tabular-nums text-slate-600">
-                                        {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
-                                        {row.fees && row.fees.length > 0
-                                          ? (() => {
-                                              const extraFees = row.fees.filter((fee) => {
-                                                const kind = classifyDnsFeeKind(fee);
-                                                return kind === "late" || kind === "other";
-                                              });
-                                              const nameExemptFees = (row.fees ?? []).filter(
-                                                (fee) =>
-                                                  classifyDnsFeeKind(fee) !== "late" &&
-                                                  isFeeNameExempt(exemptFeeNames, fee.name),
-                                              );
-                                              if (extraFees.length === 0 && nameExemptFees.length === 0) {
-                                                return null;
-                                              }
-                                              return (
-                                                <ul className="mt-1 space-y-0.5 text-left text-xs font-normal normal-case tracking-normal text-slate-500">
-                                                  {extraFees.map((fee) => (
-                                                    <li key={fee.entryFeeId}>
-                                                      {fee.name} · {formatSek(fee.amountSek)} kr
-                                                    </li>
-                                                  ))}
-                                                  {nameExemptFees.map((fee) => (
-                                                    <li key={`exempt-${fee.entryFeeId}`} className="text-violet-700">
-                                                      {fee.name} · {formatSek(fee.amountSek)} kr
-                                                      {" "}
-                                                      (undantaget avgiftsnamn)
-                                                    </li>
-                                                  ))}
-                                                </ul>
-                                              );
-                                            })()
-                                          : null}
-                                      </td>
-                                      <td
-                                        className={`py-1 pr-3 tabular-nums ${
-                                          waiverFlags.waiveAnmalan ? "text-violet-700" : "text-slate-800"
-                                        }`}
-                                      >
-                                        {formatSek(split.entryFeeToPaySek)} kr
-                                      </td>
-                                      <td
-                                        className={`py-1 pr-3 tabular-nums ${
-                                          waiverFlags.waiveLate ? "text-violet-700" : "text-slate-800"
-                                        }`}
-                                      >
-                                        {formatSek(split.lateFeeToPaySek)} kr
-                                      </td>
-                                      <td
-                                        className={`py-1 pr-3 tabular-nums ${
-                                          waiverFlags.waiveOther ? "text-violet-700" : "text-slate-800"
-                                        }`}
-                                      >
-                                        {formatSek(split.otherFeeToPaySek)} kr
-                                      </td>
-                                      <td
-                                        className={`py-1 pr-3 tabular-nums ${
-                                          waiverFlags.waiveDns ? "text-violet-700" : "text-slate-800"
-                                        }`}
-                                      >
-                                        {formatSek(split.dnsFeeToPaySek)} kr
-                                      </td>
-                                      <td className="py-1 align-top">
-                                        <div className="flex flex-col items-start gap-1">
-                                          <div className="flex flex-col gap-1 text-xs text-slate-700">
-                                            {(
-                                              [
-                                                ["waiveAnmalan", "Anmälan", waiverFlags.waiveAnmalan],
-                                                ["waiveLate", "Efteranmälan", waiverFlags.waiveLate],
-                                                ["waiveOther", "Övrigt", waiverFlags.waiveOther],
-                                                ["waiveDns", "DNS", waiverFlags.waiveDns],
-                                              ] as const
-                                            ).map(([flag, label, checked]) => (
-                                              <label
-                                                key={flag}
-                                                className="flex cursor-pointer items-center gap-1.5"
-                                              >
-                                                <input
-                                                  type="checkbox"
-                                                  checked={checked}
-                                                  onChange={(event) =>
-                                                    void setManualWaiverFlag(
-                                                      row.personId,
-                                                      row.eventId,
-                                                      flag,
-                                                      event.target.checked,
-                                                    )
-                                                  }
-                                                />
-                                                <span>Undanta {label}</span>
-                                              </label>
-                                            ))}
-                                          </div>
-                                          {!eventExempt ? (
-                                            <button
-                                              type="button"
-                                              className="text-left text-xs font-medium text-amber-800 hover:underline"
-                                              onClick={() =>
-                                                void setExemptions([row.eventId], "add")
-                                              }
-                                              title="Undantar tävlingen för alla deltagare (samma som undantagna tävlingar)"
-                                            >
-                                              Undanta tävling för alla
-                                            </button>
-                                          ) : (
-                                            <span className="text-xs text-amber-700">
-                                              Tävlingen undantagen
+                                          <span className="mx-2 text-slate-300">·</span>
+                                          {row.eventName}
+                                          {manualExempt ? (
+                                            <span className="ml-2 text-sm font-medium text-violet-700">
+                                              manuellt undantag
                                             </span>
-                                          )}
+                                          ) : eventExempt ? (
+                                            <span className="ml-2 text-sm font-medium text-amber-700">
+                                              undantagen
+                                            </span>
+                                          ) : null}
+                                        </p>
+                                        <p className="mt-0.5 text-sm text-slate-500">
+                                          {row.className}
+                                          {youthJunior ? " · ungdom/junior" : ""}
+                                          {" · "}
+                                          {statusLabel(row.status)}
+                                          {row.status === "dns" && row.dnsReason
+                                            ? ` · Orsak: ${row.dnsReason}`
+                                            : ""}
+                                        </p>
+                                      </div>
+                                      <p className="shrink-0 text-sm tabular-nums font-semibold text-slate-800">
+                                        {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
+                                        <span className="ml-1 font-normal text-slate-400">totalt</span>
+                                      </p>
+                                    </div>
+
+                                    {extraFees.length > 0 || nameExemptFees.length > 0 ? (
+                                      <ul className="mt-2 space-y-0.5 text-xs text-slate-500">
+                                        {extraFees.map((fee) => (
+                                          <li key={fee.entryFeeId}>
+                                            {fee.name} · {formatSek(fee.amountSek)} kr
+                                          </li>
+                                        ))}
+                                        {nameExemptFees.map((fee) => (
+                                          <li key={`exempt-${fee.entryFeeId}`} className="text-violet-700">
+                                            {fee.name} · {formatSek(fee.amountSek)} kr (undantaget
+                                            avgiftsnamn)
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    ) : null}
+
+                                    <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                                      {payableParts.map((part) => (
+                                        <div
+                                          key={part.label}
+                                          className="rounded-lg bg-slate-50 px-2.5 py-2"
+                                        >
+                                          <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
+                                            {part.label}
+                                          </p>
+                                          <p
+                                            className={`mt-0.5 text-sm tabular-nums font-semibold ${
+                                              part.waived ? "text-violet-700" : "text-slate-800"
+                                            }`}
+                                          >
+                                            {formatSek(part.amount)} kr
+                                          </p>
                                         </div>
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </table>
+                                      ))}
+                                    </div>
+
+                                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-3">
+                                      <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-slate-700">
+                                        {(
+                                          [
+                                            ["waiveAnmalan", "Anmälan", waiverFlags.waiveAnmalan],
+                                            ["waiveLate", "Efteranmälan", waiverFlags.waiveLate],
+                                            ["waiveOther", "Övrigt", waiverFlags.waiveOther],
+                                            ["waiveDns", "DNS", waiverFlags.waiveDns],
+                                          ] as const
+                                        ).map(([flag, label, checked]) => (
+                                          <label
+                                            key={flag}
+                                            className="flex cursor-pointer items-center gap-1.5"
+                                          >
+                                            <input
+                                              type="checkbox"
+                                              checked={checked}
+                                              onChange={(event) =>
+                                                void setManualWaiverFlag(
+                                                  row.personId,
+                                                  row.eventId,
+                                                  flag,
+                                                  event.target.checked,
+                                                )
+                                              }
+                                            />
+                                            <span>Undanta {label}</span>
+                                          </label>
+                                        ))}
+                                      </div>
+                                      {!eventExempt ? (
+                                        <button
+                                          type="button"
+                                          className="text-xs font-medium text-amber-800 hover:underline"
+                                          onClick={() =>
+                                            void setExemptions([row.eventId], "add", "exempt")
+                                          }
+                                          title="Undantar tävlingen för alla deltagare (samma som undantagna tävlingar)"
+                                        >
+                                          Undanta tävling för alla
+                                        </button>
+                                      ) : (
+                                        <span className="text-xs text-amber-700">
+                                          Tävlingen undantagen
+                                        </span>
+                                      )}
+                                    </div>
+                                  </li>
+                                );
+                              })}
+                            </ul>
                           </td>
                         </tr>
                       ) : null}
