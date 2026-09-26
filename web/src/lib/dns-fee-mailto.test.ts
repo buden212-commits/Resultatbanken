@@ -3,6 +3,22 @@ import { describe, expect, it } from "vitest";
 import { buildFeeMailtoLink } from "./dns-fee-mailto";
 import type { DnsFeePersonSummary } from "./dns-fee-types";
 
+function emptyPersonFields() {
+  return {
+    entryFeeGrossSek: 0,
+    lateFeeGrossSek: 0,
+    otherFeeGrossSek: 0,
+    dnsFeeGrossSek: 0,
+    totalGrossSek: 0,
+    entryFeeToPaySek: 0,
+    lateFeeToPaySek: 0,
+    otherFeeToPaySek: 0,
+    dnsFeeToPaySek: 0,
+    totalToPaySek: 0,
+    feeSek: 0,
+  };
+}
+
 describe("buildFeeMailtoLink", () => {
   it("returns null without email", () => {
     const person: DnsFeePersonSummary = {
@@ -11,12 +27,7 @@ describe("buildFeeMailtoLink", () => {
       email: null,
       dnsCount: 0,
       startCount: 0,
-      entryFeeToPaySek: 0,
-      lateFeeToPaySek: 0,
-      otherFeeToPaySek: 0,
-      dnsFeeToPaySek: 0,
-      totalToPaySek: 0,
-      feeSek: 0,
+      ...emptyPersonFields(),
       rows: [],
     };
     expect(buildFeeMailtoLink(person, [])).toBeNull();
@@ -29,6 +40,11 @@ describe("buildFeeMailtoLink", () => {
       email: "anna@example.com",
       dnsCount: 1,
       startCount: 2,
+      entryFeeGrossSek: 150,
+      lateFeeGrossSek: 50,
+      otherFeeGrossSek: 120,
+      dnsFeeGrossSek: 200,
+      totalGrossSek: 520,
       entryFeeToPaySek: 150,
       lateFeeToPaySek: 50,
       otherFeeToPaySek: 120,
@@ -106,6 +122,11 @@ describe("buildFeeMailtoLink", () => {
       email: "anna@example.com",
       dnsCount: 1,
       startCount: 2,
+      entryFeeGrossSek: 150,
+      lateFeeGrossSek: 0,
+      otherFeeGrossSek: 0,
+      dnsFeeGrossSek: 200,
+      totalGrossSek: 350,
       entryFeeToPaySek: 150,
       lateFeeToPaySek: 0,
       otherFeeToPaySek: 0,
@@ -141,7 +162,17 @@ describe("buildFeeMailtoLink", () => {
       person,
       [],
       2026,
-      [{ personId: "1", eventId: "20", createdAt: "2026-01-01T00:00:00.000Z" }],
+      [
+        {
+          personId: "1",
+          eventId: "20",
+          createdAt: "2026-01-01T00:00:00.000Z",
+          waiveAnmalan: false,
+          waiveLate: false,
+          waiveOther: false,
+          waiveDns: true,
+        },
+      ],
     );
     const decoded = decodeURIComponent(href!.split("?")[1] ?? "");
     expect(decoded).toContain("Medel-KM");

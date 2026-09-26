@@ -73,7 +73,7 @@ describe("dns fee summary", () => {
     expect(bert.dnsFeeToPaySek).toBe(0);
   });
 
-  it("includes members without starts", () => {
+  it("excludes people with 0 kr gross fees", () => {
     const data = emptyDnsFeeTracker(2026);
     data.members = [
       { personId: "1", personName: "Anna", email: null },
@@ -82,11 +82,10 @@ describe("dns fee summary", () => {
     data.rows = [row({ personId: "1", personName: "Anna", eventId: "200", feeSek: 100, status: "ok" })];
 
     const people = summarizeDnsFeesByPerson(data);
-    expect(people).toHaveLength(2);
-    const cecilia = people.find((p) => p.personId === "3")!;
-    expect(cecilia.startCount).toBe(0);
-    expect(cecilia.entryFeeToPaySek).toBe(0);
-    expect(cecilia.dnsFeeToPaySek).toBe(0);
+    expect(people).toHaveLength(1);
+    expect(people[0].personId).toBe("1");
+    expect(people[0].entryFeeGrossSek).toBe(100);
+    expect(people[0].totalGrossSek).toBe(100);
   });
 
   it("waives only ordinary fees on exempt events; late/other still charged", () => {
@@ -235,12 +234,28 @@ describe("dns fee summary", () => {
     expect(anna.totalToPaySek).toBe(390);
   });
 
-  it("waives ordinary/other/DNS for manual exemptions but never efteranmälan", () => {
+  it("applies per-column manual waiver checkboxes on top of base rules", () => {
     const data = emptyDnsFeeTracker(2026);
     data.members = [{ personId: "1", personName: "Anna", email: null }];
     data.manualExemptions = [
-      { personId: "1", eventId: "10", createdAt: "2026-01-01T00:00:00.000Z" },
-      { personId: "1", eventId: "20", createdAt: "2026-01-01T00:00:00.000Z" },
+      {
+        personId: "1",
+        eventId: "10",
+        createdAt: "2026-01-01T00:00:00.000Z",
+        waiveAnmalan: false,
+        waiveLate: false,
+        waiveOther: false,
+        waiveDns: true,
+      },
+      {
+        personId: "1",
+        eventId: "20",
+        createdAt: "2026-01-01T00:00:00.000Z",
+        waiveAnmalan: true,
+        waiveLate: true,
+        waiveOther: false,
+        waiveDns: false,
+      },
     ];
     data.rows = [
       row({
@@ -297,8 +312,8 @@ describe("dns fee summary", () => {
     const anna = summarizeDnsFeesByPerson(data)[0];
     expect(anna.dnsFeeToPaySek).toBe(0);
     expect(anna.entryFeeToPaySek).toBe(0);
-    expect(anna.lateFeeToPaySek).toBe(100); // 50 DNS-row + 50 OK-row
-    expect(anna.totalToPaySek).toBe(100);
+    expect(anna.lateFeeToPaySek).toBe(0);
+    expect(anna.totalToPaySek).toBe(0);
   });
 
   it("waives exact fee names listed in exemptFeeNames", () => {

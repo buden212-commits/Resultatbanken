@@ -53,12 +53,32 @@ export type DnsFeeMember = {
   email: string | null;
 };
 
-/** Per-person manual fee waiver for one event — survives Eventor re-imports. */
+/** Per-person manual fee waivers for one event — survives Eventor re-imports. */
 export type DnsFeeManualExemption = {
   personId: string;
   eventId: string;
-  /** ISO timestamp when the exemption was created. */
+  /** ISO timestamp when the exemption was created/updated. */
   createdAt: string;
+  /** Waive Anmälan (ordinarie) for this person/event. */
+  waiveAnmalan: boolean;
+  /** Waive Efteranmälan for this person/event. */
+  waiveLate: boolean;
+  /** Waive Övrigt for this person/event. */
+  waiveOther: boolean;
+  /** Waive DNS-kostnad for this person/event. */
+  waiveDns: boolean;
+};
+
+export type DnsFeeManualWaiverFlags = Pick<
+  DnsFeeManualExemption,
+  "waiveAnmalan" | "waiveLate" | "waiveOther" | "waiveDns"
+>;
+
+export const EMPTY_MANUAL_WAIVER_FLAGS: DnsFeeManualWaiverFlags = {
+  waiveAnmalan: false,
+  waiveLate: false,
+  waiveOther: false,
+  waiveDns: false,
 };
 
 export type DnsFeeTrackerData = {
@@ -75,8 +95,8 @@ export type DnsFeeTrackerData = {
    */
   exemptFeeNames: string[];
   /**
-   * Manual per-person/event cost removals. Waives ordinary/other/DNS but never efteranmälan.
-   * Persisted separately so Eventor imports keep them.
+   * Manual per-person/event cost waivers (Anmälan / Efteranmälan / Övrigt / DNS).
+   * Applied on top of base rules. Survives Eventor re-imports.
    */
   manualExemptions: DnsFeeManualExemption[];
 };
@@ -89,13 +109,23 @@ export type DnsFeePersonSummary = {
   dnsCount: number;
   /** Number of imported starts (all statuses). */
   startCount: number;
+  /** Ordinarie / grundavgift innan undantag. */
+  entryFeeGrossSek: number;
+  /** Efteranmälan innan undantag. */
+  lateFeeGrossSek: number;
+  /** Övriga tillägg innan undantag. */
+  otherFeeGrossSek: number;
+  /** DNS-kostnad innan undantag. */
+  dnsFeeGrossSek: number;
+  /** Summa innan undantag. */
+  totalGrossSek: number;
   /** Ordinarie / grundavgift att betala (efter undantag). */
   entryFeeToPaySek: number;
   /** Efteranmälan att betala (efter undantag). */
   lateFeeToPaySek: number;
   /** Övriga tillägg att betala (efter undantag). */
   otherFeeToPaySek: number;
-  /** DNS-kostnad att betala (DNS always charged). */
+  /** DNS-kostnad att betala (efter undantag). */
   dnsFeeToPaySek: number;
   /** entryFeeToPaySek + lateFeeToPaySek + otherFeeToPaySek + dnsFeeToPaySek */
   totalToPaySek: number;
@@ -130,7 +160,84 @@ export function normalizeDnsFeeManualExemption(value: unknown): DnsFeeManualExem
     typeof raw.createdAt === "string" && raw.createdAt.trim()
       ? raw.createdAt.trim()
       : new Date(0).toISOString();
-  return { personId, eventId, createdAt };
+
+  const hasFlags =
+    "waiveAnmalan" in raw ||
+    "waiveLate" in raw ||
+    "waiveOther" in raw ||
+    "waiveDns" in raw;
+
+  // Legacy records were a single on/off waiver (entry+other+DNS, not late).
+  if (!hasFlags) {
+    return {
+      personId,
+      eventId,
+      createdAt,
+      waiveAnmalan: true,
+      waiveLate: false,
+      waiveOther: true,
+      waiveDns: true,
+    };
+  }
+
+  return {
+    personId,
+    eventId,
+    createdAt,
+    waiveAnmalan: Boolean(raw.waiveAnmalan),
+    waiveLate: Boolean(raw.waiveLate),
+    waiveOther: Boolean(raw.waiveOther),
+    waiveDns: Boolean(raw.waiveDns),
+  };
+}
+
+export function getManualExemption(
+  data: DnsFeeTrackerData,
+  personId: string,
+  eventId: string,
+): DnsFeeManualExemption | null {
+  const key = manualExemptionKey(personId, eventId);
+  return (
+    (data.manualExemptions ?? []).find(
+      (item) => manualExemptionKey(item.personId, item.eventId) === key,
+    ) ?? null
+  );
+}
+
+export function getManualWaiverFlags(
+  data: DnsFeeTrackerData,
+  personId: string,
+  eventId: string,
+): DnsFeeManualWaiverFlags {
+  const item = getManualExemption(data, personId, eventId);
+  if (!item) return { ...EMPTY_MANUAL_WAIVER_FLAGS };
+
+  const hasFlags =
+    typeof item.waiveAnmalan === "boolean" ||
+    typeof item.waiveLate === "boolean" ||
+    typeof item.waiveOther === "boolean" ||
+    typeof item.waiveDns === "boolean";
+
+  // Legacy on/off records (or un-normalized payloads) waived entry+other+DNS.
+  if (!hasFlags) {
+    return {
+      waiveAnmalan: true,
+      waiveLate: false,
+      waiveOther: true,
+      waiveDns: true,
+    };
+  }
+
+  return {
+    waiveAnmalan: Boolean(item.waiveAnmalan),
+    waiveLate: Boolean(item.waiveLate),
+    waiveOther: Boolean(item.waiveOther),
+    waiveDns: Boolean(item.waiveDns),
+  };
+}
+
+export function hasAnyManualWaiver(flags: DnsFeeManualWaiverFlags): boolean {
+  return flags.waiveAnmalan || flags.waiveLate || flags.waiveOther || flags.waiveDns;
 }
 
 export function isManualExempt(
@@ -138,10 +245,7 @@ export function isManualExempt(
   personId: string,
   eventId: string,
 ): boolean {
-  const key = manualExemptionKey(personId, eventId);
-  return (data.manualExemptions ?? []).some(
-    (item) => manualExemptionKey(item.personId, item.eventId) === key,
-  );
+  return hasAnyManualWaiver(getManualWaiverFlags(data, personId, eventId));
 }
 
 export function normalizeDnsFeeStatus(value: unknown): DnsFeeStatus {
@@ -348,14 +452,43 @@ export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boole
 }
 
 /**
- * Split payable amounts:
+ * Costs with no exemptions applied — only status-based split of raw fee parts.
+ */
+export function rowGrossSplit(row: DnsFeeRow): {
+  entryFeeGrossSek: number;
+  lateFeeGrossSek: number;
+  otherFeeGrossSek: number;
+  dnsFeeGrossSek: number;
+} {
+  const fee = row.feeSek ?? 0;
+  const { ordinarySek, lateSek, otherSek } = splitFeeAmounts(row, []);
+  const status = normalizeDnsFeeStatus(row.status);
+
+  if (status === "dns") {
+    return {
+      entryFeeGrossSek: 0,
+      lateFeeGrossSek: 0,
+      otherFeeGrossSek: 0,
+      dnsFeeGrossSek: fee,
+    };
+  }
+
+  return {
+    entryFeeGrossSek: ordinarySek,
+    lateFeeGrossSek: lateSek,
+    otherFeeGrossSek: otherSek,
+    dnsFeeGrossSek: 0,
+  };
+}
+
+/**
+ * Split payable amounts (base rules first, then optional per-row manual checkboxes):
  * - Fee names in exemptFeeNames: waived (except efteranmälan)
- * - Efteranmälan: never waived
- * - Manual per-person exemption: waives ordinary, övriga tillägg and DNS
  * - Anmälan (ordinarie): waived for exempt events (OK/entered) and
  *   youth/junior in Sweden (OK/entered/DNF)
- * - Övriga tillägg: charged unless manual or fee-name exemption
- * - DNS: payable fee (minus name-waived) unless manual exemption
+ * - Efteranmälan: charged unless manually waived
+ * - Övriga tillägg: charged unless fee-name or manually waived
+ * - DNS: payable fee (minus name-waived) unless manually waived
  */
 export function rowPayableSplit(
   data: DnsFeeTrackerData,
@@ -372,27 +505,34 @@ export function rowPayableSplit(
     data.exemptFeeNames ?? [],
   );
   const status = normalizeDnsFeeStatus(row.status);
-  const manualExempt = isManualExempt(data, row.personId, row.eventId);
+  const flags = getManualWaiverFlags(data, row.personId, row.eventId);
+
+  let entryFeeToPaySek = 0;
+  let lateFeeToPaySek = 0;
+  let otherFeeToPaySek = 0;
+  let dnsFeeToPaySek = 0;
 
   if (status === "dns") {
-    return {
-      entryFeeToPaySek: 0,
-      lateFeeToPaySek: manualExempt ? lateSek : 0,
-      otherFeeToPaySek: 0,
-      dnsFeeToPaySek: manualExempt ? 0 : Math.max(0, fee - waivedSek),
-    };
+    dnsFeeToPaySek = Math.max(0, fee - waivedSek);
+  } else {
+    const youthJunior = isYouthJuniorEntryFeeExempt(row);
+    const eventExempt = isEventExempt(data, row.eventId);
+    const waiveOrdinaryByRule = youthJunior || (status !== "dnf" && eventExempt);
+    entryFeeToPaySek = waiveOrdinaryByRule ? 0 : ordinarySek;
+    lateFeeToPaySek = lateSek;
+    otherFeeToPaySek = otherSek;
   }
 
-  const youthJunior = isYouthJuniorEntryFeeExempt(row);
-  const eventExempt = isEventExempt(data, row.eventId);
-  const waiveOrdinary =
-    manualExempt || youthJunior || (status !== "dnf" && eventExempt);
+  if (flags.waiveAnmalan) entryFeeToPaySek = 0;
+  if (flags.waiveLate) lateFeeToPaySek = 0;
+  if (flags.waiveOther) otherFeeToPaySek = 0;
+  if (flags.waiveDns) dnsFeeToPaySek = 0;
 
   return {
-    entryFeeToPaySek: waiveOrdinary ? 0 : ordinarySek,
-    lateFeeToPaySek: lateSek,
-    otherFeeToPaySek: manualExempt ? 0 : otherSek,
-    dnsFeeToPaySek: 0,
+    entryFeeToPaySek,
+    lateFeeToPaySek,
+    otherFeeToPaySek,
+    dnsFeeToPaySek,
   };
 }
 
@@ -427,31 +567,53 @@ export function listEventsFromRows(rows: DnsFeeRow[]): DnsFeeEventRef[] {
   );
 }
 
+function emptyPersonSummary(
+  personId: string,
+  personName: string,
+  email: string | null,
+): DnsFeePersonSummary {
+  return {
+    personId,
+    personName,
+    email,
+    dnsCount: 0,
+    startCount: 0,
+    entryFeeGrossSek: 0,
+    lateFeeGrossSek: 0,
+    otherFeeGrossSek: 0,
+    dnsFeeGrossSek: 0,
+    totalGrossSek: 0,
+    entryFeeToPaySek: 0,
+    lateFeeToPaySek: 0,
+    otherFeeToPaySek: 0,
+    dnsFeeToPaySek: 0,
+    totalToPaySek: 0,
+    feeSek: 0,
+    rows: [],
+  };
+}
+
 export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonSummary[] {
   const byPerson = new Map<string, DnsFeePersonSummary>();
 
   for (const member of data.members ?? []) {
-    byPerson.set(member.personId, {
-      personId: member.personId,
-      personName: member.personName,
-      email: member.email ?? null,
-      dnsCount: 0,
-      startCount: 0,
-      entryFeeToPaySek: 0,
-      lateFeeToPaySek: 0,
-      otherFeeToPaySek: 0,
-      dnsFeeToPaySek: 0,
-      totalToPaySek: 0,
-      feeSek: 0,
-      rows: [],
-    });
+    byPerson.set(
+      member.personId,
+      emptyPersonSummary(member.personId, member.personName, member.email ?? null),
+    );
   }
 
   for (const row of data.rows) {
     const existing = byPerson.get(row.personId);
     const fee = row.feeSek ?? 0;
+    const gross = rowGrossSplit(row);
     const split = rowPayableSplit(data, row);
     const status = normalizeDnsFeeStatus(row.status);
+    const rowGross =
+      gross.entryFeeGrossSek +
+      gross.lateFeeGrossSek +
+      gross.otherFeeGrossSek +
+      gross.dnsFeeGrossSek;
     const rowTotal =
       split.entryFeeToPaySek +
       split.lateFeeToPaySek +
@@ -460,11 +622,14 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
 
     if (!existing) {
       byPerson.set(row.personId, {
-        personId: row.personId,
-        personName: row.personName,
-        email: null,
+        ...emptyPersonSummary(row.personId, row.personName, null),
         dnsCount: status === "dns" ? 1 : 0,
         startCount: 1,
+        entryFeeGrossSek: gross.entryFeeGrossSek,
+        lateFeeGrossSek: gross.lateFeeGrossSek,
+        otherFeeGrossSek: gross.otherFeeGrossSek,
+        dnsFeeGrossSek: gross.dnsFeeGrossSek,
+        totalGrossSek: rowGross,
         entryFeeToPaySek: split.entryFeeToPaySek,
         lateFeeToPaySek: split.lateFeeToPaySek,
         otherFeeToPaySek: split.otherFeeToPaySek,
@@ -480,6 +645,11 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     }
     if (status === "dns") existing.dnsCount += 1;
     existing.startCount += 1;
+    existing.entryFeeGrossSek += gross.entryFeeGrossSek;
+    existing.lateFeeGrossSek += gross.lateFeeGrossSek;
+    existing.otherFeeGrossSek += gross.otherFeeGrossSek;
+    existing.dnsFeeGrossSek += gross.dnsFeeGrossSek;
+    existing.totalGrossSek += rowGross;
     existing.entryFeeToPaySek += split.entryFeeToPaySek;
     existing.lateFeeToPaySek += split.lateFeeToPaySek;
     existing.otherFeeToPaySek += split.otherFeeToPaySek;
@@ -489,5 +659,7 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     existing.rows.push(row);
   }
 
-  return [...byPerson.values()].sort((a, b) => a.personName.localeCompare(b.personName, "sv"));
+  return [...byPerson.values()]
+    .filter((person) => person.totalGrossSek > 0)
+    .sort((a, b) => a.personName.localeCompare(b.personName, "sv"));
 }

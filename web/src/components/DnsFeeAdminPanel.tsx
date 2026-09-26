@@ -11,10 +11,12 @@ import type {
 import {
   classifyDnsFeeKind,
   describeDnsFeePart,
+  getManualWaiverFlags,
   isFeeNameExempt,
   isManualExempt,
   isYouthJuniorEntryFeeExempt,
   rowPayableSplit,
+  type DnsFeeManualWaiverFlags,
 } from "@/lib/dns-fee-types";
 import { buildFeeMailtoLink } from "@/lib/dns-fee-mailto";
 
@@ -22,6 +24,11 @@ type Totals = {
   people: number;
   dnsStarts: number;
   starts: number;
+  entryFeeGrossSek: number;
+  lateFeeGrossSek: number;
+  otherFeeGrossSek: number;
+  dnsFeeGrossSek: number;
+  totalGrossSek: number;
   entryFeeToPaySek: number;
   lateFeeToPaySek: number;
   otherFeeToPaySek: number;
@@ -154,8 +161,6 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   const [error, setError] = useState<string | null>(null);
   const [exemptSelected, setExemptSelected] = useState<string[]>([]);
   const [exemptListOpen, setExemptListOpen] = useState(false);
-  const [feeNameSelected, setFeeNameSelected] = useState<string[]>([]);
-  const [feeNameListOpen, setFeeNameListOpen] = useState(false);
 
   const refresh = useCallback(async () => {
     const response = await fetch("/api/anmalan/dns-fees");
@@ -225,23 +230,27 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         throw new Error(json.error || "Kunde inte spara avgiftsundantag.");
       }
       await refresh();
-      if (action === "add") setFeeNameSelected([]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Kunde inte spara avgiftsundantag.");
     }
   }
 
-  async function setManualExemption(
+  async function toggleFeeNameExemption(feeName: string, exempt: boolean) {
+    await setFeeNameExemptions([feeName], exempt ? "add" : "remove");
+  }
+
+  async function setManualWaiverFlag(
     personId: string,
     eventId: string,
-    action: "add" | "remove",
+    flag: keyof DnsFeeManualWaiverFlags,
+    value: boolean,
   ) {
     setError(null);
     try {
       const response = await fetch("/api/anmalan/dns-fees/manual-exemptions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ personId, eventId, action }),
+        body: JSON.stringify({ personId, eventId, action: "set", [flag]: value }),
       });
       const json = (await response.json()) as { error?: string };
       if (!response.ok) {
@@ -256,12 +265,6 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   function toggleExemptSelected(eventId: string) {
     setExemptSelected((prev) =>
       prev.includes(eventId) ? prev.filter((id) => id !== eventId) : [...prev, eventId],
-    );
-  }
-
-  function toggleFeeNameSelected(name: string) {
-    setFeeNameSelected((prev) =>
-      prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name],
     );
   }
 
@@ -300,13 +303,6 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   const addableEvents = data.events.filter((event) => !data.exemptEventIds.includes(event.eventId));
   const exemptFeeNames = data.exemptFeeNames ?? [];
   const feeNameVariants = data.feeNames ?? [];
-  const addableFeeNames = feeNameVariants.filter(
-    (fee) => fee.kind !== "late" && !exemptFeeNames.includes(fee.name),
-  );
-  const savedFeeNameExemptions = feeNameVariants.filter((fee) =>
-    exemptFeeNames.includes(fee.name),
-  );
-  // Keep exempt names that are no longer in import (still saved).
   const orphanExemptFeeNames = exemptFeeNames.filter(
     (name) => !feeNameVariants.some((fee) => fee.name === name),
   );
@@ -329,7 +325,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
             <span className="font-medium text-slate-700">{formatImportedAt(data.importedAt)}</span>
           </p>
           <p className="mt-1 text-sm text-slate-500">
-            År {data.year} · {data.totals.people} medlemmar · {data.totals.starts} starter ·{" "}
+            År {data.year} · {data.totals.people} deltagare med avgift · {data.totals.starts} starter ·{" "}
             {data.totals.dnsStarts} DNS
           </p>
         </div>
@@ -370,42 +366,32 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.people}</p>
-          <p className="mt-1 text-sm text-slate-500">Klubbmedlemmar</p>
+          <p className="mt-1 text-sm text-slate-500">Deltagare med avgift</p>
         </div>
         <div className="card px-4 py-3">
           <p className="text-2xl font-bold tabular-nums text-slate-900">{data.totals.starts}</p>
           <p className="mt-1 text-sm text-slate-500">Starter</p>
         </div>
-        <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">
-            {formatSek(data.totals.entryFeeToPaySek)} kr
-          </p>
-          <p className="mt-1 text-sm text-slate-500">Anmälan</p>
-        </div>
-        <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">
-            {formatSek(data.totals.lateFeeToPaySek)} kr
-          </p>
-          <p className="mt-1 text-sm text-slate-500">Efteranmälan</p>
-        </div>
-        <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">
-            {formatSek(data.totals.otherFeeToPaySek)} kr
-          </p>
-          <p className="mt-1 text-sm text-slate-500">Övriga tillägg</p>
-        </div>
-        <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">
-            {formatSek(data.totals.dnsFeeToPaySek)} kr
-          </p>
-          <p className="mt-1 text-sm text-slate-500">DNS-kostnad</p>
-        </div>
-        <div className="card px-4 py-3">
-          <p className="text-2xl font-bold tabular-nums text-slate-900">
-            {formatSek(data.totals.totalToPaySek)} kr
-          </p>
-          <p className="mt-1 text-sm text-slate-500">Totalt att betala</p>
-        </div>
+        {(
+          [
+            ["Anmälan", data.totals.entryFeeGrossSek, data.totals.entryFeeToPaySek],
+            ["Efteranmälan", data.totals.lateFeeGrossSek, data.totals.lateFeeToPaySek],
+            ["Övriga tillägg", data.totals.otherFeeGrossSek, data.totals.otherFeeToPaySek],
+            ["DNS-kostnad", data.totals.dnsFeeGrossSek, data.totals.dnsFeeToPaySek],
+            ["Totalt", data.totals.totalGrossSek, data.totals.totalToPaySek],
+          ] as const
+        ).map(([label, gross, net]) => (
+          <div key={label} className="card px-4 py-3">
+            <p className="text-2xl font-bold tabular-nums text-slate-900">
+              {formatSek(net)} kr
+            </p>
+            <p className="mt-1 text-sm text-slate-500">{label} med undantag</p>
+            <p className="mt-2 text-sm tabular-nums text-slate-600">
+              {formatSek(gross)} kr{" "}
+              <span className="text-slate-400">utan undantag</span>
+            </p>
+          </div>
+        ))}
       </div>
 
       <section className="card space-y-4 p-5">
@@ -416,7 +402,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
             aldrig. Övriga tillägg räknas fortfarande vid tävlingsundantag. Ungdoms- och
             juniorklasser (t.o.m. 20) i Sverige undantas på samma sätt för ordinarie avgift.
             DNS-kostnad räknas alltid. Stafetter ingår inte. Manuella undantag per deltagare (via
-            detaljvyn) tar bort övriga kostnader men aldrig efteranmälan, och sparas över
+            detaljvyn) styrs med checkboxar för Anmälan / Efteranmälan / Övrigt / DNS och sparas över
             Eventor-importer.
           </p>
         </div>
@@ -508,142 +494,75 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna avgiftsnamn</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Unika avgiftsnamn från Eventor. Markera vilka som alltid ska undantas (t.ex. ungdomsavgifter).
-            Efteranmälan kan inte undantas här. Listan sparas över nya importer.
+            Kryssa i de avgifter som alltid ska undantas (t.ex. ungdomsavgifter). Ändringen sparas
+            direkt. Efteranmälan kan inte undantas. Listan sparas över nya importer.
           </p>
         </div>
 
-        {feeNameVariants.length === 0 ? (
+        {feeNameVariants.length === 0 && orphanExemptFeeNames.length === 0 ? (
           <p className="text-sm text-slate-500">
             Inga avgiftsnamn ännu — kör en import från Eventor först.
           </p>
         ) : (
-          <>
-            <div className="space-y-3">
-              <p className="text-sm font-medium text-slate-700">
-                Alla unika avgiftsnamn ({feeNameVariants.length})
-              </p>
-              <ul className="max-h-64 divide-y divide-slate-100 overflow-y-auto rounded-xl border border-slate-200">
-                {feeNameVariants.map((fee) => {
-                  const isLate = fee.kind === "late";
-                  const alreadyExempt = exemptFeeNames.includes(fee.name);
-                  const checked = feeNameSelected.includes(fee.name);
-                  return (
-                    <li key={fee.name}>
-                      <label
-                        className={`flex items-start gap-3 px-3 py-2.5 text-sm ${
-                          isLate || alreadyExempt
-                            ? "cursor-default bg-slate-50/80"
-                            : "cursor-pointer hover:bg-slate-50"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          className="mt-0.5"
-                          checked={alreadyExempt || checked}
-                          disabled={isLate || alreadyExempt}
-                          onChange={() => toggleFeeNameSelected(fee.name)}
-                        />
-                        <span className="min-w-0 flex-1">
-                          <span className="font-medium text-slate-800">{fee.name}</span>
-                          <span className="mt-0.5 block text-xs text-slate-400">
-                            {describeDnsFeePart({
-                              entryFeeId: fee.name,
-                              name: fee.name,
-                              amountSek: fee.totalSek,
-                              taxable: null,
-                              entryFeeType: null,
-                              validToDate: null,
-                            })}
-                            {" · "}
-                            {fee.count} st · {formatSek(fee.totalSek)} kr
-                            {isLate ? " · kan inte undantas" : null}
-                            {alreadyExempt ? " · undantagen" : null}
-                          </span>
-                        </span>
-                      </label>
-                    </li>
-                  );
-                })}
-              </ul>
-              {addableFeeNames.length > 0 ? (
-                <button
-                  type="button"
-                  className="btn-primary"
-                  disabled={feeNameSelected.length === 0}
-                  onClick={() => void setFeeNameExemptions(feeNameSelected, "add")}
-                >
-                  {feeNameSelected.length > 1
-                    ? `Undanta ${feeNameSelected.length} avgiftsnamn`
-                    : "Undanta avgiftsnamn"}
-                </button>
-              ) : null}
-            </div>
-            <div className="rounded-xl border border-slate-100">
-              <button
-                type="button"
-                className="flex w-full items-center justify-between gap-3 px-3 py-2.5 text-left text-sm"
-                onClick={() => setFeeNameListOpen((open) => !open)}
-                aria-expanded={feeNameListOpen}
-              >
-                <span className="font-medium text-slate-800">
-                  Sparade avgiftsundantag
-                  <span className="ml-2 font-normal text-slate-400">
-                    ({savedFeeNameExemptions.length + orphanExemptFeeNames.length})
+          <ul className="max-h-80 divide-y divide-slate-100 overflow-y-auto rounded-xl border border-slate-200">
+            {feeNameVariants.map((fee) => {
+              const isLate = fee.kind === "late";
+              const checked = exemptFeeNames.includes(fee.name);
+              return (
+                <li key={fee.name}>
+                  <label
+                    className={`flex items-start gap-3 px-3 py-2.5 text-sm ${
+                      isLate ? "cursor-default bg-slate-50/80" : "cursor-pointer hover:bg-slate-50"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      className="mt-0.5"
+                      checked={checked}
+                      disabled={isLate}
+                      onChange={(event) =>
+                        void toggleFeeNameExemption(fee.name, event.target.checked)
+                      }
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="font-medium text-slate-800">{fee.name}</span>
+                      <span className="mt-0.5 block text-xs text-slate-400">
+                        {describeDnsFeePart({
+                          entryFeeId: fee.name,
+                          name: fee.name,
+                          amountSek: fee.totalSek,
+                          taxable: null,
+                          entryFeeType: null,
+                          validToDate: null,
+                        })}
+                        {" · "}
+                        {fee.count} st · {formatSek(fee.totalSek)} kr
+                        {isLate ? " · kan inte undantas" : null}
+                      </span>
+                    </span>
+                  </label>
+                </li>
+              );
+            })}
+            {orphanExemptFeeNames.map((name) => (
+              <li key={name}>
+                <label className="flex cursor-pointer items-start gap-3 px-3 py-2.5 text-sm hover:bg-slate-50">
+                  <input
+                    type="checkbox"
+                    className="mt-0.5"
+                    checked
+                    onChange={() => void toggleFeeNameExemption(name, false)}
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="font-medium text-slate-800">{name}</span>
+                    <span className="mt-0.5 block text-xs text-amber-700">
+                      Saknas i senaste import — avmarkera för att ta bort
+                    </span>
                   </span>
-                </span>
-                <span className="text-slate-400">{feeNameListOpen ? "Dölj" : "Visa"}</span>
-              </button>
-              {feeNameListOpen ? (
-                savedFeeNameExemptions.length === 0 && orphanExemptFeeNames.length === 0 ? (
-                  <p className="border-t border-slate-100 px-3 py-3 text-sm text-slate-500">
-                    Inga avgiftsundantag ännu.
-                  </p>
-                ) : (
-                  <ul className="divide-y divide-slate-100 border-t border-slate-100">
-                    {savedFeeNameExemptions.map((fee) => (
-                      <li
-                        key={fee.name}
-                        className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
-                      >
-                        <span className="min-w-0">
-                          <span className="font-medium text-slate-800">{fee.name}</span>
-                          <span className="ml-2 text-slate-400">
-                            {fee.count} st · {formatSek(fee.totalSek)} kr
-                          </span>
-                        </span>
-                        <button
-                          type="button"
-                          className="shrink-0 text-brand-700 hover:underline"
-                          onClick={() => void setFeeNameExemptions([fee.name], "remove")}
-                        >
-                          Ta bort
-                        </button>
-                      </li>
-                    ))}
-                    {orphanExemptFeeNames.map((name) => (
-                      <li
-                        key={name}
-                        className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
-                      >
-                        <span className="min-w-0">
-                          <span className="font-medium text-slate-800">{name}</span>
-                          <span className="ml-2 text-amber-700">(saknas i senaste import)</span>
-                        </span>
-                        <button
-                          type="button"
-                          className="shrink-0 text-brand-700 hover:underline"
-                          onClick={() => void setFeeNameExemptions([name], "remove")}
-                        >
-                          Ta bort
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )
-              ) : null}
-            </div>
-          </>
+                </label>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
 
@@ -822,17 +741,17 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                 {person.rows.map((row) => {
                                   const eventExempt = data.exemptEventIds.includes(row.eventId);
                                   const youthJunior = isYouthJuniorEntryFeeExempt(row);
+                                  const waiverFlags = getManualWaiverFlags(
+                                    trackerForSplit,
+                                    row.personId,
+                                    row.eventId,
+                                  );
                                   const manualExempt = isManualExempt(
                                     trackerForSplit,
                                     row.personId,
                                     row.eventId,
                                   );
                                   const split = rowPayableSplit(trackerForSplit, row);
-                                  const rowTotal =
-                                    split.entryFeeToPaySek +
-                                    split.lateFeeToPaySek +
-                                    split.otherFeeToPaySek +
-                                    split.dnsFeeToPaySek;
                                   return (
                                     <tr key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}>
                                       <td className="py-1 pr-3 tabular-nums text-slate-600">
@@ -899,63 +818,63 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                       </td>
                                       <td
                                         className={`py-1 pr-3 tabular-nums ${
-                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                          waiverFlags.waiveAnmalan ? "text-violet-700" : "text-slate-800"
                                         }`}
                                       >
                                         {formatSek(split.entryFeeToPaySek)} kr
                                       </td>
                                       <td
                                         className={`py-1 pr-3 tabular-nums ${
-                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                          waiverFlags.waiveLate ? "text-violet-700" : "text-slate-800"
                                         }`}
                                       >
                                         {formatSek(split.lateFeeToPaySek)} kr
                                       </td>
                                       <td
                                         className={`py-1 pr-3 tabular-nums ${
-                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                          waiverFlags.waiveOther ? "text-violet-700" : "text-slate-800"
                                         }`}
                                       >
                                         {formatSek(split.otherFeeToPaySek)} kr
                                       </td>
                                       <td
                                         className={`py-1 pr-3 tabular-nums ${
-                                          manualExempt ? "text-violet-700" : "text-slate-800"
+                                          waiverFlags.waiveDns ? "text-violet-700" : "text-slate-800"
                                         }`}
                                       >
                                         {formatSek(split.dnsFeeToPaySek)} kr
                                       </td>
                                       <td className="py-1 align-top">
                                         <div className="flex flex-col items-start gap-1">
-                                          {manualExempt ? (
-                                            <button
-                                              type="button"
-                                              className="text-left text-xs font-medium text-violet-700 hover:underline"
-                                              onClick={() =>
-                                                void setManualExemption(
-                                                  row.personId,
-                                                  row.eventId,
-                                                  "remove",
-                                                )
-                                              }
-                                            >
-                                              Återställ kostnad
-                                            </button>
-                                          ) : rowTotal > 0 ? (
-                                            <button
-                                              type="button"
-                                              className="text-left text-xs font-medium text-brand-700 hover:underline"
-                                              onClick={() =>
-                                                void setManualExemption(
-                                                  row.personId,
-                                                  row.eventId,
-                                                  "add",
-                                                )
-                                              }
-                                            >
-                                              Ta bort kostnad
-                                            </button>
-                                          ) : null}
+                                          <div className="flex flex-col gap-1 text-xs text-slate-700">
+                                            {(
+                                              [
+                                                ["waiveAnmalan", "Anmälan", waiverFlags.waiveAnmalan],
+                                                ["waiveLate", "Efteranmälan", waiverFlags.waiveLate],
+                                                ["waiveOther", "Övrigt", waiverFlags.waiveOther],
+                                                ["waiveDns", "DNS", waiverFlags.waiveDns],
+                                              ] as const
+                                            ).map(([flag, label, checked]) => (
+                                              <label
+                                                key={flag}
+                                                className="flex cursor-pointer items-center gap-1.5"
+                                              >
+                                                <input
+                                                  type="checkbox"
+                                                  checked={checked}
+                                                  onChange={(event) =>
+                                                    void setManualWaiverFlag(
+                                                      row.personId,
+                                                      row.eventId,
+                                                      flag,
+                                                      event.target.checked,
+                                                    )
+                                                  }
+                                                />
+                                                <span>Undanta {label}</span>
+                                              </label>
+                                            ))}
+                                          </div>
                                           {!eventExempt ? (
                                             <button
                                               type="button"
