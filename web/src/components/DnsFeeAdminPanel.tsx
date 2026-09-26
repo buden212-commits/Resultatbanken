@@ -890,11 +890,31 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                     isFeeNameExempt(exemptFeeNames, fee.name),
                                 );
                                 const payableParts = [
-                                  { label: "Anmälan", amount: split.entryFeeToPaySek, waived: waiverFlags.waiveAnmalan },
-                                  { label: "Efteranm.", amount: split.lateFeeToPaySek, waived: waiverFlags.waiveLate },
-                                  { label: "Övrigt", amount: split.otherFeeToPaySek, waived: waiverFlags.waiveOther },
-                                  { label: "DNS", amount: split.dnsFeeToPaySek, waived: waiverFlags.waiveDns },
-                                ] as const;
+                                  {
+                                    label: "Anmälan",
+                                    amount: split.entryFeeToPaySek,
+                                    flag: "waiveAnmalan" as const,
+                                    waived: waiverFlags.waiveAnmalan,
+                                  },
+                                  {
+                                    label: "Efteranm.",
+                                    amount: split.lateFeeToPaySek,
+                                    flag: "waiveLate" as const,
+                                    waived: waiverFlags.waiveLate,
+                                  },
+                                  {
+                                    label: "Övrigt",
+                                    amount: split.otherFeeToPaySek,
+                                    flag: "waiveOther" as const,
+                                    waived: waiverFlags.waiveOther,
+                                  },
+                                  {
+                                    label: "DNS",
+                                    amount: split.dnsFeeToPaySek,
+                                    flag: "waiveDns" as const,
+                                    waived: waiverFlags.waiveDns,
+                                  },
+                                ];
 
                                 return (
                                   <li
@@ -954,7 +974,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                     <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
                                       {payableParts.map((part) => (
                                         <div
-                                          key={part.label}
+                                          key={part.flag}
                                           className="rounded-lg bg-slate-50 px-2.5 py-2"
                                         >
                                           <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
@@ -967,40 +987,26 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                           >
                                             {formatSek(part.amount)} kr
                                           </p>
-                                        </div>
-                                      ))}
-                                    </div>
-
-                                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-3">
-                                      <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-slate-700">
-                                        {(
-                                          [
-                                            ["waiveAnmalan", "Anmälan", waiverFlags.waiveAnmalan],
-                                            ["waiveLate", "Efteranmälan", waiverFlags.waiveLate],
-                                            ["waiveOther", "Övrigt", waiverFlags.waiveOther],
-                                            ["waiveDns", "DNS", waiverFlags.waiveDns],
-                                          ] as const
-                                        ).map(([flag, label, checked]) => (
-                                          <label
-                                            key={flag}
-                                            className="flex cursor-pointer items-center gap-1.5"
-                                          >
+                                          <label className="mt-2 flex cursor-pointer items-center gap-1.5 text-xs text-slate-600">
                                             <input
                                               type="checkbox"
-                                              checked={checked}
+                                              checked={part.waived}
                                               onChange={(event) =>
                                                 void setManualWaiverFlag(
                                                   row.personId,
                                                   row.eventId,
-                                                  flag,
+                                                  part.flag,
                                                   event.target.checked,
                                                 )
                                               }
                                             />
-                                            <span>Undanta {label}</span>
+                                            <span>Undanta</span>
                                           </label>
-                                        ))}
-                                      </div>
+                                        </div>
+                                      ))}
+                                    </div>
+
+                                    <div className="mt-3 border-t border-slate-100 pt-3">
                                       {!eventExempt ? (
                                         <button
                                           type="button"
