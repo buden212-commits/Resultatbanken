@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   emptyDnsFeeTracker,
+  getDnsFeeEventDetail,
   isYouthOrJuniorClass,
   listFeeNameVariants,
   summarizeDnsFeesByPerson,
@@ -172,6 +173,42 @@ describe("dns fee summary", () => {
     expect(anna.totalToPaySek).toBe(180);
     expect(anna.rows).toHaveLength(1);
     expect(anna.rows[0].eventId).toBe("60");
+  });
+
+  it("lists all participants for an event detail view", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "50",
+        eventName: "Medel-KM",
+        feeSek: 180,
+        status: "ok",
+      }),
+      row({
+        personId: "2",
+        personName: "Bert",
+        eventId: "50",
+        eventName: "Medel-KM",
+        feeSek: 200,
+        status: "dns",
+      }),
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "60",
+        feeSek: 100,
+        status: "ok",
+      }),
+    ];
+    const detail = getDnsFeeEventDetail(data, "50");
+    expect(detail).not.toBeNull();
+    expect(detail!.eventName).toBe("Medel-KM");
+    expect(detail!.participants).toHaveLength(2);
+    expect(detail!.participants.map((p) => p.personName)).toEqual(["Anna", "Bert"]);
+    expect(detail!.totals.people).toBe(2);
+    expect(detail!.removed).toBe(false);
   });
 
   it("waives entry fee for youth/junior classes in Sweden but always charges DNS", () => {

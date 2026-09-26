@@ -724,3 +724,103 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     .filter((person) => person.totalGrossSek > 0)
     .sort((a, b) => a.personName.localeCompare(b.personName, "sv"));
 }
+
+export type DnsFeeEventParticipant = {
+  personId: string;
+  personName: string;
+  className: string;
+  status: DnsFeeStatus;
+  dnsReason: string | null;
+  feeSek: number | null;
+  fees: DnsFeePart[] | null;
+  entryId: string | null;
+  entryFeeToPaySek: number;
+  lateFeeToPaySek: number;
+  otherFeeToPaySek: number;
+  dnsFeeToPaySek: number;
+  totalToPaySek: number;
+};
+
+export type DnsFeeEventDetail = {
+  eventId: string;
+  eventName: string;
+  date: string;
+  removed: boolean;
+  exempt: boolean;
+  participants: DnsFeeEventParticipant[];
+  totals: {
+    people: number;
+    entryFeeToPaySek: number;
+    lateFeeToPaySek: number;
+    otherFeeToPaySek: number;
+    dnsFeeToPaySek: number;
+    totalToPaySek: number;
+  };
+};
+
+/** Detail for one Eventor event including all imported starts (even if removed). */
+export function getDnsFeeEventDetail(
+  data: DnsFeeTrackerData,
+  eventId: string,
+): DnsFeeEventDetail | null {
+  const id = String(eventId).trim();
+  if (!id) return null;
+  const rows = data.rows.filter((row) => row.eventId === id);
+  if (rows.length === 0) return null;
+
+  const first = rows[0];
+  const participants: DnsFeeEventParticipant[] = rows
+    .map((row) => {
+      const split = rowPayableSplit(data, row);
+      const totalToPaySek =
+        split.entryFeeToPaySek +
+        split.lateFeeToPaySek +
+        split.otherFeeToPaySek +
+        split.dnsFeeToPaySek;
+      return {
+        personId: row.personId,
+        personName: row.personName,
+        className: row.className,
+        status: normalizeDnsFeeStatus(row.status),
+        dnsReason: row.dnsReason ?? null,
+        feeSek: row.feeSek,
+        fees: row.fees ?? null,
+        entryId: row.entryId,
+        entryFeeToPaySek: split.entryFeeToPaySek,
+        lateFeeToPaySek: split.lateFeeToPaySek,
+        otherFeeToPaySek: split.otherFeeToPaySek,
+        dnsFeeToPaySek: split.dnsFeeToPaySek,
+        totalToPaySek,
+      };
+    })
+    .sort((a, b) => a.personName.localeCompare(b.personName, "sv"));
+
+  const totals = participants.reduce(
+    (acc, p) => ({
+      people: acc.people + 1,
+      entryFeeToPaySek: acc.entryFeeToPaySek + p.entryFeeToPaySek,
+      lateFeeToPaySek: acc.lateFeeToPaySek + p.lateFeeToPaySek,
+      otherFeeToPaySek: acc.otherFeeToPaySek + p.otherFeeToPaySek,
+      dnsFeeToPaySek: acc.dnsFeeToPaySek + p.dnsFeeToPaySek,
+      totalToPaySek: acc.totalToPaySek + p.totalToPaySek,
+    }),
+    {
+      people: 0,
+      entryFeeToPaySek: 0,
+      lateFeeToPaySek: 0,
+      otherFeeToPaySek: 0,
+      dnsFeeToPaySek: 0,
+      totalToPaySek: 0,
+    },
+  );
+
+  return {
+    eventId: id,
+    eventName: first.eventName,
+    date: first.date,
+    removed: isEventRemoved(data, id),
+    exempt: isEventExempt(data, id),
+    participants,
+    totals,
+  };
+}

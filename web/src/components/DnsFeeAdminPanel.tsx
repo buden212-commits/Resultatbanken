@@ -507,7 +507,12 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                     className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
                   >
                     <span>
-                      <span className="font-medium text-slate-800">{event.eventName}</span>
+                      <Link
+                        href={`/koll-anmalan/tavling/${encodeURIComponent(event.eventId)}`}
+                        className="font-medium link-brand"
+                      >
+                        {event.eventName}
+                      </Link>
                       <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
                       <span className="mt-0.5 block text-xs text-slate-400">
                         Endast ordinarie anmälan undantas
@@ -548,7 +553,12 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                   className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
                 >
                   <span>
-                    <span className="font-medium text-slate-800">{event.eventName}</span>
+                    <Link
+                      href={`/koll-anmalan/tavling/${encodeURIComponent(event.eventId)}`}
+                      className="font-medium link-brand"
+                    >
+                      {event.eventName}
+                    </Link>
                     <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
                     <span className="mt-0.5 block text-xs text-slate-400">
                       Alla kostnader undantas
@@ -928,7 +938,12 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                             {formatDate(row.date)}
                                           </span>
                                           <span className="mx-2 text-slate-300">·</span>
-                                          {row.eventName}
+                                          <Link
+                                            href={`/koll-anmalan/tavling/${encodeURIComponent(row.eventId)}`}
+                                            className="link-brand"
+                                          >
+                                            {row.eventName}
+                                          </Link>
                                           {manualExempt ? (
                                             <span className="ml-2 text-sm font-medium text-violet-700">
                                               manuellt undantag
