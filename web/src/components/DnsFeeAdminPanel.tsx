@@ -161,6 +161,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   const [error, setError] = useState<string | null>(null);
   const [exemptSelected, setExemptSelected] = useState<string[]>([]);
   const [exemptListOpen, setExemptListOpen] = useState(false);
+  const [expandedFeeName, setExpandedFeeName] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     const response = await fetch("/api/anmalan/dns-fees");
@@ -495,7 +496,8 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
           <h2 className="text-lg font-bold text-slate-900">Undantagna avgiftsnamn</h2>
           <p className="mt-1 text-sm text-slate-500">
             Kryssa i de avgifter som alltid ska undantas (t.ex. ungdomsavgifter). Ändringen sparas
-            direkt. Efteranmälan kan inte undantas. Listan sparas över nya importer.
+            direkt. Klicka på ett avgiftsnamn för att se vilka deltagare som har den avgiften.
+            Efteranmälan kan inte undantas. Listan sparas över nya importer.
           </p>
         </div>
 
@@ -504,15 +506,16 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
             Inga avgiftsnamn ännu — kör en import från Eventor först.
           </p>
         ) : (
-          <ul className="max-h-80 divide-y divide-slate-100 overflow-y-auto rounded-xl border border-slate-200">
+          <ul className="max-h-[28rem] divide-y divide-slate-100 overflow-y-auto rounded-xl border border-slate-200">
             {feeNameVariants.map((fee) => {
               const isLate = fee.kind === "late";
               const checked = exemptFeeNames.includes(fee.name);
+              const open = expandedFeeName === fee.name;
               return (
                 <li key={fee.name}>
-                  <label
+                  <div
                     className={`flex items-start gap-3 px-3 py-2.5 text-sm ${
-                      isLate ? "cursor-default bg-slate-50/80" : "cursor-pointer hover:bg-slate-50"
+                      isLate ? "bg-slate-50/80" : "hover:bg-slate-50"
                     }`}
                   >
                     <input
@@ -520,12 +523,20 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                       className="mt-0.5"
                       checked={checked}
                       disabled={isLate}
+                      aria-label={`Undanta ${fee.name}`}
                       onChange={(event) =>
                         void toggleFeeNameExemption(fee.name, event.target.checked)
                       }
                     />
-                    <span className="min-w-0 flex-1">
-                      <span className="font-medium text-slate-800">{fee.name}</span>
+                    <button
+                      type="button"
+                      className="min-w-0 flex-1 text-left"
+                      onClick={() => setExpandedFeeName(open ? null : fee.name)}
+                      aria-expanded={open}
+                    >
+                      <span className="font-medium text-slate-800 hover:text-brand-800">
+                        {fee.name}
+                      </span>
                       <span className="mt-0.5 block text-xs text-slate-400">
                         {describeDnsFeePart({
                           entryFeeId: fee.name,
@@ -538,9 +549,42 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                         {" · "}
                         {fee.count} st · {formatSek(fee.totalSek)} kr
                         {isLate ? " · kan inte undantas" : null}
+                        <span className="ml-2 text-brand-700">
+                          {open ? "dölj deltagare" : "visa deltagare"}
+                        </span>
                       </span>
-                    </span>
-                  </label>
+                    </button>
+                  </div>
+                  {open ? (
+                    <div className="border-t border-slate-100 bg-slate-50/60 px-3 py-2">
+                      {(fee.participants ?? []).length === 0 ? (
+                        <p className="text-xs text-slate-500">Inga deltagare hittades.</p>
+                      ) : (
+                        <ul className="max-h-56 space-y-1.5 overflow-y-auto text-xs sm:text-sm">
+                          {(fee.participants ?? []).map((participant, index) => (
+                            <li
+                              key={`${participant.personId}-${participant.eventId}-${participant.date}-${index}`}
+                              className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-slate-700"
+                            >
+                              <span className="font-medium text-slate-800">
+                                {participant.personName}
+                              </span>
+                              <span className="text-slate-400">
+                                {formatDate(participant.date)} · {participant.eventName}
+                                {participant.className !== "–"
+                                  ? ` · ${participant.className}`
+                                  : ""}
+                                {" · "}
+                                {statusLabel(participant.status)}
+                                {" · "}
+                                {formatSek(participant.amountSek)} kr
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ) : null}
                 </li>
               );
             })}

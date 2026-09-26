@@ -432,11 +432,14 @@ describe("dns fee summary", () => {
     const variants = listFeeNameVariants(data.rows);
     expect(variants).toHaveLength(2);
     expect(variants[0].name).toBe("Efteranmälan");
+    expect(variants[0].participants).toHaveLength(1);
     expect(variants[1]).toMatchObject({
       name: "Ordinarie anmälningsavgift",
       count: 2,
       totalSek: 360,
       kind: "ordinary",
     });
+    expect(variants[1].participants).toHaveLength(2);
+    expect(variants[1].participants.map((p) => p.personId)).toEqual(["1", "2"]);
   });
 });

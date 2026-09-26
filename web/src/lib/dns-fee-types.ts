@@ -292,12 +292,25 @@ export function describeDnsFeePart(part: DnsFeePart): string {
 
 export type DnsFeeKind = "ordinary" | "late" | "other";
 
+export type DnsFeeNameParticipant = {
+  personId: string;
+  personName: string;
+  eventId: string;
+  eventName: string;
+  date: string;
+  className: string;
+  status: DnsFeeStatus;
+  amountSek: number;
+};
+
 export type DnsFeeNameVariant = {
   name: string;
   /** Number of fee parts with this exact name. */
   count: number;
   totalSek: number;
   kind: DnsFeeKind;
+  /** Starts where this exact fee name appears. */
+  participants: DnsFeeNameParticipant[];
 };
 
 function normalizeFeeName(name: string): string {
@@ -339,26 +352,57 @@ export function isFeeNameExempt(
 
 /** Unique Eventor fee name variants found on imported rows. */
 export function listFeeNameVariants(rows: DnsFeeRow[]): DnsFeeNameVariant[] {
-  const map = new Map<string, { count: number; totalSek: number; kind: DnsFeeKind }>();
+  const map = new Map<
+    string,
+    {
+      count: number;
+      totalSek: number;
+      kind: DnsFeeKind;
+      participants: DnsFeeNameParticipant[];
+    }
+  >();
   for (const row of rows) {
     for (const fee of row.fees ?? []) {
       const name = fee.name.trim();
       if (!name) continue;
       const existing = map.get(name);
+      const participant: DnsFeeNameParticipant = {
+        personId: row.personId,
+        personName: row.personName,
+        eventId: row.eventId,
+        eventName: row.eventName,
+        date: row.date,
+        className: row.className,
+        status: normalizeDnsFeeStatus(row.status),
+        amountSek: fee.amountSek,
+      };
       if (existing) {
         existing.count += 1;
         existing.totalSek += fee.amountSek;
+        existing.participants.push(participant);
       } else {
         map.set(name, {
           count: 1,
           totalSek: fee.amountSek,
           kind: classifyDnsFeeKind(fee),
+          participants: [participant],
         });
       }
     }
   }
   return [...map.entries()]
-    .map(([name, value]) => ({ name, ...value }))
+    .map(([name, value]) => ({
+      name,
+      count: value.count,
+      totalSek: value.totalSek,
+      kind: value.kind,
+      participants: value.participants.sort((a, b) => {
+        const nameCmp = a.personName.localeCompare(b.personName, "sv");
+        if (nameCmp !== 0) return nameCmp;
+        if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+        return a.eventName.localeCompare(b.eventName, "sv");
+      }),
+    }))
     .sort((a, b) => a.name.localeCompare(b.name, "sv"));
 }
 
