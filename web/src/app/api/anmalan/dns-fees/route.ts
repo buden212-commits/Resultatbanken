@@ -16,12 +16,15 @@ export async function GET() {
   const data = await loadDnsFeeTracker();
   const people = summarizeDnsFeesByPerson(data);
   const events = listEventsFromRows(data.rows);
-  const feeNames = listFeeNameVariants(data.rows);
+  const feeNames = listFeeNameVariants(
+    data.rows.filter((row) => !(data.removedEventIds ?? []).includes(row.eventId)),
+  );
 
   return NextResponse.json({
     year: data.year,
     importedAt: data.importedAt,
     exemptEventIds: data.exemptEventIds,
+    removedEventIds: data.removedEventIds ?? [],
     exemptFeeNames: data.exemptFeeNames ?? [],
     manualExemptions: data.manualExemptions ?? [],
     people,

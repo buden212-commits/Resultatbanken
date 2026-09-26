@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type {
@@ -19,6 +20,11 @@ import {
   type DnsFeeManualWaiverFlags,
 } from "@/lib/dns-fee-types";
 import { buildFeeMailtoLink } from "@/lib/dns-fee-mailto";
+
+function personDetailHref(personId: string, year: number): string {
+  const params = new URLSearchParams({ personId, year: String(year) });
+  return `/eventor?${params.toString()}`;
+}
 
 type Totals = {
   people: number;
@@ -40,6 +46,7 @@ type Payload = {
   year: number;
   importedAt: string | null;
   exemptEventIds: string[];
+  removedEventIds: string[];
   exemptFeeNames: string[];
   manualExemptions: DnsFeeManualExemption[];
   people: DnsFeePersonSummary[];
@@ -195,7 +202,11 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     }
   }
 
-  async function setExemptions(eventIds: string[], action: "add" | "remove") {
+  async function setExemptions(
+    eventIds: string[],
+    action: "add" | "remove",
+    mode: "exempt" | "removed" = "exempt",
+  ) {
     const ids = eventIds.map((id) => id.trim()).filter(Boolean);
     if (ids.length === 0) return;
     setError(null);
@@ -203,7 +214,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
       const response = await fetch("/api/anmalan/dns-fees/exemptions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eventIds: ids, action }),
+        body: JSON.stringify({ eventIds: ids, action, mode }),
       });
       const json = (await response.json()) as { error?: string };
       if (!response.ok) {
@@ -300,8 +311,16 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     }
   }
 
+  const removedEventIds = data.removedEventIds ?? [];
   const exemptEvents = data.events.filter((event) => data.exemptEventIds.includes(event.eventId));
-  const addableEvents = data.events.filter((event) => !data.exemptEventIds.includes(event.eventId));
+  const removedEvents = data.events.filter((event) => removedEventIds.includes(event.eventId));
+  const orphanRemovedEventIds = removedEventIds.filter(
+    (eventId) => !data.events.some((event) => event.eventId === eventId),
+  );
+  const addableEvents = data.events.filter(
+    (event) =>
+      !data.exemptEventIds.includes(event.eventId) && !removedEventIds.includes(event.eventId),
+  );
   const exemptFeeNames = data.exemptFeeNames ?? [];
   const feeNameVariants = data.feeNames ?? [];
   const orphanExemptFeeNames = exemptFeeNames.filter(
@@ -313,6 +332,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     rows: [] as DnsFeePersonSummary["rows"],
     members: [],
     exemptEventIds: data.exemptEventIds,
+    removedEventIds,
     exemptFeeNames,
     manualExemptions: data.manualExemptions ?? [],
   };
@@ -399,18 +419,18 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         <div>
           <h2 className="text-lg font-bold text-slate-900">Undantagna tävlingar</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Undantagna tävlingar ger 0 kr i ordinarie anmälan (OK/anmäld). Efteranmälan undantas
-            aldrig. Övriga tillägg räknas fortfarande vid tävlingsundantag. Ungdoms- och
-            juniorklasser (t.o.m. 20) i Sverige undantas på samma sätt för ordinarie avgift.
-            DNS-kostnad räknas alltid. Stafetter ingår inte. Manuella undantag per deltagare (via
-            detaljvyn) styrs med checkboxar för Anmälan / Efteranmälan / Övrigt / DNS och sparas över
-            Eventor-importer.
+            Undantag ger 0 kr i ordinarie anmälan (OK/anmäld). Efteranmälan undantas aldrig via
+            undantag. Övriga tillägg räknas fortfarande. Du kan i stället ta bort en tävling helt —
+            då försvinner alla kostnader (anmälan, efteranmälan, övrigt och DNS) från koll. Båda
+            listorna sparas över nya Eventor-importer. Ungdoms- och juniorklasser (t.o.m. 20) i
+            Sverige undantas för ordinarie avgift. Stafetter ingår inte. Manuella undantag per
+            deltagare styrs med checkboxar för Anmälan / Efteranmälan / Övrigt / DNS.
           </p>
         </div>
 
         {addableEvents.length > 0 ? (
           <div className="space-y-3">
-            <p className="text-sm font-medium text-slate-700">Lägg till undantag</p>
+            <p className="text-sm font-medium text-slate-700">Lägg till</p>
             <ul className="max-h-48 divide-y divide-slate-100 overflow-y-auto rounded-xl border border-slate-200">
               {addableEvents.map((event) => {
                 const checked = exemptSelected.includes(event.eventId);
@@ -432,19 +452,33 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                 );
               })}
             </ul>
-            <button
-              type="button"
-              className="btn-primary"
-              disabled={exemptSelected.length === 0}
-              onClick={() => void setExemptions(exemptSelected, "add")}
-            >
-              {exemptSelected.length > 1
-                ? `Lägg till ${exemptSelected.length} undantag`
-                : "Lägg till undantag"}
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                className="btn-primary"
+                disabled={exemptSelected.length === 0}
+                onClick={() => void setExemptions(exemptSelected, "add", "exempt")}
+              >
+                {exemptSelected.length > 1
+                  ? `Undanta ${exemptSelected.length} tävlingar`
+                  : "Undanta ordinarie avgift"}
+              </button>
+              <button
+                type="button"
+                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                disabled={exemptSelected.length === 0}
+                onClick={() => void setExemptions(exemptSelected, "add", "removed")}
+              >
+                {exemptSelected.length > 1
+                  ? `Ta bort ${exemptSelected.length} tävlingar helt`
+                  : "Ta bort tävling helt"}
+              </button>
+            </div>
           </div>
         ) : (
-          <p className="text-sm text-slate-500">Alla importerade tävlingar är redan undantagna.</p>
+          <p className="text-sm text-slate-500">
+            Alla importerade tävlingar är redan undantagna eller borttagna.
+          </p>
         )}
 
         <div className="rounded-xl border border-slate-100">
@@ -475,19 +509,82 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                     <span>
                       <span className="font-medium text-slate-800">{event.eventName}</span>
                       <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
+                      <span className="mt-0.5 block text-xs text-slate-400">
+                        Endast ordinarie anmälan undantas
+                      </span>
                     </span>
                     <button
                       type="button"
                       className="text-brand-700 hover:underline"
-                      onClick={() => void setExemptions([event.eventId], "remove")}
+                      onClick={() => void setExemptions([event.eventId], "remove", "exempt")}
                     >
-                      Ta bort
+                      Återställ
                     </button>
                   </li>
                 ))}
               </ul>
             )
           ) : null}
+        </div>
+
+        <div className="rounded-xl border border-slate-100">
+          <div className="flex items-center justify-between gap-3 px-3 py-2.5 text-sm">
+            <span className="font-medium text-slate-800">
+              Borttagna tävlingar
+              <span className="ml-2 font-normal text-slate-400">
+                ({removedEvents.length + orphanRemovedEventIds.length})
+              </span>
+            </span>
+          </div>
+          {removedEvents.length === 0 && orphanRemovedEventIds.length === 0 ? (
+            <p className="border-t border-slate-100 px-3 py-3 text-sm text-slate-500">
+              Inga borttagna tävlingar ännu.
+            </p>
+          ) : (
+            <ul className="divide-y divide-slate-100 border-t border-slate-100">
+              {removedEvents.map((event) => (
+                <li
+                  key={event.eventId}
+                  className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
+                >
+                  <span>
+                    <span className="font-medium text-slate-800">{event.eventName}</span>
+                    <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
+                    <span className="mt-0.5 block text-xs text-slate-400">
+                      Alla kostnader undantas
+                    </span>
+                  </span>
+                  <button
+                    type="button"
+                    className="text-brand-700 hover:underline"
+                    onClick={() => void setExemptions([event.eventId], "remove", "removed")}
+                  >
+                    Återställ
+                  </button>
+                </li>
+              ))}
+              {orphanRemovedEventIds.map((eventId) => (
+                <li
+                  key={eventId}
+                  className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
+                >
+                  <span>
+                    <span className="font-medium text-slate-800">Tävling #{eventId}</span>
+                    <span className="mt-0.5 block text-xs text-amber-700">
+                      Saknas i senaste import — återställ för att ta bort från listan
+                    </span>
+                  </span>
+                  <button
+                    type="button"
+                    className="text-brand-700 hover:underline"
+                    onClick={() => void setExemptions([eventId], "remove", "removed")}
+                  >
+                    Återställ
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 
@@ -566,9 +663,12 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                               key={`${participant.personId}-${participant.eventId}-${participant.date}-${index}`}
                               className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-slate-700"
                             >
-                              <span className="font-medium text-slate-800">
+                              <Link
+                                href={personDetailHref(participant.personId, data.year)}
+                                className="link-brand font-medium"
+                              >
                                 {participant.personName}
-                              </span>
+                              </Link>
                               <span className="text-slate-400">
                                 {formatDate(participant.date)} · {participant.eventName}
                                 {participant.className !== "–"
@@ -704,13 +804,12 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                       <tr className="border-b border-slate-50">
                         <td className="px-3 py-2.5 sm:px-4">
                           <div className="flex items-center gap-2">
-                            <button
-                              type="button"
-                              className="text-left font-medium text-slate-800 hover:text-brand-800"
-                              onClick={() => setExpanded(open ? null : person.personId)}
+                            <Link
+                              href={personDetailHref(person.personId, data.year)}
+                              className="link-brand font-medium"
                             >
                               {person.personName}
-                            </button>
+                            </Link>
                             {person.email ? (
                               <a
                                 href={
@@ -742,7 +841,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                               className="text-xs font-normal text-slate-400 hover:text-brand-700"
                               onClick={() => setExpanded(open ? null : person.personId)}
                             >
-                              {open ? "dölj" : "detaljer"}
+                              {open ? "dölj" : "avgifter"}
                             </button>
                           </div>
                         </td>

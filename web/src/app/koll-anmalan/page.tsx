@@ -28,11 +28,14 @@ export default async function KollAnmalanPage() {
       year: data.year,
       importedAt: data.importedAt,
       exemptEventIds: data.exemptEventIds,
+      removedEventIds: data.removedEventIds ?? [],
       exemptFeeNames: data.exemptFeeNames ?? [],
       manualExemptions: data.manualExemptions ?? [],
       people,
       events: listEventsFromRows(data.rows),
-      feeNames: listFeeNameVariants(data.rows),
+      feeNames: listFeeNameVariants(
+        data.rows.filter((row) => !(data.removedEventIds ?? []).includes(row.eventId)),
+      ),
     totals: {
       people: people.length,
       dnsStarts: people.reduce((sum, row) => sum + row.dnsCount, 0),

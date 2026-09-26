@@ -90,6 +90,11 @@ export type DnsFeeTrackerData = {
   /** Eventor event IDs where ordinarie anmälan (OK/entered) should not burden the participant. */
   exemptEventIds: string[];
   /**
+   * Eventor event IDs completely excluded from cost tracking (all fee kinds + DNS).
+   * Survives Eventor re-imports. Mutually exclusive with exemptEventIds in admin.
+   */
+  removedEventIds: string[];
+  /**
    * Exact Eventor fee names that are always waived (except efteranmälan).
    * Survives Eventor re-imports. Managed from the unique fee-name list in admin.
    */
@@ -141,6 +146,7 @@ export function emptyDnsFeeTracker(year = 2026): DnsFeeTrackerData {
     rows: [],
     members: [],
     exemptEventIds: [],
+    removedEventIds: [],
     exemptFeeNames: [],
     manualExemptions: [],
   };
@@ -449,6 +455,17 @@ export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean
   return data.exemptEventIds.includes(eventId);
 }
 
+export function isEventRemoved(data: DnsFeeTrackerData, eventId: string): boolean {
+  return (data.removedEventIds ?? []).includes(eventId);
+}
+
+/** Rows that still count toward costs (excludes fully removed events). */
+export function activeDnsFeeRows(data: DnsFeeTrackerData): DnsFeeRow[] {
+  const removed = new Set(data.removedEventIds ?? []);
+  if (removed.size === 0) return data.rows;
+  return data.rows.filter((row) => !removed.has(row.eventId));
+}
+
 export function isRowInSweden(row: DnsFeeRow): boolean {
   return row.inSweden !== false;
 }
@@ -647,7 +664,7 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     );
   }
 
-  for (const row of data.rows) {
+  for (const row of activeDnsFeeRows(data)) {
     const existing = byPerson.get(row.personId);
     const fee = row.feeSek ?? 0;
     const gross = rowGrossSplit(row);

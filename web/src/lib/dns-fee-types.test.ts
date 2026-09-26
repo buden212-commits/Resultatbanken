@@ -126,6 +126,54 @@ describe("dns fee summary", () => {
     expect(anna.totalToPaySek).toBe(50);
   });
 
+  it("excludes removed events entirely from person costs and starts", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.removedEventIds = ["50"];
+    data.members = [{ personId: "1", personName: "Anna", email: null }];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "50",
+        feeSek: 270,
+        status: "ok",
+        fees: [
+          {
+            entryFeeId: "1",
+            name: "Ordinarie anmälningsavgift",
+            amountSek: 220,
+            taxable: true,
+            entryFeeType: null,
+            validToDate: null,
+          },
+          {
+            entryFeeId: "2",
+            name: "Efteranmälningsavgift",
+            amountSek: 50,
+            taxable: false,
+            entryFeeType: null,
+            validToDate: null,
+          },
+        ],
+      }),
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "60",
+        feeSek: 180,
+        status: "dns",
+      }),
+    ];
+    const anna = summarizeDnsFeesByPerson(data)[0];
+    expect(anna.startCount).toBe(1);
+    expect(anna.dnsCount).toBe(1);
+    expect(anna.totalGrossSek).toBe(180);
+    expect(anna.dnsFeeToPaySek).toBe(180);
+    expect(anna.totalToPaySek).toBe(180);
+    expect(anna.rows).toHaveLength(1);
+    expect(anna.rows[0].eventId).toBe("60");
+  });
+
   it("waives entry fee for youth/junior classes in Sweden but always charges DNS", () => {
     const data = emptyDnsFeeTracker(2026);
     data.members = [{ personId: "1", personName: "Ada", email: null }];

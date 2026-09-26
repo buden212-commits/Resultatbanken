@@ -56,6 +56,7 @@ export function buildFeeMailtoLink(
     rows: person.rows,
     members: [],
     exemptEventIds,
+    removedEventIds: [],
     exemptFeeNames,
     manualExemptions,
   };
