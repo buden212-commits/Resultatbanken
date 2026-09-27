@@ -60,6 +60,7 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
   const [data, setData] = useState(initial);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [showAllParticipants, setShowAllParticipants] = useState(false);
 
   const refresh = useCallback(async () => {
     const response = await fetch(`/api/anmalan/dns-fees/events/${encodeURIComponent(data.event.eventId)}`);
@@ -159,6 +160,9 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
     waiveOther: eventFlags.waiveOther,
     waiveDns: eventFlags.waiveDns,
   };
+  const visibleParticipants = showAllParticipants
+    ? event.participants
+    : event.participants.filter((participant) => (participant.feeSek ?? 0) > 0);
   const eventPayableParts = [
     {
       label: "Anmälan",
@@ -207,12 +211,24 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-sm text-slate-500">
-            {formatDate(event.date)} · {event.totals.people} deltagare ·{" "}
+            {formatDate(event.date)} ·{" "}
+            {showAllParticipants
+              ? `${event.totals.people} deltagare`
+              : `${visibleParticipants.length} med avgift av ${event.totals.people}`}
+            {" · "}
             {formatSek(event.totals.totalToPaySek)} kr att betala
             {event.removed ? " (om återställd)" : ""}
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-3">
+          <label className="flex items-center gap-2 text-sm text-slate-700">
+            <input
+              type="checkbox"
+              checked={showAllParticipants}
+              onChange={(event) => setShowAllParticipants(event.target.checked)}
+            />
+            Visa alla deltagare
+          </label>
           {event.removed ? (
             <button
               type="button"
@@ -272,7 +288,14 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
       ) : null}
 
       <ul className="space-y-2">
-        {event.participants.map((participant) => {
+        {visibleParticipants.length === 0 ? (
+          <li className="rounded-xl border border-dashed border-slate-200 px-4 py-8 text-center text-sm text-slate-500">
+            {event.participants.length === 0
+              ? "Inga deltagare på tävlingen."
+              : "Inga deltagare med avgift. Aktivera ”Visa alla deltagare” för att se övriga."}
+          </li>
+        ) : null}
+        {visibleParticipants.map((participant) => {
           const waiverFlags = getManualWaiverFlags(
             trackerForSplit,
             participant.personId,
