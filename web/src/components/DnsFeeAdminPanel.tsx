@@ -5,6 +5,7 @@ import { FormEvent, Fragment, useCallback, useMemo, useState } from "react";
 
 import type {
   DnsFeeEventRef,
+  DnsFeeEventSummary,
   DnsFeeEventWaiver,
   DnsFeeManualExemption,
   DnsFeeNameVariant,
@@ -52,15 +53,29 @@ type Payload = {
   exemptFeeNames: string[];
   manualExemptions: DnsFeeManualExemption[];
   people: DnsFeePersonSummary[];
+  eventSummaries: DnsFeeEventSummary[];
   events: DnsFeeEventRef[];
   feeNames: DnsFeeNameVariant[];
   totals: Totals;
 };
 
+type ListTab = "people" | "events";
+
 type SortKey =
   | "personName"
   | "dnsCount"
   | "startCount"
+  | "entryFeeToPaySek"
+  | "lateFeeToPaySek"
+  | "otherFeeToPaySek"
+  | "dnsFeeToPaySek"
+  | "totalToPaySek";
+
+type EventSortKey =
+  | "date"
+  | "eventName"
+  | "people"
+  | "dnsCount"
   | "entryFeeToPaySek"
   | "lateFeeToPaySek"
   | "otherFeeToPaySek"
@@ -160,10 +175,13 @@ export function AnmalanLoginForm() {
 
 export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   const [data, setData] = useState(initial);
+  const [listTab, setListTab] = useState<ListTab>("people");
   const [query, setQuery] = useState("");
   const [onlyPayable, setOnlyPayable] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>("totalToPaySek");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [eventSortKey, setEventSortKey] = useState<EventSortKey>("date");
+  const [eventSortDir, setEventSortDir] = useState<"asc" | "desc">("desc");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -304,12 +322,43 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
     return sorted;
   }, [data.people, query, onlyPayable, sortKey, sortDir]);
 
+  const eventSummaries = useMemo(() => {
+    const q = query.trim().toLocaleLowerCase("sv");
+    let list = data.eventSummaries ?? [];
+    if (q) {
+      list = list.filter((event) => event.eventName.toLocaleLowerCase("sv").includes(q));
+    }
+    if (onlyPayable) {
+      list = list.filter((event) => !event.removed && event.totalToPaySek > 0);
+    }
+    const sorted = [...list].sort((a, b) => {
+      const av = a[eventSortKey];
+      const bv = b[eventSortKey];
+      if (typeof av === "string" && typeof bv === "string") {
+        const cmp = av.localeCompare(bv, "sv");
+        return eventSortDir === "asc" ? cmp : -cmp;
+      }
+      const cmp = Number(av) - Number(bv);
+      return eventSortDir === "asc" ? cmp : -cmp;
+    });
+    return sorted;
+  }, [data.eventSummaries, query, onlyPayable, eventSortKey, eventSortDir]);
+
   function toggleSort(key: SortKey) {
     if (sortKey === key) {
       setSortDir((dir) => (dir === "asc" ? "desc" : "asc"));
     } else {
       setSortKey(key);
       setSortDir(key === "personName" ? "asc" : "desc");
+    }
+  }
+
+  function toggleEventSort(key: EventSortKey) {
+    if (eventSortKey === key) {
+      setEventSortDir((dir) => (dir === "asc" ? "desc" : "asc"));
+    } else {
+      setEventSortKey(key);
+      setEventSortDir(key === "eventName" ? "asc" : "desc");
     }
   }
 
@@ -724,17 +773,48 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
       </section>
 
       <section className="space-y-4">
+        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-px">
+          <button
+            type="button"
+            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition ${
+              listTab === "people"
+                ? "border-brand-600 text-brand-800"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+            onClick={() => setListTab("people")}
+            aria-pressed={listTab === "people"}
+          >
+            Deltagare
+            <span className="ml-1.5 font-normal text-slate-400">({data.people.length})</span>
+          </button>
+          <button
+            type="button"
+            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition ${
+              listTab === "events"
+                ? "border-brand-600 text-brand-800"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+            onClick={() => setListTab("events")}
+            aria-pressed={listTab === "events"}
+          >
+            Tävlingar
+            <span className="ml-1.5 font-normal text-slate-400">
+              ({(data.eventSummaries ?? []).length})
+            </span>
+          </button>
+        </div>
+
         <div className="flex flex-wrap items-end gap-3">
           <div className="min-w-[14rem] flex-1">
             <label htmlFor="dns-filter" className="mb-1 block text-sm font-medium text-slate-700">
-              Filtrera namn
+              {listTab === "people" ? "Filtrera namn" : "Filtrera tävling"}
             </label>
             <input
               id="dns-filter"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               className="input-field"
-              placeholder="Sök deltagare…"
+              placeholder={listTab === "people" ? "Sök deltagare…" : "Sök tävling…"}
             />
           </div>
           <label className="flex items-center gap-2 pb-2 text-sm text-slate-700">
@@ -747,320 +827,462 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
           </label>
         </div>
 
-        <div className="card overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="border-b border-slate-100 bg-slate-50/80">
-                <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
-                  <th className="px-3 py-3 sm:px-4">
-                    <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("personName")}>
-                      Deltagare
-                    </button>
-                  </th>
-                  <th className="px-3 py-3 sm:px-4">
-                    <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("dnsCount")}>
-                      DNS
-                    </button>
-                  </th>
-                  <th className="px-3 py-3 sm:px-4">
-                    <button
-                      type="button"
-                      className="hover:text-slate-700"
-                      onClick={() => toggleSort("entryFeeToPaySek")}
-                    >
-                      Anmälan
-                    </button>
-                  </th>
-                  <th className="px-3 py-3 sm:px-4">
-                    <button
-                      type="button"
-                      className="hover:text-slate-700"
-                      onClick={() => toggleSort("lateFeeToPaySek")}
-                    >
-                      Efteranmälan
-                    </button>
-                  </th>
-                  <th className="px-3 py-3 sm:px-4">
-                    <button
-                      type="button"
-                      className="hover:text-slate-700"
-                      onClick={() => toggleSort("otherFeeToPaySek")}
-                    >
-                      Övrigt
-                    </button>
-                  </th>
-                  <th className="px-3 py-3 sm:px-4">
-                    <button
-                      type="button"
-                      className="hover:text-slate-700"
-                      onClick={() => toggleSort("dnsFeeToPaySek")}
-                    >
-                      DNS-kostnad
-                    </button>
-                  </th>
-                  <th className="px-3 py-3 sm:px-4">
-                    <button
-                      type="button"
-                      className="hover:text-slate-700"
-                      onClick={() => toggleSort("totalToPaySek")}
-                    >
-                      Totalt
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {people.map((person) => {
-                  const open = expanded === person.personId;
-                  return (
-                    <Fragment key={person.personId}>
-                      <tr className="border-b border-slate-50">
-                        <td className="px-3 py-2.5 sm:px-4">
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={personDetailHref(person.personId, data.year)}
-                              className="link-brand font-medium"
-                            >
-                              {person.personName}
-                            </Link>
-                            {person.email ? (
-                              <a
-                                href={
-                                  buildFeeMailtoLink(
-                                    person,
-                                    data.exemptEventIds,
-                                    data.year,
-                                    data.manualExemptions ?? [],
-                                    data.exemptFeeNames ?? [],
-                                  ) ?? undefined
-                                }
-                                className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-brand-700 hover:bg-brand-50"
-                                title={`Skicka mail: Startavgifter och Ej start (${person.email})`}
-                                aria-label={`Skicka mail till ${person.personName}`}
+        {listTab === "people" ? (
+          <div className="card overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead className="border-b border-slate-100 bg-slate-50/80">
+                  <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
+                    <th className="px-3 py-3 sm:px-4">
+                      <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("personName")}>
+                        Deltagare
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("dnsCount")}>
+                        DNS
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleSort("entryFeeToPaySek")}
+                      >
+                        Anmälan
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleSort("lateFeeToPaySek")}
+                      >
+                        Efteranmälan
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleSort("otherFeeToPaySek")}
+                      >
+                        Övrigt
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleSort("dnsFeeToPaySek")}
+                      >
+                        DNS-kostnad
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleSort("totalToPaySek")}
+                      >
+                        Totalt
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {people.map((person) => {
+                    const open = expanded === person.personId;
+                    return (
+                      <Fragment key={person.personId}>
+                        <tr className="border-b border-slate-50">
+                          <td className="px-3 py-2.5 sm:px-4">
+                            <div className="flex items-center gap-2">
+                              <Link
+                                href={personDetailHref(person.personId, data.year)}
+                                className="link-brand font-medium"
                               >
-                                <svg
-                                  className="h-4 w-4"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                  aria-hidden
+                                {person.personName}
+                              </Link>
+                              {person.email ? (
+                                <a
+                                  href={
+                                    buildFeeMailtoLink(
+                                      person,
+                                      data.exemptEventIds,
+                                      data.year,
+                                      data.manualExemptions ?? [],
+                                      data.exemptFeeNames ?? [],
+                                    ) ?? undefined
+                                  }
+                                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-brand-700 hover:bg-brand-50"
+                                  title={`Skicka mail: Startavgifter och Ej start (${person.email})`}
+                                  aria-label={`Skicka mail till ${person.personName}`}
                                 >
-                                  <path d="M2.003 5.884 10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884Z" />
-                                  <path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118Z" />
-                                </svg>
-                              </a>
-                            ) : null}
-                            <button
-                              type="button"
-                              className="text-xs font-normal text-slate-400 hover:text-brand-700"
-                              onClick={() => setExpanded(open ? null : person.personId)}
-                            >
-                              {open ? "dölj" : "avgifter"}
-                            </button>
-                          </div>
-                        </td>
-                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">{person.dnsCount}</td>
-                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
-                          {formatSek(person.entryFeeToPaySek)} kr
-                        </td>
-                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
-                          {formatSek(person.lateFeeToPaySek)} kr
-                        </td>
-                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
-                          {formatSek(person.otherFeeToPaySek)} kr
-                        </td>
-                        <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
-                          {formatSek(person.dnsFeeToPaySek)} kr
-                        </td>
-                        <td className="px-3 py-2.5 tabular-nums font-medium text-slate-900 sm:px-4">
-                          {formatSek(person.totalToPaySek)} kr
-                        </td>
-                      </tr>
-                      {open ? (
-                        <tr className="border-b border-slate-100 bg-slate-50/70">
-                          <td colSpan={7} className="px-3 py-3 sm:px-4">
-                            <ul className="space-y-2">
-                              {person.rows.map((row) => {
-                                const eventExempt = data.exemptEventIds.includes(row.eventId);
-                                const youthJunior = isYouthJuniorEntryFeeExempt(row);
-                                const waiverFlags = getManualWaiverFlags(
-                                  trackerForSplit,
-                                  row.personId,
-                                  row.eventId,
-                                );
-                                const manualExempt = isManualExempt(
-                                  trackerForSplit,
-                                  row.personId,
-                                  row.eventId,
-                                );
-                                const split = rowPayableSplit(trackerForSplit, row);
-                                const extraFees = (row.fees ?? []).filter((fee) => {
-                                  const kind = classifyDnsFeeKind(fee);
-                                  return kind === "late" || kind === "other";
-                                });
-                                const nameExemptFees = (row.fees ?? []).filter(
-                                  (fee) =>
-                                    classifyDnsFeeKind(fee) !== "late" &&
-                                    isFeeNameExempt(exemptFeeNames, fee.name),
-                                );
-                                const payableParts = [
-                                  {
-                                    label: "Anmälan",
-                                    amount: split.entryFeeToPaySek,
-                                    flag: "waiveAnmalan" as const,
-                                    waived: waiverFlags.waiveAnmalan,
-                                  },
-                                  {
-                                    label: "Efteranm.",
-                                    amount: split.lateFeeToPaySek,
-                                    flag: "waiveLate" as const,
-                                    waived: waiverFlags.waiveLate,
-                                  },
-                                  {
-                                    label: "Övrigt",
-                                    amount: split.otherFeeToPaySek,
-                                    flag: "waiveOther" as const,
-                                    waived: waiverFlags.waiveOther,
-                                  },
-                                  {
-                                    label: "DNS",
-                                    amount: split.dnsFeeToPaySek,
-                                    flag: "waiveDns" as const,
-                                    waived: waiverFlags.waiveDns,
-                                  },
-                                ];
-
-                                return (
-                                  <li
-                                    key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}
-                                    className="rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm sm:px-4"
+                                  <svg
+                                    className="h-4 w-4"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    aria-hidden
                                   >
-                                    <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                                      <div className="min-w-0">
-                                        <p className="font-medium text-slate-900">
-                                          <span className="tabular-nums text-slate-500">
-                                            {formatDate(row.date)}
-                                          </span>
-                                          <span className="mx-2 text-slate-300">·</span>
-                                          <Link
-                                            href={`/koll-anmalan/tavling/${encodeURIComponent(row.eventId)}`}
-                                            className="link-brand"
-                                          >
-                                            {row.eventName}
-                                          </Link>
-                                          {manualExempt ? (
-                                            <span className="ml-2 text-sm font-medium text-violet-700">
-                                              manuellt undantag
-                                            </span>
-                                          ) : eventExempt ? (
-                                            <span className="ml-2 text-sm font-medium text-amber-700">
-                                              undantagen
-                                            </span>
-                                          ) : null}
-                                        </p>
-                                        <p className="mt-0.5 text-sm text-slate-500">
-                                          {row.className}
-                                          {youthJunior ? " · ungdom/junior" : ""}
-                                          {" · "}
-                                          {statusLabel(row.status)}
-                                          {row.status === "dns" && row.dnsReason
-                                            ? ` · Orsak: ${row.dnsReason}`
-                                            : ""}
-                                        </p>
-                                      </div>
-                                      <p className="shrink-0 text-sm tabular-nums font-semibold text-slate-800">
-                                        {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
-                                        <span className="ml-1 font-normal text-slate-400">totalt</span>
-                                      </p>
-                                    </div>
-
-                                    {extraFees.length > 0 || nameExemptFees.length > 0 ? (
-                                      <ul className="mt-2 space-y-0.5 text-xs text-slate-500">
-                                        {extraFees.map((fee) => (
-                                          <li key={fee.entryFeeId}>
-                                            {fee.name} · {formatSek(fee.amountSek)} kr
-                                          </li>
-                                        ))}
-                                        {nameExemptFees.map((fee) => (
-                                          <li key={`exempt-${fee.entryFeeId}`} className="text-violet-700">
-                                            {fee.name} · {formatSek(fee.amountSek)} kr (undantaget
-                                            avgiftsnamn)
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    ) : null}
-
-                                    <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                                      {payableParts.map((part) => (
-                                        <div
-                                          key={part.flag}
-                                          className="rounded-lg bg-slate-50 px-2.5 py-2"
-                                        >
-                                          <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
-                                            {part.label}
-                                          </p>
-                                          <p
-                                            className={`mt-0.5 text-sm tabular-nums font-semibold ${
-                                              part.waived ? "text-violet-700" : "text-slate-800"
-                                            }`}
-                                          >
-                                            {formatSek(part.amount)} kr
-                                          </p>
-                                          <label className="mt-2 flex cursor-pointer items-center gap-1.5 text-xs text-slate-600">
-                                            <input
-                                              type="checkbox"
-                                              checked={part.waived}
-                                              onChange={(event) =>
-                                                void setManualWaiverFlag(
-                                                  row.personId,
-                                                  row.eventId,
-                                                  part.flag,
-                                                  event.target.checked,
-                                                )
-                                              }
-                                            />
-                                            <span>Undanta</span>
-                                          </label>
-                                        </div>
-                                      ))}
-                                    </div>
-
-                                    <div className="mt-3 border-t border-slate-100 pt-3">
-                                      {!eventExempt ? (
-                                        <button
-                                          type="button"
-                                          className="text-xs font-medium text-amber-800 hover:underline"
-                                          onClick={() =>
-                                            void setExemptions([row.eventId], "add", "exempt")
-                                          }
-                                          title="Undantar tävlingen för alla deltagare (samma som undantagna tävlingar)"
-                                        >
-                                          Undanta tävling för alla
-                                        </button>
-                                      ) : (
-                                        <span className="text-xs text-amber-700">
-                                          Tävlingen undantagen
-                                        </span>
-                                      )}
-                                    </div>
-                                  </li>
-                                );
-                              })}
-                            </ul>
+                                    <path d="M2.003 5.884 10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884Z" />
+                                    <path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118Z" />
+                                  </svg>
+                                </a>
+                              ) : null}
+                              <button
+                                type="button"
+                                className="text-xs font-normal text-slate-400 hover:text-brand-700"
+                                onClick={() => setExpanded(open ? null : person.personId)}
+                              >
+                                {open ? "dölj" : "avgifter"}
+                              </button>
+                            </div>
+                          </td>
+                          <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">{person.dnsCount}</td>
+                          <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                            {formatSek(person.entryFeeToPaySek)} kr
+                          </td>
+                          <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                            {formatSek(person.lateFeeToPaySek)} kr
+                          </td>
+                          <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                            {formatSek(person.otherFeeToPaySek)} kr
+                          </td>
+                          <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                            {formatSek(person.dnsFeeToPaySek)} kr
+                          </td>
+                          <td className="px-3 py-2.5 tabular-nums font-medium text-slate-900 sm:px-4">
+                            {formatSek(person.totalToPaySek)} kr
                           </td>
                         </tr>
-                      ) : null}
-                    </Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
+                        {open ? (
+                          <tr className="border-b border-slate-100 bg-slate-50/70">
+                            <td colSpan={7} className="px-3 py-3 sm:px-4">
+                              <ul className="space-y-2">
+                                {person.rows.map((row) => {
+                                  const eventExempt = data.exemptEventIds.includes(row.eventId);
+                                  const youthJunior = isYouthJuniorEntryFeeExempt(row);
+                                  const waiverFlags = getManualWaiverFlags(
+                                    trackerForSplit,
+                                    row.personId,
+                                    row.eventId,
+                                  );
+                                  const manualExempt = isManualExempt(
+                                    trackerForSplit,
+                                    row.personId,
+                                    row.eventId,
+                                  );
+                                  const split = rowPayableSplit(trackerForSplit, row);
+                                  const extraFees = (row.fees ?? []).filter((fee) => {
+                                    const kind = classifyDnsFeeKind(fee);
+                                    return kind === "late" || kind === "other";
+                                  });
+                                  const nameExemptFees = (row.fees ?? []).filter(
+                                    (fee) =>
+                                      classifyDnsFeeKind(fee) !== "late" &&
+                                      isFeeNameExempt(exemptFeeNames, fee.name),
+                                  );
+                                  const payableParts = [
+                                    {
+                                      label: "Anmälan",
+                                      amount: split.entryFeeToPaySek,
+                                      flag: "waiveAnmalan" as const,
+                                      waived: waiverFlags.waiveAnmalan,
+                                    },
+                                    {
+                                      label: "Efteranm.",
+                                      amount: split.lateFeeToPaySek,
+                                      flag: "waiveLate" as const,
+                                      waived: waiverFlags.waiveLate,
+                                    },
+                                    {
+                                      label: "Övrigt",
+                                      amount: split.otherFeeToPaySek,
+                                      flag: "waiveOther" as const,
+                                      waived: waiverFlags.waiveOther,
+                                    },
+                                    {
+                                      label: "DNS",
+                                      amount: split.dnsFeeToPaySek,
+                                      flag: "waiveDns" as const,
+                                      waived: waiverFlags.waiveDns,
+                                    },
+                                  ];
+
+                                  return (
+                                    <li
+                                      key={`${row.eventId}-${row.className}-${row.entryId}-${row.status}`}
+                                      className="rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm sm:px-4"
+                                    >
+                                      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                                        <div className="min-w-0">
+                                          <p className="font-medium text-slate-900">
+                                            <span className="tabular-nums text-slate-500">
+                                              {formatDate(row.date)}
+                                            </span>
+                                            <span className="mx-2 text-slate-300">·</span>
+                                            <Link
+                                              href={`/koll-anmalan/tavling/${encodeURIComponent(row.eventId)}`}
+                                              className="link-brand"
+                                            >
+                                              {row.eventName}
+                                            </Link>
+                                            {manualExempt ? (
+                                              <span className="ml-2 text-sm font-medium text-violet-700">
+                                                manuellt undantag
+                                              </span>
+                                            ) : eventExempt ? (
+                                              <span className="ml-2 text-sm font-medium text-amber-700">
+                                                undantagen
+                                              </span>
+                                            ) : null}
+                                          </p>
+                                          <p className="mt-0.5 text-sm text-slate-500">
+                                            {row.className}
+                                            {youthJunior ? " · ungdom/junior" : ""}
+                                            {" · "}
+                                            {statusLabel(row.status)}
+                                            {row.status === "dns" && row.dnsReason
+                                              ? ` · Orsak: ${row.dnsReason}`
+                                              : ""}
+                                          </p>
+                                        </div>
+                                        <p className="shrink-0 text-sm tabular-nums font-semibold text-slate-800">
+                                          {row.feeSek === null ? "–" : `${formatSek(row.feeSek)} kr`}
+                                          <span className="ml-1 font-normal text-slate-400">totalt</span>
+                                        </p>
+                                      </div>
+
+                                      {extraFees.length > 0 || nameExemptFees.length > 0 ? (
+                                        <ul className="mt-2 space-y-0.5 text-xs text-slate-500">
+                                          {extraFees.map((fee) => (
+                                            <li key={fee.entryFeeId}>
+                                              {fee.name} · {formatSek(fee.amountSek)} kr
+                                            </li>
+                                          ))}
+                                          {nameExemptFees.map((fee) => (
+                                            <li key={`exempt-${fee.entryFeeId}`} className="text-violet-700">
+                                              {fee.name} · {formatSek(fee.amountSek)} kr (undantaget
+                                              avgiftsnamn)
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      ) : null}
+
+                                      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                                        {payableParts.map((part) => (
+                                          <div
+                                            key={part.flag}
+                                            className="rounded-lg bg-slate-50 px-2.5 py-2"
+                                          >
+                                            <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
+                                              {part.label}
+                                            </p>
+                                            <p
+                                              className={`mt-0.5 text-sm tabular-nums font-semibold ${
+                                                part.waived ? "text-violet-700" : "text-slate-800"
+                                              }`}
+                                            >
+                                              {formatSek(part.amount)} kr
+                                            </p>
+                                            <label className="mt-2 flex cursor-pointer items-center gap-1.5 text-xs text-slate-600">
+                                              <input
+                                                type="checkbox"
+                                                checked={part.waived}
+                                                onChange={(event) =>
+                                                  void setManualWaiverFlag(
+                                                    row.personId,
+                                                    row.eventId,
+                                                    part.flag,
+                                                    event.target.checked,
+                                                  )
+                                                }
+                                              />
+                                              <span>Undanta</span>
+                                            </label>
+                                          </div>
+                                        ))}
+                                      </div>
+
+                                      <div className="mt-3 border-t border-slate-100 pt-3">
+                                        {!eventExempt ? (
+                                          <button
+                                            type="button"
+                                            className="text-xs font-medium text-amber-800 hover:underline"
+                                            onClick={() =>
+                                              void setExemptions([row.eventId], "add", "exempt")
+                                            }
+                                            title="Undantar tävlingen för alla deltagare (samma som undantagna tävlingar)"
+                                          >
+                                            Undanta tävling för alla
+                                          </button>
+                                        ) : (
+                                          <span className="text-xs text-amber-700">
+                                            Tävlingen undantagen
+                                          </span>
+                                        )}
+                                      </div>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </td>
+                          </tr>
+                        ) : null}
+                      </Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            {people.length === 0 ? (
+              <p className="px-4 py-8 text-center text-sm text-slate-500">
+                {data.importedAt ? "Inga träffar för filtret." : "Ingen data ännu — kör en import från Eventor."}
+              </p>
+            ) : null}
           </div>
-          {people.length === 0 ? (
-            <p className="px-4 py-8 text-center text-sm text-slate-500">
-              {data.importedAt ? "Inga träffar för filtret." : "Ingen data ännu — kör en import från Eventor."}
-            </p>
-          ) : null}
-        </div>
+        ) : (
+          <div className="card overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead className="border-b border-slate-100 bg-slate-50/80">
+                  <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("date")}
+                      >
+                        Datum
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("eventName")}
+                      >
+                        Tävling
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("people")}
+                      >
+                        Deltagare
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("dnsCount")}
+                      >
+                        DNS
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("entryFeeToPaySek")}
+                      >
+                        Anmälan
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("lateFeeToPaySek")}
+                      >
+                        Efteranmälan
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("otherFeeToPaySek")}
+                      >
+                        Övrigt
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("dnsFeeToPaySek")}
+                      >
+                        DNS-kostnad
+                      </button>
+                    </th>
+                    <th className="px-3 py-3 sm:px-4">
+                      <button
+                        type="button"
+                        className="hover:text-slate-700"
+                        onClick={() => toggleEventSort("totalToPaySek")}
+                      >
+                        Totalt
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {eventSummaries.map((event) => (
+                    <tr key={event.eventId} className="border-b border-slate-50 hover:bg-slate-50/80">
+                      <td className="px-3 py-2.5 tabular-nums text-slate-600 sm:px-4">
+                        {formatDate(event.date)}
+                      </td>
+                      <td className="px-3 py-2.5 sm:px-4">
+                        <Link
+                          href={`/koll-anmalan/tavling/${encodeURIComponent(event.eventId)}`}
+                          className="link-brand font-medium"
+                        >
+                          {event.eventName}
+                        </Link>
+                        {event.removed ? (
+                          <span className="ml-2 text-xs font-medium text-amber-700">borttagen</span>
+                        ) : event.exempt ? (
+                          <span className="ml-2 text-xs font-medium text-amber-700">undantagen</span>
+                        ) : null}
+                      </td>
+                      <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                        {event.people}
+                      </td>
+                      <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                        {event.dnsCount}
+                      </td>
+                      <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                        {formatSek(event.entryFeeToPaySek)} kr
+                      </td>
+                      <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                        {formatSek(event.lateFeeToPaySek)} kr
+                      </td>
+                      <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                        {formatSek(event.otherFeeToPaySek)} kr
+                      </td>
+                      <td className="px-3 py-2.5 tabular-nums text-slate-700 sm:px-4">
+                        {formatSek(event.dnsFeeToPaySek)} kr
+                      </td>
+                      <td className="px-3 py-2.5 tabular-nums font-medium text-slate-900 sm:px-4">
+                        {formatSek(event.totalToPaySek)} kr
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {eventSummaries.length === 0 ? (
+              <p className="px-4 py-8 text-center text-sm text-slate-500">
+                {data.importedAt ? "Inga träffar för filtret." : "Ingen data ännu — kör en import från Eventor."}
+              </p>
+            ) : null}
+          </div>
+        )}
       </section>
     </div>
   );

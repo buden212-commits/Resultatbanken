@@ -7,6 +7,7 @@ import { loadDnsFeeTracker } from "@/lib/dns-fee-store";
 import {
   listEventsFromRows,
   listFeeNameVariants,
+  summarizeDnsFeesByEvent,
   summarizeDnsFeesByPerson,
 } from "@/lib/dns-fee-types";
 
@@ -24,6 +25,7 @@ export default async function KollAnmalanPage() {
   if (authenticated) {
     const data = await loadDnsFeeTracker();
     const people = summarizeDnsFeesByPerson(data);
+    const eventSummaries = summarizeDnsFeesByEvent(data);
     initial = {
       year: data.year,
       importedAt: data.importedAt,
@@ -33,6 +35,7 @@ export default async function KollAnmalanPage() {
       exemptFeeNames: data.exemptFeeNames ?? [],
       manualExemptions: data.manualExemptions ?? [],
       people,
+      eventSummaries,
       events: listEventsFromRows(data.rows),
       feeNames: listFeeNameVariants(
         data.rows.filter((row) => !(data.removedEventIds ?? []).includes(row.eventId)),

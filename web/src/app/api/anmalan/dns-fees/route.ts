@@ -5,6 +5,7 @@ import { loadDnsFeeTracker } from "@/lib/dns-fee-store";
 import {
   listEventsFromRows,
   listFeeNameVariants,
+  summarizeDnsFeesByEvent,
   summarizeDnsFeesByPerson,
 } from "@/lib/dns-fee-types";
 
@@ -15,6 +16,7 @@ export async function GET() {
 
   const data = await loadDnsFeeTracker();
   const people = summarizeDnsFeesByPerson(data);
+  const eventSummaries = summarizeDnsFeesByEvent(data);
   const events = listEventsFromRows(data.rows);
   const feeNames = listFeeNameVariants(
     data.rows.filter((row) => !(data.removedEventIds ?? []).includes(row.eventId)),
@@ -29,6 +31,7 @@ export async function GET() {
     exemptFeeNames: data.exemptFeeNames ?? [],
     manualExemptions: data.manualExemptions ?? [],
     people,
+    eventSummaries,
     events,
     feeNames,
     totals: {

@@ -5,6 +5,7 @@ import {
   getDnsFeeEventDetail,
   isYouthOrJuniorClass,
   listFeeNameVariants,
+  summarizeDnsFeesByEvent,
   summarizeDnsFeesByPerson,
   type DnsFeeRow,
 } from "./dns-fee-types";
@@ -209,6 +210,15 @@ describe("dns fee summary", () => {
     expect(detail!.participants.map((p) => p.personName)).toEqual(["Anna", "Bert"]);
     expect(detail!.totals.people).toBe(2);
     expect(detail!.removed).toBe(false);
+
+    const summaries = summarizeDnsFeesByEvent(data);
+    expect(summaries).toHaveLength(2);
+    expect(summaries.map((e) => e.eventId).sort()).toEqual(["50", "60"]);
+    expect(summaries.find((e) => e.eventId === "50")).toMatchObject({
+      people: 2,
+      dnsCount: 1,
+      eventName: "Medel-KM",
+    });
   });
 
   it("applies whole-event category waivers to all participants", () => {

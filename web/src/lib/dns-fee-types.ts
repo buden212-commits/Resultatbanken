@@ -871,3 +871,88 @@ export function getDnsFeeEventDetail(
     totals,
   };
 }
+
+export type DnsFeeEventSummary = {
+  eventId: string;
+  eventName: string;
+  date: string;
+  removed: boolean;
+  exempt: boolean;
+  people: number;
+  dnsCount: number;
+  entryFeeToPaySek: number;
+  lateFeeToPaySek: number;
+  otherFeeToPaySek: number;
+  dnsFeeToPaySek: number;
+  totalToPaySek: number;
+  totalGrossSek: number;
+};
+
+/** One row per imported event (including borttagna), sorted by date desc. */
+export function summarizeDnsFeesByEvent(data: DnsFeeTrackerData): DnsFeeEventSummary[] {
+  const byEvent = new Map<
+    string,
+    DnsFeeEventSummary & { personIds: Set<string> }
+  >();
+
+  for (const row of data.rows) {
+    const existing = byEvent.get(row.eventId);
+    const gross = rowGrossSplit(row);
+    const split = rowPayableSplit(data, row);
+    const status = normalizeDnsFeeStatus(row.status);
+    const rowGross =
+      gross.entryFeeGrossSek +
+      gross.lateFeeGrossSek +
+      gross.otherFeeGrossSek +
+      gross.dnsFeeGrossSek;
+    const rowTotal =
+      split.entryFeeToPaySek +
+      split.lateFeeToPaySek +
+      split.otherFeeToPaySek +
+      split.dnsFeeToPaySek;
+
+    if (!existing) {
+      byEvent.set(row.eventId, {
+        eventId: row.eventId,
+        eventName: row.eventName,
+        date: row.date,
+        removed: isEventRemoved(data, row.eventId),
+        exempt: isEventExempt(data, row.eventId),
+        people: 1,
+        dnsCount: status === "dns" ? 1 : 0,
+        entryFeeToPaySek: split.entryFeeToPaySek,
+        lateFeeToPaySek: split.lateFeeToPaySek,
+        otherFeeToPaySek: split.otherFeeToPaySek,
+        dnsFeeToPaySek: split.dnsFeeToPaySek,
+        totalToPaySek: rowTotal,
+        totalGrossSek: rowGross,
+        personIds: new Set([row.personId]),
+      });
+      continue;
+    }
+
+    existing.personIds.add(row.personId);
+    existing.people = existing.personIds.size;
+    if (status === "dns") existing.dnsCount += 1;
+    existing.entryFeeToPaySek += split.entryFeeToPaySek;
+    existing.lateFeeToPaySek += split.lateFeeToPaySek;
+    existing.otherFeeToPaySek += split.otherFeeToPaySek;
+    existing.dnsFeeToPaySek += split.dnsFeeToPaySek;
+    existing.totalToPaySek += rowTotal;
+    existing.totalGrossSek += rowGross;
+    if (row.date > existing.date) {
+      existing.date = row.date;
+      existing.eventName = row.eventName;
+    }
+  }
+
+  return [...byEvent.values()]
+    .map(({ personIds: _personIds, ...summary }) => summary)
+    .sort((a, b) =>
+      a.date === b.date
+        ? a.eventName.localeCompare(b.eventName, "sv")
+        : a.date < b.date
+          ? 1
+          : -1,
+    );
+}
