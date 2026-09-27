@@ -162,7 +162,7 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
   };
   const visibleParticipants = showAllParticipants
     ? event.participants
-    : event.participants.filter((participant) => (participant.feeSek ?? 0) > 0);
+    : event.participants.filter((participant) => participant.totalToPaySek > 0);
   const eventPayableParts = [
     {
       label: "Anmälan",
@@ -214,7 +214,7 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
             {formatDate(event.date)} ·{" "}
             {showAllParticipants
               ? `${event.totals.people} deltagare`
-              : `${visibleParticipants.length} med avgift av ${event.totals.people}`}
+              : `${visibleParticipants.length} med belopp av ${event.totals.people}`}
             {" · "}
             {formatSek(event.totals.totalToPaySek)} kr att betala
             {event.removed ? " (om återställd)" : ""}
@@ -292,7 +292,7 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
           <li className="rounded-xl border border-dashed border-slate-200 px-4 py-8 text-center text-sm text-slate-500">
             {event.participants.length === 0
               ? "Inga deltagare på tävlingen."
-              : "Inga deltagare med avgift. Aktivera ”Visa alla deltagare” för att se övriga."}
+              : "Inga deltagare med belopp att betala. Aktivera ”Visa alla deltagare” för att se övriga."}
           </li>
         ) : null}
         {visibleParticipants.map((participant) => {
