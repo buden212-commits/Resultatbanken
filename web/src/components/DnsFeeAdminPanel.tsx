@@ -23,9 +23,8 @@ import {
 } from "@/lib/dns-fee-types";
 import { buildFeeMailtoLink } from "@/lib/dns-fee-mailto";
 
-function personDetailHref(personId: string, year: number): string {
-  const params = new URLSearchParams({ personId, year: String(year) });
-  return `/eventor?${params.toString()}`;
+function personDetailHref(personId: string): string {
+  return `/koll-anmalan/deltagare/${encodeURIComponent(personId)}`;
 }
 
 type Totals = {
@@ -364,15 +363,17 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   }
 
   const removedEventIds = data.removedEventIds ?? [];
+  const eventSummariesList = data.eventSummaries ?? [];
   const exemptEvents = data.events.filter((event) => data.exemptEventIds.includes(event.eventId));
-  const removedEvents = data.events.filter((event) => removedEventIds.includes(event.eventId));
+  const removedEvents = eventSummariesList.filter((event) => event.removed);
   const orphanRemovedEventIds = removedEventIds.filter(
-    (eventId) => !data.events.some((event) => event.eventId === eventId),
+    (eventId) => !eventSummariesList.some((event) => event.eventId === eventId),
   );
-  const addableEvents = data.events.filter(
-    (event) =>
-      !data.exemptEventIds.includes(event.eventId) && !removedEventIds.includes(event.eventId),
-  );
+  const addableEvents = data.events.filter((event) => {
+    const summary = eventSummariesList.find((item) => item.eventId === event.eventId);
+    if (summary?.removed || summary?.clubCompetition) return false;
+    return !data.exemptEventIds.includes(event.eventId) && !removedEventIds.includes(event.eventId);
+  });
   const exemptFeeNames = data.exemptFeeNames ?? [];
   const feeNameVariants = data.feeNames ?? [];
   const orphanExemptFeeNames = exemptFeeNames.filter(
@@ -526,9 +527,13 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                   Undantagna tävlingar ger 0 kr i ordinarie anmälan. Efteranmälan undantas inte via
                   det undantaget.
                 </li>
-                <li>
+                  <li>
                   Borttagna tävlingar tar bort alla kostnader (anmälan, efteranmälan, övrigt och DNS)
                   från koll.
+                </li>
+                <li>
+                  Klubbtävlingar (Eventor-typ) hanteras alltid som borttagna — de sparas automatiskt
+                  vid import.
                 </li>
                 <li>
                   Undantagna avgiftsnamn gäller alltid (utom efteranmälan). Listan sparas över nya
@@ -687,15 +692,23 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                     </Link>
                     <span className="ml-2 text-slate-400">{formatDate(event.date)}</span>
                     <span className="mt-0.5 block text-xs text-slate-400">
-                      Alla kostnader undantas
+                      {event.clubCompetition
+                        ? "Klubbtävling — alltid borttagen"
+                        : "Alla kostnader undantas"}
                     </span>
                   </span>
                   <button
                     type="button"
-                    className="text-brand-700 hover:underline"
+                    className="text-brand-700 hover:underline disabled:cursor-not-allowed disabled:opacity-40"
+                    disabled={event.clubCompetition}
+                    title={
+                      event.clubCompetition
+                        ? "Klubbtävlingar kan inte återställas"
+                        : undefined
+                    }
                     onClick={() => void setExemptions([event.eventId], "remove", "removed")}
                   >
-                    Återställ
+                    {event.clubCompetition ? "Alltid borttagen" : "Återställ"}
                   </button>
                 </li>
               ))}
@@ -800,7 +813,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                               className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-slate-700"
                             >
                               <Link
-                                href={personDetailHref(participant.personId, data.year)}
+                                href={personDetailHref(participant.personId)}
                                 className="link-brand font-medium"
                               >
                                 {participant.personName}
@@ -943,7 +956,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                           <td className="px-3 py-2.5 sm:px-4">
                             <div className="flex items-center gap-2">
                               <Link
-                                href={personDetailHref(person.personId, data.year)}
+                                href={personDetailHref(person.personId)}
                                 className="link-brand font-medium"
                               >
                                 {person.personName}
@@ -1330,7 +1343,9 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                           {event.eventName}
                         </Link>
                         {event.removed ? (
-                          <span className="ml-2 text-xs font-medium text-amber-700">borttagen</span>
+                          <span className="ml-2 text-xs font-medium text-amber-700">
+                            {event.clubCompetition ? "klubbtävling" : "borttagen"}
+                          </span>
                         ) : event.exempt ? (
                           <span className="ml-2 text-xs font-medium text-amber-700">undantagen</span>
                         ) : null}

@@ -45,6 +45,10 @@ function normalizeTracker(data: DnsFeeTrackerData): DnsFeeTrackerData {
       ...row,
       status: normalizeDnsFeeStatus(row.status),
       inSweden: row.inSweden !== false,
+      classificationId:
+        typeof row.classificationId === "string" && row.classificationId.trim()
+          ? row.classificationId.trim()
+          : null,
       fees: Array.isArray(row.fees)
         ? row.fees.map(normalizeDnsFeePart).filter((part): part is NonNullable<typeof part> => Boolean(part))
         : null,

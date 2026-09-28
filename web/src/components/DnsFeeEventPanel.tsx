@@ -41,9 +41,8 @@ function statusLabel(status: string): string {
   }
 }
 
-function personDetailHref(personId: string, year: number): string {
-  const params = new URLSearchParams({ personId, year: String(year) });
-  return `/eventor?${params.toString()}`;
+function personFeeHref(personId: string): string {
+  return `/koll-anmalan/deltagare/${encodeURIComponent(personId)}`;
 }
 
 type EventPayload = {
@@ -198,7 +197,14 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
         </p>
       ) : null}
 
-      {event.removed ? (
+      {event.clubCompetition ? (
+        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          <p className="font-medium">Klubbtävling</p>
+          <p className="mt-1">
+            Klubbtävlingar hanteras alltid som borttagna och ingår inte i koll på anmälan.
+          </p>
+        </div>
+      ) : event.removed ? (
         <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           <p className="font-medium">Borttagen tävling</p>
           <p className="mt-1">
@@ -217,7 +223,7 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
               : `${visibleParticipants.length} med belopp av ${event.totals.people}`}
             {" · "}
             {formatSek(event.totals.totalToPaySek)} kr att betala
-            {event.removed ? " (om återställd)" : ""}
+            {event.removed && !event.clubCompetition ? " (om återställd)" : ""}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
@@ -225,11 +231,11 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
             <input
               type="checkbox"
               checked={showAllParticipants}
-              onChange={(event) => setShowAllParticipants(event.target.checked)}
+              onChange={(changeEvent) => setShowAllParticipants(changeEvent.target.checked)}
             />
             Visa alla deltagare
           </label>
-          {event.removed ? (
+          {event.clubCompetition ? null : event.removed ? (
             <button
               type="button"
               className="btn-primary"
@@ -363,7 +369,7 @@ export function DnsFeeEventPanel({ initial }: { initial: EventPayload }) {
                 <div className="min-w-0">
                   <p className="font-medium text-slate-900">
                     <Link
-                      href={personDetailHref(participant.personId, data.year)}
+                      href={personFeeHref(participant.personId)}
                       className="link-brand"
                     >
                       {participant.personName}

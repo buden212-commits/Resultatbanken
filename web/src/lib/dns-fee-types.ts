@@ -35,6 +35,11 @@ export type DnsFeeRow = {
    * (legacy imports from Swedish Eventor).
    */
   inSweden?: boolean;
+  /**
+   * Eventor EventClassificationId (1=mästerskap … 5=klubbtävling …).
+   * Missing on legacy rows until re-import.
+   */
+  classificationId?: string | null;
   /** Participant-submitted reason for DNS (Ej start). */
   dnsReason?: string | null;
   /** ISO timestamp when dnsReason was last saved. */
@@ -501,15 +506,28 @@ export function isEventExempt(data: DnsFeeTrackerData, eventId: string): boolean
   return data.exemptEventIds.includes(eventId);
 }
 
-export function isEventRemoved(data: DnsFeeTrackerData, eventId: string): boolean {
-  return (data.removedEventIds ?? []).includes(eventId);
+/** Eventor classificationId 5 = klubbtävling. */
+export const DNS_FEE_CLUB_CLASSIFICATION_ID = "5";
+
+export function isDnsFeeClubCompetition(classificationId: string | null | undefined): boolean {
+  return String(classificationId ?? "").trim() === DNS_FEE_CLUB_CLASSIFICATION_ID;
 }
 
-/** Rows that still count toward costs (excludes fully removed events). */
+export function isEventClubCompetition(data: DnsFeeTrackerData, eventId: string): boolean {
+  return data.rows.some(
+    (row) => row.eventId === eventId && isDnsFeeClubCompetition(row.classificationId),
+  );
+}
+
+export function isEventRemoved(data: DnsFeeTrackerData, eventId: string): boolean {
+  if ((data.removedEventIds ?? []).includes(eventId)) return true;
+  // Klubbtävlingar are always excluded from fee tracking.
+  return isEventClubCompetition(data, eventId);
+}
+
+/** Rows that still count toward costs (excludes fully removed events and klubbtävlingar). */
 export function activeDnsFeeRows(data: DnsFeeTrackerData): DnsFeeRow[] {
-  const removed = new Set(data.removedEventIds ?? []);
-  if (removed.size === 0) return data.rows;
-  return data.rows.filter((row) => !removed.has(row.eventId));
+  return data.rows.filter((row) => !isEventRemoved(data, row.eventId));
 }
 
 export function isRowInSweden(row: DnsFeeRow): boolean {
@@ -772,6 +790,15 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
     .sort((a, b) => a.personName.localeCompare(b.personName, "sv"));
 }
 
+export function getDnsFeePersonDetail(
+  data: DnsFeeTrackerData,
+  personId: string,
+): DnsFeePersonSummary | null {
+  const id = String(personId).trim();
+  if (!id) return null;
+  return summarizeDnsFeesByPerson(data).find((person) => person.personId === id) ?? null;
+}
+
 export type DnsFeeEventParticipant = {
   personId: string;
   personName: string;
@@ -794,6 +821,7 @@ export type DnsFeeEventDetail = {
   date: string;
   removed: boolean;
   exempt: boolean;
+  clubCompetition: boolean;
   participants: DnsFeeEventParticipant[];
   totals: {
     people: number;
@@ -867,6 +895,7 @@ export function getDnsFeeEventDetail(
     date: first.date,
     removed: isEventRemoved(data, id),
     exempt: isEventExempt(data, id),
+    clubCompetition: isEventClubCompetition(data, id),
     participants,
     totals,
   };
@@ -878,6 +907,7 @@ export type DnsFeeEventSummary = {
   date: string;
   removed: boolean;
   exempt: boolean;
+  clubCompetition: boolean;
   people: number;
   dnsCount: number;
   entryFeeToPaySek: number;
@@ -918,6 +948,7 @@ export function summarizeDnsFeesByEvent(data: DnsFeeTrackerData): DnsFeeEventSum
         date: row.date,
         removed: isEventRemoved(data, row.eventId),
         exempt: isEventExempt(data, row.eventId),
+        clubCompetition: isDnsFeeClubCompetition(row.classificationId),
         people: 1,
         dnsCount: status === "dns" ? 1 : 0,
         entryFeeToPaySek: split.entryFeeToPaySek,
@@ -934,6 +965,8 @@ export function summarizeDnsFeesByEvent(data: DnsFeeTrackerData): DnsFeeEventSum
     existing.personIds.add(row.personId);
     existing.people = existing.personIds.size;
     if (status === "dns") existing.dnsCount += 1;
+    if (isDnsFeeClubCompetition(row.classificationId)) existing.clubCompetition = true;
+    existing.removed = isEventRemoved(data, row.eventId);
     existing.entryFeeToPaySek += split.entryFeeToPaySek;
     existing.lateFeeToPaySek += split.lateFeeToPaySek;
     existing.otherFeeToPaySek += split.otherFeeToPaySek;

@@ -176,6 +176,38 @@ describe("dns fee summary", () => {
     expect(anna.rows[0].eventId).toBe("60");
   });
 
+  it("treats klubbtävlingar as removed even without removedEventIds", () => {
+    const data = emptyDnsFeeTracker(2026);
+    data.members = [{ personId: "1", personName: "Anna", email: null }];
+    data.rows = [
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "50",
+        feeSek: 100,
+        status: "ok",
+        classificationId: "5",
+      }),
+      row({
+        personId: "1",
+        personName: "Anna",
+        eventId: "60",
+        feeSek: 180,
+        status: "ok",
+        classificationId: "2",
+      }),
+    ];
+    const anna = summarizeDnsFeesByPerson(data)[0];
+    expect(anna.startCount).toBe(1);
+    expect(anna.totalToPaySek).toBe(180);
+    expect(anna.rows[0].eventId).toBe("60");
+    const summaries = summarizeDnsFeesByEvent(data);
+    expect(summaries.find((e) => e.eventId === "50")).toMatchObject({
+      clubCompetition: true,
+      removed: true,
+    });
+  });
+
   it("lists all participants for an event detail view", () => {
     const data = emptyDnsFeeTracker(2026);
     data.rows = [

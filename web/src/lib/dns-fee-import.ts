@@ -6,6 +6,7 @@
 import { eventorGet, fetchOrganisationId, isEventorConfigured } from "./eventor";
 import { listClubPersons } from "./eventor-person";
 import type { DnsFeePart, DnsFeeRow, DnsFeeStatus, DnsFeeTrackerData } from "./dns-fee-types";
+import { DNS_FEE_CLUB_CLASSIFICATION_ID, isDnsFeeClubCompetition } from "./dns-fee-types";
 
 function firstLeaf(xml: string, tag: string): string {
   const re = new RegExp(`<${tag}(?:\\s[^>]*)?>([^<]*)</${tag}>`, "i");
@@ -42,6 +43,7 @@ type EventMeta = {
   date: string;
   isRelay: boolean;
   inSweden: boolean;
+  classificationId: string | null;
 };
 
 function parseInSwedenFromXml(xml: string): boolean {
@@ -68,12 +70,14 @@ function parseEventMetaFromXml(xml: string, eventId: string): EventMeta {
   const date =
     eventBlock.match(/<StartDate>[\s\S]*?<Date>([^<]+)<\/Date>/i)?.[1]?.trim().slice(0, 10) ||
     firstLeaf(eventBlock, "Date").slice(0, 10);
+  const classificationId = firstLeaf(eventBlock, "EventClassificationId") || null;
   return {
     eventId,
     eventName: name || `Eventor ${eventId}`,
     date: date || "",
     isRelay: isRelayEventXml(eventBlock),
     inSweden: parseInSwedenFromXml(eventBlock),
+    classificationId,
   };
 }
 
@@ -90,6 +94,7 @@ function mergeEventMeta(current: EventMeta | undefined, next: EventMeta): EventM
     isRelay: current.isRelay || next.isRelay,
     // Prefer explicit non-Sweden if either side says so
     inSweden: current.inSweden && next.inSweden,
+    classificationId: current.classificationId || next.classificationId,
   };
 }
 
@@ -104,6 +109,7 @@ type ParsedEntry = {
   feeIds: string[];
   isRelay: boolean;
   inSweden: boolean;
+  classificationId: string | null;
 };
 
 function parseEntriesXml(xml: string): ParsedEntry[] {
@@ -120,7 +126,14 @@ function parseEntriesXml(xml: string): ParsedEntry[] {
     const nestedEvent = block.match(/<Event\b[\s\S]*?<\/Event>/i)?.[0];
     const meta = nestedEvent
       ? parseEventMetaFromXml(nestedEvent, eventId)
-      : { eventId, eventName: `Eventor ${eventId}`, date: "", isRelay: false, inSweden: true };
+      : {
+          eventId,
+          eventName: `Eventor ${eventId}`,
+          date: "",
+          isRelay: false,
+          inSweden: true,
+          classificationId: null,
+        };
 
     const feeIds = [...block.matchAll(/<EntryEntryFee\b[\s\S]*?<EntryFeeId>(\d+)<\/EntryFeeId>/gi)].map(
       (m) => m[1],
@@ -137,6 +150,7 @@ function parseEntriesXml(xml: string): ParsedEntry[] {
       feeIds,
       isRelay: meta.isRelay,
       inSweden: meta.inSweden,
+      classificationId: meta.classificationId,
     });
   }
   return rows;
@@ -331,6 +345,7 @@ export async function importDnsFeesFromEventor(
         date: entry.date,
         isRelay: entry.isRelay,
         inSweden: entry.inSweden,
+        classificationId: entry.classificationId,
       }),
     );
   }
@@ -401,6 +416,7 @@ export async function importDnsFeesFromEventor(
           date: entry.date,
           isRelay: entry.isRelay,
           inSweden: entry.inSweden,
+          classificationId: entry.classificationId,
         }),
       );
     }
@@ -438,6 +454,8 @@ export async function importDnsFeesFromEventor(
         fees,
         entryId: entry.entryId || null,
         inSweden: resolved.inSweden,
+        classificationId:
+          resolved.classificationId || entry.classificationId || null,
       };
 
       const key = `${row.personId}::${row.eventId}`;
@@ -484,6 +502,19 @@ export async function importDnsFeesFromEventor(
       return a.eventName.localeCompare(b.eventName, "sv");
     });
 
+  const clubEventIds = [
+    ...new Set(
+      [
+        ...[...events.values()]
+          .filter((event) => event.classificationId === DNS_FEE_CLUB_CLASSIFICATION_ID)
+          .map((event) => event.eventId),
+        ...rows
+          .filter((row) => isDnsFeeClubCompetition(row.classificationId))
+          .map((row) => row.eventId),
+      ].map(String),
+    ),
+  ];
+
   const data: DnsFeeTrackerData = {
     year,
     importedAt: new Date().toISOString(),
@@ -493,8 +524,12 @@ export async function importDnsFeesFromEventor(
       personName: person.displayName,
       email: person.email,
     })),
-    exemptEventIds: [...new Set(existing.exemptEventIds.map(String))],
-    removedEventIds: [...new Set((existing.removedEventIds ?? []).map(String))],
+    exemptEventIds: [...new Set(existing.exemptEventIds.map(String))].filter(
+      (id) => !clubEventIds.includes(id),
+    ),
+    removedEventIds: [
+      ...new Set([...(existing.removedEventIds ?? []).map(String), ...clubEventIds]),
+    ].sort((a, b) => a.localeCompare(b, "sv")),
     eventWaivers: [...(existing.eventWaivers ?? [])],
     exemptFeeNames: [...new Set((existing.exemptFeeNames ?? []).map(String))],
     manualExemptions: [...(existing.manualExemptions ?? [])],
