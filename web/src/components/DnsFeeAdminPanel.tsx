@@ -59,7 +59,7 @@ type Payload = {
   totals: Totals;
 };
 
-type ListTab = "people" | "events";
+type ListTab = "people" | "events" | "rules";
 
 type SortKey =
   | "personName"
@@ -183,6 +183,7 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
   const [eventSortKey, setEventSortKey] = useState<EventSortKey>("date");
   const [eventSortDir, setEventSortDir] = useState<"asc" | "desc">("desc");
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [showAllPersonStarts, setShowAllPersonStarts] = useState(false);
   const [importing, setImporting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -466,6 +467,79 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
           </div>
         ))}
       </div>
+
+      <section className="space-y-4">
+        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-px">
+          <button
+            type="button"
+            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition ${
+              listTab === "people"
+                ? "border-brand-600 text-brand-800"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+            onClick={() => setListTab("people")}
+            aria-pressed={listTab === "people"}
+          >
+            Deltagare
+            <span className="ml-1.5 font-normal text-slate-400">({data.people.length})</span>
+          </button>
+          <button
+            type="button"
+            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition ${
+              listTab === "events"
+                ? "border-brand-600 text-brand-800"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+            onClick={() => setListTab("events")}
+            aria-pressed={listTab === "events"}
+          >
+            Tävlingar
+            <span className="ml-1.5 font-normal text-slate-400">
+              ({(data.eventSummaries ?? []).length})
+            </span>
+          </button>
+          <button
+            type="button"
+            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition ${
+              listTab === "rules"
+                ? "border-brand-600 text-brand-800"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+            onClick={() => setListTab("rules")}
+            aria-pressed={listTab === "rules"}
+          >
+            Regler & undantag
+          </button>
+        </div>
+
+        {listTab === "rules" ? (
+          <div className="space-y-4">
+            <section className="card space-y-3 p-5">
+              <h2 className="text-lg font-bold text-slate-900">Så fungerar undantag</h2>
+              <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-600">
+                <li>
+                  Ungdoms- och juniorklasser (t.o.m. 20) i Sverige undantas automatiskt för ordinarie
+                  anmälan.
+                </li>
+                <li>Stafetter ingår inte i koll på anmälan.</li>
+                <li>
+                  Undantagna tävlingar ger 0 kr i ordinarie anmälan. Efteranmälan undantas inte via
+                  det undantaget.
+                </li>
+                <li>
+                  Borttagna tävlingar tar bort alla kostnader (anmälan, efteranmälan, övrigt och DNS)
+                  från koll.
+                </li>
+                <li>
+                  Undantagna avgiftsnamn gäller alltid (utom efteranmälan). Listan sparas över nya
+                  importer.
+                </li>
+                <li>
+                  På deltagare- och tävlingssidor kan du undanta Anmälan / Efteranmälan / Övrigt /
+                  DNS per person eller för hela tävlingen.
+                </li>
+              </ul>
+            </section>
 
       <section className="card space-y-4 p-5">
         <div>
@@ -771,39 +845,9 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
           </ul>
         )}
       </section>
-
-      <section className="space-y-4">
-        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-px">
-          <button
-            type="button"
-            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition ${
-              listTab === "people"
-                ? "border-brand-600 text-brand-800"
-                : "border-transparent text-slate-500 hover:text-slate-800"
-            }`}
-            onClick={() => setListTab("people")}
-            aria-pressed={listTab === "people"}
-          >
-            Deltagare
-            <span className="ml-1.5 font-normal text-slate-400">({data.people.length})</span>
-          </button>
-          <button
-            type="button"
-            className={`-mb-px border-b-2 px-3 py-2 text-sm font-medium transition ${
-              listTab === "events"
-                ? "border-brand-600 text-brand-800"
-                : "border-transparent text-slate-500 hover:text-slate-800"
-            }`}
-            onClick={() => setListTab("events")}
-            aria-pressed={listTab === "events"}
-          >
-            Tävlingar
-            <span className="ml-1.5 font-normal text-slate-400">
-              ({(data.eventSummaries ?? []).length})
-            </span>
-          </button>
-        </div>
-
+          </div>
+        ) : (
+          <>
         <div className="flex flex-wrap items-end gap-3">
           <div className="min-w-[14rem] flex-1">
             <label htmlFor="dns-filter" className="mb-1 block text-sm font-medium text-slate-700">
@@ -959,8 +1003,46 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                         {open ? (
                           <tr className="border-b border-slate-100 bg-slate-50/70">
                             <td colSpan={7} className="px-3 py-3 sm:px-4">
+                              {(() => {
+                                const visibleRows = showAllPersonStarts
+                                  ? person.rows
+                                  : person.rows.filter((row) => {
+                                      const split = rowPayableSplit(trackerForSplit, row);
+                                      return (
+                                        split.entryFeeToPaySek +
+                                          split.lateFeeToPaySek +
+                                          split.otherFeeToPaySek +
+                                          split.dnsFeeToPaySek >
+                                        0
+                                      );
+                                    });
+                                return (
+                                  <>
+                              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                                <p className="text-xs text-slate-500">
+                                  {showAllPersonStarts
+                                    ? `${person.rows.length} starter`
+                                    : `${visibleRows.length} med belopp av ${person.rows.length}`}
+                                </p>
+                                <label className="flex items-center gap-2 text-xs text-slate-700 sm:text-sm">
+                                  <input
+                                    type="checkbox"
+                                    checked={showAllPersonStarts}
+                                    onChange={(event) =>
+                                      setShowAllPersonStarts(event.target.checked)
+                                    }
+                                  />
+                                  Visa alla tävlingar
+                                </label>
+                              </div>
                               <ul className="space-y-2">
-                                {person.rows.map((row) => {
+                                {visibleRows.length === 0 ? (
+                                  <li className="rounded-xl border border-dashed border-slate-200 px-4 py-6 text-center text-sm text-slate-500">
+                                    Inga tävlingar med belopp att betala. Aktivera ”Visa alla
+                                    tävlingar” för att se övriga.
+                                  </li>
+                                ) : null}
+                                {visibleRows.map((row) => {
                                   const eventExempt = data.exemptEventIds.includes(row.eventId);
                                   const youthJunior = isYouthJuniorEntryFeeExempt(row);
                                   const waiverFlags = getManualWaiverFlags(
@@ -1127,6 +1209,9 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
                                   );
                                 })}
                               </ul>
+                                  </>
+                                );
+                              })()}
                             </td>
                           </tr>
                         ) : null}
@@ -1282,6 +1367,8 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
               </p>
             ) : null}
           </div>
+        )}
+          </>
         )}
       </section>
     </div>
