@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
 
+import { EventorPaceChart } from "@/components/EventorPaceChart";
 import { StatsBarChart, StatsCountTable } from "@/components/StatsCharts";
 import { StatCard } from "@/components/ui";
 import type { EventorClubPerson, EventorPersonResult } from "@/lib/eventor-person";
 import type { EventorPersonStats } from "@/lib/eventor-person-stats";
-import { formatKmPace } from "@/lib/eventor-person-stats";
+import { buildPaceChartPoints, formatKmPace } from "@/lib/eventor-person-stats";
 
 type DashboardPayload = {
   person: EventorClubPerson;
@@ -143,6 +144,10 @@ export function EventorPersonDashboard({
   }, [initialPersonId]);
 
   const yearOptions = useMemo(() => data?.years ?? [], [data]);
+  const pacePoints = useMemo(
+    () => (data ? buildPaceChartPoints(data.results) : []),
+    [data],
+  );
 
   return (
     <div className="space-y-8">
@@ -296,6 +301,13 @@ export function EventorPersonDashboard({
               ) : null}
             </section>
           )}
+
+          <section>
+            <h3 className="mb-4 text-lg font-bold text-slate-900">Kilometertid</h3>
+            <div className="card p-4 sm:p-5">
+              <EventorPaceChart points={pacePoints} />
+            </div>
+          </section>
 
           <section>
             <h3 className="mb-4 text-lg font-bold text-slate-900">Resultathistorik</h3>

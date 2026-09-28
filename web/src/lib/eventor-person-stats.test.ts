@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { buildEventorPersonStats, filterResultsByYear } from "./eventor-person-stats";
+import {
+  buildEventorPersonStats,
+  buildPaceChartPoints,
+  courseLengthKm,
+  filterResultsByYear,
+  formatCourseLengthKm,
+} from "./eventor-person-stats";
 import type { EventorPersonResult } from "./eventor-person";
 
 function row(partial: Partial<EventorPersonResult> & Pick<EventorPersonResult, "eventId" | "date">): EventorPersonResult {
@@ -49,5 +55,39 @@ describe("eventor person stats", () => {
     ];
     expect(filterResultsByYear(results, 2024)).toHaveLength(1);
     expect(filterResultsByYear(results, null)).toHaveLength(2);
+  });
+
+  it("derives course length from time and kilometre time", () => {
+    expect(courseLengthKm(1593, 374)).toBeCloseTo(4.259, 3);
+    expect(courseLengthKm(null, 374)).toBeNull();
+    expect(courseLengthKm(1593, 0)).toBeNull();
+    expect(formatCourseLengthKm(4.259)).toBe("4,3 km");
+  });
+
+  it("builds pace chart points sorted by date", () => {
+    const results = [
+      row({ eventId: "2", date: "2024-06-01", kilometreTimeSeconds: 400, kilometreTime: "6:40" }),
+      row({ eventId: "1", date: "2024-05-01", kilometreTimeSeconds: 360, kilometreTime: "6:00" }),
+      row({
+        eventId: "3",
+        date: "2024-07-01",
+        status: "dns",
+        time: null,
+        timeSeconds: null,
+        kilometreTime: null,
+        kilometreTimeSeconds: null,
+      }),
+      row({
+        eventId: "4",
+        date: "2024-08-01",
+        isTeam: true,
+        kilometreTime: null,
+        kilometreTimeSeconds: null,
+      }),
+    ];
+    const points = buildPaceChartPoints(results);
+    expect(points).toHaveLength(2);
+    expect(points.map((p) => p.eventId)).toEqual(["1", "2"]);
+    expect(points[0].lengthKm).toBeCloseTo(1593 / 360, 5);
   });
 });

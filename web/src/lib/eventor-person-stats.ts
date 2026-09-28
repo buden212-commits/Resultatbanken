@@ -119,3 +119,63 @@ export function formatKmPace(totalSeconds: number | null): string {
   const seconds = totalSeconds % 60;
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
+
+/** Banlängd i km från löptid och Eventors kilometertid (tid / km-tid). */
+export function courseLengthKm(
+  timeSeconds: number | null | undefined,
+  kilometreTimeSeconds: number | null | undefined,
+): number | null {
+  if (
+    timeSeconds == null ||
+    kilometreTimeSeconds == null ||
+    timeSeconds <= 0 ||
+    kilometreTimeSeconds <= 0
+  ) {
+    return null;
+  }
+  return timeSeconds / kilometreTimeSeconds;
+}
+
+export function formatCourseLengthKm(km: number | null): string {
+  if (km === null || !Number.isFinite(km) || km <= 0) return "–";
+  return `${km.toLocaleString("sv-SE", { maximumFractionDigits: 1, minimumFractionDigits: 1 })} km`;
+}
+
+export type EventorPacePoint = {
+  eventId: string;
+  date: string;
+  eventName: string;
+  className: string;
+  time: string | null;
+  timeSeconds: number;
+  kilometreTime: string;
+  kilometreTimeSeconds: number;
+  lengthKm: number | null;
+};
+
+/** OK-resultat med km-tid, sorterade kronologiskt för tidsserie. */
+export function buildPaceChartPoints(results: EventorPersonResult[]): EventorPacePoint[] {
+  return results
+    .filter(
+      (row) =>
+        row.status === "ok" &&
+        !row.isTeam &&
+        row.kilometreTimeSeconds !== null &&
+        row.kilometreTimeSeconds > 0 &&
+        row.kilometreTime &&
+        row.timeSeconds !== null &&
+        row.timeSeconds > 0,
+    )
+    .map((row) => ({
+      eventId: row.eventId,
+      date: row.date,
+      eventName: row.eventName,
+      className: row.className,
+      time: row.time,
+      timeSeconds: row.timeSeconds as number,
+      kilometreTime: row.kilometreTime as string,
+      kilometreTimeSeconds: row.kilometreTimeSeconds as number,
+      lengthKm: courseLengthKm(row.timeSeconds, row.kilometreTimeSeconds),
+    }))
+    .sort((a, b) => a.date.localeCompare(b.date) || a.eventName.localeCompare(b.eventName, "sv"));
+}
