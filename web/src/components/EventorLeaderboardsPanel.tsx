@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 
 import { buildEventorLeaderboardSnapshot } from "@/lib/eventor-leaderboard-stats";
 import type {
@@ -97,20 +97,27 @@ function BoardCard({ board, year }: { board: EventorLeaderboardBoard; year: numb
   );
 }
 
+async function sleep(ms: number) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export function EventorLeaderboardsPanel({
   year,
   years,
   snapshot,
   canRefresh,
+  needsRefresh,
 }: {
   year: number;
   years: number[];
   snapshot: EventorLeaderboardSnapshot | null;
   canRefresh: boolean;
+  needsRefresh: boolean;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [refreshing, setRefreshing] = useState(false);
+  const [autoRefreshing, setAutoRefreshing] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sportFilter, setSportFilter] = useState<EventorSportFilter>(DEFAULT_EVENTOR_SPORT_FILTER);
@@ -130,6 +137,63 @@ export function EventorLeaderboardsPanel({
       sportFilter,
     );
   }, [snapshot, sportFilter, canRefilter]);
+
+  useEffect(() => {
+    if (!needsRefresh) return;
+
+    let cancelled = false;
+
+    async function ensureFresh() {
+      setAutoRefreshing(true);
+      setError(null);
+      try {
+        for (let attempt = 0; attempt < 12; attempt += 1) {
+          const response = await fetch("/api/eventor/leaderboards/ensure-fresh", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ year }),
+          });
+          const json = (await response.json()) as {
+            error?: string;
+            status?: string;
+            message?: string;
+          };
+          if (cancelled) return;
+          if (!response.ok) {
+            throw new Error(json.error || "Automatisk uppdatering misslyckades.");
+          }
+          if (json.status === "refreshed") {
+            setMessage(json.message ?? "Topplistorna har uppdaterats från Eventor.");
+            startTransition(() => {
+              router.refresh();
+            });
+            return;
+          }
+          if (json.status === "fresh") {
+            startTransition(() => {
+              router.refresh();
+            });
+            return;
+          }
+          await sleep(10_000);
+        }
+        if (!cancelled) {
+          setMessage("Uppdatering från Eventor pågår fortfarande. Ladda om sidan om en stund.");
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : "Automatisk uppdatering misslyckades.");
+        }
+      } finally {
+        if (!cancelled) setAutoRefreshing(false);
+      }
+    }
+
+    void ensureFresh();
+    return () => {
+      cancelled = true;
+    };
+  }, [needsRefresh, year, router]);
 
   async function onRefresh() {
     setRefreshing(true);
@@ -156,6 +220,8 @@ export function EventorLeaderboardsPanel({
     }
   }
 
+  const busy = refreshing || autoRefreshing;
+
   return (
     <div className={`space-y-8 ${pending ? "opacity-80" : ""}`}>
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -165,6 +231,13 @@ export function EventorLeaderboardsPanel({
               ? `Uppdaterad ${formatUpdatedAt(view.importedAt)} · ${view.personCount} löpare · ${view.resultCount} resultat · ${view.eventsScanned} tävlingar`
               : "Ingen snapshot för valt år ännu."}
           </p>
+          {needsRefresh ? (
+            <p className="mt-1 text-xs text-amber-700">
+              {autoRefreshing
+                ? "Hämtar nyare data från Eventor (kan ta några minuter)…"
+                : "Data äldre än 14 dagar — uppdatering startar automatiskt."}
+            </p>
+          ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <label className="text-sm font-medium text-slate-600" htmlFor="eventor-lb-year">
@@ -191,7 +264,7 @@ export function EventorLeaderboardsPanel({
             <button
               type="button"
               onClick={() => void onRefresh()}
-              disabled={refreshing}
+              disabled={busy}
               className="rounded-xl bg-brand-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-brand-700 disabled:opacity-60"
             >
               {refreshing ? "Hämtar från Eventor…" : `Uppdatera ${year}`}
@@ -235,6 +308,12 @@ export function EventorLeaderboardsPanel({
         </div>
       ) : null}
 
+      {autoRefreshing && !view ? (
+        <div className="rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-900">
+          Hämtar årets topplistor från Eventor första gången. Det kan ta några minuter…
+        </div>
+      ) : null}
+
       {message ? (
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
           {message}
@@ -248,9 +327,11 @@ export function EventorLeaderboardsPanel({
 
       {!view ? (
         <div className="card px-6 py-10 text-center text-slate-500">
-          {canRefresh
-            ? `Klicka på “Uppdatera ${year}” för att hämta årets klubbresultat från Eventor.`
-            : `Topplistorna för ${year} har inte genererats ännu.`}
+          {autoRefreshing
+            ? "Väntar på Eventor…"
+            : canRefresh
+              ? `Klicka på “Uppdatera ${year}” för att hämta årets klubbresultat från Eventor.`
+              : `Topplistorna för ${year} har inte genererats ännu.`}
         </div>
       ) : (
         <>

@@ -5,6 +5,7 @@ import { EventorLeaderboardsPanel } from "@/components/EventorLeaderboardsPanel"
 import { PageHeader } from "@/components/PageHeader";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { loadEventorLeaderboards } from "@/lib/eventor-leaderboard-store";
+import { isEventorLeaderboardStale } from "@/lib/eventor-leaderboard-types";
 import { isEventorConfigured } from "@/lib/eventor";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default async function EventorLeaderboardsPage({ searchParams }: Props) {
 
   const data = configured ? await loadEventorLeaderboards() : { byYear: {} };
   const snapshot = data.byYear[String(year)] ?? null;
+  const needsRefresh = configured && isEventorLeaderboardStale(snapshot);
   const years = [
     ...new Set([
       currentYear,
@@ -41,7 +43,7 @@ export default async function EventorLeaderboardsPage({ searchParams }: Props) {
       <PageHeader
         eyebrow="Eventor"
         title="Årets topplistor"
-        description="Klubbvisa rankingar från Eventor — skogskilometrar, formkurva, fältplacering och mer. Listorna bygger på en cachad års-snapshot."
+        description="Klubbvisa rankingar från Eventor — skogskilometrar, formkurva, fältplacering och mer. Listorna cachas och uppdateras automatiskt om de är äldre än 14 dagar."
       />
 
       <p className="mt-4 text-sm text-slate-500">
@@ -64,6 +66,7 @@ export default async function EventorLeaderboardsPage({ searchParams }: Props) {
             years={years}
             snapshot={snapshot}
             canRefresh={canRefresh}
+            needsRefresh={needsRefresh}
           />
         </div>
       )}
