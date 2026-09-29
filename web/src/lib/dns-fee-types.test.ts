@@ -205,6 +205,12 @@ describe("dns fee summary", () => {
     expect(summaries.find((e) => e.eventId === "50")).toMatchObject({
       clubCompetition: true,
       removed: true,
+      entryFeeToPaySek: 0,
+      lateFeeToPaySek: 0,
+      otherFeeToPaySek: 0,
+      dnsFeeToPaySek: 0,
+      totalToPaySek: 0,
+      totalGrossSek: 0,
     });
   });
 

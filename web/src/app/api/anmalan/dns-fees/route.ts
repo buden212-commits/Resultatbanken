@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { isAnmalanAuthenticated } from "@/lib/anmalan-auth";
 import { loadDnsFeeTracker } from "@/lib/dns-fee-store";
 import {
+  activeDnsFeeRows,
   listEventsFromRows,
   listFeeNameVariants,
   summarizeDnsFeesByEvent,
@@ -18,9 +19,7 @@ export async function GET() {
   const people = summarizeDnsFeesByPerson(data);
   const eventSummaries = summarizeDnsFeesByEvent(data);
   const events = listEventsFromRows(data.rows);
-  const feeNames = listFeeNameVariants(
-    data.rows.filter((row) => !(data.removedEventIds ?? []).includes(row.eventId)),
-  );
+  const feeNames = listFeeNameVariants(activeDnsFeeRows(data));
 
   return NextResponse.json({
     year: data.year,

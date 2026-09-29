@@ -579,12 +579,32 @@ export function isEntryFeeExempt(data: DnsFeeTrackerData, row: DnsFeeRow): boole
 /**
  * Costs with no exemptions applied — only status-based split of raw fee parts.
  */
-export function rowGrossSplit(row: DnsFeeRow): {
+const zeroFeeSplit = {
+  entryFeeGrossSek: 0,
+  lateFeeGrossSek: 0,
+  otherFeeGrossSek: 0,
+  dnsFeeGrossSek: 0,
+} as const;
+
+const zeroPayableSplit = {
+  entryFeeToPaySek: 0,
+  lateFeeToPaySek: 0,
+  otherFeeToPaySek: 0,
+  dnsFeeToPaySek: 0,
+} as const;
+
+export function rowGrossSplit(
+  data: DnsFeeTrackerData,
+  row: DnsFeeRow,
+): {
   entryFeeGrossSek: number;
   lateFeeGrossSek: number;
   otherFeeGrossSek: number;
   dnsFeeGrossSek: number;
 } {
+  if (isEventClubCompetition(data, row.eventId)) {
+    return { ...zeroFeeSplit };
+  }
   const fee = row.feeSek ?? 0;
   const { ordinarySek, lateSek, otherSek } = splitFeeAmounts(row, []);
   const status = normalizeDnsFeeStatus(row.status);
@@ -624,6 +644,9 @@ export function rowPayableSplit(
   otherFeeToPaySek: number;
   dnsFeeToPaySek: number;
 } {
+  if (isEventClubCompetition(data, row.eventId)) {
+    return { ...zeroPayableSplit };
+  }
   const fee = row.feeSek ?? 0;
   const { ordinarySek, lateSek, otherSek, waivedSek } = splitFeeAmounts(
     row,
@@ -732,7 +755,7 @@ export function summarizeDnsFeesByPerson(data: DnsFeeTrackerData): DnsFeePersonS
   for (const row of activeDnsFeeRows(data)) {
     const existing = byPerson.get(row.personId);
     const fee = row.feeSek ?? 0;
-    const gross = rowGrossSplit(row);
+    const gross = rowGrossSplit(data, row);
     const split = rowPayableSplit(data, row);
     const status = normalizeDnsFeeStatus(row.status);
     const rowGross =
@@ -927,7 +950,7 @@ export function summarizeDnsFeesByEvent(data: DnsFeeTrackerData): DnsFeeEventSum
 
   for (const row of data.rows) {
     const existing = byEvent.get(row.eventId);
-    const gross = rowGrossSplit(row);
+    const gross = rowGrossSplit(data, row);
     const split = rowPayableSplit(data, row);
     const status = normalizeDnsFeeStatus(row.status);
     const rowGross =

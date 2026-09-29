@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { isAnmalanAuthenticated } from "@/lib/anmalan-auth";
 import { loadDnsFeeTracker } from "@/lib/dns-fee-store";
 import {
+  activeDnsFeeRows,
   listEventsFromRows,
   listFeeNameVariants,
   summarizeDnsFeesByEvent,
@@ -37,9 +38,7 @@ export default async function KollAnmalanPage() {
       people,
       eventSummaries,
       events: listEventsFromRows(data.rows),
-      feeNames: listFeeNameVariants(
-        data.rows.filter((row) => !(data.removedEventIds ?? []).includes(row.eventId)),
-      ),
+      feeNames: listFeeNameVariants(activeDnsFeeRows(data)),
     totals: {
       people: people.length,
       dnsStarts: people.reduce((sum, row) => sum + row.dnsCount, 0),
