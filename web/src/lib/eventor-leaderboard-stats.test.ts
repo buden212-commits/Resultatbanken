@@ -222,4 +222,28 @@ describe("eventor leaderboard stats", () => {
     expect(starts?.entries.map((e) => e.personId)).toEqual(["1"]);
     expect(snapshot.rows).toHaveLength(7);
   });
+
+  it("ranks finish-rate ties by number of starts", () => {
+    const rows = [
+      ...Array.from({ length: 5 }, (_, i) =>
+        row({
+          personId: "few",
+          displayName: "Ada Få",
+          eventId: `f${i}`,
+          date: `2026-03-${String(i + 1).padStart(2, "0")}`,
+        }),
+      ),
+      ...Array.from({ length: 8 }, (_, i) =>
+        row({
+          personId: "many",
+          displayName: "Bert Många",
+          eventId: `m${i}`,
+          date: `2026-04-${String(i + 1).padStart(2, "0")}`,
+        }),
+      ),
+    ];
+    const snapshot = buildEventorLeaderboardSnapshot(2026, rows, { eventsScanned: 13 });
+    const finish = snapshot.featured.find((b) => b.id === "finishrate");
+    expect(finish?.entries.map((e) => e.personId)).toEqual(["many", "few"]);
+  });
 });

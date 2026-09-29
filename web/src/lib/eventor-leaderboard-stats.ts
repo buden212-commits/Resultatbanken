@@ -314,7 +314,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "finishrate",
       "Aldrig ge upp",
-      `Högst andel fullföljda starter. Minst ${MIN_FINISH_RATE} starter.`,
+      `Högst andel fullföljda starter. Minst ${MIN_FINISH_RATE} starter; vid lika andel räknas flest starter högst.`,
       "percent",
       topEntries(
         people
@@ -325,6 +325,7 @@ export function buildEventorLeaderboardSnapshot(
               personId: p.personId,
               displayName: p.displayName,
               value: rate,
+              tiebreak: p.starts,
               detail: `${p.finished}/${p.starts} · ${formatPercent(rate)}`,
             };
           }),
