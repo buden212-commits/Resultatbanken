@@ -148,4 +148,78 @@ describe("eventor leaderboard stats", () => {
     const finish = snapshot.featured.find((b) => b.id === "finishrate");
     expect(finish?.entries[0]?.personId).toBe("1");
   });
+
+  it("excludes mtbo and skio by default", () => {
+    const rows = [
+      row({
+        personId: "1",
+        displayName: "Fot",
+        eventId: "1",
+        date: "2026-05-01",
+        sportKind: "footo",
+        place: 1,
+        startsInClass: 10,
+      }),
+      row({
+        personId: "1",
+        displayName: "Fot",
+        eventId: "2",
+        date: "2026-05-02",
+        sportKind: "footo",
+        place: 1,
+        startsInClass: 10,
+      }),
+      row({
+        personId: "1",
+        displayName: "Fot",
+        eventId: "3",
+        date: "2026-05-03",
+        sportKind: "footo",
+        place: 1,
+        startsInClass: 10,
+      }),
+      row({
+        personId: "1",
+        displayName: "Fot",
+        eventId: "4",
+        date: "2026-05-04",
+        sportKind: "footo",
+        place: 1,
+        startsInClass: 10,
+      }),
+      row({
+        personId: "1",
+        displayName: "Fot",
+        eventId: "5",
+        date: "2026-05-05",
+        sportKind: "footo",
+        place: 1,
+        startsInClass: 10,
+      }),
+      row({
+        personId: "2",
+        displayName: "MTB",
+        eventId: "6",
+        date: "2026-06-01",
+        eventName: "MTBO-KM",
+        sportKind: "mtbo",
+        place: 1,
+        startsInClass: 5,
+      }),
+      row({
+        personId: "3",
+        displayName: "Skido",
+        eventId: "7",
+        date: "2026-01-01",
+        eventName: "SkidoKM",
+        sportKind: "skio",
+        place: 1,
+        startsInClass: 5,
+      }),
+    ];
+    const snapshot = buildEventorLeaderboardSnapshot(2026, rows, { eventsScanned: 7 });
+    const starts = snapshot.classic.find((b) => b.id === "starter");
+    expect(starts?.entries.map((e) => e.personId)).toEqual(["1"]);
+    expect(snapshot.rows).toHaveLength(7);
+  });
 });

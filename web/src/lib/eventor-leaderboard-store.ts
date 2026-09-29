@@ -33,7 +33,10 @@ function normalize(data: EventorLeaderboardsData | null | undefined): EventorLea
   const byYear: Record<string, EventorLeaderboardSnapshot> = {};
   for (const [year, snapshot] of Object.entries(data.byYear ?? {})) {
     if (!snapshot || !Array.isArray(snapshot.featured)) continue;
-    byYear[year] = snapshot;
+    byYear[year] = {
+      ...snapshot,
+      rows: Array.isArray(snapshot.rows) ? snapshot.rows : undefined,
+    };
   }
   return { byYear };
 }

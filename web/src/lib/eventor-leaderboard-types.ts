@@ -1,3 +1,5 @@
+import type { EventorClubResultRow } from "./eventor-person";
+
 export type EventorLeaderboardValueKind =
   | "count"
   | "duration"
@@ -30,6 +32,8 @@ export type EventorLeaderboardSnapshot = {
   resultCount: number;
   featured: EventorLeaderboardBoard[];
   classic: EventorLeaderboardBoard[];
+  /** Raw year rows so UI can refilter MTBO/SkidO without re-import. */
+  rows?: EventorClubResultRow[];
 };
 
 export type EventorLeaderboardsData = {

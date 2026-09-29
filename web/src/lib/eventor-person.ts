@@ -8,6 +8,7 @@ import {
   fetchOrganisationId,
   isEventorConfigured,
 } from "./eventor";
+import { detectEventorSportKind, type EventorSportKind } from "./eventor-sport";
 import { parseTimeToSeconds } from "./time";
 
 const CLASSIFICATION_TYPE: Record<string, string> = {
@@ -59,6 +60,7 @@ export type EventorPersonResult = {
   startsInClass: number | null;
   eventUrl: string;
   isTeam: boolean;
+  sportKind?: EventorSportKind;
 };
 
 /** Club result row from organisation/person ResultList XML. */
@@ -215,6 +217,10 @@ export function parseResultListXml(listXml: string): EventorClubResultRow[] {
   const organizer =
     eventBlock.match(/<Organiser>[\s\S]*?<Name>([^<]+)<\/Name>/i)?.[1]?.trim() || "";
   const classificationId = firstLeaf(eventBlock, "EventClassificationId");
+  const disciplineId =
+    firstLeaf(eventBlock, "DisciplineId") ||
+    eventBlock.match(/\bdisciplineId="([^"]+)"/i)?.[1] ||
+    null;
   const distanceKind = mapDistance(
     eventBlock.match(/<WRSInfo>[\s\S]*?<Distance>([^<]+)<\/Distance>/i)?.[1]?.trim() ?? "",
   );
@@ -250,6 +256,11 @@ export function parseResultListXml(listXml: string): EventorClubResultRow[] {
           resultXml.match(/<CompetitorStatus[^>]*value="([^"]+)"/i)?.[1] || fields.statusRaw;
         const time = fields.time;
         const kilometreTime = fields.kilometreTime;
+        const sportKind = detectEventorSportKind({
+          eventName,
+          className,
+          disciplineId,
+        });
         rows.push({
           personId,
           displayName,
@@ -271,6 +282,7 @@ export function parseResultListXml(listXml: string): EventorClubResultRow[] {
           startsInClass: Number.isInteger(startsInClass) ? startsInClass : null,
           eventUrl: eventorEventUrl(eventId),
           isTeam: false,
+          sportKind,
         });
       }
     }
@@ -288,6 +300,11 @@ export function parseResultListXml(listXml: string): EventorClubResultRow[] {
         firstLeaf(teamMember.match(/<OverallResult>[\s\S]*?<\/OverallResult>/i)?.[0] ?? "", "ResultPosition");
       const place = placeRaw ? Number(placeRaw) : null;
       const time = firstLeaf(teamMember, "Time") || null;
+      const sportKind = detectEventorSportKind({
+        eventName,
+        className,
+        disciplineId,
+      });
       rows.push({
         personId,
         displayName,
@@ -309,6 +326,7 @@ export function parseResultListXml(listXml: string): EventorClubResultRow[] {
         startsInClass: Number.isInteger(startsInClass) ? startsInClass : null,
         eventUrl: eventorEventUrl(eventId),
         isTeam: true,
+        sportKind,
       });
     }
   }

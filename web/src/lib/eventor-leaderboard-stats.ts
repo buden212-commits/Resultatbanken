@@ -6,6 +6,11 @@ import type {
   EventorLeaderboardSnapshot,
   EventorLeaderboardValueKind,
 } from "./eventor-leaderboard-types";
+import {
+  DEFAULT_EVENTOR_SPORT_FILTER,
+  filterRowsBySport,
+  type EventorSportFilter,
+} from "./eventor-sport";
 
 const MIN_PLACE_PCT = 5;
 const MIN_FINISH_RATE = 5;
@@ -201,8 +206,10 @@ export function buildEventorLeaderboardSnapshot(
   year: number,
   rows: EventorClubResultRow[],
   meta: { eventsScanned: number; importedAt?: string },
+  sportFilter: EventorSportFilter = DEFAULT_EVENTOR_SPORT_FILTER,
 ): EventorLeaderboardSnapshot {
-  const people = aggregateClubResults(rows);
+  const filteredRows = filterRowsBySport(rows, sportFilter);
+  const people = aggregateClubResults(filteredRows);
 
   const featured: EventorLeaderboardBoard[] = [
     board(
@@ -461,8 +468,9 @@ export function buildEventorLeaderboardSnapshot(
     importedAt: meta.importedAt ?? new Date().toISOString(),
     eventsScanned: meta.eventsScanned,
     personCount: people.length,
-    resultCount: rows.length,
+    resultCount: filteredRows.length,
     featured,
     classic,
+    rows,
   };
 }

@@ -2,14 +2,19 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 
+import { buildEventorLeaderboardSnapshot } from "@/lib/eventor-leaderboard-stats";
 import type {
   EventorLeaderboardBoard,
   EventorLeaderboardSnapshot,
   EventorLeaderboardValueKind,
 } from "@/lib/eventor-leaderboard-types";
 import { formatKmPace } from "@/lib/eventor-person-stats";
+import {
+  DEFAULT_EVENTOR_SPORT_FILTER,
+  type EventorSportFilter,
+} from "@/lib/eventor-sport";
 
 function formatDuration(totalSeconds: number): string {
   if (totalSeconds <= 0) return "–";
@@ -108,6 +113,23 @@ export function EventorLeaderboardsPanel({
   const [refreshing, setRefreshing] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [sportFilter, setSportFilter] = useState<EventorSportFilter>(DEFAULT_EVENTOR_SPORT_FILTER);
+
+  const canRefilter = Boolean(snapshot?.rows && snapshot.rows.length > 0);
+
+  const view = useMemo(() => {
+    if (!snapshot) return null;
+    if (!canRefilter) return snapshot;
+    return buildEventorLeaderboardSnapshot(
+      snapshot.year,
+      snapshot.rows ?? [],
+      {
+        eventsScanned: snapshot.eventsScanned,
+        importedAt: snapshot.importedAt,
+      },
+      sportFilter,
+    );
+  }, [snapshot, sportFilter, canRefilter]);
 
   async function onRefresh() {
     setRefreshing(true);
@@ -139,8 +161,8 @@ export function EventorLeaderboardsPanel({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm text-slate-500">
-            {snapshot
-              ? `Uppdaterad ${formatUpdatedAt(snapshot.importedAt)} · ${snapshot.personCount} löpare · ${snapshot.eventsScanned} tävlingar`
+            {view
+              ? `Uppdaterad ${formatUpdatedAt(view.importedAt)} · ${view.personCount} löpare · ${view.resultCount} resultat · ${view.eventsScanned} tävlingar`
               : "Ingen snapshot för valt år ännu."}
           </p>
         </div>
@@ -178,6 +200,41 @@ export function EventorLeaderboardsPanel({
         </div>
       </div>
 
+      {snapshot ? (
+        <div className="flex flex-wrap items-center gap-4 text-sm text-slate-700">
+          <span className="font-medium text-slate-600">Visa:</span>
+          <label className="inline-flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-slate-300 text-brand-600"
+              checked={sportFilter.excludeMtbo}
+              disabled={!canRefilter}
+              onChange={(event) =>
+                setSportFilter((prev) => ({ ...prev, excludeMtbo: event.target.checked }))
+              }
+            />
+            Exkludera MTBO
+          </label>
+          <label className="inline-flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-slate-300 text-brand-600"
+              checked={sportFilter.excludeSkio}
+              disabled={!canRefilter}
+              onChange={(event) =>
+                setSportFilter((prev) => ({ ...prev, excludeSkio: event.target.checked }))
+              }
+            />
+            Exkludera SkidO
+          </label>
+          {!canRefilter ? (
+            <span className="text-xs text-slate-500">
+              Uppdatera topplistorna för att aktivera filter.
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+
       {message ? (
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
           {message}
@@ -189,7 +246,7 @@ export function EventorLeaderboardsPanel({
         </div>
       ) : null}
 
-      {!snapshot ? (
+      {!view ? (
         <div className="card px-6 py-10 text-center text-slate-500">
           {canRefresh
             ? `Klicka på “Uppdatera ${year}” för att hämta årets klubbresultat från Eventor.`
@@ -200,7 +257,7 @@ export function EventorLeaderboardsPanel({
           <section className="space-y-4">
             <h2 className="text-lg font-bold text-slate-900">Ovanliga topplistor</h2>
             <div className="grid gap-6 md:grid-cols-2">
-              {snapshot.featured.map((board) => (
+              {view.featured.map((board) => (
                 <BoardCard key={board.id} board={board} year={year} />
               ))}
             </div>
@@ -209,7 +266,7 @@ export function EventorLeaderboardsPanel({
           <section className="space-y-4">
             <h2 className="text-lg font-bold text-slate-900">Klassiska listor</h2>
             <div className="grid gap-6 md:grid-cols-3">
-              {snapshot.classic.map((board) => (
+              {view.classic.map((board) => (
                 <BoardCard key={board.id} board={board} year={year} />
               ))}
             </div>
