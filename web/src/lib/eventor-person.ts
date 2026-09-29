@@ -61,6 +61,12 @@ export type EventorPersonResult = {
   isTeam: boolean;
 };
 
+/** Club result row from organisation/person ResultList XML. */
+export type EventorClubResultRow = EventorPersonResult & {
+  personId: string;
+  displayName: string;
+};
+
 function firstLeaf(xml: string, tag: string): string {
   const re = new RegExp(`<${tag}(?:\\s[^>]*)?>([^<]*)</${tag}>`, "i");
   return xml.match(re)?.[1]?.trim() ?? "";
@@ -196,7 +202,8 @@ function parseResultFields(resultXml: string): {
   };
 }
 
-function extractPersonResultsFromList(listXml: string, personId: string): EventorPersonResult[] {
+/** Parse one Eventor ResultList into club rows (individuals + team legs). */
+export function parseResultListXml(listXml: string): EventorClubResultRow[] {
   const eventBlock = listXml.match(/<Event\b[\s\S]*?<\/Event>/i)?.[0] ?? "";
   const eventId = firstLeaf(eventBlock, "EventId");
   if (!eventId) return [];
@@ -212,7 +219,7 @@ function extractPersonResultsFromList(listXml: string, personId: string): Evento
     eventBlock.match(/<WRSInfo>[\s\S]*?<Distance>([^<]+)<\/Distance>/i)?.[1]?.trim() ?? "",
   );
 
-  const rows: EventorPersonResult[] = [];
+  const rows: EventorClubResultRow[] = [];
   const classResults = splitTopLevel(listXml, "ClassResult");
 
   for (const classResult of classResults) {
@@ -222,7 +229,11 @@ function extractPersonResultsFromList(listXml: string, personId: string): Evento
     const startsInClass = startsRaw ? Number(startsRaw) : null;
 
     for (const personResult of splitTopLevel(classResult, "PersonResult")) {
-      if (firstLeaf(personResult, "PersonId") !== personId) continue;
+      const personId = firstLeaf(personResult, "PersonId");
+      if (!personId) continue;
+      const family = firstLeaf(personResult, "Family");
+      const given = firstLeaf(personResult, "Given");
+      const displayName = [given, family].filter(Boolean).join(" ") || `Person ${personId}`;
 
       const raceResults = splitTopLevel(personResult, "RaceResult");
       const directResult = personResult.match(/<Result\b[\s\S]*?<\/Result>/i)?.[0];
@@ -235,12 +246,13 @@ function extractPersonResultsFromList(listXml: string, personId: string): Evento
 
       for (const resultXml of resultBlocks) {
         const fields = parseResultFields(resultXml);
-        // CompetitorStatus is an empty element with value= attr — parseResultFields may miss it
         const statusRaw =
           resultXml.match(/<CompetitorStatus[^>]*value="([^"]+)"/i)?.[1] || fields.statusRaw;
         const time = fields.time;
         const kilometreTime = fields.kilometreTime;
         rows.push({
+          personId,
+          displayName,
           eventId,
           eventName,
           date,
@@ -264,7 +276,11 @@ function extractPersonResultsFromList(listXml: string, personId: string): Evento
     }
 
     for (const teamMember of splitTopLevel(classResult, "TeamMemberResult")) {
-      if (firstLeaf(teamMember, "PersonId") !== personId) continue;
+      const personId = firstLeaf(teamMember, "PersonId");
+      if (!personId) continue;
+      const family = firstLeaf(teamMember, "Family");
+      const given = firstLeaf(teamMember, "Given");
+      const displayName = [given, family].filter(Boolean).join(" ") || `Person ${personId}`;
       const statusRaw =
         teamMember.match(/<CompetitorStatus[^>]*value="([^"]+)"/i)?.[1] || "OK";
       const placeRaw =
@@ -273,6 +289,8 @@ function extractPersonResultsFromList(listXml: string, personId: string): Evento
       const place = placeRaw ? Number(placeRaw) : null;
       const time = firstLeaf(teamMember, "Time") || null;
       rows.push({
+        personId,
+        displayName,
         eventId,
         eventName,
         date,
@@ -296,6 +314,17 @@ function extractPersonResultsFromList(listXml: string, personId: string): Evento
   }
 
   return rows;
+}
+
+function extractPersonResultsFromList(listXml: string, personId: string): EventorPersonResult[] {
+  return parseResultListXml(listXml)
+    .filter((row) => row.personId === personId)
+    .map(({ personId: _personId, displayName: _displayName, ...rest }) => rest);
+}
+
+/** Parse full organisation/person results XML (one or more ResultList). */
+export function parseOrganisationResultsXml(xml: string): EventorClubResultRow[] {
+  return splitTopLevel(xml, "ResultList").flatMap((list) => parseResultListXml(list));
 }
 
 export async function fetchPersonResults(

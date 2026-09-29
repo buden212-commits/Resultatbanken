@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { EventorPersonDashboard } from "@/components/EventorPersonDashboard";
 import { PageHeader } from "@/components/PageHeader";
@@ -25,6 +26,12 @@ export default async function EventorStatsPage({ searchParams }: Props) {
         title="Personlig statistik"
         description="Sök en klubbmedlem och se starter, placeringar, klasser och km-tider direkt från Eventor. Filtrera per år."
       />
+
+      <p className="mt-4 text-sm text-slate-500">
+        <Link href="/eventor/topplistor" className="link-brand">
+          Se årets klubbtopplistor →
+        </Link>
+      </p>
 
       {!configured ? (
         <div className="mt-8 card border-amber-200 bg-amber-50 p-6 text-sm text-amber-900">

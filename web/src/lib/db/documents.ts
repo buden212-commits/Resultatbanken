@@ -6,7 +6,8 @@ export type AppDocumentKey =
   | "type-aliases"
   | "stats-exclusions"
   | "mastarnas"
-  | "dns-fee-tracker";
+  | "dns-fee-tracker"
+  | "eventor-leaderboards";
 
 export async function getDocument<T>(
   db: DbClient,
