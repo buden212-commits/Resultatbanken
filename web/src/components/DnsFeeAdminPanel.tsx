@@ -27,9 +27,6 @@ function personDetailHref(personId: string): string {
   return `/koll-anmalan/deltagare/${encodeURIComponent(personId)}`;
 }
 
-const DNS_FEE_LIST_TABLE_HEAD_CLASS =
-  "border-b border-slate-100 bg-slate-50 [&_th]:sticky [&_th]:top-14 [&_th]:z-40 [&_th]:bg-slate-50 md:[&_th]:top-[3.75rem]";
-
 type Totals = {
   people: number;
   dnsStarts: number;
@@ -888,10 +885,10 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
         </div>
 
         {listTab === "people" ? (
-          <div className="card">
-            <div className="overflow-x-auto">
+          <div className="card overflow-hidden">
+            <div className="dns-fee-list-table-scroll">
               <table className="min-w-full text-sm">
-                <thead className={DNS_FEE_LIST_TABLE_HEAD_CLASS}>
+                <thead className="border-b border-slate-100 bg-slate-50">
                   <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
                     <th className="px-3 py-3 sm:px-4">
                       <button type="button" className="hover:text-slate-700" onClick={() => toggleSort("personName")}>
@@ -1244,10 +1241,10 @@ export function DnsFeeAdminPanel({ initial }: { initial: Payload }) {
             ) : null}
           </div>
         ) : (
-          <div className="card">
-            <div className="overflow-x-auto">
+          <div className="card overflow-hidden">
+            <div className="dns-fee-list-table-scroll">
               <table className="min-w-full text-sm">
-                <thead className={DNS_FEE_LIST_TABLE_HEAD_CLASS}>
+                <thead className="border-b border-slate-100 bg-slate-50">
                   <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
                     <th className="px-3 py-3 sm:px-4">
                       <button
