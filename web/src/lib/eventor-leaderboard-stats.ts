@@ -17,7 +17,7 @@ const MIN_FINISH_RATE = 5;
 const MIN_CONSISTENCY = 5;
 const MIN_FORM = 3;
 const MIN_PACE = 3;
-const MIN_ALLROUND = 3;
+const MIN_CLASS_HOPPER = 3;
 const TOP_N = 10;
 
 type PersonAgg = {
@@ -276,23 +276,20 @@ export function buildEventorLeaderboardSnapshot(
       ),
     ),
     board(
-      "allround",
-      "Allroundaren",
-      "Flest unika distanser och tävlingstyper under året.",
+      "klasshoppare",
+      "Klasshopparen",
+      `Flest unika klasser under året. Minst ${MIN_CLASS_HOPPER} fullföljda.`,
       "count",
       topEntries(
         people
-          .filter((p) => p.finished >= MIN_ALLROUND)
-          .map((p) => {
-            const score = p.distanceKinds.size + p.classifications.size;
-            return {
-              personId: p.personId,
-              displayName: p.displayName,
-              value: score,
-              detail: `${p.distanceKinds.size} distanser · ${p.classifications.size} typer`,
-            };
-          })
-          .filter((row) => row.value > 0),
+          .filter((p) => p.finished >= MIN_CLASS_HOPPER && p.classNames.size > 0)
+          .map((p) => ({
+            personId: p.personId,
+            displayName: p.displayName,
+            value: p.classNames.size,
+            detail: `${p.classNames.size} klasser · ${p.finished} fullföljda`,
+            tiebreak: p.finished,
+          })),
         "desc",
       ),
     ),
