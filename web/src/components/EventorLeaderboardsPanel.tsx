@@ -63,7 +63,7 @@ function BoardCard({ board, year }: { board: EventorLeaderboardBoard; year: numb
   return (
     <div className="card p-4 sm:p-5">
       <h3 className="text-base font-semibold text-slate-900">{board.title}</h3>
-      <p className="mt-1 text-sm text-slate-500">{board.subtitle}</p>
+      <p className="mt-1 text-sm leading-relaxed text-slate-500">{board.subtitle}</p>
       {board.entries.length === 0 ? (
         <p className="mt-4 text-sm text-slate-500">Ingen data ännu.</p>
       ) : (

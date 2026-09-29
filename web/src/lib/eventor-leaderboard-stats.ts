@@ -215,7 +215,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "skogskm",
       "Skogskilometrar",
-      "Flest beräknade tävlingskilometer (tid ÷ km-tid).",
+      "Summerar ungefär hur långt du sprungit i tävling. Banlängd räknas som löptid ÷ km-tid (t.ex. 26:33 med 6:14/km ≈ 4,3 km). Bara individuella lopp där Eventor har km-tid.",
       "km",
       topEntries(
         people
@@ -232,7 +232,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "faltkungen",
       "Fältkungen",
-      `Bästa snittplacering i fältet (plats/starter). Minst ${MIN_PLACE_PCT} fullföljda.`,
+      `Bästa snittplacering relativt startfältet: plats ÷ starter i klassen. Exempel: 3:a av 30 = 10 %. Lägre är bättre. Minst ${MIN_PLACE_PCT} fullföljda med känd fältstorlek.`,
       "percent",
       topEntries(
         people
@@ -252,7 +252,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "formkurvan",
       "Formkurvan",
-      `Störst förbättring av snittplacering första → andra halvåret (min ${MIN_FORM}+${MIN_FORM}).`,
+      `Störst förbättring av fältplacering från första till andra halvåret. Exempel: snitt 40 % jan–jun → 25 % jul–dec = stark formkurva. Kräver minst ${MIN_FORM} lopp per halvår.`,
       "percent",
       topEntries(
         people
@@ -278,7 +278,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "klasshoppare",
       "Klasshopparen",
-      `Flest unika klasser under året. Minst ${MIN_CLASS_HOPPER} fullföljda.`,
+      `Flest olika klassnamn under året (t.ex. H40, H45 och Öppen räknas som tre). Minst ${MIN_CLASS_HOPPER} fullföljda; vid lika antal klasser vinner den med flest fullföljda.`,
       "count",
       topEntries(
         people
@@ -296,7 +296,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "masterskap",
       "Mästerskapsjägaren",
-      "Flest pallplatser (sedan starter) på mästerskap.",
+      "Flest pallplatser (1–3) på Eventor-klassningen Mästerskap (SM, DM m.m.). Vid lika pall räknas flest mästerskapsstarter högst.",
       "count",
       topEntries(
         people
@@ -314,7 +314,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "finishrate",
       "Aldrig ge upp",
-      `Högst andel fullföljda starter. Minst ${MIN_FINISH_RATE} starter; vid lika andel räknas flest starter högst.`,
+      `Högst andel fullföljda starter (OK ÷ alla starter). Exempel: 19 av 20 = 95 %. DNS/DNF/felstämpling sänker andelen. Minst ${MIN_FINISH_RATE} starter; vid 100 % vinner den med flest starter.`,
       "percent",
       topEntries(
         people
@@ -335,7 +335,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "jamnhet",
       "Jämnheten",
-      `Minst spridning i fältplacering. Minst ${MIN_CONSISTENCY} lopp med plats/fält.`,
+      `Minst spridning i fältplacering (standardavvikelse). Den som oftast landar på ungefär samma nivå i fältet rankas högst — inte den snabbaste. Minst ${MIN_CONSISTENCY} lopp med plats och fältstorlek.`,
       "percent",
       topEntries(
         people
@@ -355,7 +355,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "stafett",
       "Stafetthjälten",
-      "Flest stafettpallplatser, därefter starter.",
+      "Flest stafettpallplatser (placering 1–3), därefter flest stafettstarter. Bara lag-/stafettlopp räknas — inte individuella.",
       "count",
       topEntries(
         people
@@ -373,7 +373,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "tidsbank",
       "Tidsbanken",
-      "Längst total löptid i individuella lopp.",
+      "Längst sammanlagd löptid i individuella fullföljda lopp. Exempel: tre lopp på 45, 50 och 55 min = 2h 30m. Stafetter räknas inte.",
       "duration",
       topEntries(
         people
@@ -390,7 +390,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "blixten",
       "Blixten",
-      `Bästa snitt-km-tid. Minst ${MIN_PACE} individuella lopp med km-tid.`,
+      `Bästa snitt-kilometertid (lägre är snabbare). Exempel: 5:40, 6:00 och 6:20 ger snitt 6:00/km. Minst ${MIN_PACE} individuella lopp med km-tid från Eventor.`,
       "pace",
       topEntries(
         people
@@ -413,7 +413,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "starter",
       "Flest starter",
-      "Totalt antal starter under året.",
+      "Totalt antal anmälda starter under året (inkl. DNS/DNF). Under raden visas hur många som fullföljdes.",
       "count",
       topEntries(
         people
@@ -430,7 +430,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "segrar",
       "Flest segrar",
-      "Individuella och stafettsegrar räknas.",
+      "Antal gånger du kommit etta (placering 1), både individuellt och i stafett.",
       "count",
       topEntries(
         people
@@ -446,7 +446,7 @@ export function buildEventorLeaderboardSnapshot(
     board(
       "pall",
       "Flest pallplatser",
-      "Placering 1–3.",
+      "Antal gånger du kommit 1:a, 2:a eller 3:a — individuellt och i stafett.",
       "count",
       topEntries(
         people
