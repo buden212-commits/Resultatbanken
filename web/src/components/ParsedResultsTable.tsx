@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import type { ResolvedResultRow } from "@/lib/data";
 import type { ResultRow } from "@/lib/types";
+import { ResultListEditor } from "@/components/ResultListEditor";
 import { ResultTimeEditor } from "@/components/ResultTimeEditor";
 import { isUnreasonableTime } from "@/lib/time";
 
@@ -62,26 +63,71 @@ function groupRowsByClass(rows: (ResultRow | ResolvedResultRow)[]): { className:
 
 export function ParsedResultsTable({
   rows,
+  editRows,
   eventId,
   canEdit = false,
 }: {
   rows: ResultRow[] | ResolvedResultRow[];
+  editRows?: ResultRow[];
   eventId?: number;
   canEdit?: boolean;
 }) {
+  const [editing, setEditing] = useState(false);
   const groupedRows = useMemo(() => groupRowsByClass(rows), [rows]);
   const eventHasUnreasonableTimes = useMemo(
     () => rows.some((row) => isUnreasonableTime(row.time)),
     [rows],
   );
 
+  const canEditList = canEdit && eventId !== undefined;
+  const editorSource = editRows ?? rows;
+
+  if (editing && canEditList) {
+    return (
+      <ResultListEditor
+        eventId={eventId}
+        initialRows={editorSource}
+        onCancel={() => setEditing(false)}
+      />
+    );
+  }
+
   if (rows.length === 0) {
-    return null;
+    if (!canEditList) {
+      return null;
+    }
+
+    return (
+      <section className="mt-10">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 className="text-lg font-bold text-slate-900">Deltagare</h2>
+          <button
+            type="button"
+            className="text-sm font-medium text-brand-700 hover:text-brand-900"
+            onClick={() => setEditing(true)}
+          >
+            Lägg till deltagare
+          </button>
+        </div>
+        <p className="mt-3 text-sm text-slate-600">Inga deltagare indexerade ännu.</p>
+      </section>
+    );
   }
 
   return (
     <section className="mt-10">
-      <h2 className="mb-4 text-lg font-bold text-slate-900">Deltagare</h2>
+      <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+        <h2 className="text-lg font-bold text-slate-900">Deltagare</h2>
+        {canEditList ? (
+          <button
+            type="button"
+            className="text-sm font-medium text-brand-700 hover:text-brand-900"
+            onClick={() => setEditing(true)}
+          >
+            Redigera listan
+          </button>
+        ) : null}
+      </div>
       <div className="table-shell overflow-x-auto">
         <table>
           <thead>

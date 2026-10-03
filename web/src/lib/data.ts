@@ -149,16 +149,23 @@ export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[]
   }));
 }
 
+async function getRawResultsForEventAsync(eventId: number): Promise<ResultRow[]> {
+  return useDbData() ? await readResultsForEventFromDb(eventId) : getResultsForEvent(eventId);
+}
+
 /** Prefer DB query for one event (avoids loading the full results index). */
 export async function getResolvedResultsForEventAsync(eventId: number): Promise<ResolvedResultRow[]> {
-  const rows = useDbData()
-    ? await readResultsForEventFromDb(eventId)
-    : getResultsForEvent(eventId);
+  const rows = await getRawResultsForEventAsync(eventId);
   return dedupeResultsByPerson(derivePlaces(rows)).map((row) => ({
     ...row,
     resolved_person_key: resolvePersonKey(row.person_key),
     resolved_name: resolveDisplayName(row.person_key, row.name),
   }));
+}
+
+/** All stored rows for an event (no dedupe), with derived places for editing. */
+export async function getEditableResultsForEventAsync(eventId: number): Promise<ResultRow[]> {
+  return derivePlaces(await getRawResultsForEventAsync(eventId));
 }
 
 /** Warm caches needed by stats / people search. */

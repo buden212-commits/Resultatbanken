@@ -11,6 +11,7 @@ import {
   ensureDataReady,
   findContentFile,
   formatDate,
+  getEditableResultsForEventAsync,
   getEvent,
   getResolvedResultsForEventAsync,
 } from "@/lib/data";
@@ -42,10 +43,13 @@ export default async function EventPage({ params }: Props) {
   }
 
   const content = findContentFile(eventId);
-  const parsedRows = await getResolvedResultsForEventAsync(eventId);
+  const canEdit = await isAdminAuthenticated();
+  const [parsedRows, editRows] = await Promise.all([
+    getResolvedResultsForEventAsync(eventId),
+    canEdit ? getEditableResultsForEventAsync(eventId) : Promise.resolve(undefined),
+  ]);
   const title = event.name || event.type || `Resultat ${event.id}`;
   const excludedFromStats = isEventExcludedFromStats(eventId);
-  const canEdit = await isAdminAuthenticated();
   const showMmImport = isAdminConfigured();
   const availableTypes = getCanonicalEventTypesForPicker();
 
@@ -108,7 +112,12 @@ export default async function EventPage({ params }: Props) {
         </div>
       </header>
 
-      <ParsedResultsTable rows={parsedRows} eventId={eventId} canEdit={canEdit} />
+      <ParsedResultsTable
+        rows={parsedRows}
+        editRows={editRows}
+        eventId={eventId}
+        canEdit={canEdit}
+      />
 
       <section className="mt-10">
         <h2 className="mb-4 text-lg font-bold text-slate-900">Resultatfil</h2>

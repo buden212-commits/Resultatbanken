@@ -1,23 +1,11 @@
-import fs from "fs";
-import path from "path";
-
 import {
-  fetchManifestFromGitHub,
-  fetchResultsIndexFromGitHub,
-  isGitDeployConfigured,
-  publishResultsDataToGitHub,
-} from "./github-deploy";
-import { rebuildPeopleIndexFromResults } from "./rebuild-people-index";
-import { ensureDbSnapshot, getEvent, getEvents, getResultsIndex } from "./data";
-import { isDbEnabled } from "./db/config";
-import { syncResultsAndPeopleIntoDb } from "./db/write";
-import { refreshDbSnapshot } from "./db/store";
+  getEvent,
+  loadMutableResultsIndex,
+  rebuildAndPersistResults,
+  type ResultsDeployResult,
+} from "./results-persist";
 import { isValidCorrectedTime } from "./time";
 import type { ResultRow } from "./types";
-
-const DATA_DIR = path.join(process.cwd(), "..", "data");
-const RESULTS_INDEX_PATH = path.join(DATA_DIR, "results-index.json");
-const PEOPLE_INDEX_PATH = path.join(DATA_DIR, "people-index.json");
 
 export type ResultTimeRowKey = {
   event_id: number;
@@ -29,7 +17,7 @@ export type ResultTimeRowKey = {
 
 export type SaveResultTimeResult = {
   time: string;
-  deploy: { mode: "local" | "git" | "db"; ok: boolean; message: string };
+  deploy: ResultsDeployResult;
 };
 
 function matchesRow(row: ResultRow, key: ResultTimeRowKey): boolean {
@@ -40,33 +28,6 @@ function matchesRow(row: ResultRow, key: ResultTimeRowKey): boolean {
     (row.place ?? null) === key.place &&
     row.time === key.time
   );
-}
-
-function writeResultsDataLocal(results: ResultRow[], peopleJson: string): void {
-  fs.writeFileSync(RESULTS_INDEX_PATH, `${JSON.stringify(results, null, 2)}\n`, "utf-8");
-  fs.writeFileSync(PEOPLE_INDEX_PATH, peopleJson, "utf-8");
-}
-
-async function persistResultsData(
-  results: ResultRow[],
-  peopleJson: string,
-  message: string,
-): Promise<SaveResultTimeResult["deploy"]> {
-  if (isDbEnabled()) {
-    const events = getEvents();
-    await syncResultsAndPeopleIntoDb(results, events);
-    writeResultsDataLocal(results, peopleJson);
-    await refreshDbSnapshot();
-    return { mode: "db", ok: true, message: "Tid sparad i databasen." };
-  }
-
-  if (isGitDeployConfigured()) {
-    const result = await publishResultsDataToGitHub(results, peopleJson, message);
-    return { mode: "git", ok: result.ok, message: result.message };
-  }
-
-  writeResultsDataLocal(results, peopleJson);
-  return { mode: "local", ok: true, message: "Tid sparad och index uppdaterat." };
 }
 
 export async function saveCorrectedResultTime(
@@ -81,19 +42,12 @@ export async function saveCorrectedResultTime(
     throw new Error("Ogiltig tid — ange t.ex. 46:34, 1:05:30 eller 58.23 (8 min–3 tim).");
   }
 
-  if (isDbEnabled()) {
-    await ensureDbSnapshot();
-  }
-
+  const results = await loadMutableResultsIndex();
   const event = getEvent(key.event_id);
   if (!event) {
     throw new Error("Eventet finns inte.");
   }
 
-  const results =
-    !isDbEnabled() && isGitDeployConfigured()
-      ? await fetchResultsIndexFromGitHub()
-      : getResultsIndex();
   const index = results.findIndex((row) => matchesRow(row, key));
 
   if (index === -1) {
@@ -108,16 +62,14 @@ export async function saveCorrectedResultTime(
   };
   results[index] = updatedRow;
 
-  const events =
-    !isDbEnabled() && isGitDeployConfigured() ? await fetchManifestFromGitHub() : getEvents();
-  const people = rebuildPeopleIndexFromResults(results, events);
-  const peopleJson = `${JSON.stringify(people, null, 2)}\n`;
-
   const personName = updatedRow.name;
-  const deploy = await persistResultsData(
+  const deploy = await rebuildAndPersistResults(
     results,
-    peopleJson,
     `Rätta tid: ${personName} (${key.event_id}) → ${trimmed}`,
+    {
+      db: "Tid sparad i databasen.",
+      local: "Tid sparad och index uppdaterat.",
+    },
   );
 
   return { time: trimmed, deploy };
