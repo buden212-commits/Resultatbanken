@@ -13,6 +13,8 @@ export type StandingRow = {
   class_name: string;
   is_youth: boolean;
   place: number;
+  /** Positive = moved up after latest event; null = new / no previous standing. */
+  placeDelta?: number | null;
   total: number;
   totalAll: number;
   starts: number;
@@ -149,6 +151,47 @@ export function standingsForClass(rows: StandingRow[], classId: string | null): 
 
 export function standingsForYouth(rows: StandingRow[]): StandingRow[] {
   return assignStandingPlaces(rows.filter((row) => row.is_youth));
+}
+
+function eventHasScoringResults(event: MastarnasSeason["events"][number]): boolean {
+  return event.results.length > 0;
+}
+
+/** Latest event that contributed results, by date (then id). */
+export function latestScoringEvent(season: MastarnasSeason): MastarnasSeason["events"][number] | null {
+  const scoring = season.events.filter(eventHasScoringResults);
+  if (scoring.length === 0) {
+    return null;
+  }
+  return [...scoring].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id))[0] ?? null;
+}
+
+/** Standings as they were before the latest scoring event. Null if fewer than two scoring events. */
+export function computeStandingsBeforeLatestEvent(
+  data: MastarnasData,
+  season: MastarnasSeason,
+): StandingRow[] | null {
+  const latest = latestScoringEvent(season);
+  if (!latest) {
+    return null;
+  }
+  const previousEvents = season.events.filter((event) => event.id !== latest.id);
+  if (!previousEvents.some(eventHasScoringResults)) {
+    return null;
+  }
+  return computeStandings(data, { ...season, events: previousEvents });
+}
+
+/** Attach place movement vs a previous standing list (same filter/view). */
+export function attachPlaceDeltas(current: StandingRow[], previous: StandingRow[]): StandingRow[] {
+  const previousPlace = new Map(previous.map((row) => [row.person_key, row.place]));
+  return current.map((row) => {
+    const prior = previousPlace.get(row.person_key);
+    if (prior == null) {
+      return { ...row, placeDelta: null };
+    }
+    return { ...row, placeDelta: prior - row.place };
+  });
 }
 
 export function getSeasonAwards(

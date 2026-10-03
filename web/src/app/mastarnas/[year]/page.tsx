@@ -12,7 +12,14 @@ import { ensureMastarnasLoaded } from "@/lib/data";
 import { readMastarnasData } from "@/lib/mastarnas";
 import { canonicalDisciplineId } from "@/lib/mastarnas-normalize";
 import { formatPoints } from "@/lib/mastarnas-points";
-import { computeStandings, getSeasonAwards, standingsForClass, standingsForYouth } from "@/lib/mastarnas-standings";
+import {
+  attachPlaceDeltas,
+  computeStandings,
+  computeStandingsBeforeLatestEvent,
+  getSeasonAwards,
+  standingsForClass,
+  standingsForYouth,
+} from "@/lib/mastarnas-standings";
 
 type Props = {
   params: Promise<{ year: string }>;
@@ -53,6 +60,7 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
 
   const years = [...data.seasons.map((item) => item.year)].sort((a, b) => b - a);
   const allRows = computeStandings(data, season);
+  const previousAllRows = computeStandingsBeforeLatestEvent(data, season);
   const classId = klass && data.classes.some((item) => item.id === klass) ? klass : null;
   const isYouthList = lista === "ungdom" && !classId;
   const grenId = gren ? canonicalDisciplineId(gren) : "";
@@ -61,7 +69,11 @@ export default async function MastarnasYearPage({ params, searchParams }: Props)
       season.events.find((item) => item.id === grenId) ??
       season.events.find((item) => item.id === gren)
     : undefined;
-  const rows = isYouthList ? standingsForYouth(allRows) : standingsForClass(allRows, classId);
+  const filterRows = (source: typeof allRows) =>
+    isYouthList ? standingsForYouth(source) : standingsForClass(source, classId);
+  const rows = previousAllRows
+    ? attachPlaceDeltas(filterRows(allRows), filterRows(previousAllRows))
+    : filterRows(allRows);
   const awards = getSeasonAwards(data, year, allRows);
   const usedClasses = data.classes.filter((item) => allRows.some((row) => row.class_id === item.id) && item.id !== "okand");
   const canEdit = isAdminConfigured() && (await isAdminAuthenticated());

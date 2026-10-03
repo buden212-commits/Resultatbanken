@@ -14,6 +14,28 @@ function countedDisciplineIds(byDiscipline: Record<string, number | null>): Set<
   );
 }
 
+function PlaceDelta({ delta }: { delta: number | null | undefined }) {
+  if (delta == null || delta === 0) {
+    return null;
+  }
+
+  const improved = delta > 0;
+  const places = Math.abs(delta);
+
+  return (
+    <span
+      className={`mr-1.5 inline-flex items-baseline gap-0.5 text-xs font-semibold tabular-nums ${
+        improved ? "text-emerald-700" : "text-red-700"
+      }`}
+      title={improved ? `Upp ${places} platser` : `Ner ${places} platser`}
+      aria-label={improved ? `Upp ${places} platser` : `Ner ${places} platser`}
+    >
+      <span aria-hidden="true">{improved ? "↑" : "↓"}</span>
+      <span>({places})</span>
+    </span>
+  );
+}
+
 export function MastarnasStandingsTable({
   year,
   rows,
@@ -60,6 +82,7 @@ export function MastarnasStandingsTable({
               <tr key={row.person_key}>
                 <td className="font-medium text-slate-700">{row.place}</td>
                 <td>
+                  <PlaceDelta delta={row.placeDelta} />
                   <Link href={`/person/${encodeURIComponent(row.person_key)}`} className="link-brand">
                     {row.name}
                   </Link>
