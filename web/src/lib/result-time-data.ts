@@ -1,5 +1,5 @@
 import {
-  getEvent,
+  getEventAsync,
   loadMutableResultsIndex,
   rebuildAndPersistResults,
   type ResultsDeployResult,
@@ -43,7 +43,7 @@ export async function saveCorrectedResultTime(
   }
 
   const results = await loadMutableResultsIndex();
-  const event = getEvent(key.event_id);
+  const event = await getEventAsync(key.event_id);
   if (!event) {
     throw new Error("Eventet finns inte.");
   }

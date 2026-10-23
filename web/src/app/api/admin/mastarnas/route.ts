@@ -4,7 +4,7 @@ import { isAdminAuthenticated } from "@/lib/admin-auth";
 import {
   ensureDataReady,
   ensureMastarnasLoaded,
-  getEvent,
+  getEventAsync,
   getEvents,
   getResolvedResultsForEventAsync,
 } from "@/lib/data";
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
 
   const previewEventId = Number(url.searchParams.get("preview_event"));
   if (previewEventId) {
-    const event = getEvent(previewEventId);
+    const event = await getEventAsync(previewEventId);
     if (!event) {
       return NextResponse.json({ error: "Resultat hittades inte." }, { status: 404 });
     }
@@ -88,7 +88,7 @@ type Body = {
 };
 
 async function previewFromArchive(archiveEventId: number, mapping: Record<string, string>) {
-  const event = getEvent(archiveEventId);
+  const event = await getEventAsync(archiveEventId);
   if (!event) {
     throw new Error("Resultat hittades inte.");
   }

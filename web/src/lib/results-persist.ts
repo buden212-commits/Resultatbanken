@@ -8,7 +8,7 @@ import {
   publishResultsDataToGitHub,
 } from "./github-deploy";
 import { rebuildPeopleIndexFromResults } from "./rebuild-people-index";
-import { ensureDbSnapshot, getEvent, getEvents, getResultsIndex } from "./data";
+import { ensureDbSnapshot, getEvent, getEventAsync, getEvents, getResultsIndex } from "./data";
 import { isDbEnabled } from "./db/config";
 import { syncResultsAndPeopleIntoDb } from "./db/write";
 import { refreshDbSnapshot } from "./db/store";
@@ -82,4 +82,4 @@ export async function rebuildAndPersistResults(
   return persistResultsData(results, peopleJson, commitMessage, successMessages);
 }
 
-export { getEvent };
+export { getEvent, getEventAsync };

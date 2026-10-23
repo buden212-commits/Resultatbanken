@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { ensureDataReady, getEvent } from "@/lib/data";
+import { ensureDataReady, getEventAsync } from "@/lib/data";
 import { saveEventStatsExclusion } from "@/lib/stats-exclusion-data";
 
 export async function POST(request: Request) {
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Saknar excluded (boolean)." }, { status: 400 });
     }
 
-    const event = getEvent(eventId);
+    const event = await getEventAsync(eventId);
     if (!event) {
       return NextResponse.json({ error: "Eventet finns inte." }, { status: 404 });
     }

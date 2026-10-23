@@ -7,12 +7,15 @@ import { EventStatsExclusionSwitch } from "@/components/EventStatsExclusionSwitc
 import { EventTypePicker } from "@/components/EventTypePicker";
 import { ParsedResultsTable } from "@/components/ParsedResultsTable";
 import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
+import path from "path";
+
 import {
   ensureDataReady,
   findContentFile,
+  findContentUrl,
   formatDate,
   getEditableResultsForEventAsync,
-  getEvent,
+  getEventAsync,
   getResolvedResultsForEventAsync,
 } from "@/lib/data";
 import { getCanonicalEventTypesForPicker } from "@/lib/event-types";
@@ -26,7 +29,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await ensureDataReady();
   const { id } = await params;
-  const event = getEvent(Number(id));
+  const event = await getEventAsync(Number(id));
   return {
     title: event ? `${event.name} — Resultatbanken` : "Resultat saknas",
   };
@@ -36,18 +39,22 @@ export default async function EventPage({ params }: Props) {
   await ensureDataReady();
   const { id } = await params;
   const eventId = Number(id);
-  const event = getEvent(eventId);
+  const event = await getEventAsync(eventId);
 
   if (!event) {
     notFound();
   }
 
-  const content = findContentFile(eventId);
+  const localContent = findContentFile(eventId);
   const canEdit = await isAdminAuthenticated();
-  const [parsedRows, editRows] = await Promise.all([
+  const [parsedRows, editRows, blobUrl] = await Promise.all([
     getResolvedResultsForEventAsync(eventId),
     canEdit ? getEditableResultsForEventAsync(eventId) : Promise.resolve(undefined),
+    findContentUrl(eventId),
   ]);
+  const contentExt =
+    localContent?.ext || path.extname(event.result_file || event.local_file || "").toLowerCase();
+  const hasContentFile = Boolean(localContent || blobUrl);
   const title = event.name || event.type || `Resultat ${event.id}`;
   const excludedFromStats = isEventExcludedFromStats(eventId);
   const showMmImport = isAdminConfigured();
@@ -121,11 +128,11 @@ export default async function EventPage({ params }: Props) {
 
       <section className="mt-10">
         <h2 className="mb-4 text-lg font-bold text-slate-900">Resultatfil</h2>
-        {!content ? (
+        {!hasContentFile ? (
           <div className="rounded-xl border border-amber-200/80 bg-amber-50 px-5 py-4 text-sm text-amber-900">
             Resultatfil saknas för detta event.
           </div>
-        ) : content.ext === ".pdf" ? (
+        ) : contentExt === ".pdf" ? (
           <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50">
             <iframe
               src={`/api/content/${eventId}`}
@@ -133,7 +140,7 @@ export default async function EventPage({ params }: Props) {
               className="h-[80vh] w-full"
             />
           </div>
-        ) : content.ext === ".html" || content.ext === ".txt" ? (
+        ) : contentExt === ".html" || contentExt === ".txt" ? (
           <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50">
             <iframe
               src={`/api/content/${eventId}`}
@@ -141,7 +148,7 @@ export default async function EventPage({ params }: Props) {
               className="min-h-[40vh] w-full"
             />
           </div>
-        ) : content.ext === ".jpeg" || content.ext === ".jpg" ? (
+        ) : contentExt === ".jpeg" || contentExt === ".jpg" ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={`/api/content/${eventId}`}

@@ -1,5 +1,5 @@
 import {
-  getEvent,
+  getEventAsync,
   loadMutableResultsIndex,
   rebuildAndPersistResults,
   type ResultsDeployResult,
@@ -96,7 +96,7 @@ export async function saveEventResultList(
   rows: EditableResultInput[],
 ): Promise<SaveEventResultListResult> {
   const existing = await loadMutableResultsIndex();
-  const event = getEvent(eventId);
+  const event = await getEventAsync(eventId);
   if (!event) {
     throw new Error("Eventet finns inte.");
   }

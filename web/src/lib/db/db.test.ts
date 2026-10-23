@@ -17,7 +17,13 @@ import {
   upsertEvent,
 } from "./events";
 import { storeContentFile, findLocalContentFile } from "./content";
-import { loadDbSnapshot, invalidateDbSnapshot } from "./store";
+import {
+  loadDbSnapshot,
+  invalidateDbSnapshot,
+  ensureDbSnapshot,
+  readEventFromDb,
+  refreshDbSnapshot,
+} from "./store";
 import type { Event, ResultRow } from "../types";
 
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "rb-db-"));
@@ -120,6 +126,27 @@ describe("db schema and CRUD", () => {
     expect(snapshot.events).toHaveLength(1);
     expect(snapshot.events[0].name).toBe("Snapshot");
     expect(snapshot.statsExclusions).toEqual([458]);
+  });
+
+  it("reads a single event from DB even when the snapshot is stale", async () => {
+    await resetDbForTests();
+    const db = await getDb();
+    await applySchema(db);
+    await db.exec("DELETE FROM results; DELETE FROM events; DELETE FROM app_documents;");
+    await upsertEvent(db, sampleEvent(20, { name: "Cached" }));
+    await setDocument(db, "person-aliases", []);
+    await setDocument(db, "type-aliases", []);
+    await setDocument(db, "stats-exclusions", []);
+    await refreshDbSnapshot();
+
+    await upsertEvent(db, sampleEvent(21, { name: "Fresh import" }));
+    // Snapshot still only has id 20 until TTL/refresh — direct read must see 21.
+    const fresh = await readEventFromDb(21);
+    expect(fresh?.name).toBe("Fresh import");
+
+    invalidateDbSnapshot();
+    await ensureDbSnapshot();
+    expect((await readEventFromDb(21))?.id).toBe(21);
   });
 });
 

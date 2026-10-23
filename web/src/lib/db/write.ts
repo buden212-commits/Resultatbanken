@@ -100,7 +100,8 @@ export async function createEventInDb(
   };
 
   await upsertEvent(db, saved, stored.contentUrl);
-  invalidateDbSnapshot();
+  // Refresh (not only invalidate) so this isolate lists the new event immediately.
+  await refreshDbSnapshot();
   return { event: saved, contentUrl: stored.contentUrl };
 }
 
@@ -114,7 +115,7 @@ export async function updateEventTypeDb(eventId: number, type: string): Promise<
   const db = await getDb();
   await applySchema(db);
   const updated = await updateEventTypeInDb(db, eventId, type);
-  invalidateDbSnapshot();
+  await refreshDbSnapshot();
   return updated;
 }
 

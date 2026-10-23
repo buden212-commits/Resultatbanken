@@ -18,14 +18,24 @@ export type DbSnapshot = {
   statsExclusions: unknown;
 };
 
+/** Warm serverless isolates keep a snapshot; TTL picks up events created on other instances. */
+const SNAPSHOT_TTL_MS = 30_000;
+
 const globalForCache = globalThis as typeof globalThis & {
   __rbDbSnapshot?: DbSnapshot | null;
+  __rbDbSnapshotAt?: number;
   __rbDbSnapshotLoading?: Promise<DbSnapshot> | null;
   __rbResultsCache?: ResultRow[] | null;
   __rbResultsLoading?: Promise<ResultRow[]> | null;
   __rbPeopleCache?: Person[] | null;
   __rbMastarnasCache?: unknown;
 };
+
+function isSnapshotFresh(): boolean {
+  const snapshot = globalForCache.__rbDbSnapshot;
+  const at = globalForCache.__rbDbSnapshotAt ?? 0;
+  return Boolean(snapshot) && Date.now() - at < SNAPSHOT_TTL_MS;
+}
 
 export function useDbData(): boolean {
   return isDbEnabled();
@@ -54,13 +64,14 @@ export async function ensureDbSnapshot(): Promise<DbSnapshot | null> {
   if (!isDbEnabled()) {
     return null;
   }
-  if (globalForCache.__rbDbSnapshot) {
-    return globalForCache.__rbDbSnapshot;
+  if (isSnapshotFresh()) {
+    return globalForCache.__rbDbSnapshot ?? null;
   }
   if (!globalForCache.__rbDbSnapshotLoading) {
     globalForCache.__rbDbSnapshotLoading = loadDbSnapshot()
       .then((snapshot) => {
         globalForCache.__rbDbSnapshot = snapshot;
+        globalForCache.__rbDbSnapshotAt = Date.now();
         globalForCache.__rbDbSnapshotLoading = null;
         return snapshot;
       })
@@ -91,6 +102,7 @@ export function requireDbSnapshot(): DbSnapshot {
 
 export async function refreshDbSnapshot(): Promise<DbSnapshot> {
   globalForCache.__rbDbSnapshot = null;
+  globalForCache.__rbDbSnapshotAt = undefined;
   globalForCache.__rbDbSnapshotLoading = null;
   globalForCache.__rbResultsCache = null;
   globalForCache.__rbResultsLoading = null;
@@ -98,11 +110,13 @@ export async function refreshDbSnapshot(): Promise<DbSnapshot> {
   globalForCache.__rbMastarnasCache = undefined;
   const snapshot = await loadDbSnapshot();
   globalForCache.__rbDbSnapshot = snapshot;
+  globalForCache.__rbDbSnapshotAt = Date.now();
   return snapshot;
 }
 
 export function invalidateDbSnapshot(): void {
   globalForCache.__rbDbSnapshot = null;
+  globalForCache.__rbDbSnapshotAt = undefined;
   globalForCache.__rbDbSnapshotLoading = null;
   globalForCache.__rbResultsCache = null;
   globalForCache.__rbResultsLoading = null;
@@ -181,12 +195,10 @@ export async function readPeopleFromDb(): Promise<Person[]> {
   return ensurePeopleLoaded();
 }
 
+/** Always query by id — avoids stale serverless snapshots after imports on other instances. */
 export async function readEventFromDb(id: number): Promise<Event | undefined> {
-  const snapshot = await ensureDbSnapshot();
-  if (snapshot) {
-    return snapshot.events.find((event) => event.id === id);
-  }
   const db = await getDb();
+  await applySchema(db);
   return getEventById(db, id);
 }
 

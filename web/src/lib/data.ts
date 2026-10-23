@@ -17,6 +17,7 @@ import {
   getPeopleCacheSync,
   getResultsCacheSync,
   readContentUrlFromDb,
+  readEventFromDb,
   readResultsForEventFromDb,
   useDbData,
 } from "./db/store";
@@ -70,11 +71,9 @@ function readJson<T>(filename: string): T {
 export function getEvents(): Event[] {
   if (useDbData()) {
     const snap = getDbSnapshotSync();
-    if (snap) {
-      return snap.events;
-    }
-    // Fallback so generateMetadata / cold paths don't crash
-    return readJson<Event[]>("manifest.json").sort((a, b) => b.date.localeCompare(a.date));
+    // Never fall back to bundled manifest.json in DB mode — it is often older than
+    // Neon and would hide newly imported events (or resurrect deleted ones).
+    return snap?.events ?? [];
   }
   return readJson<Event[]>("manifest.json").sort((a, b) => b.date.localeCompare(a.date));
 }
@@ -83,24 +82,27 @@ export function getEvent(id: number): Event | undefined {
   return getEvents().find((event) => event.id === id);
 }
 
+/** Prefer a live DB read so detail pages work even with a stale events snapshot. */
+export async function getEventAsync(id: number): Promise<Event | undefined> {
+  if (!Number.isFinite(id)) {
+    return undefined;
+  }
+  if (useDbData()) {
+    return readEventFromDb(id);
+  }
+  return getEvent(id);
+}
+
 export function getResultsIndex(): ResultRow[] {
   if (useDbData()) {
-    const cached = getResultsCacheSync();
-    if (cached) {
-      return cached;
-    }
-    return readJson<ResultRow[]>("results-index.json");
+    return getResultsCacheSync() ?? [];
   }
   return readJson<ResultRow[]>("results-index.json");
 }
 
 export function getPeopleIndex(): Person[] {
   if (useDbData()) {
-    const cached = getPeopleCacheSync();
-    if (cached) {
-      return cached;
-    }
-    return readJson<Person[]>("people-index.json");
+    return getPeopleCacheSync() ?? [];
   }
   return readJson<Person[]>("people-index.json");
 }
