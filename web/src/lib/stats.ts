@@ -6,6 +6,7 @@ import {
   getResultsIndex,
   parseTimeToSeconds,
 } from "./data";
+import { isEventorArchiveEvent } from "./eventor";
 import { isUnreasonableTime } from "./time";
 import { countUniquePeople, resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import { getStatsExcludedEventIds } from "./stats-exclusions";
@@ -122,6 +123,21 @@ function getEventDateLookup(): Map<number, string> {
   return new Map(getEvents().map((event) => [event.id, event.date]));
 }
 
+function getEventorEventIds(): Set<number> {
+  return new Set(
+    getEvents()
+      .filter((event) => isEventorArchiveEvent(event))
+      .map((event) => event.id),
+  );
+}
+
+function isUnreasonableTimeForStats(time: string | null | undefined, eventId: number, eventorIds: Set<number>): boolean {
+  if (eventorIds.has(eventId)) {
+    return false;
+  }
+  return isUnreasonableTime(time);
+}
+
 function getEventMetaLookup(): Map<
   number,
   { date: string; type: string; location: string; name: string }
@@ -149,6 +165,7 @@ function normalizeLabel(value: string): string {
 
 function buildPersonAggregates(range?: { from: string; to: string }): Map<string, PersonAggregate> {
   const eventDates = getEventDateLookup();
+  const eventorIds = getEventorEventIds();
   const aggregates = new Map<string, PersonAggregate>();
 
   for (const row of filterResultsForStats(getResultsIndex())) {
@@ -195,7 +212,7 @@ function buildPersonAggregates(range?: { from: string; to: string }): Map<string
       aggregate.podiums += 1;
     }
 
-    if (row.time && !isUnreasonableTime(row.time)) {
+    if (row.time && !isUnreasonableTimeForStats(row.time, row.event_id, eventorIds)) {
       const seconds = parseTimeToSeconds(row.time);
       if (seconds !== null) {
         aggregate.totalTimeSeconds += seconds;
@@ -428,11 +445,14 @@ function computeStreakYears(years: number[]): number {
   return best;
 }
 
-function isCompetitiveResult(result: PersonResult | ResultRow): boolean {
+function isCompetitiveResult(
+  result: PersonResult | ResultRow,
+  eventorIds: Set<number>,
+): boolean {
   if (result.status && result.status !== "deltagit") {
     return false;
   }
-  if (!result.time || isUnreasonableTime(result.time)) {
+  if (!result.time || isUnreasonableTimeForStats(result.time, result.event_id, eventorIds)) {
     return false;
   }
   return true;
@@ -440,6 +460,7 @@ function isCompetitiveResult(result: PersonResult | ResultRow): boolean {
 
 export function getPersonStats(person: Person): PersonStats {
   const results = filterPersonResultsForStats(person.results);
+  const eventorIds = getEventorEventIds();
   const wins = results.filter((r) => r.place === 1).length;
   const podiums = results.filter((r) => r.place !== null && r.place >= 1 && r.place <= 3).length;
   const dns = results.filter((r) => r.status === "dns").length;
@@ -449,7 +470,7 @@ export function getPersonStats(person: Person): PersonStats {
 
   let totalTimeSeconds = 0;
   for (const result of results) {
-    if (result.time && !isUnreasonableTime(result.time)) {
+    if (result.time && !isUnreasonableTimeForStats(result.time, result.event_id, eventorIds)) {
       const seconds = parseTimeToSeconds(result.time);
       if (seconds !== null) {
         totalTimeSeconds += seconds;
@@ -479,7 +500,7 @@ export function getPersonStats(person: Person): PersonStats {
 
   const bestByClass = new Map<string, PersonalRecord>();
   for (const result of results) {
-    if (!isCompetitiveResult(result) || !result.class_name || !result.time) {
+    if (!isCompetitiveResult(result, eventorIds) || !result.class_name || !result.time) {
       continue;
     }
     const seconds = parseTimeToSeconds(result.time);

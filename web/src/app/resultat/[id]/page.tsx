@@ -18,6 +18,7 @@ import {
   getEventAsync,
   getResolvedResultsForEventAsync,
 } from "@/lib/data";
+import { isEventorArchiveEvent } from "@/lib/eventor";
 import { getCanonicalEventTypesForPicker } from "@/lib/event-types";
 import { isEventExcludedFromStats } from "@/lib/stats-exclusions";
 import { resolveEventType } from "@/lib/type-aliases";
@@ -124,6 +125,7 @@ export default async function EventPage({ params }: Props) {
         editRows={editRows}
         eventId={eventId}
         canEdit={canEdit}
+        flagUnreasonableTimes={!isEventorArchiveEvent(event)}
       />
 
       <section className="mt-10">

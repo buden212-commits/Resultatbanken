@@ -1,5 +1,7 @@
 export const MIN_REASONABLE_TIME_SECONDS = 8 * 60;
 export const MAX_REASONABLE_TIME_SECONDS = 3 * 3_600;
+/** Manual corrections may be short (indoor etc.); only reject empty/unparseable/zero. */
+export const MIN_CORRECTED_TIME_SECONDS = 1;
 
 function isWithinReasonableRange(seconds: number): boolean {
   return (
@@ -143,7 +145,7 @@ export function isValidCorrectedTime(time: string): boolean {
   const seconds = parseTimeToSeconds(time.trim());
   return (
     seconds !== null &&
-    seconds >= MIN_REASONABLE_TIME_SECONDS &&
+    seconds >= MIN_CORRECTED_TIME_SECONDS &&
     seconds <= MAX_REASONABLE_TIME_SECONDS
   );
 }

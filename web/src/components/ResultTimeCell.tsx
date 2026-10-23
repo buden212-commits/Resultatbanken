@@ -4,9 +4,11 @@ type Props = {
   time: string | null | undefined;
   /** When set, show status instead of time (single-column layouts). */
   status?: string | null;
+  /** Eventor imports skip the unreasonable-time badge. Default true. */
+  flagUnreasonable?: boolean;
 };
 
-export function ResultTimeCell({ time, status }: Props) {
+export function ResultTimeCell({ time, status, flagUnreasonable = true }: Props) {
   if (status) {
     return <span>{status}</span>;
   }
@@ -17,7 +19,7 @@ export function ResultTimeCell({ time, status }: Props) {
 
   const displayTime = formatTimeForDisplay(time) ?? time;
 
-  if (!isUnreasonableTime(time)) {
+  if (!flagUnreasonable || !isUnreasonableTime(time)) {
     return <>{displayTime}</>;
   }
 

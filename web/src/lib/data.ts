@@ -8,6 +8,7 @@ import { getMastarnasOnlyPerson, searchMastarnasPeople } from "./mastarnas";
 import { readCachedJson } from "./json-cache";
 import { resolveDisplayName, resolvePersonKey } from "./person-aliases";
 import { isUnreasonableTime, parseTimeToSeconds } from "./time";
+import { isEventorArchiveEvent } from "./eventor";
 import { findLocalContentFile } from "./db/content";
 import {
   ensureDbSnapshot,
@@ -129,9 +130,20 @@ export function getResultsForEvent(eventId: number): ResultRow[] {
   return getResultsIndex().filter((row) => row.event_id === eventId);
 }
 
+/** Eventor-importerade tider (t.ex. indoor) ska inte flaggas som orimliga. */
+export function eventChecksUnreasonableTimes(eventId: number): boolean {
+  const event = getEvent(eventId);
+  return !event || !isEventorArchiveEvent(event);
+}
+
 export function getEventIdsWithUnreasonableTimes(): Set<number> {
   const eventIds = new Set<number>();
+  const eventsById = new Map(getEvents().map((event) => [event.id, event]));
   for (const row of getResultsIndex()) {
+    const event = eventsById.get(row.event_id);
+    if (event && isEventorArchiveEvent(event)) {
+      continue;
+    }
     if (isUnreasonableTime(row.time)) {
       eventIds.add(row.event_id);
     }
@@ -140,11 +152,17 @@ export function getEventIdsWithUnreasonableTimes(): Set<number> {
 }
 
 export function eventHasUnreasonableTimes(eventId: number): boolean {
+  if (!eventChecksUnreasonableTimes(eventId)) {
+    return false;
+  }
   return getResultsForEvent(eventId).some((row) => isUnreasonableTime(row.time));
 }
 
 export function getResolvedResultsForEvent(eventId: number): ResolvedResultRow[] {
-  return dedupeResultsByPerson(derivePlaces(getResultsForEvent(eventId))).map((row) => ({
+  const ignoreUnreasonable = !eventChecksUnreasonableTimes(eventId);
+  return dedupeResultsByPerson(
+    derivePlaces(getResultsForEvent(eventId), { ignoreUnreasonableTimes: ignoreUnreasonable }),
+  ).map((row) => ({
     ...row,
     resolved_person_key: resolvePersonKey(row.person_key),
     resolved_name: resolveDisplayName(row.person_key, row.name),
@@ -158,16 +176,22 @@ async function getRawResultsForEventAsync(eventId: number): Promise<ResultRow[]>
 /** Prefer DB query for one event (avoids loading the full results index). */
 export async function getResolvedResultsForEventAsync(eventId: number): Promise<ResolvedResultRow[]> {
   const rows = await getRawResultsForEventAsync(eventId);
-  return dedupeResultsByPerson(derivePlaces(rows)).map((row) => ({
-    ...row,
-    resolved_person_key: resolvePersonKey(row.person_key),
-    resolved_name: resolveDisplayName(row.person_key, row.name),
-  }));
+  const ignoreUnreasonable = !eventChecksUnreasonableTimes(eventId);
+  return dedupeResultsByPerson(derivePlaces(rows, { ignoreUnreasonableTimes: ignoreUnreasonable })).map(
+    (row) => ({
+      ...row,
+      resolved_person_key: resolvePersonKey(row.person_key),
+      resolved_name: resolveDisplayName(row.person_key, row.name),
+    }),
+  );
 }
 
 /** All stored rows for an event (no dedupe), with derived places for editing. */
 export async function getEditableResultsForEventAsync(eventId: number): Promise<ResultRow[]> {
-  return derivePlaces(await getRawResultsForEventAsync(eventId));
+  const ignoreUnreasonable = !eventChecksUnreasonableTimes(eventId);
+  return derivePlaces(await getRawResultsForEventAsync(eventId), {
+    ignoreUnreasonableTimes: ignoreUnreasonable,
+  });
 }
 
 /** Warm caches needed by stats / people search. */

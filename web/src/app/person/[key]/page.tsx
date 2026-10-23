@@ -7,7 +7,15 @@ import { MastarnasPersonSection } from "@/components/MastarnasPersonSection";
 import { PersonResultsTable } from "@/components/PersonResultsTable";
 import { StatsBarChart, StatsCountTable } from "@/components/StatsSections";
 import { StatCard } from "@/components/ui";
-import { ensureHeavyDataReady, ensureMastarnasLoaded, formatDate, formatDuration, getPerson } from "@/lib/data";
+import {
+  ensureHeavyDataReady,
+  ensureMastarnasLoaded,
+  formatDate,
+  formatDuration,
+  getEvents,
+  getPerson,
+} from "@/lib/data";
+import { isEventorArchiveEvent } from "@/lib/eventor";
 import { resolvePersonKey } from "@/lib/person-aliases";
 import { getPersonStats } from "@/lib/stats";
 
@@ -40,6 +48,11 @@ export default async function PersonPage({ params }: Props) {
   }
 
   const stats = getPersonStats(person);
+  const eventorEventIds = new Set(
+    getEvents()
+      .filter((event) => isEventorArchiveEvent(event))
+      .map((event) => event.id),
+  );
 
   const yearSpan =
     person.first_date && person.last_date
@@ -157,7 +170,10 @@ export default async function PersonPage({ params }: Props) {
 
       <section className="mt-10">
         <h2 className="mb-4 text-lg font-bold text-slate-900">Resultathistorik</h2>
-        <PersonResultsTable results={person.results} />
+        <PersonResultsTable
+          results={person.results}
+          eventIdsSkipUnreasonableCheck={eventorEventIds}
+        />
       </section>
     </main>
   );

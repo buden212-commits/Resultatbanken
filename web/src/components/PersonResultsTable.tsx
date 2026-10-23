@@ -67,7 +67,14 @@ function compareResults(a: PersonResult, b: PersonResult, key: SortKey): number 
   }
 }
 
-export function PersonResultsTable({ results }: { results: PersonResult[] }) {
+export function PersonResultsTable({
+  results,
+  eventIdsSkipUnreasonableCheck,
+}: {
+  results: PersonResult[];
+  /** Eventor-imported event ids — do not show "Orimlig tid". */
+  eventIdsSkipUnreasonableCheck?: Set<number>;
+}) {
   const [sortKey, setSortKey] = useState<SortKey>("date");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
@@ -136,7 +143,11 @@ export function PersonResultsTable({ results }: { results: PersonResult[] }) {
               <td className="text-slate-600">{result.class_name || "–"}</td>
               <td className="font-medium">{result.place ?? "–"}</td>
               <td className="font-mono text-sm">
-                <ResultTimeCell time={result.time} status={result.status} />
+                <ResultTimeCell
+                  time={result.time}
+                  status={result.status}
+                  flagUnreasonable={!eventIdsSkipUnreasonableCheck?.has(result.event_id)}
+                />
               </td>
             </tr>
           ))}

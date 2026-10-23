@@ -3,11 +3,16 @@ import { isUnreasonableTime, parseTimeToSeconds } from "./time";
 
 const NON_RANKABLE_STATUSES = new Set(["deltagit", "dns", "dnf", "felst"]);
 
+export type DerivePlacesOptions = {
+  /** When true, short/long times still count for derived places (Eventor imports). */
+  ignoreUnreasonableTimes?: boolean;
+};
+
 function classGroupKey(className: string | null | undefined): string {
   return className?.trim() || "–";
 }
 
-function isRankableForDerivedPlace(row: ResultRow): boolean {
+function isRankableForDerivedPlace(row: ResultRow, ignoreUnreasonableTimes: boolean): boolean {
   if (row.place !== null) {
     return false;
   }
@@ -17,14 +22,17 @@ function isRankableForDerivedPlace(row: ResultRow): boolean {
   if (row.status && NON_RANKABLE_STATUSES.has(row.status)) {
     return false;
   }
-  if (isUnreasonableTime(row.time)) {
+  if (!ignoreUnreasonableTimes && isUnreasonableTime(row.time)) {
     return false;
   }
   return parseTimeToSeconds(row.time) !== null;
 }
 
-function derivePlacesForClassGroup(rows: ResultRow[]): ResultRow[] {
-  const rankable = rows.filter(isRankableForDerivedPlace);
+function derivePlacesForClassGroup(
+  rows: ResultRow[],
+  ignoreUnreasonableTimes: boolean,
+): ResultRow[] {
+  const rankable = rows.filter((row) => isRankableForDerivedPlace(row, ignoreUnreasonableTimes));
   if (rankable.length === 0) {
     return rows;
   }
@@ -62,7 +70,8 @@ function rowKey(row: ResultRow): string {
 }
 
 /** Assign placering within each class_name group from times when place is missing. */
-export function derivePlaces(rows: ResultRow[]): ResultRow[] {
+export function derivePlaces(rows: ResultRow[], options?: DerivePlacesOptions): ResultRow[] {
+  const ignoreUnreasonableTimes = options?.ignoreUnreasonableTimes ?? false;
   const groups = new Map<string, ResultRow[]>();
 
   for (const row of rows) {
@@ -72,5 +81,7 @@ export function derivePlaces(rows: ResultRow[]): ResultRow[] {
     groups.set(key, group);
   }
 
-  return [...groups.values()].flatMap(derivePlacesForClassGroup);
+  return [...groups.values()].flatMap((group) =>
+    derivePlacesForClassGroup(group, ignoreUnreasonableTimes),
+  );
 }

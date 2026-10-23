@@ -281,6 +281,17 @@ export function eventorEventUrl(eventorId: string): string {
   return `https://eventor.orientering.se/Events/Show/${eventorId}`;
 }
 
+/** Eventor-importerade arkivposter (hela tävling eller klubb). */
+export function isEventorArchiveEvent(event: {
+  source_url?: string | null;
+  result_file?: string | null;
+}): boolean {
+  if (/eventor\.orientering\.se\/Events\/Show\//i.test(event.source_url ?? "")) {
+    return true;
+  }
+  return /^eventor-\d+\.xml$/i.test(event.result_file ?? "");
+}
+
 export function isEventorConfigured(): boolean {
   return Boolean(process.env.EVENTOR_API_KEY?.trim());
 }

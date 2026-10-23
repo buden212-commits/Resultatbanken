@@ -1,3 +1,4 @@
+import { isEventorArchiveEvent } from "./eventor";
 import { isKmEvent, searchEvents } from "./event-search";
 import { assignClassPoints } from "./mastarnas-points";
 import { toSlug } from "./slug";
@@ -5,6 +6,8 @@ import { isUnreasonableTime, parseTimeToSeconds } from "./time";
 import type { Event } from "./types";
 import type { ResolvedResultRow } from "./data";
 import type { MastarnasClass, MastarnasDiscipline, MastarnasStatus } from "./mastarnas-types";
+
+export { isEventorArchiveEvent };
 
 export type ArchiveEventHit = {
   id: number;
@@ -151,14 +154,6 @@ export function searchArchiveEvents(events: Event[], query: string): ArchiveEven
     date: event.date,
     location: event.location,
   }));
-}
-
-/** Eventor-importerade arkivposter (hela tävling eller klubb). */
-export function isEventorArchiveEvent(event: Pick<Event, "source_url" | "result_file">): boolean {
-  if (/eventor\.orientering\.se\/Events\/Show\//i.test(event.source_url ?? "")) {
-    return true;
-  }
-  return /^eventor-\d+\.xml$/i.test(event.result_file ?? "");
 }
 
 /** Matchar IFK Mora OK / IFK Mora Orienteringsklubb o.likn. */

@@ -16,6 +16,7 @@ type Props = {
   place: number | null;
   initialTime: string;
   canEdit: boolean;
+  flagUnreasonable?: boolean;
 };
 
 export function ResultTimeEditor({
@@ -25,6 +26,7 @@ export function ResultTimeEditor({
   place,
   initialTime,
   canEdit,
+  flagUnreasonable = true,
 }: Props) {
   const [time, setTime] = useState(initialTime);
   const [draft, setDraft] = useState("");
@@ -37,7 +39,7 @@ export function ResultTimeEditor({
   }
 
   if (!canEdit) {
-    return <ResultTimeCell time={time} />;
+    return <ResultTimeCell time={time} flagUnreasonable={flagUnreasonable} />;
   }
 
   const parsedSeconds = parseTimeToSeconds(time);
@@ -51,7 +53,7 @@ export function ResultTimeEditor({
       return;
     }
     if (!isValidCorrectedTime(corrected)) {
-      setError("Ogiltig tid — ange t.ex. 46:34, 1:05:30 eller 58.23 (8 min–3 tim).");
+      setError("Ogiltig tid — ange t.ex. 7:15, 46:34 eller 1:05:30 (max 3 tim).");
       return;
     }
 
@@ -108,7 +110,7 @@ export function ResultTimeEditor({
 
   return (
     <div className="space-y-2">
-      <ResultTimeCell time={time} />
+      <ResultTimeCell time={time} flagUnreasonable={flagUnreasonable} />
       {parsedLabel ? (
         <p className="text-xs text-amber-800">Tolkas nu som {parsedLabel}</p>
       ) : null}

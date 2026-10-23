@@ -66,17 +66,21 @@ export function ParsedResultsTable({
   editRows,
   eventId,
   canEdit = false,
+  flagUnreasonableTimes = true,
 }: {
   rows: ResultRow[] | ResolvedResultRow[];
   editRows?: ResultRow[];
   eventId?: number;
   canEdit?: boolean;
+  /** Eventor imports skip unreasonable-time highlighting. */
+  flagUnreasonableTimes?: boolean;
 }) {
   const [editing, setEditing] = useState(false);
   const groupedRows = useMemo(() => groupRowsByClass(rows), [rows]);
   const eventHasUnreasonableTimes = useMemo(
-    () => rows.some((row) => isUnreasonableTime(row.time)),
-    [rows],
+    () =>
+      flagUnreasonableTimes && rows.some((row) => isUnreasonableTime(row.time)),
+    [rows, flagUnreasonableTimes],
   );
 
   const canEditList = canEdit && eventId !== undefined;
@@ -146,6 +150,7 @@ export function ParsedResultsTable({
                 eventId={eventId}
                 canEdit={canEdit}
                 eventHasUnreasonableTimes={eventHasUnreasonableTimes}
+                flagUnreasonableTimes={flagUnreasonableTimes}
               />
             ))}
           </tbody>
@@ -161,12 +166,14 @@ function GroupRows({
   eventId,
   canEdit,
   eventHasUnreasonableTimes,
+  flagUnreasonableTimes,
 }: {
   group: { className: string; rows: ResultRow[] };
   isFirst: boolean;
   eventId?: number;
   canEdit: boolean;
   eventHasUnreasonableTimes: boolean;
+  flagUnreasonableTimes: boolean;
 }) {
   return (
     <>
@@ -184,7 +191,7 @@ function GroupRows({
         </td>
       </tr>
       {group.rows.map((row, index) => {
-        const unreasonable = isUnreasonableTime(row.time);
+        const unreasonable = flagUnreasonableTimes && isUnreasonableTime(row.time);
         return (
         <tr
           key={`${group.className}-${rowLinkKey(row)}-${row.place}-${index}`}
@@ -208,6 +215,7 @@ function GroupRows({
               place={row.place}
               initialTime={row.time ?? ""}
               canEdit={canEdit && eventHasUnreasonableTimes && eventId !== undefined}
+              flagUnreasonable={flagUnreasonableTimes}
             />
           </td>
           <td className="text-slate-500">{row.status ?? "–"}</td>
