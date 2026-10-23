@@ -29,12 +29,27 @@ const globalForCache = globalThis as typeof globalThis & {
   __rbResultsLoading?: Promise<ResultRow[]> | null;
   __rbPeopleCache?: Person[] | null;
   __rbMastarnasCache?: unknown;
+  __rbMastarnasCacheAt?: number;
+  __rbMastarnasLoading?: Promise<unknown> | null;
 };
 
 function isSnapshotFresh(): boolean {
   const snapshot = globalForCache.__rbDbSnapshot;
   const at = globalForCache.__rbDbSnapshotAt ?? 0;
   return Boolean(snapshot) && Date.now() - at < SNAPSHOT_TTL_MS;
+}
+
+function isMastarnasFresh(): boolean {
+  return (
+    globalForCache.__rbMastarnasCache !== undefined &&
+    Date.now() - (globalForCache.__rbMastarnasCacheAt ?? 0) < SNAPSHOT_TTL_MS
+  );
+}
+
+function setMastarnasCache(data: unknown): void {
+  globalForCache.__rbMastarnasCache = data;
+  globalForCache.__rbMastarnasCacheAt = Date.now();
+  globalForCache.__rbMastarnasLoading = null;
 }
 
 export function useDbData(): boolean {
@@ -108,6 +123,8 @@ export async function refreshDbSnapshot(): Promise<DbSnapshot> {
   globalForCache.__rbResultsLoading = null;
   globalForCache.__rbPeopleCache = null;
   globalForCache.__rbMastarnasCache = undefined;
+  globalForCache.__rbMastarnasCacheAt = undefined;
+  globalForCache.__rbMastarnasLoading = null;
   const snapshot = await loadDbSnapshot();
   globalForCache.__rbDbSnapshot = snapshot;
   globalForCache.__rbDbSnapshotAt = Date.now();
@@ -122,6 +139,8 @@ export function invalidateDbSnapshot(): void {
   globalForCache.__rbResultsLoading = null;
   globalForCache.__rbPeopleCache = null;
   globalForCache.__rbMastarnasCache = undefined;
+  globalForCache.__rbMastarnasCacheAt = undefined;
+  globalForCache.__rbMastarnasLoading = null;
 }
 
 export async function ensureResultsLoaded(): Promise<ResultRow[]> {
@@ -161,12 +180,33 @@ export async function ensureMastarnasLoaded(): Promise<unknown> {
   if (!isDbEnabled()) {
     return null;
   }
-  if (globalForCache.__rbMastarnasCache !== undefined) {
+  if (isMastarnasFresh()) {
     return globalForCache.__rbMastarnasCache;
   }
+  if (!globalForCache.__rbMastarnasLoading) {
+    globalForCache.__rbMastarnasLoading = (async () => {
+      const db = await getDb();
+      const data = await getDocument(db, "mastarnas", null);
+      setMastarnasCache(data);
+      return data;
+    })().catch((error) => {
+      globalForCache.__rbMastarnasLoading = null;
+      throw error;
+    });
+  }
+  return globalForCache.__rbMastarnasLoading;
+}
+
+/** Always reload mastarnas from DB — use before admin writes to avoid clobbering other instances. */
+export async function refreshMastarnasFromDb(): Promise<unknown> {
+  if (!isDbEnabled()) {
+    return null;
+  }
+  globalForCache.__rbMastarnasLoading = null;
   const db = await getDb();
+  await applySchema(db);
   const data = await getDocument(db, "mastarnas", null);
-  globalForCache.__rbMastarnasCache = data;
+  setMastarnasCache(data);
   return data;
 }
 
@@ -220,6 +260,6 @@ export async function writeDocumentToDb(key: AppDocumentKey, data: unknown): Pro
   invalidateDbSnapshot();
   // Keep MM in-memory after write so same-request reads stay current.
   if (key === "mastarnas") {
-    globalForCache.__rbMastarnasCache = data;
+    setMastarnasCache(data);
   }
 }

@@ -10,7 +10,7 @@ import {
 import { emptyMastarnasData } from "./mastarnas-defaults";
 import { readMastarnasData } from "./mastarnas";
 import { isDbEnabled, isServerlessRuntime } from "./db/config";
-import { writeDocumentToDb } from "./db/store";
+import { refreshMastarnasFromDb, writeDocumentToDb } from "./db/store";
 import { toSlug } from "./slug";
 import { resolvePersonKey } from "./person-aliases";
 import type {
@@ -33,12 +33,14 @@ function writeLocal(data: MastarnasData): void {
 
 async function readForWrite(): Promise<MastarnasData> {
   if (isDbEnabled()) {
-    return readMastarnasData();
+    // Always reload from Neon so a stale serverless cache cannot overwrite newer edits.
+    await refreshMastarnasFromDb();
+    return structuredClone(readMastarnasData());
   }
   if (isGitDeployConfigured()) {
     return fetchMastarnasFromGitHub();
   }
-  return readMastarnasData();
+  return structuredClone(readMastarnasData());
 }
 
 async function persist(data: MastarnasData, message: string): Promise<MastarnasDeploy> {
